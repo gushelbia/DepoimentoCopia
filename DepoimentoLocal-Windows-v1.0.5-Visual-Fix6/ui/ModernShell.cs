@@ -971,6 +971,7 @@ public sealed class ModernDepoimentoForm : Form
     private ModernButton addButton;
     private ModernButton copyButton;
     private ModernButton saveButton;
+    private ModernButton openButton;
     private ModernButton exportButton;
     private ModernButton clearButton;
     private ModernButton logButton;
@@ -998,7 +999,10 @@ public sealed class ModernDepoimentoForm : Form
     private int themePollTicks;
     private string backendDescription = "";
     private Timer autosaveTimer;
-    private string lastSavedCombined = "";
+    // What was last saved or opened (text and qualification), to know what is unsaved.
+    private string lastSavedText = "";
+    private Qualification lastSavedQualification;
+    private string lastDraftPath;
     private bool autosaveReady;
     // Side-by-side layout and review highlights (visual only).
     private const int WideLayoutMinWidth = 1180;
@@ -1010,6 +1014,15 @@ public sealed class ModernDepoimentoForm : Form
     private bool highlightsEnabled = true;
     private bool applyingHighlights;
     private ReviewResult lastReview;
+    // Qualification panel (collapsed by default). Never sent to the model.
+    private RoundedPanel qualCard;
+    private Label qualTitle, qualSummary;
+    private ModernButton qualToggle, qualClear;
+    private TableLayoutPanel qualGrid;
+    private readonly Control[] qualInputs = new Control[Qualification.Count];
+    private readonly Label[] qualLabels = new Label[Qualification.Count];
+    private readonly RoundedPanel[] qualHosts = new RoundedPanel[Qualification.Count];
+    private bool qualExpanded;
     private string reviewFull = "", reviewShort = "";
     private bool layingOutStatus;
 
@@ -1059,11 +1072,12 @@ public sealed class ModernDepoimentoForm : Form
         // Two columns: original and reformulated side by side on wide windows;
         // every other row spans both columns (see UpdateWorkLayout).
         root.ColumnCount = 2;
-        root.RowCount = 7;
+        root.RowCount = 8;
         root.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
         root.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
         root.RowStyles.Add(new RowStyle(SizeType.Absolute, 58F));
         root.RowStyles.Add(new RowStyle(SizeType.Absolute, 72F));
+        root.RowStyles.Add(new RowStyle(SizeType.Absolute, 54F));   // qualification (collapsed)
         root.RowStyles.Add(new RowStyle(SizeType.Percent, 33.33F));
         root.RowStyles.Add(new RowStyle(SizeType.Absolute, 52F));
         root.RowStyles.Add(new RowStyle(SizeType.Percent, 33.33F));
@@ -1173,10 +1187,14 @@ public sealed class ModernDepoimentoForm : Form
         root.Controls.Add(modelCard, 0, 1);
         root.SetColumnSpan(modelCard, 2);
 
+        BuildQualification();
+        root.Controls.Add(qualCard, 0, 2);
+        root.SetColumnSpan(qualCard, 2);
+
         originalCard = new SectionCard("Resposta / transcrição original", false, true);
         originalCard.ClearButton.Click += ClearOriginal_Click;
         originalCard.Dock = DockStyle.Fill;
-        root.Controls.Add(originalCard, 0, 2);
+        root.Controls.Add(originalCard, 0, 3);
         root.SetColumnSpan(originalCard, 2);
 
         generation = new Panel();
@@ -1235,7 +1253,7 @@ public sealed class ModernDepoimentoForm : Form
             status.Width = Math.Max(120, available - status.Left);
             LayoutStatusLines();
         };
-        root.Controls.Add(generation, 0, 3);
+        root.Controls.Add(generation, 0, 4);
         root.SetColumnSpan(generation, 2);
 
         reformulatedCard = new SectionCard("Texto reformulado", true, true);
@@ -1249,7 +1267,7 @@ public sealed class ModernDepoimentoForm : Form
         // Re-highlight shortly after an edit; the timer restarts on each change.
         originalCard.Editor.TextChanged += delegate { ScheduleHighlights(); };
         reformulatedCard.Editor.TextChanged += delegate { ScheduleHighlights(); };
-        root.Controls.Add(reformulatedCard, 0, 4);
+        root.Controls.Add(reformulatedCard, 0, 5);
         root.SetColumnSpan(reformulatedCard, 2);
 
         actions = new FlowLayoutPanel();
@@ -1261,6 +1279,7 @@ public sealed class ModernDepoimentoForm : Form
         addButton = SecondaryButton("Adicionar ao depoimento");
         copyButton = SecondaryButton("Copiar");
         saveButton = SecondaryButton("Salvar rascunho");
+        openButton = SecondaryButton("Abrir rascunho");
         exportButton = SecondaryButton("Exportar Word");
         clearButton = new ModernButton("Limpar consolidado", palette.DangerButton, palette.DangerText, palette.DangerBorder);
         logButton = SecondaryButton("Abrir log");
@@ -1268,6 +1287,7 @@ public sealed class ModernDepoimentoForm : Form
         addButton.Click += Add_Click;
         copyButton.Click += Copy_Click;
         saveButton.Click += Save_Click;
+        openButton.Click += Open_Click;
         exportButton.Click += Export_Click;
         clearButton.Click += Clear_Click;
         logButton.Click += async delegate { await UpdateBridgeAsync(delegate { bridge.Click("Abrir log"); }); };
@@ -1275,10 +1295,14 @@ public sealed class ModernDepoimentoForm : Form
         actions.Controls.Add(addButton);
         actions.Controls.Add(copyButton);
         actions.Controls.Add(saveButton);
+        actions.Controls.Add(openButton);
         actions.Controls.Add(exportButton);
         actions.Controls.Add(clearButton);
         actions.Controls.Add(logButton);
-        root.Controls.Add(actions, 0, 5);
+        addButton.AccessibleName = "Adicionar ao depoimento";
+        reviewTip.SetToolTip(addButton, "Adicionar ao depoimento");
+        actions.SizeChanged += delegate { FitActions(); };
+        root.Controls.Add(actions, 0, 6);
         root.SetColumnSpan(actions, 2);
 
         combinedCard = new SectionCard("Depoimento consolidado", false);
@@ -1291,7 +1315,7 @@ public sealed class ModernDepoimentoForm : Form
                 await UpdateBridgeAsync(delegate { bridge.CombinedText = text; });
         };
         combinedCard.Editor.TextChanged += delegate { ScheduleAutosave(); };
-        root.Controls.Add(combinedCard, 0, 6);
+        root.Controls.Add(combinedCard, 0, 7);
         root.SetColumnSpan(combinedCard, 2);
 
         autosaveTimer = new Timer();
@@ -1316,11 +1340,314 @@ public sealed class ModernDepoimentoForm : Form
         syncTimer.Start();
 
         LayoutHeaderTheme();
-        Resize += delegate { UpdateWorkLayout(); };
+        Resize += delegate { UpdateWorkLayout(); UpdateScrollRoom(); };
         UpdateWorkLayout();
     }
 
+    // A slim bar (title, summary, "Limpar campos", "Mostrar campos") over a grid
+    // of fields that only appears when expanded.
+    private void BuildQualification()
+    {
+        qualCard = new RoundedPanel();
+        qualCard.Dock = DockStyle.Fill;
+        qualCard.Margin = new Padding(0, 0, 0, 7);
+        qualCard.Padding = new Padding(16, 6, 16, 8);
+
+        var layout = new TableLayoutPanel();
+        layout.Dock = DockStyle.Fill;
+        layout.BackColor = Color.Transparent;
+        layout.Margin = new Padding(0);
+        layout.ColumnCount = 1;
+        layout.RowCount = 2;
+        layout.RowStyles.Add(new RowStyle(SizeType.Absolute, 40F));
+        layout.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+
+        var bar = new TableLayoutPanel();
+        bar.Dock = DockStyle.Fill;
+        bar.BackColor = Color.Transparent;
+        bar.Margin = new Padding(0);
+        bar.ColumnCount = 4;
+        bar.RowCount = 1;
+        bar.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize));
+        bar.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+        bar.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize));
+        bar.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize));
+        bar.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+
+        qualTitle = new Label();
+        qualTitle.Text = "Qualificação";
+        qualTitle.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
+        qualTitle.AutoSize = true;
+        qualTitle.Anchor = AnchorStyles.Left;
+        qualTitle.Margin = new Padding(6, 0, 14, 0);
+        qualTitle.BackColor = Color.Transparent;
+
+        qualSummary = new Label();
+        qualSummary.Dock = DockStyle.Fill;
+        qualSummary.TextAlign = ContentAlignment.MiddleLeft;
+        qualSummary.AutoEllipsis = true;
+        qualSummary.Font = new Font("Segoe UI", 9.5F);
+        qualSummary.BackColor = Color.Transparent;
+        qualSummary.Margin = new Padding(0);
+
+        qualClear = SecondaryButton("Limpar campos");
+        qualClear.Margin = new Padding(8, 1, 0, 1);
+        qualClear.Click += QualClear_Click;
+        qualToggle = SecondaryButton("Mostrar campos");
+        qualToggle.Margin = new Padding(8, 1, 0, 1);
+        qualToggle.Click += delegate { SetQualExpanded(!qualExpanded); };
+
+        bar.Controls.Add(qualTitle, 0, 0);
+        bar.Controls.Add(qualSummary, 1, 0);
+        bar.Controls.Add(qualClear, 2, 0);
+        bar.Controls.Add(qualToggle, 3, 0);
+
+        qualGrid = new TableLayoutPanel();
+        qualGrid.Dock = DockStyle.Fill;
+        qualGrid.BackColor = Color.Transparent;
+        qualGrid.Margin = new Padding(0);
+        qualGrid.Padding = new Padding(0, 6, 0, 0);
+        qualGrid.ColumnCount = 4;
+        qualGrid.RowCount = 3;
+        for (int c = 0; c < 4; c++) qualGrid.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
+        for (int r = 0; r < 3; r++) qualGrid.RowStyles.Add(new RowStyle(SizeType.Percent, 33.33F));
+        // field, column, row, column span
+        int[,] place = {
+            { Qualification.Procedimento, 0, 0, 1 }, { Qualification.Unidade, 1, 0, 1 }, { Qualification.Local, 2, 0, 1 }, { Qualification.DataHora, 3, 0, 1 },
+            { Qualification.Depoente, 0, 1, 1 }, { Qualification.Documento, 1, 1, 1 }, { Qualification.Condicao, 2, 1, 1 }, { Qualification.Telefone, 3, 1, 1 },
+            { Qualification.Endereco, 0, 2, 2 }, { Qualification.Autoridade, 2, 2, 1 }, { Qualification.Escrivao, 3, 2, 1 } };
+        for (int p = 0; p < place.GetLength(0); p++)
+        {
+            int field = place[p, 0];
+            var cell = new Panel();
+            cell.Dock = DockStyle.Fill;
+            cell.Margin = new Padding(0, 0, 10, 2);
+            cell.BackColor = Color.Transparent;
+            Control input;
+            if (field == Qualification.Condicao)
+            {
+                var combo = new ThemedComboBox();
+                combo.Items.Add("—");
+                foreach (string condition in Qualification.Conditions) combo.Items.Add(condition);
+                combo.SelectedIndex = 0;
+                combo.Dock = DockStyle.Top;
+                combo.AccessibleName = Qualification.Labels[field];
+                combo.SelectedIndexChanged += delegate { QualChanged(); };
+                cell.Controls.Add(combo);
+                input = combo;
+            }
+            else
+            {
+                var host = new RoundedPanel();
+                host.Radius = 8;
+                host.Dock = DockStyle.Top;
+                host.Height = 32;
+                host.Padding = new Padding(9, 7, 8, 5);
+                var box = new TextBox();
+                box.BorderStyle = BorderStyle.None;
+                box.Dock = DockStyle.Fill;
+                box.Font = new Font("Segoe UI", 9.75F);
+                box.AccessibleName = Qualification.Labels[field];
+                box.TextChanged += delegate { QualChanged(); };
+                host.Controls.Add(box);
+                cell.Controls.Add(host);
+                qualHosts[field] = host;
+                input = box;
+            }
+            // Added last, so it docks first: the label sits above the input.
+            var label = new Label();
+            label.Text = Qualification.Labels[field];
+            label.Dock = DockStyle.Top;
+            label.Height = 19;
+            label.Font = new Font("Segoe UI", 8.75F);
+            label.BackColor = Color.Transparent;
+            cell.Controls.Add(label);
+            qualLabels[field] = label;
+            qualInputs[field] = input;
+            qualGrid.Controls.Add(cell, place[p, 1], place[p, 2]);
+            if (place[p, 3] > 1) qualGrid.SetColumnSpan(cell, place[p, 3]);
+        }
+        qualGrid.Visible = false;
+
+        layout.Controls.Add(bar, 0, 0);
+        layout.Controls.Add(qualGrid, 0, 1);
+        qualCard.Controls.Add(layout);
+        ((TextBox)qualInputs[Qualification.DataHora]).Text = DateTime.Now.ToString("dd/MM/yyyy HH:mm");
+        UpdateQualSummary();
+    }
+
+    private void SetQualExpanded(bool expanded)
+    {
+        qualExpanded = expanded;
+        qualGrid.Visible = expanded;
+        qualToggle.Text = expanded ? "Ocultar campos" : "Mostrar campos";
+        float k = DeviceDpi / 96f;
+        root.RowStyles[2] = new RowStyle(SizeType.Absolute, (float)Math.Round((expanded ? 228 : 54) * k));
+        UpdateScrollRoom();
+        if (expanded) qualInputs[Qualification.Procedimento].Focus();
+    }
+
+    // With the qualification panel open on a short window, the page scrolls
+    // instead of squeezing the text boxes below a usable height. With the
+    // panel closed nothing changes. Scrolling starts only below 115 px per
+    // text box (no scroll bar for a few pixels), and then gives each 140 px.
+    private const int MinTextCardHeight = 140;
+    private const int ScrollTriggerHeight = 115;
+
+    private void UpdateScrollRoom()
+    {
+        if (root == null || root.RowStyles.Count < 8) return;
+        int needed = 0, trigger = 0;
+        if (qualExpanded)
+        {
+            float k = DeviceDpi / 96f;
+            int percentRows = 0, fixedRows = root.Padding.Vertical;
+            foreach (RowStyle s in root.RowStyles)
+            {
+                if (s.SizeType == SizeType.Absolute) fixedRows += (int)Math.Ceiling(s.Height);
+                else if (s.SizeType == SizeType.Percent) percentRows++;
+            }
+            needed = fixedRows + percentRows * (int)Math.Round(MinTextCardHeight * k);
+            trigger = fixedRows + percentRows * (int)Math.Round(ScrollTriggerHeight * k);
+        }
+        bool scroll = trigger > ClientSize.Height;
+        if (scroll)
+        {
+            if (!root.AutoScroll) root.AutoScroll = true;
+            if (root.AutoScrollMinSize.Height != needed) root.AutoScrollMinSize = new Size(0, needed);
+        }
+        else if (root.AutoScroll)
+        {
+            root.AutoScrollPosition = Point.Empty;
+            root.AutoScrollMinSize = Size.Empty;
+            root.AutoScroll = false;
+        }
+    }
+
+    private Qualification ReadQualification()
+    {
+        var q = new Qualification();
+        for (int i = 0; i < Qualification.Count; i++)
+        {
+            var combo = qualInputs[i] as ComboBox;
+            if (combo != null) q[i] = combo.SelectedIndex > 0 ? Convert.ToString(combo.SelectedItem) : "";
+            else if (qualInputs[i] != null) q[i] = qualInputs[i].Text;
+        }
+        return q;
+    }
+
+    private void ApplyQualification(Qualification q)
+    {
+        if (q == null) return;
+        for (int i = 0; i < Qualification.Count; i++)
+        {
+            var combo = qualInputs[i] as ComboBox;
+            if (combo != null)
+            {
+                string value = q[i];
+                int index = value.Length == 0 ? 0 : combo.FindStringExact(value);
+                if (index < 0) index = combo.Items.Add(value);
+                combo.SelectedIndex = index;
+            }
+            else if (qualInputs[i] != null) qualInputs[i].Text = q[i];
+        }
+        UpdateQualSummary();
+    }
+
+    private void QualChanged()
+    {
+        UpdateQualSummary();
+        ScheduleAutosave();
+    }
+
+    // One line when collapsed: what identifies this testimony, and any warning.
+    private void UpdateQualSummary()
+    {
+        if (qualSummary == null) return;
+        Qualification q = ReadQualification();
+        var parts = new List<string>();
+        if (q[Qualification.Procedimento].Length > 0) parts.Add("Proc. " + q[Qualification.Procedimento]);
+        if (q[Qualification.Depoente].Length > 0) parts.Add(q[Qualification.Depoente]);
+        if (q[Qualification.Condicao].Length > 0) parts.Add(q[Qualification.Condicao]);
+        if (q[Qualification.DataHora].Length > 0) parts.Add(q[Qualification.DataHora]);
+        string text = q.HasContentBesidesDate() ? String.Join("  •  ", parts.ToArray()) : "não preenchida (dados vão só para o Word e o rascunho, nunca para o modelo)";
+        bool warn = q.CpfWarning;
+        if (warn) text += "  •  CPF inválido";
+        qualSummary.Text = text;
+        qualSummary.ForeColor = warn ? palette.DangerText : palette.Muted;
+        Label document = qualLabels[Qualification.Documento];
+        if (document != null)
+        {
+            document.Text = Qualification.Labels[Qualification.Documento] + (warn ? " — CPF inválido" : "");
+            document.ForeColor = warn ? palette.DangerText : palette.Muted;
+        }
+    }
+
+    private void QualClear_Click(object sender, EventArgs e)
+    {
+        if (ReadQualification().HasContentBesidesDate())
+        {
+            DialogResult r = MessageBox.Show(this,
+                "Deseja limpar os campos de qualificação para começar um novo depoimento?\n\nO texto dos quadros não é alterado.",
+                "Limpar campos", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
+            if (r != DialogResult.Yes) return;
+        }
+        var fresh = new Qualification();
+        fresh[Qualification.DataHora] = DateTime.Now.ToString("dd/MM/yyyy HH:mm");
+        ApplyQualification(fresh);
+        status.Text = "Campos de qualificação limpos.";
+    }
+
+    private void ApplyQualificationTheme()
+    {
+        if (qualCard == null) return;
+        qualCard.FillColor = palette.Card;
+        qualCard.BorderColor = palette.Border;
+        qualCard.Invalidate();
+        qualTitle.ForeColor = palette.Text;
+        ApplySecondaryPalette(qualToggle);
+        ApplySecondaryPalette(qualClear);
+        for (int i = 0; i < Qualification.Count; i++)
+        {
+            if (qualLabels[i] != null) qualLabels[i].ForeColor = palette.Muted;
+            if (qualHosts[i] != null)
+            {
+                qualHosts[i].FillColor = palette.Editor;
+                qualHosts[i].BorderColor = palette.EditorBorder;
+                qualHosts[i].Invalidate();
+            }
+            var combo = qualInputs[i] as ThemedComboBox;
+            if (combo != null) combo.SetPalette(palette);
+            else if (qualInputs[i] != null) { qualInputs[i].BackColor = palette.Editor; qualInputs[i].ForeColor = palette.Text; }
+        }
+        UpdateQualSummary();
+    }
+
     // Side by side when the window is wide enough; otherwise the stacked layout.
+    // On narrow windows «Adicionar ao depoimento» becomes «Adicionar» so every
+    // button of the row stays visible.
+    private void FitActions()
+    {
+        if (actions == null || addButton == null) return;
+        string wanted = "Adicionar ao depoimento";
+        if (ActionsWidth("Adicionar ao depoimento") > actions.ClientSize.Width) wanted = "Adicionar";
+        if (addButton.Text != wanted) addButton.Text = wanted;
+    }
+
+    private int ActionsWidth(string addText)
+    {
+        int width = actions.Padding.Horizontal;
+        foreach (Control c in actions.Controls)
+        {
+            if (!c.Visible) continue;
+            int w = c.GetPreferredSize(Size.Empty).Width;
+            if (c == addButton && c.Text != addText)
+                w += TextRenderer.MeasureText(addText, c.Font).Width - TextRenderer.MeasureText(c.Text, c.Font).Width;
+            width += w + c.Margin.Horizontal;
+        }
+        return width;
+    }
+
     private void UpdateWorkLayout()
     {
         if (root == null || originalCard == null || reformulatedCard == null) return;
@@ -1332,28 +1659,29 @@ public sealed class ModernDepoimentoForm : Form
         if (mode == 1)
         {
             root.SetColumnSpan(originalCard, 1);
-            root.SetCellPosition(originalCard, new TableLayoutPanelCellPosition(0, 2));
+            root.SetCellPosition(originalCard, new TableLayoutPanelCellPosition(0, 3));
             root.SetColumnSpan(reformulatedCard, 1);
-            root.SetCellPosition(reformulatedCard, new TableLayoutPanelCellPosition(1, 2));
+            root.SetCellPosition(reformulatedCard, new TableLayoutPanelCellPosition(1, 3));
             originalCard.Margin = new Padding(0, 6, 7, 6);
             reformulatedCard.Margin = new Padding(7, 6, 0, 6);
-            root.RowStyles[2] = new RowStyle(SizeType.Percent, 55F);
-            root.RowStyles[4] = new RowStyle(SizeType.Absolute, 0F);
-            root.RowStyles[6] = new RowStyle(SizeType.Percent, 45F);
+            root.RowStyles[3] = new RowStyle(SizeType.Percent, 55F);
+            root.RowStyles[5] = new RowStyle(SizeType.Absolute, 0F);
+            root.RowStyles[7] = new RowStyle(SizeType.Percent, 45F);
         }
         else
         {
-            root.SetCellPosition(reformulatedCard, new TableLayoutPanelCellPosition(0, 4));
+            root.SetCellPosition(reformulatedCard, new TableLayoutPanelCellPosition(0, 5));
             root.SetColumnSpan(reformulatedCard, 2);
-            root.SetCellPosition(originalCard, new TableLayoutPanelCellPosition(0, 2));
+            root.SetCellPosition(originalCard, new TableLayoutPanelCellPosition(0, 3));
             root.SetColumnSpan(originalCard, 2);
             originalCard.Margin = new Padding(0, 6, 0, 6);
             reformulatedCard.Margin = new Padding(0, 6, 0, 6);
-            root.RowStyles[2] = new RowStyle(SizeType.Percent, 33.33F);
-            root.RowStyles[4] = new RowStyle(SizeType.Percent, 33.33F);
-            root.RowStyles[6] = new RowStyle(SizeType.Percent, 33.34F);
+            root.RowStyles[3] = new RowStyle(SizeType.Percent, 33.33F);
+            root.RowStyles[5] = new RowStyle(SizeType.Percent, 33.33F);
+            root.RowStyles[7] = new RowStyle(SizeType.Percent, 33.34F);
         }
         root.ResumeLayout(true);
+        UpdateScrollRoom();
     }
 
     // Status on the first line; the review summary below it, up to two lines.
@@ -1367,7 +1695,7 @@ public sealed class ModernDepoimentoForm : Form
             float k = DeviceDpi / 96f;
             bool two = reviewFull.Length > 0;
             float wanted = (float)Math.Round((two ? 70 : 52) * k);
-            if (Math.Abs(root.RowStyles[3].Height - wanted) > 0.5f) root.RowStyles[3] = new RowStyle(SizeType.Absolute, wanted);
+            if (Math.Abs(root.RowStyles[4].Height - wanted) > 0.5f) root.RowStyles[4] = new RowStyle(SizeType.Absolute, wanted);
             int extra = Math.Max(0, generation.ClientSize.Height - (int)Math.Round(52 * k)) / 2;
             reformulate.Top = (int)Math.Round(7 * k) + extra;
             cancel.Top = reformulate.Top;
@@ -1539,9 +1867,11 @@ public sealed class ModernDepoimentoForm : Form
         ApplySecondaryPalette(addButton);
         ApplySecondaryPalette(copyButton);
         ApplySecondaryPalette(saveButton);
+        ApplySecondaryPalette(openButton);
         ApplySecondaryPalette(exportButton);
         ApplySecondaryPalette(logButton);
         ApplySecondaryPalette(reviewToggle);
+        ApplyQualificationTheme();
 
         if (clearButton != null) clearButton.SetPalette(palette.DangerButton, palette.DangerText, palette.DangerBorder);
 
@@ -1903,7 +2233,7 @@ public sealed class ModernDepoimentoForm : Form
     {
         if (combinedCard.Editor.Text.Trim().Length > 0)
         {
-            string msg = HasUnsavedChanges()
+            string msg = combinedCard.Editor.Text.Trim() != lastSavedText
                 ? "O depoimento consolidado ainda não foi salvo.\n\nDeseja realmente apagá-lo? Essa ação não pode ser desfeita."
                 : "Deseja realmente limpar o depoimento consolidado?";
             DialogResult r = MessageBox.Show(this, msg, "Limpar consolidado",
@@ -1911,22 +2241,95 @@ public sealed class ModernDepoimentoForm : Form
             if (r != DialogResult.Yes) return;
         }
         combinedCard.Editor.Clear();
-        lastSavedCombined = "";
+        lastSavedText = "";
         if (autosaveTimer != null) autosaveTimer.Stop();
-        AutosaveStore.Delete();
+        // Keeps a recovery copy only if unsaved qualification fields remain.
+        WriteAutosave();
         await UpdateBridgeAsync(delegate { bridge.CombinedText = ""; });
         if (!closing) status.Text = "Depoimento consolidado limpo.";
     }
 
     private void Save_Click(object sender, EventArgs e)
     {
-        string text = combinedCard.Editor.Text.Trim();
-        if (text.Length == 0)
+        if (!HasDraftContent())
         {
-            MessageBox.Show(this, "O depoimento consolidado está vazio.", "Depoimento Local", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show(this, "O depoimento consolidado e os campos de qualificação estão vazios.", "Depoimento Local", MessageBoxButtons.OK, MessageBoxIcon.Information);
             return;
         }
-        if (SaveCombinedToFile(false)) status.Text = "Rascunho salvo.";
+        if (SaveCombinedToFile(false)) status.Text = "Rascunho salvo (texto consolidado e campos de qualificação).";
+    }
+
+    private async void Open_Click(object sender, EventArgs e)
+    {
+        string path;
+        using (OpenFileDialog dlg = new OpenFileDialog())
+        {
+            dlg.Title = "Abrir rascunho";
+            dlg.Filter = "Rascunho (*.txt)|*.txt|Todos os arquivos (*.*)|*.*";
+            if (lastDraftPath != null)
+            {
+                dlg.InitialDirectory = Path.GetDirectoryName(lastDraftPath);
+                dlg.FileName = Path.GetFileName(lastDraftPath);
+            }
+            if (dlg.ShowDialog(this) != DialogResult.OK) return;
+            path = dlg.FileName;
+        }
+
+        string text;
+        Qualification q;
+        try
+        {
+            string content = File.ReadAllText(path, Encoding.UTF8);
+            if (content.IndexOf('\0') >= 0) throw new InvalidDataException("O arquivo não é um rascunho de texto.");
+            DraftFile.Parse(content, out text, out q);
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show(this, "Não foi possível abrir o rascunho.\n\n" + ex.Message, "Abrir rascunho", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            return;
+        }
+
+        if (HasUnsavedChanges())
+        {
+            DialogResult r = MessageBox.Show(this,
+                "O depoimento atual tem alterações que não foram salvas.\n\n" +
+                "Deseja substituí-lo pelo rascunho «" + Path.GetFileName(path) + "»? As alterações não salvas serão perdidas.",
+                "Abrir rascunho", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
+            if (r != DialogResult.Yes) return;
+        }
+
+        // An old draft has no fields: offer to clear the current ones so the data
+        // of one testimony is not mixed with the text of another. «Sim» is the default.
+        bool clearFields = false;
+        if (q == null && ReadQualification().HasContentBesidesDate())
+        {
+            DialogResult r = MessageBox.Show(this,
+                "O rascunho «" + Path.GetFileName(path) + "» é antigo e não tem campos de qualificação.\n\n" +
+                "Deseja limpar os campos atuais, para não misturar os dados de um depoimento com o texto de outro?",
+                "Abrir rascunho", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1);
+            clearFields = r == DialogResult.Yes;
+        }
+
+        if (autosaveTimer != null) autosaveTimer.Stop();
+        combinedCard.Editor.Text = text;
+        // The editor keeps line breaks as \n; compare and sync exactly what it shows,
+        // so a Windows .txt (\r\n) does not look unsaved right after opening.
+        text = combinedCard.Editor.Text;
+        if (q != null) ApplyQualification(q);
+        else if (clearFields)
+        {
+            var fresh = new Qualification();
+            fresh[Qualification.DataHora] = DateTime.Now.ToString("dd/MM/yyyy HH:mm");
+            ApplyQualification(fresh);
+        }
+        lastDraftPath = path;
+        MarkCombinedSaved(text, q != null || clearFields ? ReadQualification() : lastSavedQualification);
+        await UpdateBridgeAsync(delegate { bridge.CombinedText = text; });
+        if (closing) return;
+        status.Text = q != null
+            ? "Rascunho aberto: " + Path.GetFileName(path) + "."
+            : "Rascunho antigo aberto (só o texto): " + Path.GetFileName(path) + "." +
+              (clearFields ? " Campos de qualificação limpos." : " Os campos de qualificação não foram alterados.");
     }
 
     private void OfferRecovery()
@@ -1935,24 +2338,31 @@ public sealed class ModernDepoimentoForm : Form
         {
             string path = AutosaveStore.FilePath;
             if (!File.Exists(path)) return;
-            string saved = File.ReadAllText(path, Encoding.UTF8);
-            if (saved.Trim().Length == 0)
+            string text;
+            Qualification q;
+            DraftFile.Parse(File.ReadAllText(path, Encoding.UTF8), out text, out q);
+            bool hasFields = q != null && q.HasContentBesidesDate();
+            if (text.Trim().Length == 0 && !hasFields)
             {
                 AutosaveStore.Delete();
                 return;
             }
-            if (saved.Trim() == combinedCard.Editor.Text.Trim()) return;
+            if (text.Trim() == combinedCard.Editor.Text.Trim() && (q == null || q.SameAs(ReadQualification()))) return;
 
             DateTime when = File.GetLastWriteTime(path);
+            string what = text.Trim().Length == 0 ? "Foram encontrados campos de qualificação que não foram salvos"
+                : hasFields ? "Foi encontrado um depoimento consolidado, com os campos de qualificação, que não foi salvo"
+                : "Foi encontrado um depoimento consolidado que não foi salvo";
             DialogResult r = MessageBox.Show(this,
-                "Foi encontrado um depoimento consolidado que não foi salvo na última sessão (" +
-                when.ToString("dd/MM/yyyy 'às' HH:mm") + ").\n\nDeseja recuperá-lo?\n\n" +
-                "Se escolher «Não», esse texto será descartado.",
+                what + " na última sessão (" + when.ToString("dd/MM/yyyy 'às' HH:mm") + ").\n\n" +
+                (text.Trim().Length == 0 ? "Deseja recuperá-los?\n\nSe escolher «Não», esses dados serão descartados."
+                    : "Deseja recuperá-lo?\n\nSe escolher «Não», esse texto será descartado."),
                 "Recuperar depoimento", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (r == DialogResult.Yes)
             {
-                combinedCard.Editor.Text = saved;
-                var sync = UpdateBridgeAsync(delegate { bridge.CombinedText = saved; });
+                combinedCard.Editor.Text = text;
+                if (q != null) ApplyQualification(q);
+                var sync = UpdateBridgeAsync(delegate { bridge.CombinedText = text; });
                 status.Text = "Depoimento recuperado da última sessão. Lembre-se de salvá-lo.";
             }
             else
@@ -1977,11 +2387,9 @@ public sealed class ModernDepoimentoForm : Form
     {
         try
         {
-            string text = combinedCard.Editor.Text;
-            string trimmed = text.Trim();
             // Nothing to protect: empty, or identical to what the user last saved.
-            if (trimmed.Length == 0 || trimmed == lastSavedCombined) AutosaveStore.Delete();
-            else AutosaveStore.Write(text);
+            if (!HasUnsavedChanges()) AutosaveStore.Delete();
+            else AutosaveStore.Write(DraftFile.Serialize(combinedCard.Editor.Text, ReadQualification()));
         }
         catch (Exception ex)
         {
@@ -1989,19 +2397,27 @@ public sealed class ModernDepoimentoForm : Form
         }
     }
 
-    private bool HasUnsavedChanges()
+    // Text in the consolidated box, or qualification fields besides the automatic date.
+    private bool HasDraftContent()
     {
-        string t = combinedCard.Editor.Text.Trim();
-        return t.Length > 0 && t != lastSavedCombined;
+        return combinedCard.Editor.Text.Trim().Length > 0 || ReadQualification().HasContentBesidesDate();
     }
 
-    private void MarkCombinedSaved(string savedText)
+    private bool HasUnsavedChanges()
     {
-        lastSavedCombined = (savedText ?? "").Trim();
+        if (!HasDraftContent()) return false;
+        if (combinedCard.Editor.Text.Trim() != lastSavedText) return true;
+        Qualification q = ReadQualification();
+        return lastSavedQualification == null ? q.HasContentBesidesDate() : !q.SameAs(lastSavedQualification);
+    }
+
+    private void MarkCombinedSaved(string savedText, Qualification savedQualification)
+    {
+        lastSavedText = (savedText ?? "").Trim();
+        lastSavedQualification = savedQualification;
         if (autosaveTimer != null) autosaveTimer.Stop();
         WriteAutosave();
     }
-
     private void Form_Closing(object sender, FormClosingEventArgs e)
     {
         if (autosaveTimer != null) autosaveTimer.Stop();
@@ -2015,7 +2431,7 @@ public sealed class ModernDepoimentoForm : Form
         else if (HasUnsavedChanges())
         {
             DialogResult r = MessageBox.Show(this,
-                "O depoimento consolidado não foi salvo.\n\nDeseja salvá-lo antes de sair?",
+                "O depoimento (texto consolidado ou campos de qualificação) não foi salvo.\n\nDeseja salvá-lo antes de sair?",
                 "Depoimento Local", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
             if (r == DialogResult.Cancel || (r == DialogResult.Yes && !SaveCombinedToFile(true)))
             {
@@ -2040,28 +2456,38 @@ public sealed class ModernDepoimentoForm : Form
     private bool SaveCombinedToFile(bool offerWord)
     {
         string text = combinedCard.Editor.Text.Trim();
-        if (text.Length == 0) return true;
+        if (!HasDraftContent()) return true;
+        Qualification q = ReadQualification();
 
         using (SaveFileDialog dlg = new SaveFileDialog())
         {
             if (offerWord)
             {
-                dlg.Filter = "Documento do Word (*.docx)|*.docx|Texto (*.txt)|*.txt";
+                dlg.Filter = "Documento do Word (*.docx)|*.docx|Rascunho (*.txt)|*.txt";
                 dlg.FileName = "depoimento.docx";
             }
             else
             {
-                dlg.Filter = "Texto (*.txt)|*.txt";
+                dlg.Filter = "Rascunho (*.txt)|*.txt";
                 dlg.FileName = "depoimento-rascunho.txt";
+                if (lastDraftPath != null)
+                {
+                    dlg.InitialDirectory = Path.GetDirectoryName(lastDraftPath);
+                    dlg.FileName = Path.GetFileName(lastDraftPath);
+                }
             }
             if (dlg.ShowDialog(this) != DialogResult.OK) return false;
 
             try
             {
                 if (dlg.FileName.EndsWith(".docx", StringComparison.OrdinalIgnoreCase))
-                    SimpleDocx.Write(dlg.FileName, text);
+                    SimpleDocx.Write(dlg.FileName, text, q);
                 else
-                    File.WriteAllText(dlg.FileName, text, new UTF8Encoding(false));
+                {
+                    // Text and qualification together, in a file «Abrir rascunho» reopens.
+                    File.WriteAllText(dlg.FileName, DraftFile.Serialize(text, q), new UTF8Encoding(false));
+                    lastDraftPath = dlg.FileName;
+                }
             }
             catch (Exception ex)
             {
@@ -2069,7 +2495,7 @@ public sealed class ModernDepoimentoForm : Form
                 return false;
             }
 
-            MarkCombinedSaved(text);
+            MarkCombinedSaved(text, q);
             return true;
         }
     }
@@ -2091,8 +2517,9 @@ public sealed class ModernDepoimentoForm : Form
             {
                 try
                 {
-                    SimpleDocx.Write(dlg.FileName, text);
-                    MarkCombinedSaved(text);
+                    Qualification q = ReadQualification();
+                    SimpleDocx.Write(dlg.FileName, text, q);
+                    MarkCombinedSaved(text, q);
                     status.Text = "Documento Word exportado.";
                 }
                 catch (Exception ex)
@@ -2104,7 +2531,156 @@ public sealed class ModernDepoimentoForm : Form
     }
 }
 
-// Recovery copy of the consolidated text, outside the program folder.
+// Qualification of the testimony. Never sent to the model: it goes only to the
+// Word header and to the draft.
+public sealed class Qualification
+{
+    public const int Procedimento = 0, Unidade = 1, Local = 2, DataHora = 3, Depoente = 4, Documento = 5,
+        Condicao = 6, Endereco = 7, Telefone = 8, Autoridade = 9, Escrivao = 10, Count = 11;
+    public static readonly string[] Keys = { "procedimento", "unidade", "local", "data_hora", "depoente", "documento", "condicao", "endereco", "telefone", "autoridade", "escrivao" };
+    public static readonly string[] Labels = { "Nº do procedimento", "Unidade", "Local", "Data e hora", "Nome do depoente", "Documento (RG/CPF)", "Condição", "Endereço", "Telefone", "Autoridade", "Escrivão" };
+    public static readonly string[] Conditions = { "vítima", "testemunha", "investigado", "declarante" };
+    private readonly string[] values = new string[Count];
+
+    public Qualification() { for (int i = 0; i < Count; i++) values[i] = ""; }
+
+    public string this[int i]
+    {
+        get { return values[i] ?? ""; }
+        set { values[i] = (value ?? "").Trim(); }
+    }
+
+    // The automatic date/time alone does not make a qualification "filled".
+    public bool HasContentBesidesDate()
+    {
+        for (int i = 0; i < Count; i++) if (i != DataHora && this[i].Length > 0) return true;
+        return false;
+    }
+
+    public bool SameAs(Qualification other)
+    {
+        if (other == null) return false;
+        for (int i = 0; i < Count; i++) if (this[i] != other[i]) return false;
+        return true;
+    }
+
+    // Only a document that looks like a CPF is checked; an RG is left alone.
+    public static bool LooksLikeCpf(string document)
+    {
+        if (String.IsNullOrWhiteSpace(document)) return false;
+        if (Regex.IsMatch(document, @"\bcpf\b", RegexOptions.IgnoreCase)) return true;
+        return Regex.IsMatch(document, @"^\s*(?:\d{3}\.\d{3}\.\d{3}-\d{2}|\d{11})\s*$");
+    }
+
+    public static bool CpfValid(string document)
+    {
+        string source = document ?? "";
+        Match afterWord = Regex.Match(source, @"\bcpf\b\s*(?:n[º°o.]?\s*)?:?\s*(?<n>[\d.\-\s]{11,16})", RegexOptions.IgnoreCase);
+        string d = Regex.Replace(afterWord.Success ? afterWord.Groups["n"].Value : source, @"\D", "");
+        if (d.Length != 11 || new string(d[0], 11) == d) return false;
+        for (int n = 9; n <= 10; n++)
+        {
+            int sum = 0;
+            for (int i = 0; i < n; i++) sum += (d[i] - '0') * (n + 1 - i);
+            int check = sum * 10 % 11;
+            if (check == 10) check = 0;
+            if (check != d[n] - '0') return false;
+        }
+        return true;
+    }
+
+    public bool CpfWarning
+    {
+        get { return LooksLikeCpf(this[Documento]) && !CpfValid(this[Documento]); }
+    }
+}
+
+// Draft file: the consolidated text and the qualification fields together, in
+// plain text that Notepad can read. A file without the header is an old draft
+// (text only) and opens as text.
+//   [DEPOIMENTO LOCAL - RASCUNHO]
+//   versao: 1
+//   procedimento: ...          (one line per field; \ and line breaks escaped)
+//   [TEXTO]
+//   text, unchanged, to the end of the file
+public static class DraftFile
+{
+    public const string Header = "[DEPOIMENTO LOCAL - RASCUNHO]";
+    public const string TextMarker = "[TEXTO]";
+
+    public static string Serialize(string text, Qualification q)
+    {
+        var sb = new StringBuilder();
+        sb.Append(Header).Append("\r\n");
+        sb.Append("versao: 1\r\n");
+        for (int i = 0; i < Qualification.Count; i++)
+            sb.Append(Qualification.Keys[i]).Append(": ").Append(Escape(q == null ? "" : q[i])).Append("\r\n");
+        sb.Append(TextMarker).Append("\r\n");
+        sb.Append(text ?? "");
+        return sb.ToString();
+    }
+
+    // q is null for an old draft (text only).
+    public static void Parse(string content, out string text, out Qualification q)
+    {
+        content = content ?? "";
+        if (content.Length > 0 && content[0] == '\uFEFF') content = content.Substring(1);
+        int firstEnd = content.IndexOf('\n');
+        string first = (firstEnd < 0 ? content : content.Substring(0, firstEnd)).TrimEnd('\r').Trim();
+        if (first != Header)
+        {
+            text = content;
+            q = null;
+            return;
+        }
+        q = new Qualification();
+        text = "";
+        int pos = firstEnd + 1;
+        while (pos > 0 && pos <= content.Length)
+        {
+            int end = content.IndexOf('\n', pos);
+            string line = (end < 0 ? content.Substring(pos) : content.Substring(pos, end - pos)).TrimEnd('\r');
+            if (line.Trim() == TextMarker)
+            {
+                text = end < 0 ? "" : content.Substring(end + 1);
+                return;
+            }
+            int colon = line.IndexOf(':');
+            if (colon > 0)
+            {
+                int field = Array.IndexOf(Qualification.Keys, line.Substring(0, colon).Trim().ToLowerInvariant());
+                string value = line.Substring(colon + 1);
+                if (value.StartsWith(" ")) value = value.Substring(1);
+                if (field >= 0) q[field] = Unescape(value);
+            }
+            if (end < 0) break;
+            pos = end + 1;
+        }
+        throw new InvalidDataException("O rascunho está incompleto (falta a parte do texto).");
+    }
+
+    private static string Escape(string value)
+    {
+        return (value ?? "").Replace("\\", "\\\\").Replace("\r", "\\r").Replace("\n", "\\n");
+    }
+
+    private static string Unescape(string value)
+    {
+        var sb = new StringBuilder();
+        for (int i = 0; i < value.Length; i++)
+        {
+            if (value[i] == '\\' && i + 1 < value.Length)
+            {
+                char next = value[++i];
+                sb.Append(next == 'n' ? '\n' : next == 'r' ? '\r' : next);
+            }
+            else sb.Append(value[i]);
+        }
+        return sb.ToString();
+    }
+}
+
+// Recovery copy of the consolidated text and qualification, outside the program folder.
 public static class AutosaveStore
 {
     public static string Folder
@@ -2701,9 +3277,28 @@ public static class ReviewPainter
     }
 }
 
+// Formatted Word document: Times New Roman 12, justified, 1.5 spacing, A4 with
+// margins 3 cm (left/top) and 2 cm (right/bottom), page numbers in the footer,
+// qualification header (only filled fields) and signature lines at the end.
 public static class SimpleDocx
 {
+    private const string W = "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
+    private const string R = "http://schemas.openxmlformats.org/officeDocument/2006/relationships";
+
     public static void Write(string path, string text)
+    {
+        Write(path, text, null);
+    }
+
+    public static string Title(Qualification q)
+    {
+        string condition = q == null ? "" : q[Qualification.Condicao].ToLowerInvariant();
+        if (condition == "vítima" || condition == "declarante") return "TERMO DE DECLARAÇÕES";
+        if (condition == "investigado") return "TERMO DE INTERROGATÓRIO";
+        return "TERMO DE DEPOIMENTO";
+    }
+
+    public static void Write(string path, string text, Qualification q)
     {
         if (File.Exists(path)) File.Delete(path);
         using (FileStream fs = new FileStream(path, FileMode.CreateNew, FileAccess.ReadWrite))
@@ -2715,28 +3310,106 @@ public static class SimpleDocx
                 "<Default Extension=\"rels\" ContentType=\"application/vnd.openxmlformats-package.relationships+xml\"/>" +
                 "<Default Extension=\"xml\" ContentType=\"application/xml\"/>" +
                 "<Override PartName=\"/word/document.xml\" ContentType=\"application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml\"/>" +
+                "<Override PartName=\"/word/styles.xml\" ContentType=\"application/vnd.openxmlformats-officedocument.wordprocessingml.styles+xml\"/>" +
+                "<Override PartName=\"/word/footer1.xml\" ContentType=\"application/vnd.openxmlformats-officedocument.wordprocessingml.footer+xml\"/>" +
                 "</Types>");
             Add(zip, "_rels/.rels",
                 "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>" +
                 "<Relationships xmlns=\"http://schemas.openxmlformats.org/package/2006/relationships\">" +
                 "<Relationship Id=\"rId1\" Type=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument\" Target=\"word/document.xml\"/>" +
                 "</Relationships>");
-            StringBuilder body = new StringBuilder();
-            string normalized = text.Replace("\r\n", "\n").Replace("\r", "\n");
-            string[] lines = normalized.Split('\n');
-            foreach (string line in lines)
+            Add(zip, "word/_rels/document.xml.rels",
+                "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>" +
+                "<Relationships xmlns=\"http://schemas.openxmlformats.org/package/2006/relationships\">" +
+                "<Relationship Id=\"rId1\" Type=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles\" Target=\"styles.xml\"/>" +
+                "<Relationship Id=\"rId2\" Type=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships/footer\" Target=\"footer1.xml\"/>" +
+                "</Relationships>");
+            // Defaults for every paragraph: Times New Roman 12, 1.5 lines, no extra space.
+            Add(zip, "word/styles.xml",
+                "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>" +
+                "<w:styles xmlns:w=\"" + W + "\"><w:docDefaults><w:rPrDefault><w:rPr>" +
+                "<w:rFonts w:ascii=\"Times New Roman\" w:hAnsi=\"Times New Roman\" w:cs=\"Times New Roman\" w:eastAsia=\"Times New Roman\"/>" +
+                "<w:sz w:val=\"24\"/><w:szCs w:val=\"24\"/><w:lang w:val=\"pt-BR\"/></w:rPr></w:rPrDefault>" +
+                "<w:pPrDefault><w:pPr><w:spacing w:after=\"0\" w:line=\"360\" w:lineRule=\"auto\"/></w:pPr></w:pPrDefault></w:docDefaults>" +
+                "<w:style w:type=\"paragraph\" w:default=\"1\" w:styleId=\"Normal\"><w:name w:val=\"Normal\"/></w:style></w:styles>");
+            Add(zip, "word/footer1.xml",
+                "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>" +
+                "<w:ftr xmlns:w=\"" + W + "\"><w:p><w:pPr><w:jc w:val=\"right\"/><w:spacing w:line=\"240\" w:lineRule=\"auto\"/></w:pPr>" +
+                Run("Página ", false, 20) + "<w:fldSimple w:instr=\" PAGE \">" + Run("1", false, 20) + "</w:fldSimple>" +
+                Run(" de ", false, 20) + "<w:fldSimple w:instr=\" NUMPAGES \">" + Run("1", false, 20) + "</w:fldSimple></w:p></w:ftr>");
+
+            var body = new StringBuilder();
+            body.Append(Paragraph("center", 240, 0, 240, false, Run(Title(q), true, 0)));
+            // Header: only the filled qualification fields, compact.
+            if (q != null)
             {
-                body.Append("<w:p><w:r><w:t xml:space=\"preserve\">");
-                body.Append(XmlEscape(line));
-                body.Append("</w:t></w:r></w:p>");
+                int[] order = { Qualification.Procedimento, Qualification.Unidade, Qualification.Local, Qualification.DataHora,
+                    Qualification.Depoente, Qualification.Documento, Qualification.Condicao, Qualification.Endereco,
+                    Qualification.Telefone, Qualification.Autoridade, Qualification.Escrivao };
+                string[] names = { "Procedimento nº", "Unidade", "Local", "Data e hora", "Depoente", "Documento", "Condição", "Endereço", "Telefone", "Autoridade", "Escrivão" };
+                bool any = false;
+                for (int i = 0; i < order.Length; i++)
+                {
+                    string value = q[order[i]];
+                    if (value.Length == 0) continue;
+                    body.Append(Paragraph("left", 240, 0, 0, false, Run(names[i] + ": ", true, 0) + Run(value, false, 0)));
+                    any = true;
+                }
+                if (any) body.Append(Paragraph("left", 240, 0, 0, false, ""));
             }
+            // Every line of the text becomes a justified paragraph, unchanged; a blank
+            // line between paragraphs becomes space after the paragraph (12 pt).
+            // The last paragraph stays with the signatures, so they never sit alone on a page.
+            string[] lines = (text ?? "").Replace("\r\n", "\n").Replace("\r", "\n").Split('\n');
+            int lastLine = -1;
+            for (int i = 0; i < lines.Length; i++) if (lines[i].Trim().Length > 0) lastLine = i;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                if (lines[i].Trim().Length == 0) continue;
+                bool blankFollows = i + 1 < lines.Length && lines[i + 1].Trim().Length == 0;
+                body.Append(Paragraph("both", 360, 0, blankFollows ? 240 : 0, i == lastLine, Run(lines[i], false, 0)));
+            }
+            // Signature lines stay together at the end.
+            string depoente = q == null ? "" : q[Qualification.Depoente];
+            string autoridade = q == null ? "" : q[Qualification.Autoridade];
+            string escrivao = q == null ? "" : q[Qualification.Escrivao];
+            // About 1 cm above each line to sign; the whole block moves to the next page if it does not fit.
+            body.Append(Paragraph("center", 240, 480, 0, true, ""));
+            AppendSignature(body, depoente, "Depoente", 480, false);
+            AppendSignature(body, autoridade, "Autoridade", 600, false);
+            AppendSignature(body, escrivao, "Escrivão", 600, true);
+
             Add(zip, "word/document.xml",
                 "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>" +
-                "<w:document xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><w:body>" +
-                body.ToString() + "<w:sectPr/></w:body></w:document>");
+                "<w:document xmlns:w=\"" + W + "\" xmlns:r=\"" + R + "\"><w:body>" + body.ToString() +
+                "<w:sectPr><w:footerReference w:type=\"default\" r:id=\"rId2\"/>" +
+                "<w:pgSz w:w=\"11906\" w:h=\"16838\"/>" +
+                "<w:pgMar w:top=\"1701\" w:right=\"1134\" w:bottom=\"1134\" w:left=\"1701\" w:header=\"709\" w:footer=\"567\" w:gutter=\"0\"/>" +
+                "</w:sectPr></w:body></w:document>");
         }
     }
 
+    // The signature block stays together: every paragraph keeps with the next except the last.
+    private static void AppendSignature(StringBuilder body, string name, string role, int before, bool last)
+    {
+        body.Append(Paragraph("center", 240, before, 0, true, Run("_______________________________________", false, 0)));
+        if (name.Length > 0) body.Append(Paragraph("center", 240, 0, 0, true, Run(name, false, 0)));
+        body.Append(Paragraph("center", 240, 0, 0, !last, Run(role, false, 0)));
+    }
+
+    // spacing: line (240 = single, 360 = 1.5), space before/after in twips.
+    private static string Paragraph(string align, int line, int before, int after, bool keepNext, string runs)
+    {
+        return "<w:p><w:pPr>" + (keepNext ? "<w:keepNext/><w:keepLines/>" : "") +
+            "<w:spacing w:before=\"" + before + "\" w:after=\"" + after + "\" w:line=\"" + line + "\" w:lineRule=\"auto\"/>" +
+            "<w:jc w:val=\"" + align + "\"/></w:pPr>" + runs + "</w:p>";
+    }
+
+    private static string Run(string text, bool bold, int halfPoints)
+    {
+        string props = (bold ? "<w:b/><w:bCs/>" : "") + (halfPoints > 0 ? "<w:sz w:val=\"" + halfPoints + "\"/><w:szCs w:val=\"" + halfPoints + "\"/>" : "");
+        return "<w:r>" + (props.Length > 0 ? "<w:rPr>" + props + "</w:rPr>" : "") + "<w:t xml:space=\"preserve\">" + XmlEscape(text) + "</w:t></w:r>";
+    }
     private static void Add(ZipArchive zip, string name, string content)
     {
         ZipArchiveEntry e = zip.CreateEntry(name, CompressionLevel.Optimal);

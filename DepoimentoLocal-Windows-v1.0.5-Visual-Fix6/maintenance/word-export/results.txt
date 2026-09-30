@@ -1,0 +1,28 @@
+﻿START 2026-09-30T13:55:12
+PASS 1: .docx completo e com XML válido (documento, estilos, rodapé, relações)
+PASS 1: página A4
+PASS 1: margens 3 cm (esquerda, em cima) e 2 cm (direita, embaixo) | top=1701 left=1701 right=1134 bottom=1134
+PASS 1: fonte Times New Roman 12 em todo o documento
+PASS 1: nenhum trecho do corpo troca a fonte ou o tamanho
+PASS 1: texto justificado com espaçamento 1,5 | 4 parágrafos
+PASS 1: texto do consolidado vai para o Word sem alteração
+PASS 1: numeração de páginas no rodapé | rid=rId2
+PASS 1: cabeçalho com os 11 campos, rótulos em negrito | Procedimento nº: IP 0457/2026 / Unidade: 1ª Delegacia de Polícia Civil de Exemplópolis / Local: Sala de oitivas 2 / Data e hora: 30/09/2026 14:30 / Depoente: Maria Exemplo da Silva / Documento: CPF 529.982.247-25 / Condição: testemunha / Endereço: Rua das Amostras, 100, Centro, Exemplópolis / Telefone: (31) 99999-0000 / Autoridade: Dr. João Fictício Pereira / Escrivão: Ana Modelo Souza
+PASS 1: título conforme a condição (testemunha → TERMO DE DEPOIMENTO) | TERMO DE DEPOIMENTO
+PASS 1: linhas de assinatura do depoente, da autoridade e do escrivão, com os nomes | |_______________________________________|Maria Exemplo da Silva|Depoente|_______________________________________|Dr. João Fictício Pereira|Autoridade|_______________________________________|Ana Modelo Souza|Escrivão
+PASS 1: assinaturas no final, sem se separar entre páginas e junto com o último parágrafo
+PASS 1: campos vazios não aparecem no cabeçalho | Data e hora: 30/09/2026 15:00 / Depoente: José Teste / Condição: vítima
+PASS 1: autoridade e escrivão sem nome ficam só com a linha e o rótulo | TERMO DE DECLARAÇÕES||_______________________________________|José Teste|Depoente|_______________________________________|Autoridade|_______________________________________|Escrivão
+PASS 1: sem qualificação, sem cabeçalho de campos (compatível com a chamada antiga)
+PASS 1: aspas, &, <, acentos e tabulação preservados
+PASS 1: título por condição (vítima/declarante → declarações; investigado → interrogatório; testemunha/vazio → depoimento) | TERMO DE DECLARAÇÕES, TERMO DE DEPOIMENTO, TERMO DE INTERROGATÓRIO, TERMO DE DECLARAÇÕES, TERMO DE DEPOIMENTO
+PASS 1: substitui um arquivo existente
+PASS 1: «Exportar Word» grava o arquivo escolhido | Salvar como | C:\Users\gusta\AppData\Local\Temp\DepoimentoLocal-teste-word\ui-exportar.docx
+PASS 1: «Exportar Word» usa os campos de qualificação da tela | Procedimento nº: IP 0457/2026 / Unidade: 1ª Delegacia de Polícia Civil de Exemplópolis / Local: Sala de oitivas 2 / Data e hora: 30/09/2026 14:30 / Depoente: Maria Exemplo da Silva / Documento: CPF 123.456.789-00 / Condição: testemunha / Endereço: Rua das Amostras, 100, Centro, Exemplópolis / Telefone: (31) 99999-0000 / Autoridade: Dr. João Fictício Pereira / Escrivão: Ana Modelo Souza
+PASS 1: CPF inválido só avisa, não impede o Word
+PASS 1: texto do consolidado sem alteração no Word exportado
+PASS 1: exportar marca o consolidado como salvo (proteção de saída mantida)
+PASS 1: Word salvo ao fechar também leva o cabeçalho
+PASS 1: cancelar a janela de salvar não grava nada
+PASS 1: nenhuma janela inesperada
+RESULT PASS

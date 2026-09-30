@@ -168,7 +168,7 @@ public static class AutosaveTest
             if (!File.Exists(path) || (DateTime.Now - File.GetLastWriteTime(path)).TotalSeconds > 60) continue;
             bool mine = defaultName.EndsWith(".docx")
                 ? DocxText(path).Contains(testText)
-                : File.ReadAllText(path, Encoding.UTF8) == testText;
+                : DraftText(File.ReadAllText(path, Encoding.UTF8)) == testText;
             if (mine) { File.Delete(path); removed = true; Log("LIMPEZA arquivo gravado fora da pasta de teste e removido: " + path); }
         }
         return removed;
@@ -181,9 +181,17 @@ public static class AutosaveTest
             return reader.ReadToEnd();
     }
 
+    // The text part of a draft (the recovery copy and «Salvar rascunho» also keep the qualification fields).
+    private static string DraftText(string content)
+    {
+        string text; Qualification q;
+        DraftFile.Parse(content, out text, out q);
+        return text;
+    }
+
     private static string Saved()
     {
-        return File.Exists(AutosaveStore.FilePath) ? File.ReadAllText(AutosaveStore.FilePath, Encoding.UTF8) : null;
+        return File.Exists(AutosaveStore.FilePath) ? DraftText(File.ReadAllText(AutosaveStore.FilePath, Encoding.UTF8)) : null;
     }
 
     private static Process StartEngine(string root)
@@ -250,7 +258,7 @@ public static class AutosaveTest
             Expect save = Arm("Salvar", 1 /*IDOK*/, txt);
             Call(form, "Save_Click"); Pump(500);
             bool straySave = StrayRemoved("depoimento-rascunho.txt", "Texto para salvar como rascunho.");
-            Check(save.Done && File.Exists(txt) && File.ReadAllText(txt, Encoding.UTF8) == "Texto para salvar como rascunho." && Saved() == null && !straySave, "3: «Salvar rascunho» grava o arquivo e apaga a cópia", null);
+            Check(save.Done && File.Exists(txt) && DraftText(File.ReadAllText(txt, Encoding.UTF8)) == "Texto para salvar como rascunho." && Saved() == null && !straySave, "3: «Salvar rascunho» grava o arquivo e apaga a cópia", null);
             combined.Editor.Text = "Texto para exportar em Word.";
             WaitFor(delegate { return Saved() != null; }, 3000);
             string docx = Path.Combine(workDir, "exportado-teste.docx");

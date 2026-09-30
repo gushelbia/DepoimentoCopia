@@ -53,7 +53,8 @@ try {
 
     # Compatibilidade com o caminho relativo do modelo gravado pelo executável.
     Set-Location -LiteralPath $Engine
-    $icon = Join-Path $root 'ui\DepoimentoLocal.ico'
+    $icon = Join-Path $root 'ui\Fidelis.ico'
+if (-not (Test-Path -LiteralPath $icon)) { $icon = Join-Path $root 'ui\DepoimentoLocal.ico' }
     [ModernShell]::Run($process, $icon, $backendDescription)
 }
 catch {

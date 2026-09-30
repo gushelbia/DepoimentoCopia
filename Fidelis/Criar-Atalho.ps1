@@ -7,7 +7,8 @@ $ErrorActionPreference = 'Stop'
 $pasta = $PSScriptRoot
 $exe = Join-Path $pasta 'Fidelis.exe'
 if (-not (Test-Path -LiteralPath $exe)) { throw "Fidelis.exe não encontrado em $pasta" }
-$icone = Join-Path $pasta 'ui\DepoimentoLocal.ico'
+$icone = Join-Path $pasta 'ui\Fidelis.ico'
+if (-not (Test-Path -LiteralPath $icone)) { $icone = Join-Path $pasta 'ui\DepoimentoLocal.ico' }
 $destinos = @([Environment]::GetFolderPath('Desktop'))
 if ($Destino) { $destinos = @($Destino) }
 elseif ($MenuIniciar) { $destinos += (Join-Path ([Environment]::GetFolderPath('Programs')) '') }

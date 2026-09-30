@@ -6,8 +6,8 @@
     },
     {
         "path":  "launcher/DesktopProgram.cs",
-        "sha256":  "BDD779FC51ACC2946E89381DD791D48E4F97881A3959CAEA74C855D535D62E0D",
-        "bytes":  5205
+        "sha256":  "08D72173F7BB8531556AFA05E007939614CCC691CCB430501F7F6067C4F2BA6D",
+        "bytes":  5414
     },
     {
         "path":  "engine/DepoimentoLocal.dll",

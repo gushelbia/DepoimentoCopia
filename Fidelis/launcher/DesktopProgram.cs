@@ -81,7 +81,10 @@ internal static class DesktopProgram
                 // Native GGUF fopen on Windows may reject accented absolute ancestor paths.
                 // Both UI and engine use engine/ as cwd, so this remains portable and unambiguous.
                 bridge.ModelPath = Path.GetRelativePath(engine, Path.GetFullPath(model));
-            using (var form = new ModernDepoimentoForm(bridge, Path.Combine(root, "ui", "DepoimentoLocal.ico"), "Vulkan • 8 camadas GPU"))
+            // Window and taskbar icon: ui/Fidelis.ico (the old icon only if it is missing).
+            string icon = Path.Combine(root, "ui", "Fidelis.ico");
+            if (!File.Exists(icon)) icon = Path.Combine(root, "ui", "DepoimentoLocal.ico");
+            using (var form = new ModernDepoimentoForm(bridge, icon, "Vulkan • 8 camadas GPU"))
                 Application.Run(form);
         }
         catch (Exception error)

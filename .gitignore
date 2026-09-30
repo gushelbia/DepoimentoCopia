@@ -29,6 +29,15 @@ DepoimentoLocal-Windows-v1.0.5-Visual-Fix6/engine/*
 !DepoimentoLocal-Windows-v1.0.5-Visual-Fix6/engine/DepoimentoLocal.Vulkan8.dll
 !DepoimentoLocal-Windows-v1.0.5-Visual-Fix6/engine/DepoimentoLocal.CPU-original.dll
 !DepoimentoLocal-Windows-v1.0.5-Visual-Fix6/engine/DepoimentoLocal*.json
+# As mesmas regras para a pasta depois de renomeada para "Fidelis".
+Fidelis/engine/*
+!Fidelis/engine/DepoimentoLocal.dll
+!Fidelis/engine/DepoimentoLocal.Vulkan8.dll
+!Fidelis/engine/DepoimentoLocal.CPU-original.dll
+!Fidelis/engine/DepoimentoLocal*.json
+
+# ===== Cópias da interface compilada (recompiláveis a partir do histórico) =====
+**/maintenance/desktop-backups/*.dll
 
 # ===== Textos reais de oitiva: NUNCA enviar =====
 # Guarde depoimentos reais na pasta "oitivas-reais" (ou com "oitiva" no nome).

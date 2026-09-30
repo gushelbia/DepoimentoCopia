@@ -294,7 +294,7 @@ public static class DraftTest
                 "2: recuperação só dos campos, com aviso próprio", recoverFields.Text.Replace("\n", " "));
 
             // Close prompt mentions the fields.
-            DialogKit.Expect closeAsk = DialogKit.Arm("Depoimento Local", 2);
+            DialogKit.Expect closeAsk = DialogKit.Arm("Fidelis", 2);
             form.Close(); Pump(500);
             Check(closeAsk.Done && closeAsk.Text.Contains("campos de qualificação") && form.Visible, "2: ao fechar com campos não salvos, pergunta (e «Cancelar» mantém aberto)", closeAsk.Text.Replace("\n", " "));
             Check(DialogKit.Unexpected.Count == 0, "2: nenhuma janela inesperada", String.Join(", ", DialogKit.Unexpected.ToArray()));

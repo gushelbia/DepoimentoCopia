@@ -49,7 +49,7 @@ try {
     $psi.UseShellExecute = $true
     $psi.WindowStyle = [System.Diagnostics.ProcessWindowStyle]::Minimized
     $process = [System.Diagnostics.Process]::Start($psi)
-    if ($null -eq $process) { throw 'Não foi possível iniciar o motor do Depoimento Local.' }
+    if ($null -eq $process) { throw 'Não foi possível iniciar o motor do Fidelis.' }
 
     # Compatibilidade com o caminho relativo do modelo gravado pelo executável.
     Set-Location -LiteralPath $Engine
@@ -63,7 +63,7 @@ catch {
     try {
         [System.Windows.Forms.MessageBox]::Show(
             $_.Exception.Message,
-            'Depoimento Local — erro ao abrir interface',
+            'Fidelis — erro ao abrir interface',
             [System.Windows.Forms.MessageBoxButtons]::OK,
             [System.Windows.Forms.MessageBoxIcon]::Error
         ) | Out-Null

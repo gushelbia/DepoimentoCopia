@@ -270,14 +270,14 @@ public static class AutosaveTest
             // 2) Close with unsaved text: Cancelar, and Sim + cancelled save, keep it open.
             combined.Editor.Text = "Texto não salvo ao fechar.";
             WaitFor(delegate { return Saved() != null; }, 3000);
-            Expect cancelClose = Arm("Depoimento Local", 2 /*IDCANCEL*/, null);
+            Expect cancelClose = Arm("Fidelis", 2 /*IDCANCEL*/, null);
             form.Close(); Pump(500);
             Check(cancelClose.Done && cancelClose.SeenText.Contains("não foi salvo") && form.Visible && !engine.HasExited, "2: «Cancelar» mantém a janela e o motor abertos", null);
-            Expect yes = Arm("Depoimento Local", 6, null);
+            Expect yes = Arm("Fidelis", 6, null);
             Expect giveUp = Arm("Salvar", 2 /*IDCANCEL*/, null);
             form.Close(); Pump(500);
             Check(yes.Done && giveUp.Done && form.Visible && !engine.HasExited && Saved() == "Texto não salvo ao fechar.", "2: «Sim» e cancelar a janela de salvar não fecha o programa", null);
-            Expect saveOnClose = Arm("Depoimento Local", 6, null);
+            Expect saveOnClose = Arm("Fidelis", 6, null);
             string closeDocx = Path.Combine(workDir, "ao-fechar.docx");
             Arm("Salvar", 1, closeDocx);
             form.Close(); Pump(800);
@@ -295,7 +295,7 @@ public static class AutosaveTest
             form.Show(); Pump(500);
             combined.Editor.Text = "Texto que será descartado.";
             WaitFor(delegate { return Saved() != null; }, 3000);
-            Expect no = Arm("Depoimento Local", 7, null);
+            Expect no = Arm("Fidelis", 7, null);
             form.Close(); Pump(500);
             Check(no.Done && !form.Visible && Saved() == null && WaitFor(delegate { return engine.HasExited; }, 5000), "2/3: «Não» fecha, apaga a cópia e encerra o motor", null);
             form.Dispose();

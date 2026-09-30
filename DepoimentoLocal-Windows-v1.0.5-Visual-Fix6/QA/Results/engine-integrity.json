@@ -8,27 +8,7 @@
                    },
                    {
                        "Algorithm":  "SHA256",
-                       "Hash":  "EC15230128E7C17FCD6C54FBA60080DC94DF2E53C2A0EE6DE959483C4523671A",
-                       "Path":  "C:\\Users\\gusta\\OneDrive\\Área de Trabalho\\Depoimento - Copia\\DepoimentoLocal-Windows-v1.0.5-Visual-Fix6\\engine\\DepoimentoLocal.Desktop.before-cancel-retry-20260927153257.dll"
-                   },
-                   {
-                       "Algorithm":  "SHA256",
-                       "Hash":  "13DB5E82009EA58C867A1A29FC064BF9859C213352724B762F759425FF942EF4",
-                       "Path":  "C:\\Users\\gusta\\OneDrive\\Área de Trabalho\\Depoimento - Copia\\DepoimentoLocal-Windows-v1.0.5-Visual-Fix6\\engine\\DepoimentoLocal.Desktop.before-clear-20260927144714.dll"
-                   },
-                   {
-                       "Algorithm":  "SHA256",
-                       "Hash":  "3C5AA17CE46507C0A963C6DEE238A4CFD1DCB1ABA7F073709B483E9440CA3815",
-                       "Path":  "C:\\Users\\gusta\\OneDrive\\Área de Trabalho\\Depoimento - Copia\\DepoimentoLocal-Windows-v1.0.5-Visual-Fix6\\engine\\DepoimentoLocal.Desktop.before-qualification-20260930145938.dll"
-                   },
-                   {
-                       "Algorithm":  "SHA256",
-                       "Hash":  "A5D1844CB5289948F2D3A8DD3059A97FE23C26534EBECBBE92A0E4025BED38EC",
-                       "Path":  "C:\\Users\\gusta\\OneDrive\\Área de Trabalho\\Depoimento - Copia\\DepoimentoLocal-Windows-v1.0.5-Visual-Fix6\\engine\\DepoimentoLocal.Desktop.before-readiness-20260927152658.dll"
-                   },
-                   {
-                       "Algorithm":  "SHA256",
-                       "Hash":  "8F68299AC0D872C249454AAD6D72427BB57B1E76E36949442E27EE2FDA7268AC",
+                       "Hash":  "5AC37064E35FDB68F044FF95A4BDA21976C20A9E0F6ED24FD2D9319E358D5AA9",
                        "Path":  "C:\\Users\\gusta\\OneDrive\\Área de Trabalho\\Depoimento - Copia\\DepoimentoLocal-Windows-v1.0.5-Visual-Fix6\\engine\\DepoimentoLocal.Desktop.dll"
                    },
                    {
@@ -45,6 +25,31 @@
                        "Algorithm":  "SHA256",
                        "Hash":  "E41E06F6DE4BC35F7B80C46844E13D61FA91B5BD6537A4DC8848B4A3A5EBC767",
                        "Path":  "C:\\Users\\gusta\\OneDrive\\Área de Trabalho\\Depoimento - Copia\\DepoimentoLocal-Windows-v1.0.5-Visual-Fix6\\engine\\DepoimentoLocal.Vulkan8.dll"
+                   },
+                   {
+                       "Algorithm":  "SHA256",
+                       "Hash":  "EC15230128E7C17FCD6C54FBA60080DC94DF2E53C2A0EE6DE959483C4523671A",
+                       "Path":  "C:\\Users\\gusta\\OneDrive\\Área de Trabalho\\Depoimento - Copia\\DepoimentoLocal-Windows-v1.0.5-Visual-Fix6\\maintenance\\desktop-backups\\DepoimentoLocal.Desktop.before-cancel-retry-20260927153257.dll"
+                   },
+                   {
+                       "Algorithm":  "SHA256",
+                       "Hash":  "13DB5E82009EA58C867A1A29FC064BF9859C213352724B762F759425FF942EF4",
+                       "Path":  "C:\\Users\\gusta\\OneDrive\\Área de Trabalho\\Depoimento - Copia\\DepoimentoLocal-Windows-v1.0.5-Visual-Fix6\\maintenance\\desktop-backups\\DepoimentoLocal.Desktop.before-clear-20260927144714.dll"
+                   },
+                   {
+                       "Algorithm":  "SHA256",
+                       "Hash":  "3C5AA17CE46507C0A963C6DEE238A4CFD1DCB1ABA7F073709B483E9440CA3815",
+                       "Path":  "C:\\Users\\gusta\\OneDrive\\Área de Trabalho\\Depoimento - Copia\\DepoimentoLocal-Windows-v1.0.5-Visual-Fix6\\maintenance\\desktop-backups\\DepoimentoLocal.Desktop.before-qualification-20260930145938.dll"
+                   },
+                   {
+                       "Algorithm":  "SHA256",
+                       "Hash":  "A5D1844CB5289948F2D3A8DD3059A97FE23C26534EBECBBE92A0E4025BED38EC",
+                       "Path":  "C:\\Users\\gusta\\OneDrive\\Área de Trabalho\\Depoimento - Copia\\DepoimentoLocal-Windows-v1.0.5-Visual-Fix6\\maintenance\\desktop-backups\\DepoimentoLocal.Desktop.before-readiness-20260927152658.dll"
+                   },
+                   {
+                       "Algorithm":  "SHA256",
+                       "Hash":  "8F68299AC0D872C249454AAD6D72427BB57B1E76E36949442E27EE2FDA7268AC",
+                       "Path":  "C:\\Users\\gusta\\OneDrive\\Área de Trabalho\\Depoimento - Copia\\DepoimentoLocal-Windows-v1.0.5-Visual-Fix6\\maintenance\\desktop-backups\\DepoimentoLocal.Desktop.before-shortcuts-20260930160545.dll"
                    }
                ],
     "after":  [
@@ -55,27 +60,7 @@
                   },
                   {
                       "Algorithm":  "SHA256",
-                      "Hash":  "EC15230128E7C17FCD6C54FBA60080DC94DF2E53C2A0EE6DE959483C4523671A",
-                      "Path":  "C:\\Users\\gusta\\OneDrive\\Área de Trabalho\\Depoimento - Copia\\DepoimentoLocal-Windows-v1.0.5-Visual-Fix6\\engine\\DepoimentoLocal.Desktop.before-cancel-retry-20260927153257.dll"
-                  },
-                  {
-                      "Algorithm":  "SHA256",
-                      "Hash":  "13DB5E82009EA58C867A1A29FC064BF9859C213352724B762F759425FF942EF4",
-                      "Path":  "C:\\Users\\gusta\\OneDrive\\Área de Trabalho\\Depoimento - Copia\\DepoimentoLocal-Windows-v1.0.5-Visual-Fix6\\engine\\DepoimentoLocal.Desktop.before-clear-20260927144714.dll"
-                  },
-                  {
-                      "Algorithm":  "SHA256",
-                      "Hash":  "3C5AA17CE46507C0A963C6DEE238A4CFD1DCB1ABA7F073709B483E9440CA3815",
-                      "Path":  "C:\\Users\\gusta\\OneDrive\\Área de Trabalho\\Depoimento - Copia\\DepoimentoLocal-Windows-v1.0.5-Visual-Fix6\\engine\\DepoimentoLocal.Desktop.before-qualification-20260930145938.dll"
-                  },
-                  {
-                      "Algorithm":  "SHA256",
-                      "Hash":  "A5D1844CB5289948F2D3A8DD3059A97FE23C26534EBECBBE92A0E4025BED38EC",
-                      "Path":  "C:\\Users\\gusta\\OneDrive\\Área de Trabalho\\Depoimento - Copia\\DepoimentoLocal-Windows-v1.0.5-Visual-Fix6\\engine\\DepoimentoLocal.Desktop.before-readiness-20260927152658.dll"
-                  },
-                  {
-                      "Algorithm":  "SHA256",
-                      "Hash":  "8F68299AC0D872C249454AAD6D72427BB57B1E76E36949442E27EE2FDA7268AC",
+                      "Hash":  "5AC37064E35FDB68F044FF95A4BDA21976C20A9E0F6ED24FD2D9319E358D5AA9",
                       "Path":  "C:\\Users\\gusta\\OneDrive\\Área de Trabalho\\Depoimento - Copia\\DepoimentoLocal-Windows-v1.0.5-Visual-Fix6\\engine\\DepoimentoLocal.Desktop.dll"
                   },
                   {
@@ -92,6 +77,31 @@
                       "Algorithm":  "SHA256",
                       "Hash":  "E41E06F6DE4BC35F7B80C46844E13D61FA91B5BD6537A4DC8848B4A3A5EBC767",
                       "Path":  "C:\\Users\\gusta\\OneDrive\\Área de Trabalho\\Depoimento - Copia\\DepoimentoLocal-Windows-v1.0.5-Visual-Fix6\\engine\\DepoimentoLocal.Vulkan8.dll"
+                  },
+                  {
+                      "Algorithm":  "SHA256",
+                      "Hash":  "EC15230128E7C17FCD6C54FBA60080DC94DF2E53C2A0EE6DE959483C4523671A",
+                      "Path":  "C:\\Users\\gusta\\OneDrive\\Área de Trabalho\\Depoimento - Copia\\DepoimentoLocal-Windows-v1.0.5-Visual-Fix6\\maintenance\\desktop-backups\\DepoimentoLocal.Desktop.before-cancel-retry-20260927153257.dll"
+                  },
+                  {
+                      "Algorithm":  "SHA256",
+                      "Hash":  "13DB5E82009EA58C867A1A29FC064BF9859C213352724B762F759425FF942EF4",
+                      "Path":  "C:\\Users\\gusta\\OneDrive\\Área de Trabalho\\Depoimento - Copia\\DepoimentoLocal-Windows-v1.0.5-Visual-Fix6\\maintenance\\desktop-backups\\DepoimentoLocal.Desktop.before-clear-20260927144714.dll"
+                  },
+                  {
+                      "Algorithm":  "SHA256",
+                      "Hash":  "3C5AA17CE46507C0A963C6DEE238A4CFD1DCB1ABA7F073709B483E9440CA3815",
+                      "Path":  "C:\\Users\\gusta\\OneDrive\\Área de Trabalho\\Depoimento - Copia\\DepoimentoLocal-Windows-v1.0.5-Visual-Fix6\\maintenance\\desktop-backups\\DepoimentoLocal.Desktop.before-qualification-20260930145938.dll"
+                  },
+                  {
+                      "Algorithm":  "SHA256",
+                      "Hash":  "A5D1844CB5289948F2D3A8DD3059A97FE23C26534EBECBBE92A0E4025BED38EC",
+                      "Path":  "C:\\Users\\gusta\\OneDrive\\Área de Trabalho\\Depoimento - Copia\\DepoimentoLocal-Windows-v1.0.5-Visual-Fix6\\maintenance\\desktop-backups\\DepoimentoLocal.Desktop.before-readiness-20260927152658.dll"
+                  },
+                  {
+                      "Algorithm":  "SHA256",
+                      "Hash":  "8F68299AC0D872C249454AAD6D72427BB57B1E76E36949442E27EE2FDA7268AC",
+                      "Path":  "C:\\Users\\gusta\\OneDrive\\Área de Trabalho\\Depoimento - Copia\\DepoimentoLocal-Windows-v1.0.5-Visual-Fix6\\maintenance\\desktop-backups\\DepoimentoLocal.Desktop.before-shortcuts-20260930160545.dll"
                   }
               ]
 }

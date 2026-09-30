@@ -227,7 +227,7 @@ public sealed class OriginalAppBridge
     private void EnsureControlsAvailable()
     {
         if (process.HasExited || !NativeBridgeApi.IsWindow(mainWindow))
-            throw new InvalidOperationException("O motor do Depoimento Local foi encerrado. Reabra o programa.");
+            throw new InvalidOperationException("O motor do Fidelis foi encerrado. Reabra o programa.");
 
         bool valid = editors.Count >= 4 && buttons.ContainsKey("Reformular");
         foreach (IntPtr editor in editors) valid &= NativeBridgeApi.IsWindow(editor);
@@ -394,6 +394,8 @@ public static class ThemeManager
     {
         get
         {
+            // Kept as "DepoimentoLocal" on purpose after the rename to Fidelis: the engine
+            // writes its log and last-model.txt to this same folder (name fixed in the engine).
             return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "DepoimentoLocal");
         }
     }
@@ -1050,7 +1052,7 @@ public sealed class ModernDepoimentoForm : Form
     {
         bridge = appBridge;
         this.backendDescription = String.IsNullOrWhiteSpace(backendDescription) ? "" : backendDescription.Trim();
-        Text = "Depoimento Local — Windows";
+        Text = "Fidelis";
         try
         {
             if (!String.IsNullOrEmpty(iconPath) && File.Exists(iconPath)) Icon = new Icon(iconPath);
@@ -1109,7 +1111,7 @@ public sealed class ModernDepoimentoForm : Form
         header.Dock = DockStyle.Fill;
 
         appTitle = new Label();
-        appTitle.Text = "Depoimento Local";
+        appTitle.Text = "Fidelis";
         appTitle.Font = new Font("Segoe UI Semibold", 17F, FontStyle.Bold);
         appTitle.AutoSize = true;
         appTitle.Location = new Point(2, 0);
@@ -1997,7 +1999,7 @@ public sealed class ModernDepoimentoForm : Form
         reformulate.Enabled = false;
         if (String.IsNullOrWhiteSpace(modelPath.Text) || !File.Exists(modelPath.Text))
         {
-            MessageBox.Show(this, "Selecione um arquivo GGUF válido.", "Depoimento Local", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show(this, "Selecione um arquivo GGUF válido.", "Fidelis", MessageBoxButtons.OK, MessageBoxIcon.Information);
             return;
         }
 
@@ -2034,7 +2036,7 @@ public sealed class ModernDepoimentoForm : Form
         string src = originalCard.Editor.Text.Trim();
         if (src.Length == 0)
         {
-            MessageBox.Show(this, "Cole ou digite a resposta/transcrição original.", "Depoimento Local", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show(this, "Cole ou digite a resposta/transcrição original.", "Fidelis", MessageBoxButtons.OK, MessageBoxIcon.Information);
             return;
         }
 
@@ -2307,7 +2309,7 @@ public sealed class ModernDepoimentoForm : Form
     {
         if (!HasDraftContent())
         {
-            MessageBox.Show(this, "O depoimento consolidado e os campos de qualificação estão vazios.", "Depoimento Local", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show(this, "O depoimento consolidado e os campos de qualificação estão vazios.", "Fidelis", MessageBoxButtons.OK, MessageBoxIcon.Information);
             return;
         }
         if (SaveCombinedToFile(false)) status.Text = "Rascunho salvo (texto consolidado e campos de qualificação).";
@@ -2486,7 +2488,7 @@ public sealed class ModernDepoimentoForm : Form
         {
             DialogResult r = MessageBox.Show(this,
                 "O depoimento (texto consolidado ou campos de qualificação) não foi salvo.\n\nDeseja salvá-lo antes de sair?",
-                "Depoimento Local", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
+                "Fidelis", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
             if (r == DialogResult.Cancel || (r == DialogResult.Yes && !SaveCombinedToFile(true)))
             {
                 // The window stays open and the engine keeps running.
@@ -2559,7 +2561,7 @@ public sealed class ModernDepoimentoForm : Form
         string text = combinedCard.Editor.Text.Trim();
         if (text.Length == 0)
         {
-            MessageBox.Show(this, "O depoimento consolidado está vazio.", "Depoimento Local", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show(this, "O depoimento consolidado está vazio.", "Fidelis", MessageBoxButtons.OK, MessageBoxIcon.Information);
             return;
         }
 
@@ -2659,6 +2661,7 @@ public sealed class Qualification
 //   text, unchanged, to the end of the file
 public static class DraftFile
 {
+    // File-format marker, kept after the rename to Fidelis so existing drafts reopen.
     public const string Header = "[DEPOIMENTO LOCAL - RASCUNHO]";
     public const string TextMarker = "[TEXTO]";
 
@@ -3487,7 +3490,7 @@ public static class ModernShell
         OriginalAppBridge bridge = new OriginalAppBridge(originalProcess);
         if (!bridge.Connect(12000))
         {
-            MessageBox.Show("Não foi possível conectar a nova interface ao motor do Depoimento Local. Use INICIAR-ORIGINAL.bat e envie o arquivo de log se o problema persistir.", "Depoimento Local", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            MessageBox.Show("Não foi possível conectar a nova interface ao motor do Fidelis. Use INICIAR-ORIGINAL.bat e envie o arquivo de log se o problema persistir.", "Fidelis", MessageBoxButtons.OK, MessageBoxIcon.Error);
             bridge.Stop();
             return;
         }

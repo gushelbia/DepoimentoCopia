@@ -6,7 +6,7 @@ O projeto DepoimentoLocal.Desktop.csproj usa OutputType=WinExe, UseWindowsForms=
 
 Não há SDK .NET instalado nesta máquina nem projeto-fonte do motor original. Build-Launcher.ps1 usa o compilador Roslyn disponível no PowerShell7 do ambiente de desenvolvimento e as referências .NET8 já distribuídas em engine. Compila a interface existente junto com DesktopProgram como WindowsApplication x64. O apphost gráfico x64 existente é copiado, com apenas o slot padrão de caminho gerenciado ajustado para engine/DepoimentoLocal.Desktop.dll. Os arquivos runtimeconfig/deps correspondentes ficam com o runtime em engine. O motor não é recompilado nem modificado.
 
-A entrada normal é o DepoimentoLocal.exe da raiz. O EXE interno de engine continua sendo o motor e não é a entrada para o usuário.
+A entrada normal é o Fidelis.exe da raiz (antes DepoimentoLocal.exe; o motor em engine mantém seus nomes). O EXE interno de engine continua sendo o motor e não é a entrada para o usuário.
 
 ## Publicação com SDK .NET8
 
@@ -18,7 +18,7 @@ O resultado contém o apphost gráfico DepoimentoLocal.Desktop.exe, DLL, deps, r
 
     ./launcher/Build-Launcher.ps1 -PublishedHost ./launcher/bin/publish/DepoimentoLocal.Desktop.exe
 
-Este comando vincula o apphost da publicação à DLL em engine e grava o DepoimentoLocal.exe da raiz. Inclua modelo/ e ui/ ao distribuir a pasta completa. A publicação SDK está configurada, mas não foi executada nesta máquina sem SDK; a compilação entregue e o teste direto foram feitos pelo fluxo local descrito acima.
+Este comando vincula o apphost da publicação à DLL em engine e grava o Fidelis.exe da raiz. Inclua modelo/ e ui/ ao distribuir a pasta completa. A publicação SDK está configurada, mas não foi executada nesta máquina sem SDK; a compilação entregue e o teste direto foram feitos pelo fluxo local descrito acima.
 
 ## Caminhos e modelo
 

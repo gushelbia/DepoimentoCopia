@@ -51,7 +51,7 @@ public static class ExecutableProbe
     {
         report = Path.Combine(root, "maintenance", "model-readiness", "executable-results.txt");
         File.WriteAllText(report, "START " + DateTime.Now.ToString("s") + Environment.NewLine);
-        var start = new ProcessStartInfo(Path.Combine(root, "DepoimentoLocal.exe"));
+        var start = new ProcessStartInfo(Path.Combine(root, "Fidelis.exe"));
         start.WorkingDirectory = Path.GetTempPath(); start.UseShellExecute = false; start.CreateNoWindow = true;
         Process process = Process.Start(start); IntPtr window = IntPtr.Zero;
         try
@@ -62,7 +62,7 @@ public static class ExecutableProbe
                 EnumWindows(delegate(IntPtr h, IntPtr d)
                 {
                     uint pid; GetWindowThreadProcessId(h, out pid);
-                    if (pid == process.Id && Text(h) == "Depoimento Local — Windows") window = h;
+                    if (pid == process.Id && Text(h) == "Fidelis") window = h;
                     return true;
                 }, IntPtr.Zero);
                 return window != IntPtr.Zero;
@@ -83,7 +83,7 @@ public static class ExecutableProbe
             Log("PASS executável instalado abriu a partir de outro diretório");
             Click(reformulate);
             Wait(delegate { return Find(window, "Carregue o modelo antes de reformular o texto.") != IntPtr.Zero; }, 5, "unloaded guard");
-            Check(Text(window) == "Depoimento Local — Windows" && Text(editors[1]) == "", "Unloaded action did not return safely");
+            Check(Text(window) == "Fidelis" && Text(editors[1]) == "", "Unloaded action did not return safely");
             Log("PASS clique real sem modelo: aviso local, saída vazia, janela responsiva");
             Click(load);
             Wait(delegate { return !IsWindowEnabled(reformulate); }, 3, "loading lock");

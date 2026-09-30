@@ -20,7 +20,9 @@ try {
         $case
     })
     if ($fixtures.Count -ne 10 -or (@($fixtures.number | Sort-Object -Unique).Count -ne 10)) { throw 'São necessários dez casos com números únicos.' }
-    $before = @(Get-ChildItem (Join-Path $root 'engine') -Filter 'DepoimentoLocal*.dll' | Get-FileHash -Algorithm SHA256)
+    # Engine and interface DLLs in engine, plus the interface backups kept in maintenance/desktop-backups.
+    $integrityFiles = { @(Get-ChildItem (Join-Path $root 'engine') -Filter 'DepoimentoLocal*.dll') + @(Get-ChildItem (Join-Path $root 'maintenance/desktop-backups') -Filter '*.dll' -ErrorAction SilentlyContinue) }
+    $before = @(& $integrityFiles | Get-FileHash -Algorithm SHA256)
     $manifest = foreach ($file in @('ui/ModernShell.cs','launcher/DesktopProgram.cs','engine/DepoimentoLocal.dll','engine/DepoimentoLocal.Vulkan8.dll','modelo/qwen2.5-3b-instruct-q4_k_m.gguf')) {
         $full = Join-Path $root $file
         [ordered]@{path=$file;sha256=(Get-FileHash -LiteralPath $full -Algorithm SHA256).Hash;bytes=(Get-Item -LiteralPath $full).Length}
@@ -42,7 +44,7 @@ try {
         Write-QaReport $rows $results $suite.Elapsed.TotalSeconds $false
         Write-Output ("RESULTADO {0}: {1}; {2:N1}s; warnings={3}; retry={4}" -f $case.number,$row.status,$row.generationSeconds,$row.warnings.Count,$row.retry)
     }
-    $after = @(Get-ChildItem (Join-Path $root 'engine') -Filter 'DepoimentoLocal*.dll' | Get-FileHash -Algorithm SHA256)
+    $after = @(& $integrityFiles | Get-FileHash -Algorithm SHA256)
     $unchanged = -not (Compare-Object ($before | ForEach-Object { $_.Path + ':' + $_.Hash }) ($after | ForEach-Object { $_.Path + ':' + $_.Hash }))
     [ordered]@{unchanged=$unchanged;before=$before;after=$after} | ConvertTo-Json -Depth 5 | Set-Content -Encoding UTF8 (Join-Path $results 'engine-integrity.json')
     Write-QaReport $rows $results $suite.Elapsed.TotalSeconds $true

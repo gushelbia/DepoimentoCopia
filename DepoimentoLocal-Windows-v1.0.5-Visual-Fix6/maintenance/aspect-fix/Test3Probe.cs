@@ -26,7 +26,7 @@ public static class Test3Probe {
  public static void Run(string root) {
   string reportDir=Path.Combine(root,"maintenance","aspect-fix");
   var report=new List<string>();
-  var start=new ProcessStartInfo(Path.Combine(root,"DepoimentoLocal.exe"));
+  var start=new ProcessStartInfo(Path.Combine(root,"Fidelis.exe"));
   start.UseShellExecute=false;start.CreateNoWindow=true;start.WorkingDirectory=Path.GetTempPath();
   start.EnvironmentVariables["DOTNET_ROOT"]=Path.Combine(reportDir,"runtime-not-installed");
   start.EnvironmentVariables["DOTNET_ROOT_X64"]=start.EnvironmentVariables["DOTNET_ROOT"];
@@ -41,7 +41,7 @@ public static class Test3Probe {
    var timer=Stopwatch.StartNew();
    while(timer.Elapsed.TotalSeconds<35 && window==IntPtr.Zero){
     if(process.HasExited)throw new Exception("Executable exited: "+process.ExitCode);
-    EnumWindows(delegate(IntPtr h,IntPtr d){uint id;GetWindowThreadProcessId(h,out id);if(id==process.Id && Text(h)=="Depoimento Local — Windows")window=h;return true;},IntPtr.Zero);
+    EnumWindows(delegate(IntPtr h,IntPtr d){uint id;GetWindowThreadProcessId(h,out id);if(id==process.Id && Text(h)=="Fidelis")window=h;return true;},IntPtr.Zero);
     Thread.Sleep(100);
    }
    if(window==IntPtr.Zero)throw new Exception("Main interface not found");

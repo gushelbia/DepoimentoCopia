@@ -87,7 +87,7 @@ internal static class DesktopProgram
         catch (Exception error)
         {
             MessageBox.Show(error.Message + (error is FileNotFoundException ? "\n\n" + ((FileNotFoundException)error).FileName : ""),
-                "Depoimento Local — erro ao iniciar", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                "Fidelis — erro ao iniciar", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
         finally
         {

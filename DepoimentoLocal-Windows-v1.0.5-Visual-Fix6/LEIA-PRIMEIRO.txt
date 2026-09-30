@@ -1,6 +1,7 @@
-DEPOIMENTO LOCAL — COMO ABRIR
+FIDELIS — COMO ABRIR
 
-Dê dois cliques em DepoimentoLocal.exe, nesta pasta.
+Dê dois cliques em Fidelis.exe, nesta pasta.
+Para ter um atalho na Área de Trabalho, dê dois cliques em Criar-Atalho.bat (faça isso de novo se mudar a pasta de lugar).
 Não é necessário abrir INICIAR.bat, PowerShell ou terminal, nem instalar o .NET Runtime.
 
 O modelo atual está em modelo\qwen2.5-3b-instruct-q4_k_m.gguf.
@@ -8,7 +9,7 @@ O programa o localiza automaticamente. O botão Carregar modelo continua funcion
 O funcionamento é offline. O perfil Vulkan8 e as configurações atuais foram preservados.
 
 Mantenha a pasta completa:
-  DepoimentoLocal.exe  — executável de entrada
+  Fidelis.exe          — executável de entrada
   modelo\              — GGUF local
   engine\              — motor, interface compilada, runtime .NET e backends nativos
   ui\                  — ícone e fonte da interface

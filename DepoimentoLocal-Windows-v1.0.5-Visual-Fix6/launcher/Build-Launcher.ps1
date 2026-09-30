@@ -49,6 +49,9 @@ $pe=[BitConverter]::ToInt32($bytes,0x3c)
 if([BitConverter]::ToUInt16($bytes,$pe+4) -ne 0x8664){throw 'Expected x64 apphost'}
 $subsystem=$pe+24+68
 if([BitConverter]::ToUInt16($bytes,$subsystem) -ne 2){throw 'Expected Windows GUI apphost'}
-[IO.File]::WriteAllBytes((Join-Path $root 'DepoimentoLocal.exe'),$bytes)
-'COMPILE PASS: Windows GUI x64; self-contained .NET 8 in engine; root apphost bound to desktop assembly.'
+# The program's entry point is Fidelis.exe (renamed from DepoimentoLocal.exe; the engine keeps its names).
+[IO.File]::WriteAllBytes((Join-Path $root 'Fidelis.exe'),$bytes)
+$oldEntry=Join-Path $root 'DepoimentoLocal.exe'
+if(Test-Path -LiteralPath $oldEntry){Remove-Item -LiteralPath $oldEntry}
+'COMPILE PASS: Windows GUI x64; self-contained .NET 8 in engine; root apphost Fidelis.exe bound to desktop assembly.'
 

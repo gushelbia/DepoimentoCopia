@@ -1,0 +1,51 @@
+﻿PASS horários numéricos | encontrados=3: horário:14h ; horário:14h30 ; horário:16:45
+PASS horário com min e horas | encontrados=2: horário:7h45min ; horário:8 horas
+PASS horários por extenso após «às» | encontrados=2: horário:oito horas ; horário:oito e vinte
+PASS intervalo por extenso | encontrados=3: horário:sete e meia ; horário:oito horas ; horário:oito e meia
+PASS meio-dia (com «perto do», marcado inteiro) | encontrados=1: horário:Perto do meio-dia
+PASS meio-dia exato | encontrados=1: horário:meio-dia
+PASS datas numéricas | encontrados=4: data:12/08/2026 ; data:12/08 ; data:12-08-2026 ; data:12.08.26
+PASS datas por extenso | encontrados=3: data:12 de agosto de 2026 ; data:dia 13 ; data:1º de maio
+PASS CPF formatado e após a palavra CPF | encontrados=2: CPF:123.456.789-09 ; CPF:98765432100
+PASS placas antiga e Mercosul | encontrados=5: placa:ABC-1234 ; placa:ABC1234 ; placa:ABC 1234 ; placa:BRA2E19 ; placa:BRA-2E19
+PASS valores em reais | encontrados=6: valor:R$ 1.234,56 ; valor:R$50 ; valor:50 reais ; valor:cinquenta reais ; valor:mil e duzentos reais ; valor:dez reais e cinquenta centavos
+PASS telefones | encontrados=4: telefone:(11) 91234-5678 ; telefone:91234-5678 ; telefone:3456-7890 ; telefone:+55 11 91234-5678
+PASS pronome «as duas» não é horário | encontrados=0
+PASS minúsculas e ano não são placa | encontrados=0
+PASS quantidades e medidas não são data | encontrados=0
+PASS intervalo de anos não é telefone | encontrados=0
+PASS nomes próprios ficam de fora | encontrados=0
+PASS «às duas caixas» não é horário | encontrados=0
+PASS 14h = 14h00 = 14:00
+PASS 14h diferente de 15h
+PASS «oito horas» sem período (8h ou 20h) não é equivalente exato de 8h nem de 20h
+PASS «oito da manhã» diferente de 20:00
+PASS R$ 50,00 = cinquenta reais = 50 reais
+PASS 12/08 = 12 de agosto = 12/08/2026
+PASS anos diferentes não equivalem
+PASS telefone com e sem DDD
+PASS placa com e sem hífen; dígitos trocados não equivalem
+PASS só o item alterado fica sem correspondência | ABC-1243
+PASS item do original que sumiu é listado
+PASS resumo | 4 itens para conferir, 1 não encontrado no original; sumiu do reformulado: ABC-1234.
+PASS sem itens: resumo vazio
+PASS sem reformulado: original destacado sem comparação
+PASS relativo «dez para as onze» marcado inteiro | «umas dez para as onze, por aí» aproximado=True
+PASS «meio-dia e pouco» marcado inteiro | «meio-dia e pouco» aproximado=True
+PASS «umas duas e pouco» marcado inteiro | «umas duas e pouco» aproximado=True
+PASS «depois das duas» é relativo | «depois das duas» aproximado=True
+PASS «por volta das 14h30» é aproximado | «por volta das 14h30» aproximado=True
+PASS «pouco antes das nove» é relativo | «pouco antes das nove» aproximado=True
+PASS «duas e meia» sem período é ambíguo (2h30 ou 14h30) | duas e meia
+PASS «8h» numérico é exato (relógio de 24 horas)
+PASS relativo vs exato: nunca «bate» | reformulado / original = alerta / alerta
+PASS relativo vs outro horário distante: sem correspondência | reformulado / original = sem correspondência / sem correspondência
+PASS «meio-dia e pouco» vs «ao meio-dia»: alerta | reformulado / original = alerta / alerta
+PASS «umas duas e pouco» vs «14h»: alerta | reformulado / original = alerta / alerta
+PASS «duas e meia» ambíguo vs «14h30»: alerta | reformulado / original = alerta / alerta
+PASS mesma expressão ambígua dos dois lados: ainda alerta | reformulado / original = alerta / alerta
+PASS aproximado mantido igual: ainda alerta | reformulado / original = alerta / alerta
+PASS exato vs exato continua «bate» | reformulado / original = bate / bate
+PASS resumo no plural («sumiram») | 3 itens para conferir, 2 não encontrados no original; sumiram do reformulado: ABC-1234, 15h15.
+PASS resumo curto sem nomes | 3 itens para conferir, 2 não encontrados no original; 2 sumiram do reformulado. Clique para ver a lista.
+PASS lista completa ao clicar

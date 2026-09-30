@@ -337,12 +337,19 @@ public sealed class UiPalette
     public Color DangerBorder;
     public Color ProgressTrack;
     public Color Blue;
+    // Review highlights: background only, readable with the theme's text color.
+    public Color HighlightItem;
+    public Color HighlightMismatch;
+    public Color HighlightAlert;      // approximate or ambiguous: check, never "bate"
 
     public static UiPalette Create(bool dark)
     {
         UiPalette p = new UiPalette();
         p.IsDark = dark;
         p.Blue = Color.FromArgb(10, 132, 255);
+        p.HighlightItem = dark ? Color.FromArgb(88, 72, 22) : Color.FromArgb(255, 236, 158);
+        p.HighlightMismatch = dark ? Color.FromArgb(128, 36, 44) : Color.FromArgb(255, 186, 186);
+        p.HighlightAlert = dark ? Color.FromArgb(158, 88, 10) : Color.FromArgb(255, 198, 118);
         if (dark)
         {
             p.Window = Color.FromArgb(20, 24, 30);
@@ -739,6 +746,7 @@ public class SectionCard : RoundedPanel
     private ToolStripMenuItem copyItem;
     private ToolStripMenuItem pasteItem;
     private ToolStripMenuItem selectAllItem;
+    private TableLayoutPanel headingLayout;
 
     public SectionCard(string heading, bool readOnly) : this(heading, readOnly, false) { }
 
@@ -765,7 +773,7 @@ public class SectionCard : RoundedPanel
         title.TextAlign = ContentAlignment.MiddleLeft;
         title.Margin = new Padding(4, 0, 0, 3);
         title.BackColor = Color.Transparent;
-        TableLayoutPanel headingLayout = new TableLayoutPanel();
+        headingLayout = new TableLayoutPanel();
         headingLayout.Dock = DockStyle.Fill;
         headingLayout.Margin = new Padding(0);
         headingLayout.ColumnCount = 2;
@@ -818,8 +826,19 @@ public class SectionCard : RoundedPanel
         copyItem.ShortcutKeyDisplayString = "Ctrl+C";
         pasteItem.ShortcutKeyDisplayString = "Ctrl+V";
         selectAllItem.ShortcutKeyDisplayString = "Ctrl+A";
-        cutItem.Click += delegate { if (!Editor.ReadOnly && Editor.SelectionLength > 0) Editor.Cut(); };
-        copyItem.Click += delegate { if (Editor.SelectionLength > 0) Editor.Copy(); };
+        // Plain text only: review highlights are visual and must never reach
+        // Word or another program through the clipboard.
+        cutItem.Click += delegate { CutPlain(); };
+        copyItem.Click += delegate { CopyPlain(); };
+        Editor.KeyDown += delegate (object sender, KeyEventArgs e)
+        {
+            bool copy = (e.Control && !e.Shift && (e.KeyCode == Keys.C || e.KeyCode == Keys.Insert));
+            bool cut = (e.Control && !e.Shift && e.KeyCode == Keys.X) || (e.Shift && !e.Control && e.KeyCode == Keys.Delete);
+            if (!copy && !cut) return;
+            if (copy) CopyPlain(); else CutPlain();
+            e.Handled = true;
+            e.SuppressKeyPress = true;
+        };
         pasteItem.Click += delegate { if (!Editor.ReadOnly) Editor.Paste(); };
         selectAllItem.Click += delegate { Editor.Focus(); Editor.SelectAll(); };
         editorMenu.Items.AddRange(new ToolStripItem[] { cutItem, copyItem, pasteItem, selectAllItem });
@@ -860,6 +879,37 @@ public class SectionCard : RoundedPanel
     {
         if (disposing && editorMenu != null) editorMenu.Dispose();
         base.Dispose(disposing);
+    }
+
+    public void CopyPlain()
+    {
+        if (Editor.SelectionLength == 0) return;
+        // RichEdit uses a single \n; the Windows clipboard expects \r\n.
+        string text = Editor.SelectedText.Replace("\r\n", "\n").Replace("\n", "\r\n");
+        // Another program may hold the clipboard for a moment: retry for ~1 s.
+        try { Clipboard.SetDataObject(new DataObject(DataFormats.UnicodeText, text), true, 10, 100); }
+        catch (System.Runtime.InteropServices.ExternalException) { }
+    }
+
+    public void CutPlain()
+    {
+        if (Editor.ReadOnly || Editor.SelectionLength == 0) return;
+        CopyPlain();
+        Editor.SelectedText = "";
+    }
+
+    // Extra header button placed between the title and "Limpar".
+    public void AddHeaderButton(ModernButton button)
+    {
+        headingLayout.ColumnCount = 3;
+        headingLayout.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize));
+        if (ClearButton != null) headingLayout.SetColumn(ClearButton, 2);
+        button.AutoSize = false;
+        button.Dock = DockStyle.Fill;
+        button.Margin = new Padding(8, 0, 0, 3);
+        button.Font = new Font("Segoe UI", 9F);
+        button.Padding = new Padding(8, 0, 8, 0);
+        headingLayout.Controls.Add(button, 1, 0);
     }
 
     public void SetPlaceholder(string text)
@@ -950,6 +1000,18 @@ public sealed class ModernDepoimentoForm : Form
     private Timer autosaveTimer;
     private string lastSavedCombined = "";
     private bool autosaveReady;
+    // Side-by-side layout and review highlights (visual only).
+    private const int WideLayoutMinWidth = 1180;
+    private int layoutMode = -1;          // -1 unknown, 0 stacked, 1 side by side
+    private Label reviewStatus;
+    private ToolTip reviewTip;
+    private ModernButton reviewToggle;
+    private Timer highlightTimer;
+    private bool highlightsEnabled = true;
+    private bool applyingHighlights;
+    private ReviewResult lastReview;
+    private string reviewFull = "", reviewShort = "";
+    private bool layingOutStatus;
 
     public ModernDepoimentoForm(OriginalAppBridge appBridge, string iconPath, string backendDescription)
     {
@@ -994,9 +1056,12 @@ public sealed class ModernDepoimentoForm : Form
         root = new TableLayoutPanel();
         root.Dock = DockStyle.Fill;
         root.Padding = new Padding(22, 14, 22, 14);
-        root.ColumnCount = 1;
+        // Two columns: original and reformulated side by side on wide windows;
+        // every other row spans both columns (see UpdateWorkLayout).
+        root.ColumnCount = 2;
         root.RowCount = 7;
-        root.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+        root.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+        root.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
         root.RowStyles.Add(new RowStyle(SizeType.Absolute, 58F));
         root.RowStyles.Add(new RowStyle(SizeType.Absolute, 72F));
         root.RowStyles.Add(new RowStyle(SizeType.Percent, 33.33F));
@@ -1046,6 +1111,7 @@ public sealed class ModernDepoimentoForm : Form
         header.Controls.Add(themePicker);
         header.Resize += delegate { LayoutHeaderTheme(); };
         root.Controls.Add(header, 0, 0);
+        root.SetColumnSpan(header, 2);
 
         modelCard = new RoundedPanel();
         modelCard.Dock = DockStyle.Fill;
@@ -1105,11 +1171,13 @@ public sealed class ModernDepoimentoForm : Form
         modelGrid.Controls.Add(loadModel, 3, 0);
         modelCard.Controls.Add(modelGrid);
         root.Controls.Add(modelCard, 0, 1);
+        root.SetColumnSpan(modelCard, 2);
 
         originalCard = new SectionCard("Resposta / transcrição original", false, true);
         originalCard.ClearButton.Click += ClearOriginal_Click;
         originalCard.Dock = DockStyle.Fill;
         root.Controls.Add(originalCard, 0, 2);
+        root.SetColumnSpan(originalCard, 2);
 
         generation = new Panel();
         generation.Dock = DockStyle.Fill;
@@ -1137,10 +1205,23 @@ public sealed class ModernDepoimentoForm : Form
         status.Height = 38;
         status.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
 
+        // Second line under the status: summary of the review highlights.
+        reviewStatus = new Label();
+        reviewStatus.Text = "";
+        reviewStatus.Font = new Font("Segoe UI", 9F);
+        // Wraps to two lines; never cut with an ellipsis. Click opens the full list.
+        reviewStatus.AutoEllipsis = false;
+        reviewStatus.TextAlign = ContentAlignment.TopLeft;
+        reviewStatus.Visible = false;
+        reviewStatus.Cursor = Cursors.Hand;
+        reviewStatus.Click += delegate { ShowReviewDetails(); };
+        reviewTip = new ToolTip();
+
         generation.Controls.Add(reformulate);
         generation.Controls.Add(cancel);
         generation.Controls.Add(progress);
         generation.Controls.Add(status);
+        generation.Controls.Add(reviewStatus);
         generation.Resize += delegate
         {
             int available = generation.ClientSize.Width;
@@ -1152,13 +1233,24 @@ public sealed class ModernDepoimentoForm : Form
             progress.Width = progWidth;
             status.Left = progress.Right + 20;
             status.Width = Math.Max(120, available - status.Left);
+            LayoutStatusLines();
         };
         root.Controls.Add(generation, 0, 3);
+        root.SetColumnSpan(generation, 2);
 
         reformulatedCard = new SectionCard("Texto reformulado", true, true);
         reformulatedCard.ClearButton.Click += ClearReformulated_Click;
         reformulatedCard.Dock = DockStyle.Fill;
+        reviewToggle = SecondaryButton("Destaques: ligados");
+        reviewToggle.AccessibleName = "Ligar ou desligar destaques de conferência";
+        reviewToggle.Size = new Size(150, 27);
+        reviewToggle.Click += ReviewToggle_Click;
+        reformulatedCard.AddHeaderButton(reviewToggle);
+        // Re-highlight shortly after an edit; the timer restarts on each change.
+        originalCard.Editor.TextChanged += delegate { ScheduleHighlights(); };
+        reformulatedCard.Editor.TextChanged += delegate { ScheduleHighlights(); };
         root.Controls.Add(reformulatedCard, 0, 4);
+        root.SetColumnSpan(reformulatedCard, 2);
 
         actions = new FlowLayoutPanel();
         actions.Dock = DockStyle.Fill;
@@ -1187,6 +1279,7 @@ public sealed class ModernDepoimentoForm : Form
         actions.Controls.Add(clearButton);
         actions.Controls.Add(logButton);
         root.Controls.Add(actions, 0, 5);
+        root.SetColumnSpan(actions, 2);
 
         combinedCard = new SectionCard("Depoimento consolidado", false);
         combinedCard.Dock = DockStyle.Fill;
@@ -1199,6 +1292,7 @@ public sealed class ModernDepoimentoForm : Form
         };
         combinedCard.Editor.TextChanged += delegate { ScheduleAutosave(); };
         root.Controls.Add(combinedCard, 0, 6);
+        root.SetColumnSpan(combinedCard, 2);
 
         autosaveTimer = new Timer();
         autosaveTimer.Interval = 1500;
@@ -1208,12 +1302,162 @@ public sealed class ModernDepoimentoForm : Form
             WriteAutosave();
         };
 
+        highlightTimer = new Timer();
+        highlightTimer.Interval = 600;
+        highlightTimer.Tick += delegate
+        {
+            highlightTimer.Stop();
+            ApplyHighlights();
+        };
+
         syncTimer = new Timer();
         syncTimer.Interval = 350;
         syncTimer.Tick += SyncTimer_Tick;
         syncTimer.Start();
 
         LayoutHeaderTheme();
+        Resize += delegate { UpdateWorkLayout(); };
+        UpdateWorkLayout();
+    }
+
+    // Side by side when the window is wide enough; otherwise the stacked layout.
+    private void UpdateWorkLayout()
+    {
+        if (root == null || originalCard == null || reformulatedCard == null) return;
+        int minimum = (int)Math.Round(WideLayoutMinWidth * DeviceDpi / 96.0);
+        int mode = ClientSize.Width >= minimum ? 1 : 0;
+        if (mode == layoutMode) return;
+        layoutMode = mode;
+        root.SuspendLayout();
+        if (mode == 1)
+        {
+            root.SetColumnSpan(originalCard, 1);
+            root.SetCellPosition(originalCard, new TableLayoutPanelCellPosition(0, 2));
+            root.SetColumnSpan(reformulatedCard, 1);
+            root.SetCellPosition(reformulatedCard, new TableLayoutPanelCellPosition(1, 2));
+            originalCard.Margin = new Padding(0, 6, 7, 6);
+            reformulatedCard.Margin = new Padding(7, 6, 0, 6);
+            root.RowStyles[2] = new RowStyle(SizeType.Percent, 55F);
+            root.RowStyles[4] = new RowStyle(SizeType.Absolute, 0F);
+            root.RowStyles[6] = new RowStyle(SizeType.Percent, 45F);
+        }
+        else
+        {
+            root.SetCellPosition(reformulatedCard, new TableLayoutPanelCellPosition(0, 4));
+            root.SetColumnSpan(reformulatedCard, 2);
+            root.SetCellPosition(originalCard, new TableLayoutPanelCellPosition(0, 2));
+            root.SetColumnSpan(originalCard, 2);
+            originalCard.Margin = new Padding(0, 6, 0, 6);
+            reformulatedCard.Margin = new Padding(0, 6, 0, 6);
+            root.RowStyles[2] = new RowStyle(SizeType.Percent, 33.33F);
+            root.RowStyles[4] = new RowStyle(SizeType.Percent, 33.33F);
+            root.RowStyles[6] = new RowStyle(SizeType.Percent, 33.34F);
+        }
+        root.ResumeLayout(true);
+    }
+
+    // Status on the first line; the review summary below it, up to two lines.
+    // The bar grows only while a summary is shown and keeps its buttons centered.
+    private void LayoutStatusLines()
+    {
+        if (status == null || reviewStatus == null || generation == null || root == null || layingOutStatus) return;
+        layingOutStatus = true;
+        try
+        {
+            float k = DeviceDpi / 96f;
+            bool two = reviewFull.Length > 0;
+            float wanted = (float)Math.Round((two ? 70 : 52) * k);
+            if (Math.Abs(root.RowStyles[3].Height - wanted) > 0.5f) root.RowStyles[3] = new RowStyle(SizeType.Absolute, wanted);
+            int extra = Math.Max(0, generation.ClientSize.Height - (int)Math.Round(52 * k)) / 2;
+            reformulate.Top = (int)Math.Round(7 * k) + extra;
+            cancel.Top = reformulate.Top;
+            progress.Top = (int)Math.Round(21 * k) + extra;
+            reviewStatus.Visible = two;
+            if (!two)
+            {
+                status.Top = (int)Math.Round(5 * k); status.Height = (int)Math.Round(38 * k);
+                return;
+            }
+            status.Top = (int)Math.Round(2 * k); status.Height = (int)Math.Round(20 * k);
+            reviewStatus.Left = status.Left; reviewStatus.Width = status.Width;
+            reviewStatus.Top = status.Bottom;
+            int line = TextRenderer.MeasureText("Ág", reviewStatus.Font).Height;
+            reviewStatus.Height = Math.Max(line * 2 + 2, generation.ClientSize.Height - reviewStatus.Top);
+            // Full summary if it fits in two lines; otherwise counts + "clique para ver".
+            // Narrower windows fall back to shorter forms; the last one always fits.
+            TextFormatFlags flags = TextFormatFlags.WordBreak | TextFormatFlags.TextBoxControl;
+            string chosen = "Itens para conferir: clique para ver.";
+            foreach (string candidate in new string[] { reviewFull, reviewShort, ReviewScanner.CompactSummary(lastReview) })
+            {
+                if (String.IsNullOrEmpty(candidate)) continue;
+                if (TextRenderer.MeasureText(candidate, reviewStatus.Font, new Size(reviewStatus.Width, 10000), flags).Height <= line * 2 + 2) { chosen = candidate; break; }
+            }
+            reviewStatus.Text = chosen;
+        }
+        finally { layingOutStatus = false; }
+    }
+
+    private void ScheduleHighlights()
+    {
+        if (applyingHighlights || highlightTimer == null) return;
+        highlightTimer.Stop();
+        highlightTimer.Start();
+    }
+
+    // Visual only: colors are applied to the editors' formatting, never to the
+    // text, so the engine, the clipboard, the .txt and the Word export get none.
+    private void ApplyHighlights()
+    {
+        if (highlightTimer != null) highlightTimer.Stop();
+        if (originalCard == null || reformulatedCard == null || applyingHighlights) return;
+        applyingHighlights = true;
+        try
+        {
+            // During generation the text is rewritten every 350 ms: no highlights.
+            if (!highlightsEnabled || generationWasRunning || generationStarting)
+            {
+                ReviewPainter.Paint(originalCard.Editor, null, Color.Empty, Color.Empty, Color.Empty);
+                ReviewPainter.Paint(reformulatedCard.Editor, null, Color.Empty, Color.Empty, Color.Empty);
+                lastReview = null;
+                SetReviewSummary("", "");
+                return;
+            }
+            ReviewResult review = ReviewScanner.Compare(originalCard.Editor.Text, reformulatedCard.Editor.Text);
+            ReviewPainter.Paint(originalCard.Editor, review.Original, palette.HighlightItem, palette.HighlightMismatch, palette.HighlightAlert);
+            ReviewPainter.Paint(reformulatedCard.Editor, review.Reformulated, palette.HighlightItem, palette.HighlightMismatch, palette.HighlightAlert);
+            lastReview = review;
+            bool show = reformulatedCard.Editor.TextLength > 0;
+            SetReviewSummary(show ? ReviewScanner.Summary(review) : "", show ? ReviewScanner.ShortSummary(review) : "");
+        }
+        catch (Exception ex)
+        {
+            SetReviewSummary("Destaques indisponíveis: " + ex.Message, "Destaques indisponíveis.");
+        }
+        finally { applyingHighlights = false; }
+    }
+
+    private void SetReviewSummary(string full, string shortText)
+    {
+        if (reviewStatus == null) return;
+        reviewFull = full ?? "";
+        reviewShort = String.IsNullOrEmpty(shortText) ? reviewFull : shortText;
+        bool alert = lastReview != null && (lastReview.UnmatchedInReformulated > 0 || lastReview.AlertInReformulated > 0 || lastReview.MissingFromReformulated.Count > 0);
+        reviewStatus.ForeColor = alert ? palette.DangerText : palette.Muted;
+        if (reviewTip != null) reviewTip.SetToolTip(reviewStatus, reviewFull.Length > 0 ? "Clique para ver a lista completa." : "");
+        LayoutStatusLines();
+    }
+
+    private void ShowReviewDetails()
+    {
+        if (lastReview == null || reviewFull.Length == 0) return;
+        MessageBox.Show(this, ReviewScanner.Details(lastReview), "Itens para conferir", MessageBoxButtons.OK, MessageBoxIcon.Information);
+    }
+
+    private void ReviewToggle_Click(object sender, EventArgs e)
+    {
+        highlightsEnabled = !highlightsEnabled;
+        reviewToggle.Text = highlightsEnabled ? "Destaques: ligados" : "Destaques: desligados";
+        ApplyHighlights();
     }
 
     private void LayoutHeaderTheme()
@@ -1297,10 +1541,13 @@ public sealed class ModernDepoimentoForm : Form
         ApplySecondaryPalette(saveButton);
         ApplySecondaryPalette(exportButton);
         ApplySecondaryPalette(logButton);
+        ApplySecondaryPalette(reviewToggle);
 
         if (clearButton != null) clearButton.SetPalette(palette.DangerButton, palette.DangerText, palette.DangerBorder);
 
         ApplyWindowTitleBarTheme(dark);
+        // Repaint highlights with this theme's colors.
+        if (reviewStatus != null) ApplyHighlights();
         Invalidate(true);
     }
 
@@ -1411,6 +1658,7 @@ public sealed class ModernDepoimentoForm : Form
         // Reserve the operation before yielding so double clicks cannot enqueue it twice.
         generationWasRunning = true;
         cancelRequested = false;
+        ApplyHighlights(); // clears highlights and the summary while generating
         originalCard.ClearButton.Enabled = false;
         reformulatedCard.ClearButton.Enabled = false;
         generationStarting = true;
@@ -1564,6 +1812,8 @@ public sealed class ModernDepoimentoForm : Form
                     FinishGeneration();
                     progress.Value = 100;
                     reformulatedCard.Editor.Text = snapshot.Output;
+                    // Highlights only once the final text is in place.
+                    ApplyHighlights();
                 }
             }
         }
@@ -1897,6 +2147,557 @@ public static class AutosaveStore
     {
         try { if (File.Exists(FilePath)) File.Delete(FilePath); } catch { }
         try { if (File.Exists(FilePath + ".tmp")) File.Delete(FilePath + ".tmp"); } catch { }
+    }
+}
+
+// One item to double-check: date, time, CPF, plate, amount in reais or phone.
+public sealed class ReviewItem
+{
+    public int Start;
+    public int Length;
+    public string Kind;
+    public string Text;
+    public string Key;        // normalized value (digits, plate, cents...)
+    public int Day, Month, Year;
+    public int Minutes = -1;
+    public bool AmbiguousHalfDay; // time in words without period: 8h or 20h
+    public bool Approximate;      // "umas duas e pouco", "dez para as onze", "por volta das 14h"
+    public bool Unmatched;        // nothing corresponding in the other text
+    public bool Alert;            // only an approximate/ambiguous correspondence: never "bate"
+    public string Normalized;     // lower-case text, single spaces (computed once)
+}
+
+public sealed class ReviewResult
+{
+    public List<ReviewItem> Original = new List<ReviewItem>();
+    public List<ReviewItem> Reformulated = new List<ReviewItem>();
+    public List<ReviewItem> MissingFromReformulated = new List<ReviewItem>();
+    public int UnmatchedInReformulated;
+    public int AlertInReformulated;
+}
+
+// Finds and compares review items. Names are deliberately out of scope.
+// Equivalent forms compare equal: 14h, 14h00 and 14:00; R$ 50,00 and cinquenta
+// reais; 12/08 and 12 de agosto; (11) 91234-5678 and 91234-5678.
+public static class ReviewScanner
+{
+    private static readonly Dictionary<string, int> numberWords = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase)
+    {
+        {"zero",0},{"um",1},{"uma",1},{"dois",2},{"duas",2},{"três",3},{"tres",3},{"quatro",4},{"cinco",5},
+        {"seis",6},{"sete",7},{"oito",8},{"nove",9},{"dez",10},{"onze",11},{"doze",12},{"treze",13},
+        {"catorze",14},{"quatorze",14},{"quinze",15},{"dezesseis",16},{"dezessete",17},{"dezoito",18},
+        {"dezenove",19},{"vinte",20},{"trinta",30},{"quarenta",40},{"cinquenta",50},{"sessenta",60},
+        {"setenta",70},{"oitenta",80},{"noventa",90},{"cem",100},{"cento",100},{"duzentos",200},
+        {"duzentas",200},{"trezentos",300},{"trezentas",300},{"quatrocentos",400},{"quatrocentas",400},
+        {"quinhentos",500},{"quinhentas",500},{"seiscentos",600},{"seiscentas",600},{"setecentos",700},
+        {"setecentas",700},{"oitocentos",800},{"oitocentas",800},{"novecentos",900},{"novecentas",900}
+    };
+    private static readonly string[] months = { "janeiro","fevereiro","março","abril","maio","junho","julho","agosto","setembro","outubro","novembro","dezembro" };
+
+    // Longest words first so "dezoito" is not read as "dez".
+    private const string NumberWord = @"(?:dezesseis|dezessete|dezenove|dezoito|quatorze|catorze|quinze|treze|doze|onze|dez|novecentos|novecentas|oitocentos|oitocentas|setecentos|setecentas|seiscentos|seiscentas|quinhentos|quinhentas|quatrocentos|quatrocentas|trezentos|trezentas|duzentos|duzentas|cento|cem|noventa|oitenta|setenta|sessenta|cinquenta|quarenta|trinta|vinte|mil|zero|uma|um|duas|dois|três|tres|quatro|cinco|seis|sete|oito|nove)";
+    private const string HourWord = @"(?:uma|duas|três|tres|quatro|cinco|seis|sete|oito|nove|dez|onze|doze)";
+    private const string MinuteWord = @"(?:meia|(?:vinte|trinta|quarenta|cinquenta)(?:\s+e\s+(?:um|uma|dois|duas|três|tres|quatro|cinco|seis|sete|oito|nove))?|quinze|dez|cinco|onze|doze|treze|catorze|quatorze|dezesseis|dezessete|dezoito|dezenove)";
+    private const string Period = @"(?:\s+da\s+(?<per>manhã|tarde|noite|madrugada))?";
+    private const string MonthName = @"(?:janeiro|fevereiro|março|marco|abril|maio|junho|julho|agosto|setembro|outubro|novembro|dezembro)";
+
+    public static long ParseNumberWords(string phrase)
+    {
+        long total = 0, current = 0;
+        foreach (string raw in Regex.Split(phrase.Trim(), @"\s+"))
+        {
+            string w = raw.ToLowerInvariant();
+            if (w == "e" || w.Length == 0) continue;
+            if (w == "mil") { total += (current == 0 ? 1 : current) * 1000; current = 0; continue; }
+            int v;
+            if (!numberWords.TryGetValue(w, out v)) return -1;
+            current += v;
+        }
+        return total + current;
+    }
+
+    public static List<ReviewItem> Find(string text)
+    {
+        var items = new List<ReviewItem>();
+        if (String.IsNullOrEmpty(text)) return items;
+        RegexOptions ci = RegexOptions.IgnoreCase;
+
+        // CPF: formatted, or 11 digits right after the word CPF.
+        foreach (Match m in Regex.Matches(text, @"(?<!\d)\d{3}\.\d{3}\.\d{3}-\d{2}(?!\d)|(?<=\bCPF\s*(?:n[º°o.]?\s*)?:?\s*)\d{11}(?!\d)", ci))
+            Add(items, m, "CPF", Regex.Replace(m.Value, @"\D", ""));
+        // Plates: old AAA-9999 (hyphen, space or together) and Mercosul AAA9A99. Upper case only.
+        foreach (Match m in Regex.Matches(text, @"\b[A-Z]{3}(?:-|\s)?\d{4}\b|\b[A-Z]{3}-?\d[A-Z]\d{2}\b"))
+            Add(items, m, "placa", Regex.Replace(m.Value, @"[^A-Z0-9]", ""));
+        // Phones: 4+4 or 5+4 digits with a separator, optional area code and +55.
+        foreach (Match m in Regex.Matches(text, @"(?<![\d/.,-])(?:\+55\s?)?(?:\(\d{2}\)\s?|\d{2}\s)?(?:9\s?)?\d{4}[-\s]\d{4}(?![\d/.,-]\d)"))
+        {
+            string digits = Regex.Replace(m.Value, @"\D", "");
+            // "2025-2026" is a range of years, not a phone.
+            if (digits.Length == 8 && Regex.IsMatch(m.Value.Trim(), @"^(?:19|20)\d\d[-\s](?:19|20)\d\d$")) continue;
+            Add(items, m, "telefone", digits);
+        }
+        // Amounts in reais: R$ 1.234,56 / 50 reais / cinquenta reais (e vinte centavos).
+        foreach (Match m in Regex.Matches(text, @"R\$\s?(?<v>\d{1,3}(?:\.\d{3})+(?:,\d{1,2})?|\d+(?:,\d{1,2})?)|\b(?<v>\d{1,3}(?:\.\d{3})+(?:,\d{1,2})?|\d+(?:,\d{1,2})?)\s+reais\b", ci))
+            Add(items, m, "valor", Cents(m.Groups["v"].Value).ToString());
+        foreach (Match m in Regex.Matches(text, @"\b(?<n>" + NumberWord + @"(?:(?:\s+e\s+|\s+)" + NumberWord + @")*)\s+rea(?:is|l)\b(?:\s+e\s+(?<c>" + NumberWord + @"(?:\s+e\s+" + NumberWord + @")*)\s+centavos?\b)?", ci))
+        {
+            long reais = ParseNumberWords(m.Groups["n"].Value);
+            if (reais < 0) continue;
+            long cents = m.Groups["c"].Success ? ParseNumberWords(m.Groups["c"].Value) : 0;
+            if (cents < 0 || cents > 99) continue;
+            Add(items, m, "valor", (reais * 100 + cents).ToString());
+        }
+        // Dates: 12/08/2026, 12/08, 12.08.2026, 12-08-2026, 12 de agosto de 2026, dia 13.
+        foreach (Match m in Regex.Matches(text, @"(?<![\d/.,-])(?<d>\d{1,2})(?:/(?<m>\d{1,2})(?:/(?<y>\d{2}|\d{4}))?|[.-](?<m>\d{1,2})[.-](?<y>\d{2}|\d{4}))(?![\d/.,-]\d)"))
+        {
+            int d = Int32.Parse(m.Groups["d"].Value), mo = Int32.Parse(m.Groups["m"].Value);
+            if (d < 1 || d > 31 || mo < 1 || mo > 12) continue;
+            AddDate(items, m, d, mo, m.Groups["y"].Success ? Year(m.Groups["y"].Value) : 0);
+        }
+        foreach (Match m in Regex.Matches(text, @"\b(?<d>\d{1,2}|1º)\s+de\s+(?<m>" + MonthName + @")(?:\s+de\s+(?<y>\d{4}))?\b", ci))
+        {
+            int d = m.Groups["d"].Value == "1º" ? 1 : Int32.Parse(m.Groups["d"].Value);
+            if (d < 1 || d > 31) continue;
+            AddDate(items, m, d, MonthNumber(m.Groups["m"].Value), m.Groups["y"].Success ? Int32.Parse(m.Groups["y"].Value) : 0);
+        }
+        foreach (Match m in Regex.Matches(text, @"\bdia\s+(?<d>\d{1,2})\b", ci))
+        {
+            int d = Int32.Parse(m.Groups["d"].Value);
+            if (d >= 1 && d <= 31) AddDate(items, m, d, 0, 0);
+        }
+        // Relative times first, as one item: "dez para as onze", "cinco pras três".
+        foreach (Match m in Regex.Matches(text, @"\b(?<m>\d{1,2}|" + RelativeMinute + @")\s+(?:minutos\s+)?(?:para|pra|pras)\s+(?:(?:as|às|a|à|o)\s+)?(?<h>" + HourWord + @"|meio-dia|meia-noite|(?:[01]?\d|2[0-3])(?:h(?:00)?|:00)?)(?![\p{L}\d])", ci))
+        {
+            string hv = m.Groups["h"].Value.ToLowerInvariant();
+            bool hourWords = !Char.IsDigit(hv[0]);
+            long hour = hv == "meio-dia" ? 12 : hv == "meia-noite" ? 24 : hourWords ? ParseNumberWords(hv) : Int32.Parse(Regex.Match(hv, @"^\d+").Value);
+            long before = Char.IsDigit(m.Groups["m"].Value[0]) ? Int32.Parse(m.Groups["m"].Value) : ParseNumberWords(m.Groups["m"].Value);
+            if (hour < 0 || before < 1 || before > 59) continue;
+            long total = hour * 60 - before;
+            if (total < 0) total += 1440;
+            ReviewItem item = AddTime(items, m.Index, m.Length, m.Value, (int)(total / 60), (int)(total % 60), "", hourWords && hv != "meio-dia" && hv != "meia-noite");
+            if (item != null) item.Approximate = true;
+        }
+        // Times: 14h, 14h00, 14h30min, 14:00, 14 horas; words after às/das/até...
+        foreach (Match m in Regex.Matches(text, @"(?<![\d:,.])(?<h>[01]?\d|2[0-3])(?::(?<m>[0-5]\d)|h(?<m>[0-5]\d)?(?:min)?(?![\p{L}\d])|\s?hs\b|\s+horas?\b)" + Period, ci))
+            AddTime(items, m, Int32.Parse(m.Groups["h"].Value), m.Groups["m"].Success ? Int32.Parse(m.Groups["m"].Value) : 0, m.Groups["per"].Value, false);
+        foreach (Match m in Regex.Matches(text, @"\bmeio-dia(?:\s+e\s+(?<m>" + MinuteWord + @"))?\b|\bmeia-noite(?:\s+e\s+(?<m>" + MinuteWord + @"))?\b", ci))
+            AddTime(items, m, m.Value.StartsWith("meio", StringComparison.OrdinalIgnoreCase) ? 12 : 0, MinuteValue(m.Groups["m"].Value), "", false);
+        // Words need context, so "as duas assinaram" is not read as a time.
+        string after = @"(?=\s*(?:[,.;:!?)]|$)|\s+(?:e|ou|mas|quando|antes|depois|aproximadamente|mais\s+ou\s+menos|por\s+aí)\b)";
+        foreach (Match m in Regex.Matches(text, @"\b(?:às|as|das|até\s+(?:às|as)|até|pelas|por\s+volta\s+das?|entre|lá\s+pelas)\s+(?<h>" + HourWord + @")(?:\s+e\s+(?<m>" + MinuteWord + @"))?(?:\s+horas?)?" + Period + after, ci))
+            AddTimeWords(items, m);
+        foreach (Match m in Regex.Matches(text, @"\b(?<h>" + HourWord + @")(?:\s+e\s+(?<m>" + MinuteWord + @"))?\s+horas?\b" + Period, ci))
+            AddTimeWords(items, m);
+        // "duas e pouco" is always approximate; "duas e meia" alone is a time in words.
+        foreach (Match m in Regex.Matches(text, @"\b(?<h>" + HourWord + @")\s+e\s+poucos?\b", ci))
+        {
+            ReviewItem item = AddTime(items, m.Index, m.Length, m.Value, (int)ParseNumberWords(m.Groups["h"].Value), 0, "", true);
+            if (item != null) item.Approximate = true;
+        }
+        foreach (Match m in Regex.Matches(text, @"\b(?<h>" + HourWord + @")\s+e\s+(?<m>" + MinuteWord + @")" + Period + after, ci))
+            AddTimeWords(items, m);
+
+        // An approximation around a time belongs to the item: highlight it all and
+        // never treat it as exact ("umas duas e pouco", "por volta das 14h, por aí").
+        foreach (ReviewItem item in items)
+        {
+            if (item.Kind != "horário") continue;
+            int windowStart = Math.Max(0, item.Start - 40);
+            Match before = Regex.Match(text.Substring(windowStart, item.Start - windowStart), ApproxBefore, ci);
+            if (before.Success)
+            {
+                item.Approximate = true;
+                int start = windowStart + before.Index;
+                if (!OverlapsOther(items, item, start, item.Start + item.Length - start))
+                {
+                    item.Length += item.Start - start; item.Start = start;
+                }
+            }
+            int end = item.Start + item.Length;
+            Match afterApprox = Regex.Match(text.Substring(end, Math.Min(40, text.Length - end)), ApproxAfter, ci);
+            if (afterApprox.Success)
+            {
+                item.Approximate = true;
+                if (!OverlapsOther(items, item, item.Start, item.Length + afterApprox.Length)) item.Length += afterApprox.Length;
+            }
+            item.Text = text.Substring(item.Start, item.Length);
+        }
+
+        foreach (ReviewItem item in items) item.Normalized = Normalized(item.Text);
+        items.Sort(delegate (ReviewItem a, ReviewItem b) { return a.Start.CompareTo(b.Start); });
+        return items;
+    }
+
+    private const string RelativeMinute = @"(?:vinte\s+e\s+cinco|dezesseis|dezessete|dezenove|dezoito|quatorze|catorze|quinze|treze|doze|onze|vinte|dez|cinco|um|uma|dois|duas|três|tres|quatro|seis|sete|oito|nove)";
+    private const string ApproxBefore = @"\b(?:umas?|uns|lá\s+pelas?|por\s+volta\s+d[aoe]s?|cerca\s+d[aoe]s?|perto\s+d[aoe]s?|em\s+torno\s+d[aoe]s?|aproximadamente(?:\s+[àa]s?)?|mais\s+ou\s+menos(?:\s+[àa]s?)?|(?:pouco\s+)?(?:antes|depois)\s+d[aoe]s?|após\s+[àa]s?)\s+$";
+    private const string ApproxAfter = @"^(?:\s+e\s+poucos?(?:\s+minutos)?|\s+e\s+tanto|\s+mais\s+ou\s+menos|\s+aproximadamente|,?\s+por\s+aí|\s+ou\s+pouco\s+(?:mais|menos))(?![\p{L}\d])";
+
+    private static bool OverlapsOther(List<ReviewItem> items, ReviewItem self, int start, int length)
+    {
+        foreach (ReviewItem i in items)
+            if (i != self && start < i.Start + i.Length && i.Start < start + length) return true;
+        return false;
+    }
+
+    private static bool Overlaps(List<ReviewItem> items, int start, int length)
+    {
+        foreach (ReviewItem i in items)
+            if (start < i.Start + i.Length && i.Start < start + length) return true;
+        return false;
+    }
+
+    private static ReviewItem Add(List<ReviewItem> items, Match m, string kind, string key)
+    {
+        return Add(items, m.Index, m.Length, m.Value, kind, key);
+    }
+
+    private static ReviewItem Add(List<ReviewItem> items, int start, int length, string text, string kind, string key)
+    {
+        if (length == 0 || Overlaps(items, start, length)) return null;
+        var item = new ReviewItem();
+        item.Start = start; item.Length = length; item.Kind = kind; item.Text = text; item.Key = key;
+        items.Add(item);
+        return item;
+    }
+
+    private static void AddDate(List<ReviewItem> items, Match m, int day, int month, int year)
+    {
+        ReviewItem item = Add(items, m, "data", day + "/" + month + "/" + year);
+        if (item != null) { item.Day = day; item.Month = month; item.Year = year; }
+    }
+
+    private static ReviewItem AddTime(List<ReviewItem> items, Match m, int hour, int minute, string period, bool words)
+    {
+        return AddTime(items, m.Index, m.Length, m.Value, hour, minute, period, words);
+    }
+
+    private static ReviewItem AddTime(List<ReviewItem> items, int start, int length, string text, int hour, int minute, string period, bool words)
+    {
+        if (hour < 0 || hour > 23 || minute < 0 || minute > 59) return null;
+        string p = (period ?? "").ToLowerInvariant();
+        if ((p == "tarde" || p == "noite") && hour < 12) hour += 12;
+        if (p == "manhã" && hour == 12) hour = 0;
+        ReviewItem item = Add(items, start, length, text, "horário", "");
+        if (item == null) return null;
+        item.Minutes = hour * 60 + minute;
+        item.Key = (hour).ToString("00") + ":" + minute.ToString("00");
+        // "às duas e meia" may be 2h30 or 14h30; numeric 14h30 and 8h are exact (24h clock).
+        item.AmbiguousHalfDay = words && p.Length == 0;
+        return item;
+    }
+
+    private static void AddTimeWords(List<ReviewItem> items, Match m)
+    {
+        long h = ParseNumberWords(m.Groups["h"].Value);
+        if (h < 1 || h > 12) return;
+        // Highlight the time itself, not the preposition before it ("às").
+        int start = m.Groups["h"].Index, end = m.Index + m.Length;
+        AddTime(items, start, end - start, m.Value.Substring(start - m.Index), (int)h, MinuteValue(m.Groups["m"].Value), m.Groups["per"].Value, true);
+    }
+
+    private static int MinuteValue(string words)
+    {
+        if (String.IsNullOrEmpty(words)) return 0;
+        if (words.Equals("meia", StringComparison.OrdinalIgnoreCase)) return 30;
+        long v = ParseNumberWords(words);
+        return v < 0 || v > 59 ? 0 : (int)v;
+    }
+
+    private static int MonthNumber(string name)
+    {
+        string n = name.ToLowerInvariant().Replace("marco", "março");
+        return Array.IndexOf(months, n) + 1;
+    }
+
+    private static int Year(string y)
+    {
+        int v = Int32.Parse(y);
+        return y.Length == 2 ? 2000 + v : v;
+    }
+
+    private static long Cents(string value)
+    {
+        string v = value.Replace(".", "");
+        string[] parts = v.Split(',');
+        long reais = Int64.Parse(parts[0]);
+        long cents = parts.Length > 1 ? Int64.Parse(parts[1].PadRight(2, '0')) : 0;
+        return reais * 100 + cents;
+    }
+
+    // Approximate, relative or half-day-ambiguous times are never exact.
+    public static bool Uncertain(ReviewItem i)
+    {
+        return i.Approximate || (i.Kind == "horário" && i.AmbiguousHalfDay);
+    }
+
+    // Exact equivalence: the only case painted as "bate".
+    public static bool Equivalent(ReviewItem a, ReviewItem b)
+    {
+        if (a.Kind != b.Kind) return false;
+        if (a.Kind == "data")
+            return a.Day == b.Day && (a.Month == 0 || b.Month == 0 || a.Month == b.Month) && (a.Year == 0 || b.Year == 0 || a.Year == b.Year);
+        if (a.Kind == "horário")
+            return !Uncertain(a) && !Uncertain(b) && a.Minutes == b.Minutes;
+        if (a.Kind == "telefone")
+        {
+            string x = a.Key, y = b.Key;
+            int n = Math.Min(Math.Min(x.Length, y.Length), 9);
+            return n >= 8 && x.Substring(x.Length - n) == y.Substring(y.Length - n);
+        }
+        return a.Key == b.Key;
+    }
+
+    private static string Normalized(string s)
+    {
+        return Regex.Replace((s ?? "").ToLowerInvariant(), @"\s+", " ").Trim();
+    }
+
+    // A possible correspondence that still needs a human check: same wording,
+    // same time on a 12-hour clock, or an approximation within 20 minutes.
+    public static bool Related(ReviewItem a, ReviewItem b)
+    {
+        if (a.Kind != b.Kind) return false;
+        if ((a.Normalized ?? Normalized(a.Text)) == (b.Normalized ?? Normalized(b.Text))) return true;
+        if (a.Kind != "horário") return Equivalent(a, b);
+        int d = Math.Abs(a.Minutes - b.Minutes) % 720;
+        d = Math.Min(d, 720 - d);
+        // 20 min: "dez para as onze" ~ 11h and "duas e pouco" ~ 14h20, without
+        // pairing an approximation with a different nearby time.
+        if (a.Approximate || b.Approximate) return d <= 20;
+        if (a.AmbiguousHalfDay || b.AmbiguousHalfDay) return d == 0;
+        return a.Minutes == b.Minutes;
+    }
+
+    // 0 = bate, 1 = alerta (only an uncertain correspondence), 2 = sem correspondência.
+    private static int Classify(ReviewItem item, List<ReviewItem> others)
+    {
+        bool related = false;
+        foreach (ReviewItem o in others)
+        {
+            if (Equivalent(item, o)) return 0;
+            if (Related(item, o)) related = true;
+        }
+        return related ? 1 : 2;
+    }
+
+    public static ReviewResult Compare(string original, string reformulated)
+    {
+        var result = new ReviewResult();
+        result.Original = Find(original);
+        result.Reformulated = Find(reformulated);
+        bool compare = !String.IsNullOrWhiteSpace(original) && !String.IsNullOrWhiteSpace(reformulated);
+        if (!compare)
+        {
+            // Nothing to compare with: uncertain items still ask for a check.
+            foreach (ReviewItem i in result.Original) i.Alert = Uncertain(i);
+            foreach (ReviewItem i in result.Reformulated) i.Alert = Uncertain(i);
+            return result;
+        }
+        foreach (ReviewItem r in result.Reformulated)
+        {
+            int c = Classify(r, result.Original);
+            if (c == 2) { r.Unmatched = true; result.UnmatchedInReformulated++; }
+            else if (c == 1) { r.Alert = true; result.AlertInReformulated++; }
+        }
+        foreach (ReviewItem o in result.Original)
+        {
+            int c = Classify(o, result.Reformulated);
+            if (c == 2) { o.Unmatched = true; result.MissingFromReformulated.Add(o); }
+            else if (c == 1) o.Alert = true;
+        }
+        return result;
+    }
+
+    // Full summary with the names of what disappeared; ShortSummary keeps only
+    // the counts, for when the full one does not fit in two lines.
+    public static string Summary(ReviewResult result)
+    {
+        string s = Counts(result, false);
+        if (s.Length == 0) return "";
+        int missing = result.MissingFromReformulated.Count;
+        if (missing > 0)
+        {
+            var names = new List<string>();
+            foreach (ReviewItem o in result.MissingFromReformulated) names.Add(o.Text.Trim());
+            s += (missing == 1 ? "; sumiu do reformulado: " : "; sumiram do reformulado: ") + String.Join(", ", names.ToArray());
+        }
+        return s + ".";
+    }
+
+    public static string ShortSummary(ReviewResult result)
+    {
+        string s = Counts(result, true);
+        return s.Length == 0 ? "" : s + ". Clique para ver a lista.";
+    }
+
+    public static string CompactSummary(ReviewResult result)
+    {
+        if (result == null) return "";
+        int total = result.Reformulated.Count;
+        int alerts = result.UnmatchedInReformulated + result.AlertInReformulated + result.MissingFromReformulated.Count;
+        if (total == 0 && alerts == 0) return "";
+        return total + (total == 1 ? " item" : " itens") + (alerts > 0 ? ", " + alerts + " com alerta" : "") + ". Clique para ver.";
+    }
+
+    private static string Counts(ReviewResult result, bool withMissing)
+    {
+        int total = result.Reformulated.Count, missing = result.MissingFromReformulated.Count;
+        if (total == 0 && missing == 0) return "";
+        string s = total == 1 ? "1 item para conferir" : total + " itens para conferir";
+        int u = result.UnmatchedInReformulated, a = result.AlertInReformulated;
+        if (u > 0) s += ", " + u + (u == 1 ? " não encontrado no original" : " não encontrados no original");
+        if (a > 0) s += ", " + a + (a == 1 ? " aproximado ou ambíguo" : " aproximados ou ambíguos");
+        if (withMissing && missing > 0) s += "; " + missing + (missing == 1 ? " sumiu do reformulado" : " sumiram do reformulado");
+        return s;
+    }
+
+    // Complete list shown when the summary is clicked.
+    public static string Details(ReviewResult result)
+    {
+        var sb = new StringBuilder();
+        AppendGroup(sb, "Não encontrados no original (texto reformulado):", result.Reformulated, 2);
+        AppendGroup(sb, "Aproximados ou ambíguos — conferir (texto reformulado):", result.Reformulated, 1);
+        AppendGroup(sb, "Sumiram do reformulado (estavam no original):", result.MissingFromReformulated, -1);
+        AppendGroup(sb, "Conferidos nos dois textos:", result.Reformulated, 0);
+        return sb.Length == 0 ? "Nenhum item para conferir." : sb.ToString().TrimEnd();
+    }
+
+    private static void AppendGroup(StringBuilder sb, string title, List<ReviewItem> items, int state)
+    {
+        var lines = new List<string>();
+        foreach (ReviewItem i in items)
+        {
+            int s = i.Unmatched ? 2 : i.Alert ? 1 : 0;
+            if (state == -1 || s == state) lines.Add("   • " + i.Kind + ": " + i.Text.Trim());
+        }
+        if (lines.Count == 0) return;
+        sb.AppendLine(title);
+        foreach (string l in lines) sb.AppendLine(l);
+        sb.AppendLine();
+    }
+}
+
+// Paints review highlights without touching the text, the caret, the scroll
+// position or the undo history of a RichTextBox.
+public static class ReviewPainter
+{
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
+    private struct CHARFORMAT2
+    {
+        public int cbSize; public uint dwMask; public uint dwEffects; public int yHeight; public int yOffset;
+        public int crTextColor; public byte bCharSet; public byte bPitchAndFamily;
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)] public string szFaceName;
+        public short wWeight; public short sSpacing; public int crBackColor; public int lcid; public int dwReserved;
+        public short sStyle; public short wKerning; public byte bUnderlineType; public byte bAnimation; public byte bRevAuthor; public byte bReserved1;
+    }
+
+    [ComImport, Guid("8CC497C0-A1DF-11CE-8098-00AA0047BE5D"), InterfaceType(ComInterfaceType.InterfaceIsDual)]
+    private interface ITextDocument
+    {
+        [PreserveSig] int GetName(out IntPtr name);
+        [PreserveSig] int GetSelection(out IntPtr selection);
+        [PreserveSig] int GetStoryCount(out int count);
+        [PreserveSig] int GetStoryRanges(out IntPtr ranges);
+        [PreserveSig] int GetSaved(out int saved);
+        [PreserveSig] int SetSaved(int saved);
+        [PreserveSig] int GetDefaultTabStop(out float value);
+        [PreserveSig] int SetDefaultTabStop(float value);
+        [PreserveSig] int New();
+        [PreserveSig] int Open(IntPtr file, int flags, int codePage);
+        [PreserveSig] int Save(IntPtr file, int flags, int codePage);
+        [PreserveSig] int Freeze(out int count);
+        [PreserveSig] int Unfreeze(out int count);
+        [PreserveSig] int BeginEditCollection();
+        [PreserveSig] int EndEditCollection();
+        [PreserveSig] int Undo(int count, out int result);
+    }
+
+    [DllImport("user32.dll", EntryPoint = "SendMessageW")] private static extern IntPtr SendFormat(IntPtr h, int msg, IntPtr w, ref CHARFORMAT2 l);
+    [DllImport("user32.dll", EntryPoint = "SendMessageW")] private static extern IntPtr SendPoint(IntPtr h, int msg, IntPtr w, ref Point l);
+    [DllImport("user32.dll", EntryPoint = "SendMessageW")] private static extern IntPtr SendOut(IntPtr h, int msg, IntPtr w, out IntPtr l);
+    [DllImport("user32.dll", EntryPoint = "SendMessageW")] private static extern IntPtr Send(IntPtr h, int msg, IntPtr w, IntPtr l);
+    [DllImport("user32.dll", EntryPoint = "SendMessageW")] private static extern IntPtr SendRange(IntPtr h, int msg, IntPtr w, ref CHARRANGE l);
+
+    [StructLayout(LayoutKind.Sequential)]
+    private struct CHARRANGE { public int cpMin; public int cpMax; }
+
+    private const int WM_SETREDRAW = 0x000B, EM_SETCHARFORMAT = 0x0444, EM_GETSCROLLPOS = 0x04DD, EM_SETSCROLLPOS = 0x04DE, EM_GETOLEINTERFACE = 0x043C, EM_EXSETSEL = 0x0437, EM_GETEVENTMASK = 0x043B, EM_SETEVENTMASK = 0x0445;
+    private const uint CFM_BACKCOLOR = 0x04000000, CFE_AUTOBACKCOLOR = 0x04000000;
+    private const int tomSuspend = -9999995, tomResume = -9999994;
+
+    private static ITextDocument Document(RichTextBox editor)
+    {
+        try
+        {
+            IntPtr unknown;
+            SendOut(editor.Handle, EM_GETOLEINTERFACE, IntPtr.Zero, out unknown);
+            if (unknown == IntPtr.Zero) return null;
+            try { return Marshal.GetObjectForIUnknown(unknown) as ITextDocument; }
+            finally { Marshal.Release(unknown); }
+        }
+        catch { return null; }
+    }
+
+    private static void SetBack(RichTextBox editor, Color color, bool automatic)
+    {
+        var cf = new CHARFORMAT2();
+        cf.cbSize = Marshal.SizeOf(typeof(CHARFORMAT2));
+        cf.dwMask = CFM_BACKCOLOR;
+        cf.dwEffects = automatic ? CFE_AUTOBACKCOLOR : 0;
+        cf.crBackColor = automatic ? 0 : ColorTranslator.ToWin32(color);
+        SendFormat(editor.Handle, EM_SETCHARFORMAT, (IntPtr)1 /*SCF_SELECTION*/, ref cf);
+    }
+
+    private static void Select(RichTextBox editor, int start, int end)
+    {
+        var range = new CHARRANGE();
+        range.cpMin = start; range.cpMax = end;
+        SendRange(editor.Handle, EM_EXSETSEL, IntPtr.Zero, ref range);
+    }
+
+    // items == null clears every highlight.
+    public static void Paint(RichTextBox editor, List<ReviewItem> items, Color normal, Color strong, Color alert)
+    {
+        if (editor == null || !editor.IsHandleCreated) return;
+        int selStart = editor.SelectionStart, selLength = editor.SelectionLength;
+        Point scroll = Point.Empty;
+        SendPoint(editor.Handle, EM_GETSCROLLPOS, IntPtr.Zero, ref scroll);
+        ITextDocument doc = Document(editor);
+        int ignored;
+        if (doc != null) { try { doc.Undo(tomSuspend, out ignored); } catch { doc = null; } }
+        bool frozen = false;
+        if (doc != null) { try { frozen = doc.Freeze(out ignored) == 0; } catch { } }
+        // No selection/change notifications per item: they dominate the cost
+        // on long texts and must not look like user edits.
+        IntPtr mask = Send(editor.Handle, EM_GETEVENTMASK, IntPtr.Zero, IntPtr.Zero);
+        Send(editor.Handle, EM_SETEVENTMASK, IntPtr.Zero, IntPtr.Zero);
+        Send(editor.Handle, WM_SETREDRAW, IntPtr.Zero, IntPtr.Zero);
+        try
+        {
+            Select(editor, 0, -1);
+            SetBack(editor, Color.Empty, true);
+            if (items != null)
+            {
+                int length = editor.TextLength;
+                foreach (ReviewItem item in items)
+                {
+                    if (item.Start + item.Length > length) continue;
+                    Select(editor, item.Start, item.Start + item.Length);
+                    SetBack(editor, item.Unmatched ? strong : item.Alert ? alert : normal, false);
+                }
+            }
+        }
+        finally
+        {
+            Select(editor, selStart, selStart + selLength);
+            SendPoint(editor.Handle, EM_SETSCROLLPOS, IntPtr.Zero, ref scroll);
+            Send(editor.Handle, EM_SETEVENTMASK, IntPtr.Zero, mask);
+            if (frozen) { try { doc.Unfreeze(out ignored); } catch { } }
+            Send(editor.Handle, WM_SETREDRAW, (IntPtr)1, IntPtr.Zero);
+            editor.Invalidate();
+            if (doc != null) { try { doc.Undo(tomResume, out ignored); } catch { } }
+        }
     }
 }
 

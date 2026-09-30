@@ -1,16 +1,15 @@
-START 2026-09-30T09:18:53
+START 2026-09-30T11:08:57
 PASS 1: abertura da interface com modelo ainda não carregado
 STATUS Carregue o modelo antes de reformular o texto.
-WAIT responsividade sem modelo 314ms
+WAIT responsividade sem modelo 318ms
 PASS 2-3: clique sem modelo retornou em 5ms; apenas aviso local, sem envio ao motor; UI responsiva
 STATUS Carregando modelo local...
 STATUS Carregando modelo GGUF…
-WAIT falha de carregamento 957ms
+WAIT falha de carregamento 922ms
 PASS falha real de GGUF inválido: Reformular permanece desabilitado
 STATUS Carregando modelo local...
 STATUS Carregando modelo GGUF…
-STATUS Modelo carregado  •  Vulkan  •  4 threads CPU
-WAIT carregamento real do GGUF 6063ms
+WAIT carregamento real do GGUF 6419ms
 PASS 4: modelo carregado e confirmado; Reformular habilitado
 STATUS Processando localmente...
 STATUS Preparando reformulação…
@@ -20,23 +19,23 @@ STATUS Gerando… 16 partes recebidas
 STATUS Gerando… 24 partes recebidas
 STATUS Gerando… 32 partes recebidas
 STATUS Concluído. Revise o texto antes de adicionar.
-WAIT geracao 1 11883ms
-PASS 5 geracao 1: clique=10ms; UI ticks=189; maior intervalo=80ms; texto=Relatou que o depoente chegou em casa às oito horas e encontrou seu vizinho na portaria. Ele lhe entregou uma encomenda.
+WAIT geracao 1 21000ms
+PASS 5 geracao 1: clique=14ms; UI ticks=333; maior intervalo=259ms; texto=Relatou que o depoente chegou em casa às oito horas e encontrou seu vizinho na portaria. Ele lhe entregou uma encomenda.
 STATUS Processando localmente...
 STATUS Preparando reformulação…
 STATUS Gerando… 1 partes recebidas
 STATUS Gerando… 8 partes recebidas
 STATUS Gerando… 16 partes recebidas
 STATUS Gerando… 24 partes recebidas
-WAIT geracao 2 16182ms
-PASS 5 geracao 2: clique=6ms; UI ticks=257; maior intervalo=111ms; texto=Relatou que na segunda-feira, o depoente foi ao mercado comprar arroz. O depoente pagou em dinheiro e voltou para casa de ônibus.
+STATUS Concluído. Revise o texto antes de adicionar.
+WAIT geracao 2 11968ms
+PASS 5 geracao 2: clique=115ms; UI ticks=190; maior intervalo=174ms; texto=Relatou que na segunda-feira, o depoente foi ao mercado comprar arroz. O depoente pagou em dinheiro e voltou para casa de ônibus.
 STATUS Processando localmente...
-WAIT dispatch antes de cancelar 35ms
+WAIT dispatch antes de cancelar 31ms
 STATUS Preparando reformulação…
 STATUS Geração cancelada.
-WAIT cancelamento 8207ms
+WAIT cancelamento 7855ms
 PASS cancelamento protegido e modelo preservado
 STATUS Processando localmente...
-WAIT motor encerrado 31ms
+WAIT motor encerrado 44ms
 PASS motor encerrado: UI continua responsiva e geração desabilitada
-ALL PASS

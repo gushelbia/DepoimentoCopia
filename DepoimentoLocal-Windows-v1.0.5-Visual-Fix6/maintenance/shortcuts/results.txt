@@ -1,0 +1,19 @@
+﻿START 2026-09-30T15:19:45
+PASS controle: sem bloqueio, Ctrl+R alinha à direita num RichTextBox comum (a simulação funciona) | Right
+PASS dica de cada botão mostra o atalho | Reformular texto (Ctrl+Enter) / Cancelar a geração (Esc) / Salvar rascunho (Ctrl+S) / Abrir rascunho (Ctrl+O) / Exportar Word (Ctrl+E) / Ligar ou desligar os destaques (Ctrl+D)
+PASS Ctrl+E/R/L/J e demais atalhos de formatação não mudam o texto nem o alinhamento (original)
+PASS Ctrl+E/R/L/J e demais atalhos de formatação não mudam o texto nem o alinhamento (reformulado)
+PASS Ctrl+E/R/L/J e demais atalhos de formatação não mudam o texto nem o alinhamento (consolidado)
+PASS Ctrl+S salva o rascunho (texto e campos)
+PASS Ctrl+S não altera o texto do editor
+PASS Ctrl+O abre o rascunho (também com o foco num campo de qualificação) | Rascunho aberto: atalho-rascunho.txt.
+PASS Ctrl+E exporta o Word
+PASS Ctrl+D liga e desliga os destaques | Destaques: ligados
+PASS Esc sem geração em andamento não faz nada
+PASS Ctrl+Enter sem modelo só avisa e não quebra linha | Carregue o modelo antes de reformular o texto.
+PASS Enter sozinho continua quebrando linha
+PASS Ctrl+Enter reformula (sem quebrar linha no texto original)
+PASS Esc cancela a geração em andamento | Geração cancelada.
+PASS depois de cancelar, Ctrl+Enter gera normalmente (foco no consolidado, que não é alterado) | saída: «Relatou que o depoente chegou às nove horas.»
+PASS nenhuma janela inesperada
+RESULT PASS

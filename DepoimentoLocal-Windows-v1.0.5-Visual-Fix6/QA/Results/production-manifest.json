@@ -1,8 +1,8 @@
 ﻿[
     {
         "path":  "ui/ModernShell.cs",
-        "sha256":  "73FE5B5AD5831FAB17FE020A92D2C7F94CBFD72BFC4EABB7F7AB5343F22DFE8E",
-        "bytes":  150600
+        "sha256":  "156B2083625C819B1A26F5754B66BFE0F6D4C3D36834CFF45B5C6B7076C3FC60",
+        "bytes":  153830
     },
     {
         "path":  "launcher/DesktopProgram.cs",

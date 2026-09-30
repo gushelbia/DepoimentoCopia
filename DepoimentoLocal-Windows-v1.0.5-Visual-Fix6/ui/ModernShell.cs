@@ -735,6 +735,18 @@ public sealed class EditorMenuRenderer : ToolStripProfessionalRenderer
 
 public class SectionCard : RoundedPanel
 {
+    // Ctrl+E/R/L/J (alignment), Ctrl+1/2/5 (line spacing), Ctrl+Shift+L (bullets),
+    // Ctrl+= / Ctrl+Shift+= (sub/superscript) and Ctrl+Shift+< / > (font size).
+    public static bool IsFormattingShortcut(Keys keyData)
+    {
+        Keys key = keyData & Keys.KeyCode;
+        bool ctrl = (keyData & Keys.Control) != 0, shift = (keyData & Keys.Shift) != 0, alt = (keyData & Keys.Alt) != 0;
+        if (!ctrl || alt) return false;
+        if (!shift && (key == Keys.E || key == Keys.R || key == Keys.L || key == Keys.J || key == Keys.D1 || key == Keys.D2 || key == Keys.D5
+            || key == Keys.NumPad1 || key == Keys.NumPad2 || key == Keys.NumPad5)) return true;
+        if (shift && (key == Keys.L || key == Keys.Oemcomma || key == Keys.OemPeriod)) return true;
+        return key == Keys.Oemplus;
+    }
     public RichTextBox Editor;
     public ModernButton ClearButton;
     private Label title;
@@ -832,6 +844,14 @@ public class SectionCard : RoundedPanel
         copyItem.Click += delegate { CopyPlain(); };
         Editor.KeyDown += delegate (object sender, KeyEventArgs e)
         {
+            // Native RichEdit formatting shortcuts (alignment, line spacing, bullets,
+            // sub/superscript, font size) are blocked: the texts stay plain.
+            if (IsFormattingShortcut(e.KeyData))
+            {
+                e.Handled = true;
+                e.SuppressKeyPress = true;
+                return;
+            }
             bool copy = (e.Control && !e.Shift && (e.KeyCode == Keys.C || e.KeyCode == Keys.Insert));
             bool cut = (e.Control && !e.Shift && e.KeyCode == Keys.X) || (e.Shift && !e.Control && e.KeyCode == Keys.Delete);
             if (!copy && !cut) return;
@@ -1301,6 +1321,12 @@ public sealed class ModernDepoimentoForm : Form
         actions.Controls.Add(logButton);
         addButton.AccessibleName = "Adicionar ao depoimento";
         reviewTip.SetToolTip(addButton, "Adicionar ao depoimento");
+        reviewTip.SetToolTip(reformulate, "Reformular texto (Ctrl+Enter)");
+        reviewTip.SetToolTip(cancel, "Cancelar a geração (Esc)");
+        reviewTip.SetToolTip(saveButton, "Salvar rascunho (Ctrl+S)");
+        reviewTip.SetToolTip(openButton, "Abrir rascunho (Ctrl+O)");
+        reviewTip.SetToolTip(exportButton, "Exportar Word (Ctrl+E)");
+        reviewTip.SetToolTip(reviewToggle, "Ligar ou desligar os destaques (Ctrl+D)");
         actions.SizeChanged += delegate { FitActions(); };
         root.Controls.Add(actions, 0, 6);
         root.SetColumnSpan(actions, 2);
@@ -1779,6 +1805,34 @@ public sealed class ModernDepoimentoForm : Form
     {
         if (lastReview == null || reviewFull.Length == 0) return;
         MessageBox.Show(this, ReviewScanner.Details(lastReview), "Itens para conferir", MessageBoxButtons.OK, MessageBoxIcon.Information);
+    }
+
+    // Keyboard shortcuts, for the whole window. They do what the buttons do and
+    // respect the same states (Esc only while a text is being generated).
+    protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+    {
+        if (!closing && HandleShortcut(keyData)) return true;
+        return base.ProcessCmdKey(ref msg, keyData);
+    }
+
+    private bool HandleShortcut(Keys keyData)
+    {
+        if (keyData == (Keys.Control | Keys.Enter))
+        {
+            if (!generationWasRunning) Reformulate_Click(reformulate, EventArgs.Empty);
+            return true; // never a line break in the editor
+        }
+        if (keyData == Keys.Escape)
+        {
+            if (!generationWasRunning) return false;
+            if (cancel.Enabled) Cancel_Click(cancel, EventArgs.Empty);
+            return true;
+        }
+        if (keyData == (Keys.Control | Keys.S)) { if (saveButton.Enabled) Save_Click(saveButton, EventArgs.Empty); return true; }
+        if (keyData == (Keys.Control | Keys.O)) { if (openButton.Enabled) Open_Click(openButton, EventArgs.Empty); return true; }
+        if (keyData == (Keys.Control | Keys.E)) { if (exportButton.Enabled) Export_Click(exportButton, EventArgs.Empty); return true; }
+        if (keyData == (Keys.Control | Keys.D)) { if (reviewToggle.Enabled) ReviewToggle_Click(reviewToggle, EventArgs.Empty); return true; }
+        return false;
     }
 
     private void ReviewToggle_Click(object sender, EventArgs e)

@@ -29,6 +29,10 @@ As tentativas intermediárias desta rodada estão em `round-2-attempt-1/`, `roun
 
 `round-3-notes.md` documenta a correção dos achados de `QA-Inedita-20260929/RELATORIO-INTEGRAL.md`: primeira pessoa residual (formas em -ei/-i/irregulares presentes na entrada), destinatário do relato, dois «lhe» na mesma cadeia, sujeito elíptico do depoente, ação do depoente convertida em percepção, ação de participante atribuída ao depoente, autocorreções paralelas e rejeição lexical excessiva. O prompt não mudou. O estado anterior está em `round-3-before/`. Na execução final, 14/15 casos inéditos concluíram (antes 10/15) e a bateria anterior de 10 casos não regrediu. Os casos inéditos orientaram as regras, portanto não medem mais generalização.
 
+### Quinta rodada — cancelamento durante a geração
+
+Desde a primeira rodada, `GenerateAsync` devolvia o texto parcial ou vazio quando o usuário cancelava; a validação o rejeitava como «saída vazia» e o programa mostrava «Erro durante a reformulação» em vez de «Geração cancelada.» (`maintenance/model-readiness`, falha no passo de cancelamento). `Apply-SemanticFix.ps1` agora insere, logo depois de cada geração (primeira passagem e retry), a mesma verificação `ThrowIfCancellationRequested` que o laço de blocos já usava. Sem cancelamento do usuário nada muda: a rejeição de saída vazia continua valendo (verificado em `Test-Embedded.ps1`). O estado anterior está em `round-5-before/`, inclusive a interface compilada antes da recompilação do lançador.
+
 ## Reprodução
 
 Na raiz da distribuição, em PowerShell 7:

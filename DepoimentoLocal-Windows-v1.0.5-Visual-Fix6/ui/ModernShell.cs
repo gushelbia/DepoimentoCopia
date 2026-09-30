@@ -947,6 +947,9 @@ public sealed class ModernDepoimentoForm : Form
     private bool lastResolvedDark;
     private int themePollTicks;
     private string backendDescription = "";
+    private Timer autosaveTimer;
+    private string lastSavedCombined = "";
+    private bool autosaveReady;
 
     public ModernDepoimentoForm(OriginalAppBridge appBridge, string iconPath, string backendDescription)
     {
@@ -978,8 +981,12 @@ public sealed class ModernDepoimentoForm : Form
             InitialSync();
             ApplyTheme();
             ApplyWindowTitleBarTheme(lastResolvedDark);
+            // Autosave starts only after the recovery decision, so the initial
+            // sync cannot overwrite a copy that has not been offered yet.
+            try { OfferRecovery(); }
+            finally { autosaveReady = true; }
         };
-        FormClosing += delegate { closing = true; syncTimer.Stop(); bridge.Stop(); };
+        FormClosing += Form_Closing;
     }
 
     private void BuildUi()
@@ -1190,7 +1197,16 @@ public sealed class ModernDepoimentoForm : Form
             if (bridge != null && combinedCard.Editor.Focused)
                 await UpdateBridgeAsync(delegate { bridge.CombinedText = text; });
         };
+        combinedCard.Editor.TextChanged += delegate { ScheduleAutosave(); };
         root.Controls.Add(combinedCard, 0, 6);
+
+        autosaveTimer = new Timer();
+        autosaveTimer.Interval = 1500;
+        autosaveTimer.Tick += delegate
+        {
+            autosaveTimer.Stop();
+            WriteAutosave();
+        };
 
         syncTimer = new Timer();
         syncTimer.Interval = 350;
@@ -1635,7 +1651,19 @@ public sealed class ModernDepoimentoForm : Form
 
     private async void Clear_Click(object sender, EventArgs e)
     {
+        if (combinedCard.Editor.Text.Trim().Length > 0)
+        {
+            string msg = HasUnsavedChanges()
+                ? "O depoimento consolidado ainda não foi salvo.\n\nDeseja realmente apagá-lo? Essa ação não pode ser desfeita."
+                : "Deseja realmente limpar o depoimento consolidado?";
+            DialogResult r = MessageBox.Show(this, msg, "Limpar consolidado",
+                MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
+            if (r != DialogResult.Yes) return;
+        }
         combinedCard.Editor.Clear();
+        lastSavedCombined = "";
+        if (autosaveTimer != null) autosaveTimer.Stop();
+        AutosaveStore.Delete();
         await UpdateBridgeAsync(delegate { bridge.CombinedText = ""; });
         if (!closing) status.Text = "Depoimento consolidado limpo.";
     }
@@ -1648,16 +1676,151 @@ public sealed class ModernDepoimentoForm : Form
             MessageBox.Show(this, "O depoimento consolidado está vazio.", "Depoimento Local", MessageBoxButtons.OK, MessageBoxIcon.Information);
             return;
         }
+        if (SaveCombinedToFile(false)) status.Text = "Rascunho salvo.";
+    }
+
+    private void OfferRecovery()
+    {
+        try
+        {
+            string path = AutosaveStore.FilePath;
+            if (!File.Exists(path)) return;
+            string saved = File.ReadAllText(path, Encoding.UTF8);
+            if (saved.Trim().Length == 0)
+            {
+                AutosaveStore.Delete();
+                return;
+            }
+            if (saved.Trim() == combinedCard.Editor.Text.Trim()) return;
+
+            DateTime when = File.GetLastWriteTime(path);
+            DialogResult r = MessageBox.Show(this,
+                "Foi encontrado um depoimento consolidado que não foi salvo na última sessão (" +
+                when.ToString("dd/MM/yyyy 'às' HH:mm") + ").\n\nDeseja recuperá-lo?\n\n" +
+                "Se escolher «Não», esse texto será descartado.",
+                "Recuperar depoimento", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (r == DialogResult.Yes)
+            {
+                combinedCard.Editor.Text = saved;
+                var sync = UpdateBridgeAsync(delegate { bridge.CombinedText = saved; });
+                status.Text = "Depoimento recuperado da última sessão. Lembre-se de salvá-lo.";
+            }
+            else
+            {
+                AutosaveStore.Delete();
+            }
+        }
+        catch (Exception ex)
+        {
+            status.Text = "Não foi possível verificar a recuperação: " + ex.Message;
+        }
+    }
+
+    private void ScheduleAutosave()
+    {
+        if (!autosaveReady || autosaveTimer == null) return;
+        autosaveTimer.Stop();
+        autosaveTimer.Start();
+    }
+
+    private void WriteAutosave()
+    {
+        try
+        {
+            string text = combinedCard.Editor.Text;
+            string trimmed = text.Trim();
+            // Nothing to protect: empty, or identical to what the user last saved.
+            if (trimmed.Length == 0 || trimmed == lastSavedCombined) AutosaveStore.Delete();
+            else AutosaveStore.Write(text);
+        }
+        catch (Exception ex)
+        {
+            if (!generationWasRunning && !closing) status.Text = "Falha no salvamento automático: " + ex.Message;
+        }
+    }
+
+    private bool HasUnsavedChanges()
+    {
+        string t = combinedCard.Editor.Text.Trim();
+        return t.Length > 0 && t != lastSavedCombined;
+    }
+
+    private void MarkCombinedSaved(string savedText)
+    {
+        lastSavedCombined = (savedText ?? "").Trim();
+        if (autosaveTimer != null) autosaveTimer.Stop();
+        WriteAutosave();
+    }
+
+    private void Form_Closing(object sender, FormClosingEventArgs e)
+    {
+        if (autosaveTimer != null) autosaveTimer.Stop();
+
+        // Windows shutdown or forced end: no questions, keep the recovery copy.
+        bool systemClosing = e.CloseReason == CloseReason.WindowsShutDown || e.CloseReason == CloseReason.TaskManagerClosing;
+        if (systemClosing)
+        {
+            if (HasUnsavedChanges()) WriteAutosave();
+        }
+        else if (HasUnsavedChanges())
+        {
+            DialogResult r = MessageBox.Show(this,
+                "O depoimento consolidado não foi salvo.\n\nDeseja salvá-lo antes de sair?",
+                "Depoimento Local", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
+            if (r == DialogResult.Cancel || (r == DialogResult.Yes && !SaveCombinedToFile(true)))
+            {
+                // The window stays open and the engine keeps running.
+                e.Cancel = true;
+                WriteAutosave();
+                return;
+            }
+            if (r == DialogResult.No) AutosaveStore.Delete();
+        }
+        else
+        {
+            AutosaveStore.Delete();
+        }
+
+        // Only after the decision: stop syncing and end the engine.
+        closing = true;
+        syncTimer.Stop();
+        bridge.Stop();
+    }
+
+    private bool SaveCombinedToFile(bool offerWord)
+    {
+        string text = combinedCard.Editor.Text.Trim();
+        if (text.Length == 0) return true;
 
         using (SaveFileDialog dlg = new SaveFileDialog())
         {
-            dlg.Filter = "Texto (*.txt)|*.txt";
-            dlg.FileName = "depoimento-rascunho.txt";
-            if (dlg.ShowDialog(this) == DialogResult.OK)
+            if (offerWord)
             {
-                File.WriteAllText(dlg.FileName, text, new UTF8Encoding(false));
-                status.Text = "Rascunho salvo.";
+                dlg.Filter = "Documento do Word (*.docx)|*.docx|Texto (*.txt)|*.txt";
+                dlg.FileName = "depoimento.docx";
             }
+            else
+            {
+                dlg.Filter = "Texto (*.txt)|*.txt";
+                dlg.FileName = "depoimento-rascunho.txt";
+            }
+            if (dlg.ShowDialog(this) != DialogResult.OK) return false;
+
+            try
+            {
+                if (dlg.FileName.EndsWith(".docx", StringComparison.OrdinalIgnoreCase))
+                    SimpleDocx.Write(dlg.FileName, text);
+                else
+                    File.WriteAllText(dlg.FileName, text, new UTF8Encoding(false));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(this, ex.Message, "Erro ao salvar", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+
+            MarkCombinedSaved(text);
+            return true;
         }
     }
 
@@ -1679,6 +1842,7 @@ public sealed class ModernDepoimentoForm : Form
                 try
                 {
                     SimpleDocx.Write(dlg.FileName, text);
+                    MarkCombinedSaved(text);
                     status.Text = "Documento Word exportado.";
                 }
                 catch (Exception ex)
@@ -1687,6 +1851,52 @@ public sealed class ModernDepoimentoForm : Form
                 }
             }
         }
+    }
+}
+
+// Recovery copy of the consolidated text, outside the program folder.
+public static class AutosaveStore
+{
+    public static string Folder
+    {
+        get
+        {
+            return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "DepoimentoLocal", "recuperacao");
+        }
+    }
+
+    public static string FilePath
+    {
+        get { return Path.Combine(Folder, "consolidado.txt"); }
+    }
+
+    public static void Write(string text)
+    {
+        Directory.CreateDirectory(Folder);
+        string tmp = FilePath + ".tmp";
+        File.WriteAllText(tmp, text ?? "", new UTF8Encoding(false));
+        if (File.Exists(FilePath))
+        {
+            try
+            {
+                File.Replace(tmp, FilePath, null);
+                return;
+            }
+            catch (IOException) { }
+            catch (PlatformNotSupportedException) { }
+            File.Copy(tmp, FilePath, true);
+            File.Delete(tmp);
+        }
+        else
+        {
+            File.Move(tmp, FilePath);
+        }
+    }
+
+    public static void Delete()
+    {
+        try { if (File.Exists(FilePath)) File.Delete(FilePath); } catch { }
+        try { if (File.Exists(FilePath + ".tmp")) File.Delete(FilePath + ".tmp"); } catch { }
     }
 }
 

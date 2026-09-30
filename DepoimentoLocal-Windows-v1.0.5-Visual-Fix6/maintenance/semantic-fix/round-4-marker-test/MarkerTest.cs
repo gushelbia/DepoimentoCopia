@@ -162,9 +162,10 @@ public static class MarkerTest
             System.Threading.Thread.Sleep(700);
             string cancelled = bridge.ReformulatedText;
             CloseDialogs(process.Id); System.Threading.Thread.Sleep(500);
-            results.Add("INFO B: desfecho registrado pelo motor = " + endB + (endB == "[GENERATION_FAILED]" ? " (cancelamento no meio do bloco vira 'saída vazia' no motor; tratador de erro)" : " (tratador de cancelamento)"));
+            results.Add("INFO B: desfecho registrado pelo motor = " + endB + (endB == "[GENERATION_CANCELLED]" ? " (tratador de cancelamento)" : " (tratador de erro)"));
             Check(cancelled.StartsWith(Head) && Count(cancelled, Head) == 1 && cancelled.TrimEnd().EndsWith(Foot), "B: cancelamento com bloco 1 aceito marca o trecho parcial uma única vez", null);
             Check(cancelled.Contains("Ruth"), "B: texto do bloco 1 aceito continua visível dentro do marcador", null);
+            Check(endB == "[GENERATION_CANCELLED]" && cancelled.Contains("Motivo: Geração cancelada pelo usuário"), "B: cancelamento no meio do bloco é registrado como cancelamento, não como erro", endB);
             File.WriteAllText(Path.ChangeExtension(pngPath, ".cancelamento.txt"), cancelled, new UTF8Encoding(false));
 
             // C) Cancellation right after Reformular, before any text: the screen stays empty.
@@ -176,11 +177,13 @@ public static class MarkerTest
             System.Threading.Thread.Sleep(700);
             string empty = bridge.ReformulatedText;
             results.Add("INFO C: desfecho registrado pelo motor = " + endC);
+            Check(endC == "[GENERATION_CANCELLED]", "C: cancelamento antes de qualquer texto é registrado como cancelamento", endC);
             Check(String.IsNullOrWhiteSpace(empty), "C: tela vazia continua vazia (sem marcador)", "texto='" + empty + "'");
         }        catch (Exception ex) { results.Add("FAIL execução: " + ex); }
         finally
         {
-            if (form != null) { try { form.Close(); form.Dispose(); } catch { } }
+            // The consolidated text holds only test data: empty it so closing does not ask to save.
+            if (form != null) { try { Editor(form, "combinedCard").Text = ""; form.Close(); form.Dispose(); } catch { } }
             try { if (!process.HasExited) process.Kill(); } catch { }
         }
         return results;

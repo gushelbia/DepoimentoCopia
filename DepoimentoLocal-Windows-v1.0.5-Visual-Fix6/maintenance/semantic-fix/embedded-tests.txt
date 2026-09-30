@@ -26,6 +26,8 @@ PASS production marker does not duplicate
 PASS production marker keeps empty screen empty
 PASS rejection/error and cancellation handlers mark the on-screen text
 PASS rejection message no longer says the text was kept as is
+PASS cancellation checked after first pass and after retry
+PASS empty output without cancellation is still rejected
 PASS no assistant prefill that drops opening clauses
 PASS retry uses original and diagnostic, never incomplete draft
 PASS helper embedded without deployment assembly dependency

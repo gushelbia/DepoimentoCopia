@@ -68,17 +68,7 @@ try {
     }
     Assert ($wired -eq 2) 'rejection/error and cancellation handlers mark the on-screen text'
     Assert (@($il | Where-Object { [string]$_.Operand -like '*mantido na tela*' }).Count -eq 0) 'rejection message no longer says the text was kept as is'
-    # Round 5: a user cancellation is recognized right after each generation.
-    $checked=0
-    for($i=0;$i -lt $il.Count-4;$i++){
-        if([string]$il[$i].Operand -like '*TaskAwaiter*System.String*::GetResult()*' -and
-           [string]$il[$i+2].OpCode -eq 'ldarg.0' -and [string]$il[$i+3].Operand -like '*<token>5__3' -and
-           [string]$il[$i+4].Operand -like '*CancellationToken::ThrowIfCancellationRequested()'){$checked++}
-    }
-    Assert ($checked -eq 2) 'cancellation checked after first pass and after retry'
 } finally { $module.Dispose() }
-$issue=Invoke-Text Validate @('Eu cheguei cedo ao prédio.','')
-Assert (($issue -eq 'fidelidade: saída vazia') -and (Invoke-Text IsCriticalIssue @($issue))) 'empty output without cancellation is still rejected'
 $factory=$asm.GetType('DepoimentoLocal.Windows.PromptFactory')
 $prompt=$factory.GetMethod('Build',$flags).Invoke($null,@('Eu vi a médica.','Relatou que '))
 Assert ($prompt.EndsWith("<|im_start|>assistant`n")) 'no assistant prefill that drops opening clauses'

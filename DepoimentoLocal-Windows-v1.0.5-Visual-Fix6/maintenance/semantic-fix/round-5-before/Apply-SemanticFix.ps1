@@ -153,28 +153,6 @@ foreach($name in $names) {
             $markedHandlers++
         }
         if($markedHandlers -ne 2){throw "Expected 2 user-facing handlers in Reformular, found $markedHandlers"}
-        # Cancellation (round 5): GenerateAsync returns the partial or empty text
-        # when the user cancels, which validation then rejects as "saída vazia" and
-        # reports as an error. Right after each generation, apply the same token
-        # check the block loop already uses. Without a user cancellation nothing
-        # changes, so the empty-output rejection still applies.
-        $tokenCheck=($mi | Where-Object { $_.Operand -is [dnlib.DotNet.IMethod] -and $_.Operand.FullName -eq 'System.Void System.Threading.CancellationToken::ThrowIfCancellationRequested()' } | Select-Object -First 1)
-        if($null -eq $tokenCheck){throw 'Existing cancellation check not found in Reformular'}
-        $tokenField=$mi[$mi.IndexOf($tokenCheck)-1].Operand
-        if(-not ($tokenField -is [dnlib.DotNet.IField]) -or $tokenField.Name -ne '<token>5__3'){throw 'Cancellation token field not recognized'}
-        $generationResults=@($mi | Where-Object { $_.Operand -is [dnlib.DotNet.IMethod] -and $_.Operand.FullName -eq 'System.String System.Runtime.CompilerServices.TaskAwaiter`1<System.String>::GetResult()' })
-        if($generationResults.Count -ne 2){throw "Expected 2 generation results in Reformular, found $($generationResults.Count)"}
-        foreach($result in $generationResults){
-            $at=$mi.IndexOf($result)
-            if(-not $mi[$at+1].OpCode.Code.ToString().StartsWith('Stloc')){throw 'Generation result is not stored as expected'}
-            $after=$mi[$at+2]
-            if(@($mi | Where-Object { $_.Operand -eq $after }).Count -ne 0){throw 'A branch targets the insertion point'}
-            $check=@(
-                [dnlib.DotNet.Emit.Instruction]::new([dnlib.DotNet.Emit.OpCodes]::Ldarg_0),
-                [dnlib.DotNet.Emit.Instruction]::new([dnlib.DotNet.Emit.OpCodes]::Ldflda,$tokenField),
-                [dnlib.DotNet.Emit.Instruction]::new([dnlib.DotNet.Emit.OpCodes]::Call,$tokenCheck.Operand))
-            $k=$at+2; foreach($ins in $check){$mi.Insert($k++,$ins)}
-        }
         foreach($method in @($validate,$critical,$repair,$residual,$move)+@($factory.Methods)+@($type.Methods)){if($method.HasBody){$method.Body.SimplifyBranches(); $method.Body.OptimizeBranches()}}
         $options=[dnlib.DotNet.Writer.ModuleWriterOptions]::new($m)
         $options.MetadataOptions.Flags=[dnlib.DotNet.Writer.MetadataFlags]::PreserveAll
@@ -190,7 +168,7 @@ foreach($name in $names) {
                 if($method.HasBody -and (($method.Body.Instructions | ForEach-Object ToString) -join "`n") -cne $before[$method.FullName]){throw "Unrelated method changed: $($method.FullName)"}
             }}
         } finally {$check.Dispose()}
-        $report.Add("PASS $name : only prompts, assistant prefill, semantic guard, supplemental conjugations, retry classification, unsafe positional repair, incomplete-output marking and post-generation cancellation check in Reformular changed.")
+        $report.Add("PASS $name : only prompts, assistant prefill, semantic guard, supplemental conjugations, retry classification, unsafe positional repair and incomplete-output marking in Reformular changed.")
     } finally {$m.Dispose()}
 }
 $helper.Dispose()

@@ -9,9 +9,11 @@ PASS UI: Copiar leva o marcador byte a byte à área de transferência
 PASS UI: acentos do marcador preservados na cópia (sem '?' ou caractere de substituição)
 INFO tela renderizada em C:\Users\gusta\OneDrive\Área de Trabalho\Depoimento - Copia\DepoimentoLocal-Windows-v1.0.5-Visual-Fix6\maintenance\semantic-fix\round-4-marker-test\marker-screen.png
 PASS B: novo Reformular começa sem o marcador anterior (não acumula)
-INFO B: desfecho registrado pelo motor = [GENERATION_FAILED] (cancelamento no meio do bloco vira 'saída vazia' no motor; tratador de erro)
+INFO B: desfecho registrado pelo motor = [GENERATION_CANCELLED] (tratador de cancelamento)
 PASS B: cancelamento com bloco 1 aceito marca o trecho parcial uma única vez
 PASS B: texto do bloco 1 aceito continua visível dentro do marcador
-INFO C: desfecho registrado pelo motor = [GENERATION_FAILED]
+PASS B: cancelamento no meio do bloco é registrado como cancelamento, não como erro | [GENERATION_CANCELLED]
+INFO C: desfecho registrado pelo motor = [GENERATION_CANCELLED]
+PASS C: cancelamento antes de qualquer texto é registrado como cancelamento | [GENERATION_CANCELLED]
 PASS C: tela vazia continua vazia (sem marcador) | texto=''
 PASS DLLs de produção inalteradas (sentinela só na cópia temporária)

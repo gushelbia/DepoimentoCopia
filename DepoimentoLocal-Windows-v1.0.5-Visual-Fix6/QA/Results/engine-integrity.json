@@ -3,7 +3,7 @@
     "before":  [
                    {
                        "Algorithm":  "SHA256",
-                       "Hash":  "107097D812F81E48D98E2C147AB2ECC353C9ADBA3C69B20D71F0EEA83799A5DE",
+                       "Hash":  "B72BB74FE42A244A6E5D6F0AF52099057DFF1B4F4A59191A32A3B146025BE112",
                        "Path":  "C:\\Users\\gusta\\OneDrive\\Área de Trabalho\\Depoimento - Copia\\DepoimentoLocal-Windows-v1.0.5-Visual-Fix6\\engine\\DepoimentoLocal.CPU-original.dll"
                    },
                    {
@@ -28,7 +28,7 @@
                    },
                    {
                        "Algorithm":  "SHA256",
-                       "Hash":  "96C6E2D465119DA64A0B4A70C6BF1D103EBE34AD29F503C05209AF162740FE4A",
+                       "Hash":  "E41E06F6DE4BC35F7B80C46844E13D61FA91B5BD6537A4DC8848B4A3A5EBC767",
                        "Path":  "C:\\Users\\gusta\\OneDrive\\Área de Trabalho\\Depoimento - Copia\\DepoimentoLocal-Windows-v1.0.5-Visual-Fix6\\engine\\DepoimentoLocal.dll"
                    },
                    {
@@ -38,14 +38,14 @@
                    },
                    {
                        "Algorithm":  "SHA256",
-                       "Hash":  "96C6E2D465119DA64A0B4A70C6BF1D103EBE34AD29F503C05209AF162740FE4A",
+                       "Hash":  "E41E06F6DE4BC35F7B80C46844E13D61FA91B5BD6537A4DC8848B4A3A5EBC767",
                        "Path":  "C:\\Users\\gusta\\OneDrive\\Área de Trabalho\\Depoimento - Copia\\DepoimentoLocal-Windows-v1.0.5-Visual-Fix6\\engine\\DepoimentoLocal.Vulkan8.dll"
                    }
                ],
     "after":  [
                   {
                       "Algorithm":  "SHA256",
-                      "Hash":  "107097D812F81E48D98E2C147AB2ECC353C9ADBA3C69B20D71F0EEA83799A5DE",
+                      "Hash":  "B72BB74FE42A244A6E5D6F0AF52099057DFF1B4F4A59191A32A3B146025BE112",
                       "Path":  "C:\\Users\\gusta\\OneDrive\\Área de Trabalho\\Depoimento - Copia\\DepoimentoLocal-Windows-v1.0.5-Visual-Fix6\\engine\\DepoimentoLocal.CPU-original.dll"
                   },
                   {
@@ -70,7 +70,7 @@
                   },
                   {
                       "Algorithm":  "SHA256",
-                      "Hash":  "96C6E2D465119DA64A0B4A70C6BF1D103EBE34AD29F503C05209AF162740FE4A",
+                      "Hash":  "E41E06F6DE4BC35F7B80C46844E13D61FA91B5BD6537A4DC8848B4A3A5EBC767",
                       "Path":  "C:\\Users\\gusta\\OneDrive\\Área de Trabalho\\Depoimento - Copia\\DepoimentoLocal-Windows-v1.0.5-Visual-Fix6\\engine\\DepoimentoLocal.dll"
                   },
                   {
@@ -80,7 +80,7 @@
                   },
                   {
                       "Algorithm":  "SHA256",
-                      "Hash":  "96C6E2D465119DA64A0B4A70C6BF1D103EBE34AD29F503C05209AF162740FE4A",
+                      "Hash":  "E41E06F6DE4BC35F7B80C46844E13D61FA91B5BD6537A4DC8848B4A3A5EBC767",
                       "Path":  "C:\\Users\\gusta\\OneDrive\\Área de Trabalho\\Depoimento - Copia\\DepoimentoLocal-Windows-v1.0.5-Visual-Fix6\\engine\\DepoimentoLocal.Vulkan8.dll"
                   }
               ]

@@ -1,0 +1,22 @@
+[
+  {
+    "Path": "C:\\Users\\gusta\\OneDrive\\Área de Trabalho\\Depoimento - Copia\\DepoimentoLocal-Windows-v1.0.5-Visual-Fix6\\maintenance\\semantic-fix\\SemanticGuard.cs",
+    "Hash": "7045588C38B2F1414928A7D6BD29FE3D9A15748BFBC77A218C5FA72D5C3E9964"
+  },
+  {
+    "Path": "C:\\Users\\gusta\\OneDrive\\Área de Trabalho\\Depoimento - Copia\\DepoimentoLocal-Windows-v1.0.5-Visual-Fix6\\maintenance\\semantic-fix\\SystemPrompt.txt",
+    "Hash": "347FADB6606CF08918F7116C4F4D1D596CBBA8A1328CA38419CB98A4EFD488F5"
+  },
+  {
+    "Path": "C:\\Users\\gusta\\OneDrive\\Área de Trabalho\\Depoimento - Copia\\DepoimentoLocal-Windows-v1.0.5-Visual-Fix6\\maintenance\\semantic-fix\\Apply-SemanticFix.ps1",
+    "Hash": "99696CC9F40FCEC097334B26F72EA1287108C3C5B73348319044A1818017B94F"
+  },
+  {
+    "Path": "C:\\Users\\gusta\\OneDrive\\Área de Trabalho\\Depoimento - Copia\\DepoimentoLocal-Windows-v1.0.5-Visual-Fix6\\maintenance\\semantic-fix\\Copy-MethodBody.ps1",
+    "Hash": "B40C43300F337CE0B6A5C5B63125D68B2E30F80B503A478E7AA7482457D014B2"
+  },
+  {
+    "Path": "C:\\Users\\gusta\\OneDrive\\Área de Trabalho\\Depoimento - Copia\\DepoimentoLocal-Windows-v1.0.5-Visual-Fix6\\maintenance\\semantic-fix\\SemanticGuard.compiled.dll",
+    "Hash": "BEB787A7985B76D139359E9249081BAAAA1065AF25F42FE79D91DFBCA90F7FD0"
+  }
+]

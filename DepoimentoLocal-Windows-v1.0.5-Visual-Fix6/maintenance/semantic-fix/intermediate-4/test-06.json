@@ -1,0 +1,45 @@
+﻿{
+    "number":  6,
+    "name":  "Estados de conhecimento e incerteza",
+    "objective":  "Testar diferenças entre saber, acreditar, lembrar, supor e ouvir de terceiros.",
+    "status":  "CONCLUÍDO SEM ALERTAS AUTOMÁTICOS",
+    "input":  "Eu sei que a reunião aconteceu na terça-feira porque estava presente. Não lembro o horário exato. Acho que começou depois das duas, mas posso estar enganado. Eu não sei quem marcou a reunião. A Patrícia me disse que foi o diretor, mas eu não confirmei isso com ele. Tenho certeza de que Carlos entrou depois de mim porque eu já estava sentado quando ele chegou. Não tenho certeza se Ana já estava na sala. Acredito que sim, mas não lembro de ter visto ela entrar. Depois me disseram que houve outra reunião na quinta-feira. Eu não participei dessa segunda reunião e não sei quem estava presente.",
+    "output":  "Relatou que o depoente sabe que a reunião aconteceu na terça-feira porque estava presente. Não lembra o horário exato. Acredita que começou depois das duas, mas pode estar enganado. O depoente não sabe quem marcou a reunião. A Patrícia lhe disse que foi o diretor, mas o depoente não confirmou isso com ele. O depoente tem certeza de que Carlos entrou depois dele porque já estava sentado quando ele chegou. Não tem certeza se Ana já estava na sala. Acredita que sim, mas não lembra de ter visto ela entrar. Depois lhe disseram que houve outra reunião na quinta-feira. O depoente não participou dessa segunda reunião e não sabe quem estava presente.",
+    "inputChars":  595,
+    "outputChars":  649,
+    "inputWords":  106,
+    "outputWords":  112,
+    "generationSeconds":  26.539,
+    "totalSeconds":  28.9845781,
+    "modelConfig":  "context=4096; batch=512; ubatch=256; threads=4; gpuLayers=8; mmap=true; temperature=0",
+    "modelFile":  "file=qwen2.5-3b-instruct-q4_k_m.gguf; bytes=2104932768",
+    "outputCaptureVerified":  true,
+    "warnings":  [
+
+                 ],
+    "nativeWarnings":  [
+                           "[2026-09-28 20:15:02.604 -03:00] [NATIVE-WARNING] [LLAMASHARP] load: control-looking token: 128247 \u0027\u003c/s\u003e\u0027 was not control-type; this is probably a bug in the model. its type will be overridden",
+                           "[2026-09-28 20:15:03.327 -03:00] [NATIVE-WARNING] [LLAMASHARP] llama_context: n_ctx_seq (4096) \u003c n_ctx_train (32768) -- the full capacity of the model will not be utilized",
+                           "[2026-09-28 20:15:03.460 -03:00] [NATIVE-WARNING] [LLAMASHARP] llama_context: n_ctx_seq (4096) \u003c n_ctx_train (32768) -- the full capacity of the model will not be utilized"
+                       ],
+    "retry":  false,
+    "exception":  "",
+    "hasException":  false,
+    "hasError":  false,
+    "contextOverflowException":  false,
+    "completedNormally":  true,
+    "emptyOutput":  false,
+    "fullDuplication":  false,
+    "repeatedParagraphs":  false,
+    "firstPerson":  [
+
+                    ],
+    "negationWarning":  false,
+    "truncationSuspected":  false,
+    "missingEndingMarkers":  [
+
+                             ],
+    "observations":  [
+
+                     ]
+}

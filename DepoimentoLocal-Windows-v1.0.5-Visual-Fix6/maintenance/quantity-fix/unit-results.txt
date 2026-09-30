@@ -1,0 +1,12 @@
+PASS presente
+PASS passado explícito
+PASS citação preservada
+PASS contagem ambígua
+PASS categoria diferente
+PASS correção confirmada
+PASS confirmação repetida
+PASS sujeito diferente
+PASS sem confirmação
+PASS outro nome
+PASS fonte e ação preservadas
+PASS Teste 2 baseline: três estados presentes e autocorreção

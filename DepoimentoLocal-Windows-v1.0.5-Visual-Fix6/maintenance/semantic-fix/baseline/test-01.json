@@ -1,0 +1,45 @@
+﻿{
+    "number":  1,
+    "name":  "Linguagem coloquial e desorganizada",
+    "objective":  "Testar terceira pessoa, incerteza, relato indireto e preservação das fontes.",
+    "status":  "CONCLUÍDO SEM ALERTAS AUTOMÁTICOS",
+    "input":  "Eu cheguei lá acho que era umas duas e pouco, não lembro direito. Quando entrei o João já tava falando com a Maria e parecia que eles tavam discutindo, mas eu não sei porque eu não ouvi o começo. Aí eu ouvi o João falar alguma coisa tipo que aquilo não podia continuar, mas não lembro as palavras certinhas. A Maria respondeu alguma coisa mais alto também, só que tinha gente falando perto e eu não entendi tudo. Depois eu saí pra ir no banheiro e quando voltei o Carlos falou pra mim que o João tinha batido na mesa. Eu não vi isso. Também não sei se ele bateu mesmo ou se só colocou a mão na mesa. Depois a Maria veio falar comigo e disse que ele tinha sido agressivo com ela, mas ela não falou de agressão física. Eu também não vi ninguém encostando em ninguém. Mais tarde eu vi o chefe entrando na sala, mas não sei quem chamou ele. Acho que foi a Maria, mas posso estar enganado. Eu fui embora antes de terminar e no outro dia me disseram que eles tiveram outra reunião. Não sei quem participou dessa reunião.",
+    "output":  "Relatou que chegou a volta de umas duas e pouco, não se lembra exatamente. Quando entrou, João já estava falando com Maria, parecia que eles estavam discutindo, mas não sabe por que não ouviu o começo. Ouviu João dizer algo tipo que aquilo não podia continuar, mas não se lembra as palavras certas. Maria respondeu mais alto também, mas tinha gente falando perto e não entendeu tudo. Depois saiu para ir ao banheiro e quando voltou Carlos lhe disse que João tinha batido na mesa. Não viu isso. Também não sabe se ele realmente bateu ou se só colocou a mão na mesa. Depois Maria veio conversar com ele e disse que ele foi agressivo, mas ela não falou de agressão física. Não viu ninguém encostando em ninguém. Mais tarde viu o chefe entrar na sala, mas não sabe quem chamou ele. Acredita que foi Maria, mas pode estar enganado. Foi embora antes de terminar e no outro dia lhe disseram que eles tiveram outra reunião. Não sabe quem participou dessa reunião.",
+    "inputChars":  1014,
+    "outputChars":  955,
+    "inputWords":  196,
+    "outputWords":  172,
+    "generationSeconds":  42.821,
+    "totalSeconds":  45.2336593,
+    "modelConfig":  "context=4096; batch=512; ubatch=256; threads=4; gpuLayers=8; mmap=true; temperature=0",
+    "modelFile":  "file=qwen2.5-3b-instruct-q4_k_m.gguf; bytes=2104932768",
+    "outputCaptureVerified":  true,
+    "warnings":  [
+
+                 ],
+    "nativeWarnings":  [
+                           "[2026-09-27 16:01:22.618 -03:00] [NATIVE-WARNING] [LLAMASHARP] load: control-looking token: 128247 \u0027\u003c/s\u003e\u0027 was not control-type; this is probably a bug in the model. its type will be overridden",
+                           "[2026-09-27 16:01:23.376 -03:00] [NATIVE-WARNING] [LLAMASHARP] llama_context: n_ctx_seq (4096) \u003c n_ctx_train (32768) -- the full capacity of the model will not be utilized",
+                           "[2026-09-27 16:01:23.633 -03:00] [NATIVE-WARNING] [LLAMASHARP] llama_context: n_ctx_seq (4096) \u003c n_ctx_train (32768) -- the full capacity of the model will not be utilized"
+                       ],
+    "retry":  false,
+    "exception":  "",
+    "hasException":  false,
+    "hasError":  false,
+    "contextOverflowException":  false,
+    "completedNormally":  true,
+    "emptyOutput":  false,
+    "fullDuplication":  false,
+    "repeatedParagraphs":  false,
+    "firstPerson":  [
+
+                    ],
+    "negationWarning":  false,
+    "truncationSuspected":  false,
+    "missingEndingMarkers":  [
+
+                             ],
+    "observations":  [
+
+                     ]
+}

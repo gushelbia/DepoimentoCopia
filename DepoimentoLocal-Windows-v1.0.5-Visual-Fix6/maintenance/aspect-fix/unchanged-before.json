@@ -1,0 +1,18 @@
+[
+  {
+    "Path": "C:\\Users\\gusta\\OneDrive\\Área de Trabalho\\Depoimento - Copia\\DepoimentoLocal-Windows-v1.0.5-Visual-Fix6\\ui\\ModernShell.cs",
+    "Hash": "8D56F7B5FA86D40FA67A4F8C90BA97B2C93BF738FB1033B351C5FC92B8DCA580"
+  },
+  {
+    "Path": "C:\\Users\\gusta\\OneDrive\\Área de Trabalho\\Depoimento - Copia\\DepoimentoLocal-Windows-v1.0.5-Visual-Fix6\\engine\\DepoimentoLocal.Desktop.dll",
+    "Hash": "13DB5E82009EA58C867A1A29FC064BF9859C213352724B762F759425FF942EF4"
+  },
+  {
+    "Path": "C:\\Users\\gusta\\OneDrive\\Área de Trabalho\\Depoimento - Copia\\DepoimentoLocal-Windows-v1.0.5-Visual-Fix6\\DepoimentoLocal.exe",
+    "Hash": "97E1AB1EF6C4A66A6206B878F101A0FBABB24DAEF2139D9D9613C02F46310F47"
+  },
+  {
+    "Path": "C:\\Users\\gusta\\OneDrive\\Área de Trabalho\\Depoimento - Copia\\DepoimentoLocal-Windows-v1.0.5-Visual-Fix6\\modelo\\qwen2.5-3b-instruct-q4_k_m.gguf",
+    "Hash": "626B4A6678B86442240E33DF819E00132D3BA7DDDFE1CDC4FBB18E0A9615C62D"
+  }
+]

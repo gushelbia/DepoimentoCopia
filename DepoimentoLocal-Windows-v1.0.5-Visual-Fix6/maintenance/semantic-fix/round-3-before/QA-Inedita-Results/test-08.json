@@ -1,0 +1,45 @@
+﻿{
+    "number":  8,
+    "name":  "Datas e ordem incertas",
+    "objective":  "Preservar alternativas de data, intervalos e limites de lembrança.",
+    "status":  "CONCLUÍDO SEM ALERTAS AUTOMÁTICOS",
+    "input":  "Acho que visitei o arquivo em 12 de agosto, talvez tenha sido no dia 13. Sei que foi antes do feriado municipal de 15 de agosto. Cheguei entre sete e meia e oito horas, não às oito e meia. O caminhão apareceu depois da minha chegada, mas antes de abrirem o portão lateral. Não lembro se fiquei até nove horas ou até nove e quinze. Dois ou três dias depois, recebi uma ligação de Tainá sobre as caixas. Ela disse que a retirada tinha sido cancelada na véspera da ligação. Não sei a data desse cancelamento.",
+    "output":  "Relatou que o depoente acredita que visitou o arquivo em 12 de agosto, talvez tenha sido no dia 13. O depoente sabe que foi antes do feriado municipal de 15 de agosto. O depoente chegou entre sete e meia e oito horas, não às oito e meia. O caminhão apareceu depois da chegada do depoente, mas antes de abrirem o portão lateral. O depoente não lembra se ficou até nove horas ou até nove e quinze. Dois ou três dias depois, o depoente recebeu uma ligação de Tainá sobre as caixas. Ela disse que a retirada tinha sido cancelada na véspera da ligação. O depoente não sabe a data desse cancelamento.",
+    "inputChars":  505,
+    "outputChars":  594,
+    "inputWords":  96,
+    "outputWords":  111,
+    "generationSeconds":  26.694,
+    "totalSeconds":  29.1937747,
+    "modelConfig":  "context=4096; batch=512; ubatch=256; threads=4; gpuLayers=8; mmap=true; temperature=0",
+    "modelFile":  "file=qwen2.5-3b-instruct-q4_k_m.gguf; bytes=2104932768",
+    "outputCaptureVerified":  true,
+    "warnings":  [
+
+                 ],
+    "nativeWarnings":  [
+                           "[2026-09-29 17:29:57.239 -03:00] [NATIVE-WARNING] [LLAMASHARP] load: control-looking token: 128247 \u0027\u003c/s\u003e\u0027 was not control-type; this is probably a bug in the model. its type will be overridden",
+                           "[2026-09-29 17:29:57.959 -03:00] [NATIVE-WARNING] [LLAMASHARP] llama_context: n_ctx_seq (4096) \u003c n_ctx_train (32768) -- the full capacity of the model will not be utilized",
+                           "[2026-09-29 17:29:58.064 -03:00] [NATIVE-WARNING] [LLAMASHARP] llama_context: n_ctx_seq (4096) \u003c n_ctx_train (32768) -- the full capacity of the model will not be utilized"
+                       ],
+    "retry":  false,
+    "exception":  "",
+    "hasException":  false,
+    "hasError":  false,
+    "contextOverflowException":  false,
+    "completedNormally":  true,
+    "emptyOutput":  false,
+    "fullDuplication":  false,
+    "repeatedParagraphs":  false,
+    "firstPerson":  [
+
+                    ],
+    "negationWarning":  false,
+    "truncationSuspected":  false,
+    "missingEndingMarkers":  [
+
+                             ],
+    "observations":  [
+
+                     ]
+}

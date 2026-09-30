@@ -1,0 +1,45 @@
+﻿{
+    "number":  5,
+    "name":  "Percepção e relato em cadeia",
+    "objective":  "Preservar cada camada de fonte e distinguir leitura, audição e observação.",
+    "status":  "CONCLUÍDO SEM ALERTAS AUTOMÁTICOS",
+    "input":  "Vi um copo quebrado ao lado da impressora. Não vi quem o derrubou. A técnica Sílvia me contou que o motorista Raul lhe disse que alguém esbarrou na mesa. Eu não ouvi Raul falar isso. Mais tarde li uma mensagem de Noemi dizendo que ela tinha ouvido a queda, mas não tinha visto o copo cair. Sílvia acrescentou que achava que o copo já estava trincado. Eu não examinei os cacos. Sei apenas que havia vidro no chão quando entrei.",
+    "output":  "Relatou que o depoente viu um copo quebrado ao lado da impressora. O depoente não viu quem o derrubou. A técnica Sílvia contou ao depoente que o motorista Raul lhe disse que alguém esbarrou na mesa. O depoente não ouviu Raul falar isso. Mais tarde o depoente leu uma mensagem de Noemi dizendo que ela tinha ouvido a queda, mas não tinha visto o copo cair. Sílvia acrescentou que achava que o copo já estava trincado. O depoente não examinou os cacos. O depoente sabe apenas que havia vidro no chão quando o depoente entrou.",
+    "inputChars":  426,
+    "outputChars":  523,
+    "inputWords":  80,
+    "outputWords":  95,
+    "generationSeconds":  23.364,
+    "totalSeconds":  26.0824173,
+    "modelConfig":  "context=4096; batch=512; ubatch=256; threads=4; gpuLayers=8; mmap=true; temperature=0",
+    "modelFile":  "file=qwen2.5-3b-instruct-q4_k_m.gguf; bytes=2104932768",
+    "outputCaptureVerified":  true,
+    "warnings":  [
+
+                 ],
+    "nativeWarnings":  [
+                           "[2026-09-29 18:49:35.583 -03:00] [NATIVE-WARNING] [LLAMASHARP] load: control-looking token: 128247 \u0027\u003c/s\u003e\u0027 was not control-type; this is probably a bug in the model. its type will be overridden",
+                           "[2026-09-29 18:49:36.408 -03:00] [NATIVE-WARNING] [LLAMASHARP] llama_context: n_ctx_seq (4096) \u003c n_ctx_train (32768) -- the full capacity of the model will not be utilized",
+                           "[2026-09-29 18:49:36.539 -03:00] [NATIVE-WARNING] [LLAMASHARP] llama_context: n_ctx_seq (4096) \u003c n_ctx_train (32768) -- the full capacity of the model will not be utilized"
+                       ],
+    "retry":  false,
+    "exception":  "",
+    "hasException":  false,
+    "hasError":  false,
+    "contextOverflowException":  false,
+    "completedNormally":  true,
+    "emptyOutput":  false,
+    "fullDuplication":  false,
+    "repeatedParagraphs":  false,
+    "firstPerson":  [
+
+                    ],
+    "negationWarning":  false,
+    "truncationSuspected":  false,
+    "missingEndingMarkers":  [
+
+                             ],
+    "observations":  [
+
+                     ]
+}

@@ -1,0 +1,7 @@
+Depoimento Local — Visual Fix 6
+
+Ajustes desta versão:
+- Corrige a exibição do rótulo “Modelo GGUF” no cartão superior.
+- O status do modelo passa a refletir o modo realmente ativado pelo inicializador (Vulkan ou CPU).
+- Em Vulkan8, o status mostra “Vulkan • 8 camadas GPU” e mantém a informação das threads CPU usadas em conjunto.
+- Nenhuma alteração no prompt, na lógica de reformulação, no modelo GGUF ou nos parâmetros de geração.

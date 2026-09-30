@@ -1,0 +1,46 @@
+﻿{
+    "number":  2,
+    "name":  "Coloquial e desorganizado",
+    "objective":  "Preservar aproximações, destinatários e ordem sem polir fatos.",
+    "status":  "CONCLUÍDO COM ALERTAS",
+    "input":  "Foi assim, eu tava no pátio, perto do bebedouro, isso já depois do sinal, umas dez para as onze, por aí. O Davi veio falar comigo do portão. Antes disso eu tinha visto a Elisa mexendo no cadeado, mas não sei se ela abriu ou só olhou. Aí o Davi falou pra mim que a chave tinha sumido. Eu falei que não tava com a chave. Tinha um ônibus ligado, fazia barulho, então uma parte do que ele disse eu perdi. No fim a Elisa passou com uma chave na mão, só que eu não sei se era aquela. Depois fui atender um telefonema e não acompanhei mais.",
+    "output":  "Relatou que foi assim, o depoente estava no pátio, perto do bebedouro, isso já depois do sinal, por volta de dez para as onze, por aí. O Davi veio falar com o depoente do portão. Antes disso, o depoente já tinha visto a Elisa mexendo no cadeado, mas o depoente não sabe se ela abriu ou só olhou. Então o Davi falou ao depoente que a chave tinha sumido. O depoente respondeu que não tinha a chave. Havia um ônibus ligado, fazia barulho, então uma parte do que o Davi disse o depoente perdeu. No final, a Elisa passou com uma chave na mão, mas o depoente não sabe se era aquela. Depois, o depoente atendeu um telefonema e não acompanhou mais.",
+    "inputChars":  533,
+    "outputChars":  640,
+    "inputWords":  108,
+    "outputWords":  122,
+    "generationSeconds":  60.525,
+    "totalSeconds":  63.112277399999996,
+    "modelConfig":  "context=4096; batch=512; ubatch=256; threads=4; gpuLayers=8; mmap=true; temperature=0",
+    "modelFile":  "file=qwen2.5-3b-instruct-q4_k_m.gguf; bytes=2104932768",
+    "outputCaptureVerified":  true,
+    "warnings":  [
+                     "[2026-09-29 19:13:27.557 -03:00] [WARN] [BLOCK_RETRY_START] block=1/1; issue=fidelidade: marcador temporal ou de certeza omitido: perto"
+                 ],
+    "nativeWarnings":  [
+                           "[2026-09-29 19:12:56.870 -03:00] [NATIVE-WARNING] [LLAMASHARP] load: control-looking token: 128247 \u0027\u003c/s\u003e\u0027 was not control-type; this is probably a bug in the model. its type will be overridden",
+                           "[2026-09-29 19:12:57.612 -03:00] [NATIVE-WARNING] [LLAMASHARP] llama_context: n_ctx_seq (4096) \u003c n_ctx_train (32768) -- the full capacity of the model will not be utilized",
+                           "[2026-09-29 19:12:57.740 -03:00] [NATIVE-WARNING] [LLAMASHARP] llama_context: n_ctx_seq (4096) \u003c n_ctx_train (32768) -- the full capacity of the model will not be utilized",
+                           "[2026-09-29 19:13:27.564 -03:00] [NATIVE-WARNING] [LLAMASHARP] llama_context: n_ctx_seq (4096) \u003c n_ctx_train (32768) -- the full capacity of the model will not be utilized"
+                       ],
+    "retry":  true,
+    "exception":  "",
+    "hasException":  false,
+    "hasError":  false,
+    "contextOverflowException":  false,
+    "completedNormally":  true,
+    "emptyOutput":  false,
+    "fullDuplication":  false,
+    "repeatedParagraphs":  false,
+    "firstPerson":  [
+
+                    ],
+    "negationWarning":  false,
+    "truncationSuspected":  false,
+    "missingEndingMarkers":  [
+
+                             ],
+    "observations":  [
+
+                     ]
+}

@@ -1,0 +1,5 @@
+PASS: 307 arquivos do aplicativo e da manutenção existente mantiveram os hashes anteriores à bateria.
+PASS: as quinze entradas permaneceram idênticas aos arquivos congelados antes da execução.
+PASS: quinze entradas executadas conferem com os fixtures e quinze saídas literais conferem com os registros estruturados. As dez gerações concluídas conferem também com o tamanho registrado pelo motor.
+PASS: binários, interface, launcher e modelo conferem com os registros de integridade e o manifesto da execução.
+PASS: QaRunner.cs é idêntico ao executor anterior. Nenhum código do aplicativo foi alterado.

@@ -1,0 +1,45 @@
+﻿{
+    "number":  1,
+    "name":  "Linguagem coloquial e desorganizada",
+    "objective":  "Testar terceira pessoa, incerteza, relato indireto e preservação das fontes.",
+    "status":  "CONCLUÍDO SEM ALERTAS AUTOMÁTICOS",
+    "input":  "Eu cheguei lá acho que era umas duas e pouco, não lembro direito. Quando entrei o João já tava falando com a Maria e parecia que eles tavam discutindo, mas eu não sei porque eu não ouvi o começo. Aí eu ouvi o João falar alguma coisa tipo que aquilo não podia continuar, mas não lembro as palavras certinhas. A Maria respondeu alguma coisa mais alto também, só que tinha gente falando perto e eu não entendi tudo. Depois eu saí pra ir no banheiro e quando voltei o Carlos falou pra mim que o João tinha batido na mesa. Eu não vi isso. Também não sei se ele bateu mesmo ou se só colocou a mão na mesa. Depois a Maria veio falar comigo e disse que ele tinha sido agressivo com ela, mas ela não falou de agressão física. Eu também não vi ninguém encostando em ninguém. Mais tarde eu vi o chefe entrando na sala, mas não sei quem chamou ele. Acho que foi a Maria, mas posso estar enganado. Eu fui embora antes de terminar e no outro dia me disseram que eles tiveram outra reunião. Não sei quem participou dessa reunião.",
+    "output":  "Relatou que o depoente chegou lá; o depoente acredita que era umas duas e pouco, o depoente não lembra direito. Quando o depoente entrou o João já estava falando com a Maria e parecia que eles estavam discutindo, mas o depoente não sabe porque o depoente não ouviu o começo. O depoente ouviu o João falar alguma coisa tipo que aquilo não podia continuar, mas não lembra as palavras certas. A Maria respondeu alguma coisa mais alto também, só que tinha gente falando perto e o depoente não entendeu tudo. Depois o depoente saiu para ir no banheiro e quando voltou o Carlos falou para o depoente que o João tinha batido na mesa. O depoente não viu isso. Também o depoente não sabe se ele bateu mesmo ou se só colocou a mão na mesa. Depois a Maria veio conversar com o depoente e disse que ele tinha sido agressivo com ela, mas ela não falou de agressão física. O depoente também não viu ninguém encostando em ninguém. Mais tarde o depoente viu o chefe entrando na sala, mas o depoente não sabe quem chamou ele. O depoente acredita que foi a Maria, mas o depoente pode estar enganado. O depoente foi embora antes de terminar e no outro dia lhe disseram que eles tiveram outra reunião. O depoente não sabe quem participou dessa reunião.",
+    "inputChars":  1014,
+    "outputChars":  1232,
+    "inputWords":  196,
+    "outputWords":  226,
+    "generationSeconds":  46.402,
+    "totalSeconds":  48.8847455,
+    "modelConfig":  "context=4096; batch=512; ubatch=256; threads=4; gpuLayers=8; mmap=true; temperature=0",
+    "modelFile":  "file=qwen2.5-3b-instruct-q4_k_m.gguf; bytes=2104932768",
+    "outputCaptureVerified":  true,
+    "warnings":  [
+
+                 ],
+    "nativeWarnings":  [
+                           "[2026-09-29 07:54:57.516 -03:00] [NATIVE-WARNING] [LLAMASHARP] load: control-looking token: 128247 \u0027\u003c/s\u003e\u0027 was not control-type; this is probably a bug in the model. its type will be overridden",
+                           "[2026-09-29 07:54:58.208 -03:00] [NATIVE-WARNING] [LLAMASHARP] llama_context: n_ctx_seq (4096) \u003c n_ctx_train (32768) -- the full capacity of the model will not be utilized",
+                           "[2026-09-29 07:54:58.364 -03:00] [NATIVE-WARNING] [LLAMASHARP] llama_context: n_ctx_seq (4096) \u003c n_ctx_train (32768) -- the full capacity of the model will not be utilized"
+                       ],
+    "retry":  false,
+    "exception":  "",
+    "hasException":  false,
+    "hasError":  false,
+    "contextOverflowException":  false,
+    "completedNormally":  true,
+    "emptyOutput":  false,
+    "fullDuplication":  false,
+    "repeatedParagraphs":  false,
+    "firstPerson":  [
+
+                    ],
+    "negationWarning":  false,
+    "truncationSuspected":  false,
+    "missingEndingMarkers":  [
+
+                             ],
+    "observations":  [
+
+                     ]
+}

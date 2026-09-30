@@ -1,0 +1,4 @@
+PASS DepoimentoLocal.dll : only FidelityRepairs.Repair updated; prompts, validator, generation, parameters and other methods unchanged.
+PASS DepoimentoLocal.Vulkan8.dll : only FidelityRepairs.Repair updated; prompts, validator, generation, parameters and other methods unchanged.
+PASS DepoimentoLocal.CPU-original.dll : only FidelityRepairs.Repair updated; prompts, validator, generation, parameters and other methods unchanged.
+APPLIED; launchers and manifest hashes updated.

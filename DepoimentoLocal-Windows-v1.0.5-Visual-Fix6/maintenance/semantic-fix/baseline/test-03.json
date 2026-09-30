@@ -1,0 +1,45 @@
+﻿{
+    "number":  3,
+    "name":  "Versões conflitantes",
+    "objective":  "Garantir que versões diferentes sejam preservadas sem escolher uma como verdadeira.",
+    "status":  "CONCLUÍDO SEM ALERTAS AUTOMÁTICOS",
+    "input":  "Eu cheguei na secretaria por volta das duas e meia e vi a Ana conversando com o Roberto. Eu não ouvi o começo da conversa. Depois a Ana me disse que o Roberto tinha batido a porta quando entrou na sala. Eu não vi isso acontecer. Mais tarde o Carlos falou comigo e disse que, na verdade, a porta já estava fechada e que o Roberto só empurrou para abrir. Eu não sei qual das duas versões está correta.\r\n\r\nDepois eu ouvi o Roberto falar mais alto, mas não lembro exatamente o que ele disse. A Ana falou que ele tinha dito que não voltaria para aquela sala. O Carlos, por outro lado, disse que ouviu o Roberto falar que não voltaria para aquela reunião. Eu estava perto, mas tinha outras pessoas falando e não consegui entender a frase inteira.\r\n\r\nEm seguida, a Ana saiu da sala. Acho que o Roberto saiu alguns minutos depois, mas posso estar confundindo a ordem. Uma servidora me disse depois que os dois saíram juntos. Eu não vi os dois saindo juntos.\r\n\r\nMais tarde, ouvi dizer que a chefia conversou com o Roberto. A Ana me falou que essa conversa aconteceu no mesmo dia. Já o Carlos disse que acredita que foi no dia seguinte. Eu não participei dessa conversa e não sei quando ela realmente aconteceu.",
+    "output":  "Relatou que chegou na secretaria por volta das duas e meia e viu Ana conversando com Roberto. Não ouviu o começo da conversa. Depois, Ana lhe informou que Roberto batia a porta quando entrou na sala. Não viu essa cena. Mais tarde, Carlos falou com ele e disse que a porta já estava fechada e que Roberto empurrou para abrir. Não sabe qual das versões está correta. Depois, ouviu Roberto falar mais alto, mas não se lembra exatamente o que disse. Ana afirmou que Roberto disse que não voltaria para aquela sala. Carlos, por outro lado, ouviu que Roberto disse que não voltaria para aquela reunião. Ele estava perto, mas tinha outras pessoas falando e não conseguiu entender a frase inteira. Em seguida, Ana saiu da sala. Acredita que Roberto saiu alguns minutos depois, mas pode estar confundindo a ordem. Uma servidora lhe disse que os dois saíram juntos. Não viu os dois saindo juntos. Mais tarde, ouviu dizer que a chefia conversou com Roberto. Ana afirmou que essa conversa aconteceu no mesmo dia. Carlos, por outro lado, acredita que foi no dia seguinte. Ele não participou da conversa e não sabe quando ela realmente ocorreu.",
+    "inputChars":  1201,
+    "outputChars":  1130,
+    "inputWords":  223,
+    "outputWords":  196,
+    "generationSeconds":  49.212,
+    "totalSeconds":  51.2756921,
+    "modelConfig":  "context=4096; batch=512; ubatch=256; threads=4; gpuLayers=8; mmap=true; temperature=0",
+    "modelFile":  "file=qwen2.5-3b-instruct-q4_k_m.gguf; bytes=2104932768",
+    "outputCaptureVerified":  true,
+    "warnings":  [
+
+                 ],
+    "nativeWarnings":  [
+                           "[2026-09-27 16:02:58.273 -03:00] [NATIVE-WARNING] [LLAMASHARP] load: control-looking token: 128247 \u0027\u003c/s\u003e\u0027 was not control-type; this is probably a bug in the model. its type will be overridden",
+                           "[2026-09-27 16:02:58.934 -03:00] [NATIVE-WARNING] [LLAMASHARP] llama_context: n_ctx_seq (4096) \u003c n_ctx_train (32768) -- the full capacity of the model will not be utilized",
+                           "[2026-09-27 16:02:59.101 -03:00] [NATIVE-WARNING] [LLAMASHARP] llama_context: n_ctx_seq (4096) \u003c n_ctx_train (32768) -- the full capacity of the model will not be utilized"
+                       ],
+    "retry":  false,
+    "exception":  "",
+    "hasException":  false,
+    "hasError":  false,
+    "contextOverflowException":  false,
+    "completedNormally":  true,
+    "emptyOutput":  false,
+    "fullDuplication":  false,
+    "repeatedParagraphs":  false,
+    "firstPerson":  [
+
+                    ],
+    "negationWarning":  false,
+    "truncationSuspected":  false,
+    "missingEndingMarkers":  [
+
+                             ],
+    "observations":  [
+
+                     ]
+}

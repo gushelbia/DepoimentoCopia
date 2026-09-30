@@ -1,0 +1,46 @@
+﻿{
+    "number":  9,
+    "name":  "Ambiguidade temporal",
+    "objective":  "Preservar datas, sequência e dúvidas temporais sem inventar cronologia.",
+    "status":  "CONCLUÍDO COM ALERTAS",
+    "input":  "Acho que isso aconteceu na quarta-feira, mas pode ter sido na quinta. Sei que foi depois da reunião do conselho, só não lembro se foi no mesmo dia ou no dia seguinte. Eu cheguei antes do almoço. A conversa entre Bruno e Carla aconteceu depois que eu cheguei, mas não sei quanto tempo depois. Mais tarde saí do setor e, quando voltei, eles já não estavam lá. No dia seguinte, ou talvez dois dias depois, Carla me contou que tinha conversado novamente com Bruno. Não sei exatamente quando essa segunda conversa ocorreu.",
+    "output":  "Relatou que acredita que isso aconteceu na quarta-feira, mas pode ter sido na quinta. Sabe que foi depois da reunião do conselho, só não lembra se foi no mesmo dia ou no dia seguinte. Chegou antes do almoço. A conversa entre Bruno e Carla aconteceu depois que chegou, mas não sabe quanto tempo depois. Mais tarde saiu do setor e, quando voltou, eles já não estavam lá. No dia seguinte, ou talvez dois dias depois, Carla lhe contou que tinha conversado novamente com Bruno. Não sabe exatamente quando essa segunda conversa ocorreu.",
+    "inputChars":  517,
+    "outputChars":  530,
+    "inputWords":  92,
+    "outputWords":  92,
+    "generationSeconds":  44.78,
+    "totalSeconds":  47.327272799999996,
+    "modelConfig":  "context=4096; batch=512; ubatch=256; threads=4; gpuLayers=8; mmap=true; temperature=0",
+    "modelFile":  "file=qwen2.5-3b-instruct-q4_k_m.gguf; bytes=2104932768",
+    "outputCaptureVerified":  true,
+    "warnings":  [
+                     "[2026-09-27 20:57:17.778 -03:00] [WARN] [BLOCK_RETRY_START] block=1/1; issue=fidelidade: perda de destinatário do relato: no dia seguinte, ou talvez dois dias depois, carla me contou que tinha conversado novamente com bruno."
+                 ],
+    "nativeWarnings":  [
+                           "[2026-09-27 20:56:54.235 -03:00] [NATIVE-WARNING] [LLAMASHARP] load: control-looking token: 128247 \u0027\u003c/s\u003e\u0027 was not control-type; this is probably a bug in the model. its type will be overridden",
+                           "[2026-09-27 20:56:54.958 -03:00] [NATIVE-WARNING] [LLAMASHARP] llama_context: n_ctx_seq (4096) \u003c n_ctx_train (32768) -- the full capacity of the model will not be utilized",
+                           "[2026-09-27 20:56:55.092 -03:00] [NATIVE-WARNING] [LLAMASHARP] llama_context: n_ctx_seq (4096) \u003c n_ctx_train (32768) -- the full capacity of the model will not be utilized",
+                           "[2026-09-27 20:57:17.784 -03:00] [NATIVE-WARNING] [LLAMASHARP] llama_context: n_ctx_seq (4096) \u003c n_ctx_train (32768) -- the full capacity of the model will not be utilized"
+                       ],
+    "retry":  true,
+    "exception":  "",
+    "hasException":  false,
+    "hasError":  false,
+    "contextOverflowException":  false,
+    "completedNormally":  true,
+    "emptyOutput":  false,
+    "fullDuplication":  false,
+    "repeatedParagraphs":  false,
+    "firstPerson":  [
+
+                    ],
+    "negationWarning":  false,
+    "truncationSuspected":  false,
+    "missingEndingMarkers":  [
+
+                             ],
+    "observations":  [
+
+                     ]
+}

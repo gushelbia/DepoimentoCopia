@@ -1,0 +1,82 @@
+[
+  {
+    "number": 1,
+    "before": "Recupera destinatário da agressividade e preserva fontes; introduz ambiguidade no destinatário da fala de Carlos.",
+    "verdict": "Aprovado na revisão desta execução",
+    "after": "Destinatário explícito, locativo preservado e ação separada da estimativa; não há perda semântica identificada.",
+    "details": "A nova saída diz “o depoente chegou lá; o depoente acredita que era umas duas e pouco” e “Carlos falou para o depoente”, eliminando os dois problemas principais da execução anterior. Mantém horário aproximado, falta de lembrança, aparência de discussão e ausência de audição do início; Carlos continua sendo a fonte da batida, que o depoente não viu. Mantém a dúvida bater/colocar a mão, Maria como fonte da agressividade com ela, ausência de relato de agressão física e de contato visto pelo depoente. Conserva a visão da entrada do chefe, a dúvida sobre quem o chamou, a saída antes do fim e a segunda reunião recebida de terceiros. O “ele” da fala de Maria permanece ambíguo como na entrada; o destinatário do relato de Carlos agora é explícito. Há repetição estilística de “o depoente”, sem duplicação de fatos. Não se identificou alteração de fonte, sujeito, percepção, negação, incerteza, temporalidade ou referente.",
+    "outputSha256": "A01DF70CD4F15E32A3692008CDCC5A04F3C04DA6547BCE0A82C11E9E0FDA47C6"
+  },
+  {
+    "number": 2,
+    "before": "Primeira pessoa corrigida e fontes recuperadas no retry; persistem perda de referente, redução do horário e falso começo.",
+    "verdict": "Aprovado na revisão desta execução",
+    "after": "Referente e horário completos; autocorreção consolidada com dúvida e referência explícita à saída do depoente.",
+    "details": "Mantém “umas três, três e pouco” e “o que ela quis dizer”, sem reduzir o horário nem retirar o sujeito da oração subordinada. A correção efetiva ficou “O depoente acredita que Carlos entrou antes da saída do depoente”, preservando a crença e removendo o fragmento de saída abandonado e sua confirmação repetida. Carlos permanece o participante que entra e pergunta o que estava acontecendo; a ida buscar café fica explicitamente atribuída ao depoente. A pausa inicial em “então chegou...” foi mantida porque a chegada não foi retratada; ela não é o falso começo negado da saída. Conserva duração aproximada, talvez menos, ausência de percepção de contato, Carlos como fonte do grito não ouvido, fonte anônima da porta e ausência de visão desse ato, dúvida da ordem de saída e do dia da conversa com a chefia, não participação e ausência de relato sobre seu conteúdo. A frase citada está intacta. O retry recuperou a percepção negada; o warning final legado corresponde à remoção do “não” corretivo, não a uma negação factual perdida. Persistem formas coloquiais e algumas elipses com referente recuperável no contexto; não se identificou troca de fonte, sujeito, percepção, negação, grau de certeza, tempo ou referente nesta saída.",
+    "outputSha256": "8F0375B3304D98D5DED67C6E6293E572AC1EE7257070E14CEBC84571094FE558"
+  },
+  {
+    "number": 3,
+    "before": "Tempo composto, cadeia de relato, versões conflitantes e sujeito do depoimento preservados.",
+    "verdict": "Aprovado na revisão desta execução",
+    "after": "Versões conflitantes, fonte em cadeia, anterioridade e percepção permanecem preservadas.",
+    "details": "Preserva Ana como fonte de “tinha batido”, Carlos como fonte da versão de porta já fechada e o depoente sem saber qual está correta. Mantém “Carlos disse que ouviu Roberto”, sem eliminar a camada intermediária, e a divergência sala/reunião. Mantém proximidade e incompreensão do depoente, dúvida sobre a ordem de saída, a servidora como fonte da saída conjunta não presenciada e versões conflitantes sobre o dia da conversa com a chefia. As mudanças em relação à execução anterior explicitam o depoente em lembrança, possibilidade de engano e ouvir dizer; não transferem ações entre pessoas. Nenhuma mudança relevante de conteúdo, fonte, negação, incerteza, tempo ou referente foi identificada.",
+    "outputSha256": "D45F61FEF686492B48E1319C688621AFB587FCD034B652E08655008F1670A361"
+  },
+  {
+    "number": 4,
+    "before": "Preserva as ambiguidades e torna explícito o depoente nas percepções e dúvidas.",
+    "verdict": "Aprovado na revisão desta execução",
+    "after": "Ambiguidades Marcos/Felipe/diretor e voz não identificada preservadas; depoente explícito nas percepções.",
+    "details": "Preserva desconhecer quem chegou primeiro, a voz não identificada, a hipótese de Marcos ter respondido com possibilidade de engano e as dúvidas sobre Felipe/diretor e Marcos/Felipe. Não escolhe referentes para “ele já sabe disso”; a citação está intacta. Conserva a reunião anterior, as três pessoas falando quase ao mesmo tempo, a falta de compreensão, o depoente não ter perguntado, sua saída antes dos demais e o desconhecimento do desfecho. A explicitação do depoente nas limitações de percepção/memória não resolve as ambiguidades dos outros participantes. A grafia “entrou” da execução anterior foi preservada na versão final; o erro de uma tentativa com outro prompt foi descartado. Não se identificou regressão semântica ou omissão.",
+    "outputSha256": "C6A4CC68E05D4B4ACAD297690649B3F4703B845BF21F08E43C24ED35D7B25BDC"
+  },
+  {
+    "number": 5,
+    "before": "Recupera papéis explícitos, fontes e primeira pessoa; persistem elipses de sujeito e uma construção inadequada.",
+    "verdict": "Aprovado na revisão desta execução",
+    "after": "Sujeito pós-verbal corrigido e depoente explícito nas elipses perigosas; relato longo preservado.",
+    "details": "A construção inadequada virou “O depoente ouviu ela dizer que aquilo já tinha acontecido antes”. Agora aparecem “O depoente não sabe quem ligou para ela”, “O depoente não sabe dizer quanto tempo depois”, “O depoente não perguntou exatamente a que situação ele estava se referindo” e “O depoente não sabe se essa conversa realmente aconteceu”. As ações nomeadas de Patrícia, Eduardo, Marcelo, Fernanda e do coordenador permanecem com seus sujeitos; o retry do bloco 3 recuperou a atribuição explícita de Patrícia. A revisão cobriu os seis blocos: chegada aproximada antes das dez, intervalos, documento do dia anterior, atenção parcial, alternativas de endereço e de motivo da saída, tela não vista, tom alto sem afirmar gritos, conversas simultâneas, ligação, reenvio, informação de Fernanda sem percepção da conversa particular e sem certeza de sua fonte, retorno após o almoço e ordem de chegada, suposição sobre o coordenador, reunião de meia hora não presenciada, comentário incerto de Marcelo, falas posteriores sem intenção/punição/denúncia, entrega informada sem verificação, conversa posterior não confirmada, observação de Fernanda e limites finais de conhecimento. Início, meio e final estão presentes. Não há primeira pessoa fora de citações, trocas nominais, perda factual relevante, truncamento ou duplicação identificados. Continuam formas coloquiais, repetições de “o depoente” e elipses com sujeito sustentado pelo contexto; não se resolveu por adivinhação a referência das falas originalmente ambíguas.",
+    "outputSha256": "37492CECC984CE555B93C6C4B40F52BD45E33074C79F5F2D19262689FDA5BA82"
+  },
+  {
+    "number": 6,
+    "before": "Preserva lhe disseram, participação, ausência, fontes nomeadas e graus de certeza.",
+    "verdict": "Aprovado na revisão desta execução",
+    "after": "Fonte indireta, certeza, memória e ausência de participação preservadas, sem regressão.",
+    "details": "Mantém terça-feira por presença, desconhecimento do horário exato, estimativa após as duas com possibilidade de engano, Patrícia como fonte da atribuição ao diretor e ausência de confirmação. Preserva a certeza sobre Carlos entrar depois do depoente, incerteza sobre Ana e falta de lembrança de sua entrada. A reunião de quinta-feira segue como “Depois lhe disseram”, e o depoente não participou nem sabe os presentes. A versão final mantém “depois dele”, como na execução anterior de referência; a construção “depois do seu” de uma tentativa com outro prompt foi descartada. As alterações finais explicitam o depoente nas limitações e crenças, sem trocar categorias de conhecimento ou atribuições.",
+    "outputSha256": "55C4CE8B005F163C96D512C428A0E1B1887E1897B5CAA158B05C13B622A2837E"
+  },
+  {
+    "number": 7,
+    "before": "Recupera estava perto, preserva citações e separa percepção direta de relato posterior.",
+    "verdict": "Aprovado na revisão desta execução",
+    "after": "Citações literais, proximidade, audição e fonte posterior preservadas.",
+    "details": "As duas citações permanecem literais, inclusive a primeira pessoa legítima dentro das aspas. Preserva o depoente perto e ouvindo claramente a primeira fala, a resposta de Ricardo não compreendida, Daniela como fonte posterior do pedido de revisão, esse pedido não ouvido pessoalmente e a dúvida sobre o destinatário da segunda fala. A diferença principal é tornar explícito quem não sabe a quem a fala foi dirigida. Nenhuma alteração de fonte, sujeito, percepção, negação ou referente foi identificada.",
+    "outputSha256": "A6C1FFC64C66F97F7D27A55B4822C312DCC974562DE07F951CCF8A3C62C95495"
+  },
+  {
+    "number": 8,
+    "before": "Preserva a percepção visual, nomes/cargos, fonte indireta e dúvidas.",
+    "verdict": "Aprovado na revisão desta execução",
+    "after": "Percepção visual, cargos, fonte anônima e desconhecimento preservados.",
+    "details": "A entrada de Helena continua sendo vista pelo depoente. Helena permanece professora, Paulo diretor e Marcos coordenador. A servidora continua como fonte do possível motivo da visita, sem veracidade confirmada. Mantém o desconhecimento do conteúdo das conversas, a dúvida sobre serem do mesmo assunto, a saída alguns minutos depois e o depoente não ter visto a entrada do coordenador. A negativa auditiva ficou explicitamente atribuída ao depoente. Não se identificou regressão, perda temporal ou troca de pessoa/cargo.",
+    "outputSha256": "AA7A1BDD0F8DD766792DE71128C8029D5D547135D563342F1FF8F6CFCF953BAF"
+  },
+  {
+    "number": 9,
+    "before": "Recupera quarta/quinta, conselho, mesmo dia/dia seguinte e antes do almoço; conclui após retry.",
+    "verdict": "Aprovado na revisão desta execução",
+    "after": "Início temporal completo, fonte indireta e foco de só preservados.",
+    "details": "Mantém a hipótese quarta/quinta, certeza de posterioridade ao conselho com dúvida mesmo dia/dia seguinte, chegada antes do almoço e conversa posterior à chegada sem intervalo conhecido. Mantém saída e retorno, ausência dos dois no retorno, relato de Carla no dia seguinte ou talvez dois dias depois e desconhecimento da data da segunda conversa. O retry recuperou o destinatário do relato de Carla: lhe contou. A expressão final é ‘o depoente só não lembra’, preservando o foco no predicado; não afirma que apenas o depoente desconhecia a data. A alteração de foco vista na tentativa intermediária não aparece nesta execução final. Não se identificou omissão, resolução indevida de ambiguidade temporal, troca de fonte ou aumento de certeza.",
+    "outputSha256": "42FC169F28032B9CEF4783F895DDEEF927C612DB8A7919E5937834457D004215"
+  },
+  {
+    "number": 10,
+    "before": "Mantém a negação da percepção, sem afirmar inexistência do fato.",
+    "verdict": "Aprovado na revisão desta execução",
+    "after": "Negação de percepção preservada, sem convertê-la em inexistência do fato.",
+    "details": "A saída conserva ‘o depoente não viu Pedro ameaçar ninguém’, a ausência de audição da ameaça e de visão de contato físico, enquanto preserva ter visto a discussão. Maria continua como fonte do medo, sem relato de agressão física; Carlos continua como fonte do barulho, sem dizer que viu Pedro bater na mesa. Mantém origem desconhecida do ruído, dúvida sobre a presença do diretor, falta de lembrança de vê-lo entrar, reunião recebida de terceiros, ausência de relato de punição, não participação e desconhecimento da decisão. ‘Também’ permanece junto das limitações auditiva e de conhecimento, sem criar exclusividade do sujeito. Não se identificou transferência de negação para o fato nem perda de fonte, percepção ou incerteza.",
+    "outputSha256": "F2335B79E99DF316C40CD8BAEE8F520197803D51476982CC7ACB1559554E0A73"
+  }
+]

@@ -1,0 +1,16 @@
+PASS: saída vazia
+PASS: primeira pessoa em citação ignorada
+PASS: primeira pessoa fora de citação detectada
+PASS: primeira pessoa verbal sem pronome explícito
+PASS: duplicação integral detectada
+PASS: repetição de parágrafo detectada
+PASS: texto distinto sem duplicação
+PASS: captura integral normal sem erro técnico
+PASS: captura parcial divergente do log rejeitada
+PASS: final incompleto sinalizado
+PASS: overflow registrado
+PASS: falha não classificada como sucesso
+PASS: retry registrado
+PASS: warning de negação do validador
+PASS: três marcadores do final encontrados
+PASS: ausência dos três marcadores sinalizada

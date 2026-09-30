@@ -1,0 +1,45 @@
+﻿{
+    "number":  11,
+    "name":  "Nomes e funções semelhantes",
+    "objective":  "Não fundir nomes próximos nem trocar cargos, objetos ou responsabilidade.",
+    "status":  "CONCLUÍDO SEM ALERTAS AUTOMÁTICOS",
+    "input":  "Eu trabalho como auxiliar de biblioteca. A bibliotecária Lívia recebeu o formulário da assistente Lídia. Vi as duas assinarem campos diferentes. O professor Ari levou o formulário para o secretário Arlindo. Não vi a entrega ao secretário; Ari me contou isso depois. A diretora Célia estava no corredor, mas não participou da conversa que ouvi. O vice-diretor Célio telefonou para mim à tarde e perguntou pelo formulário. Eu não sou secretário e não tinha autorização para aprovar o pedido.",
+    "output":  "Relatou que o depoente trabalha como auxiliar de biblioteca. A bibliotecária Lívia recebeu o formulário da assistente Lídia. O depoente viu as duas assinarem campos diferentes. O professor Ari levou o formulário para o secretário Arlindo. O depoente não viu a entrega ao secretário; Ari lhe disse isso depois. A diretora Célia estava no corredor, mas não participou da conversa que o depoente ouviu. O vice-diretor Célio telefonou para o depoente à tarde e perguntou pelo formulário. O depoente não é secretário e não tinha autorização para aprovar o pedido.",
+    "inputChars":  489,
+    "outputChars":  558,
+    "inputWords":  79,
+    "outputWords":  90,
+    "generationSeconds":  24.74,
+    "totalSeconds":  27.5437959,
+    "modelConfig":  "context=4096; batch=512; ubatch=256; threads=4; gpuLayers=8; mmap=true; temperature=0",
+    "modelFile":  "file=qwen2.5-3b-instruct-q4_k_m.gguf; bytes=2104932768",
+    "outputCaptureVerified":  true,
+    "warnings":  [
+
+                 ],
+    "nativeWarnings":  [
+                           "[2026-09-29 18:41:15.448 -03:00] [NATIVE-WARNING] [LLAMASHARP] load: control-looking token: 128247 \u0027\u003c/s\u003e\u0027 was not control-type; this is probably a bug in the model. its type will be overridden",
+                           "[2026-09-29 18:41:16.240 -03:00] [NATIVE-WARNING] [LLAMASHARP] llama_context: n_ctx_seq (4096) \u003c n_ctx_train (32768) -- the full capacity of the model will not be utilized",
+                           "[2026-09-29 18:41:16.349 -03:00] [NATIVE-WARNING] [LLAMASHARP] llama_context: n_ctx_seq (4096) \u003c n_ctx_train (32768) -- the full capacity of the model will not be utilized"
+                       ],
+    "retry":  false,
+    "exception":  "",
+    "hasException":  false,
+    "hasError":  false,
+    "contextOverflowException":  false,
+    "completedNormally":  true,
+    "emptyOutput":  false,
+    "fullDuplication":  false,
+    "repeatedParagraphs":  false,
+    "firstPerson":  [
+
+                    ],
+    "negationWarning":  false,
+    "truncationSuspected":  false,
+    "missingEndingMarkers":  [
+
+                             ],
+    "observations":  [
+
+                     ]
+}

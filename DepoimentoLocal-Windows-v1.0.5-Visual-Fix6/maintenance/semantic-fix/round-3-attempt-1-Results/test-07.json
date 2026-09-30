@@ -1,0 +1,45 @@
+﻿{
+    "number":  7,
+    "name":  "Negações encadeadas",
+    "objective":  "Preservar escopo de negativas e ausência de confirmação ou desmentido.",
+    "status":  "CONCLUÍDO SEM ALERTAS AUTOMÁTICOS",
+    "input":  "Eu não disse que Celso não entregou o crachá. Disse que não vi a entrega. Não é verdade que ninguém me avisou da vistoria: recebi um aviso, mas não pelo telefone. Não lembro quem deixou o bilhete. A supervisora Lídia não negou que o armário estivesse aberto; ela disse que não sabia. Eu não confirmei nem desmenti a versão dela. Nunca entrei naquele depósito sem acompanhamento e não autorizei ninguém a usar meu nome.",
+    "output":  "Relatou que o depoente não disse que Celso não entregou o crachá. Disse que o depoente não viu a entrega. Não é verdade que ninguém lhe avisou da vistoria: o depoente recebeu um aviso, mas não pelo telefone. O depoente não lembra quem deixou o bilhete. A supervisora Lídia não negou que o armário estivesse aberto; ela disse que não sabia. O depoente não confirmou nem desmentiu a versão dela. Nunca entrou no depósito sem acompanhamento e não autorizou ninguém a usar seu nome.",
+    "inputChars":  418,
+    "outputChars":  478,
+    "inputWords":  74,
+    "outputWords":  84,
+    "generationSeconds":  21.727,
+    "totalSeconds":  24.4564524,
+    "modelConfig":  "context=4096; batch=512; ubatch=256; threads=4; gpuLayers=8; mmap=true; temperature=0",
+    "modelFile":  "file=qwen2.5-3b-instruct-q4_k_m.gguf; bytes=2104932768",
+    "outputCaptureVerified":  true,
+    "warnings":  [
+
+                 ],
+    "nativeWarnings":  [
+                           "[2026-09-29 18:39:24.106 -03:00] [NATIVE-WARNING] [LLAMASHARP] load: control-looking token: 128247 \u0027\u003c/s\u003e\u0027 was not control-type; this is probably a bug in the model. its type will be overridden",
+                           "[2026-09-29 18:39:24.915 -03:00] [NATIVE-WARNING] [LLAMASHARP] llama_context: n_ctx_seq (4096) \u003c n_ctx_train (32768) -- the full capacity of the model will not be utilized",
+                           "[2026-09-29 18:39:25.031 -03:00] [NATIVE-WARNING] [LLAMASHARP] llama_context: n_ctx_seq (4096) \u003c n_ctx_train (32768) -- the full capacity of the model will not be utilized"
+                       ],
+    "retry":  false,
+    "exception":  "",
+    "hasException":  false,
+    "hasError":  false,
+    "contextOverflowException":  false,
+    "completedNormally":  true,
+    "emptyOutput":  false,
+    "fullDuplication":  false,
+    "repeatedParagraphs":  false,
+    "firstPerson":  [
+
+                    ],
+    "negationWarning":  false,
+    "truncationSuspected":  false,
+    "missingEndingMarkers":  [
+
+                             ],
+    "observations":  [
+
+                     ]
+}

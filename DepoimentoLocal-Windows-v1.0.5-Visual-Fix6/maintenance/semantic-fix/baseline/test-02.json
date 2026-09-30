@@ -1,0 +1,45 @@
+﻿{
+    "number":  2,
+    "name":  "Transcrição ruim e autocorreções",
+    "objective":  "Testar falsos começos, autocorreções, primeira pessoa, incerteza e fontes.",
+    "status":  "CONCLUÍDO COM ALERTAS",
+    "input":  "Então eu cheguei... acho que foi umas três, três e pouco, não sei certinho. Quando eu cheguei o Paulo tava lá, quer dizer, acho que era o Paulo, porque eu vi ele de costas primeiro. Aí depois eu vi que era ele mesmo. Tava falando com a Juliana. Eu não ouvi o começo da conversa. Eu ouvi ela falar “você não pode fazer isso”, mas eu não sei o que ela quis dizer com isso. Depois ele falou alguma coisa, eu não entendi, tinha barulho. Aí eu saí... não, eu acho que antes de sair entrou o Carlos. É, o Carlos entrou antes. Ele perguntou o que tava acontecendo e ninguém respondeu na hora. Depois eu fui pegar café e fiquei fora uns cinco minutos, talvez menos. Quando eu voltei a Juliana tava chorando. Eu não vi ninguém encostar nela. O Carlos me falou depois que o Paulo tinha gritado com ela, mas eu não ouvi esse grito. Outra pessoa, não lembro quem, disse que ele bateu na porta quando saiu. Eu também não vi isso. Acho que ele saiu primeiro e depois a Juliana, mas posso estar confundindo a ordem. Mais tarde falaram que a chefia chamou os dois, mas eu não sei se foi no mesmo dia. Eu não participei dessa conversa e ninguém me contou o que foi falado.",
+    "output":  "Relatou que chegou aproximadamente às três e pouco, não sabe com certeza. Quando chegou, Paulo estava lá, acredita que era ele, porque viu de costas primeiro. Depois viu que era ele mesmo. Paulo estava falando com a Juliana. Não ouviu o começo da conversa. Ouviu a Juliana dizer \"você não pode fazer isso\", mas não sabe o que ela quis dizer com isso. Depois Paulo falou alguma coisa, não entendeu, havia barulho. Carlos entrou antes de sua saída. Ele perguntou o que estava acontecendo e ninguém respondeu na hora. Depois pegou café e ficou fora uns cinco minutos, talvez menos. Quando voltou, a Juliana estava chorando. Não viu ninguém tocar nela. Carlos lhe disse depois que Paulo gritou com ela, mas não ouviu esse grito. Outra pessoa, não se lembra quem, disse que Paulo bateu na porta quando saiu. Também não viu isso. Acredita que Paulo saiu primeiro e depois a Juliana, mas pode estar confundindo a ordem. Mais tarde, falaram que a chefia chamou os dois, mas não sabe se foi no mesmo dia. Não participou da conversa e ninguém lhe contou o que foi falado.",
+    "inputChars":  1155,
+    "outputChars":  1061,
+    "inputWords":  222,
+    "outputWords":  187,
+    "generationSeconds":  48.14,
+    "totalSeconds":  50.379453899999994,
+    "modelConfig":  "context=4096; batch=512; ubatch=256; threads=4; gpuLayers=8; mmap=true; temperature=0",
+    "modelFile":  "file=qwen2.5-3b-instruct-q4_k_m.gguf; bytes=2104932768",
+    "outputCaptureVerified":  true,
+    "warnings":  [
+                     "[2026-09-27 16:02:56.979 -03:00] [WARN] [BLOCK_ACCEPTED_WITH_WARNING] block=1/1; issue=uma negação pode ter sido omitida"
+                 ],
+    "nativeWarnings":  [
+                           "[2026-09-27 16:02:07.878 -03:00] [NATIVE-WARNING] [LLAMASHARP] load: control-looking token: 128247 \u0027\u003c/s\u003e\u0027 was not control-type; this is probably a bug in the model. its type will be overridden",
+                           "[2026-09-27 16:02:08.698 -03:00] [NATIVE-WARNING] [LLAMASHARP] llama_context: n_ctx_seq (4096) \u003c n_ctx_train (32768) -- the full capacity of the model will not be utilized",
+                           "[2026-09-27 16:02:08.867 -03:00] [NATIVE-WARNING] [LLAMASHARP] llama_context: n_ctx_seq (4096) \u003c n_ctx_train (32768) -- the full capacity of the model will not be utilized"
+                       ],
+    "retry":  false,
+    "exception":  "",
+    "hasException":  false,
+    "hasError":  false,
+    "contextOverflowException":  false,
+    "completedNormally":  true,
+    "emptyOutput":  false,
+    "fullDuplication":  false,
+    "repeatedParagraphs":  false,
+    "firstPerson":  [
+
+                    ],
+    "negationWarning":  true,
+    "truncationSuspected":  false,
+    "missingEndingMarkers":  [
+
+                             ],
+    "observations":  [
+                         "O validador de produção apontou possível perda de negação; não é conclusão semântica do QA."
+                     ]
+}

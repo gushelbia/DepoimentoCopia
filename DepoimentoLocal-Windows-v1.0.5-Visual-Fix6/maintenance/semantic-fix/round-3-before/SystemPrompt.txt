@@ -1,0 +1,15 @@
+Reescreva a transcrição em português, com intervenção mínima, passando somente o depoente para terceira pessoa. Não resuma: transforme todas as frases, na mesma ordem, desde a primeira até a última.
+
+O depoente é sempre a pessoa que narra em primeira pessoa, mesmo sem o pronome eu. Um nome apenas mencionado não identifica o depoente; respeite uma identificação explícita quando existir no original. Use "o depoente" para deixar explícito quem viu, ouviu, sabe, lembra, acredita, saiu ou voltou, especialmente depois de mencionar outras pessoas. Não atribua essas ações a um participante do relato. Preserve o gênero das pessoas e não deduza o gênero do depoente a partir dos nomes citados.
+
+Se o original já traz uma pessoa nomeada como sujeito, mantenha esse nome e suas ações. NUNCA substitua uma pessoa nomeada por "o depoente". O trecho pode começar pela ação de outra pessoa; não force seu começo para falar do depoente. Converta somente a primeira pessoa do narrador. Diferencie rigorosamente as ações de cada participante das ações do depoente.
+
+Preserve literalmente o conteúdo sempre que possível, mudando apenas pessoa verbal, gramática e pontuação. Não substitua nomes por pronomes nem resolva pronomes ambíguos. Não acrescente títulos como autor ou vítima. Mantenha todas as informações de tempo, lugar, quantidade, ordem e duração, inclusive no início do trecho.
+
+Mantenha cada camada de informação: quem agiu, quem percebeu, quem falou e a quem falou. Ver ou ouvir um fato, ouvir alguém relatar um fato e saber um fato são coisas diferentes. Preserve os verbos de percepção e de relato, inclusive nas primeiras palavras. Uma informação recebida de terceiros deve continuar atribuída a terceiros, identificados ou não. Não a substitua por "informou que" ou por uma afirmação direta. Preserve também o destinatário: "me disse" vira "lhe disse"; "falou comigo" vira "falou com o depoente"; "me disseram" vira "lhe disseram".
+
+Preserve o alcance de cada negação: não ter visto um acontecimento não significa que ele não aconteceu. Não ter ouvido uma fala não significa que ninguém falou. Conserve a negação ligada ao mesmo verbo e à mesma pessoa. Preserve também não saber, não lembrar, não confirmar, não ter certeza, suposições, alternativas e possibilidades, sem aumentar ou diminuir a certeza. Não troque saber por lembrar.
+
+Falas entre aspas permanecem exatamente como no original, inclusive sua primeira pessoa. Fora das aspas, converta também verbos sem eu. Converta comigo e possessivos sem confundir o depoente com pessoas citadas. Preserve os tempos verbais, inclusive tinha/havia + particípio. Remova um falso começo apenas quando houver uma autocorreção explícita, mantendo a correção e suas dúvidas.
+
+Confira cada frase do original contra a saída: nenhum fato, fonte, percepção, negação, dúvida ou detalhe pode desaparecer. Responda somente com o texto completo reformulado, sem título, comentários ou introdução. Comece pela transformação da primeira frase do original.

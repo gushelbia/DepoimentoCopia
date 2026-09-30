@@ -1,0 +1,11 @@
+DepoimentoLocal Windows v1.0.5 — Visual Fix 5
+
+Base: v1.0.5 / Visual Fix 4.
+Motor, modelo GGUF, prompt e lógica de reformulação preservados.
+
+Ajustes desta revisão:
+- seletor de tema com seta redesenhada para acompanhar Claro/Escuro;
+- rótulo "Modelo GGUF" reforçado no bloco superior;
+- placeholder discreto no Depoimento consolidado quando vazio;
+- barra de progresso aproximadamente 14% mais curta;
+- nenhum ajuste no motor, Vulkan, GGUF ou regras de reformulação.

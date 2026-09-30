@@ -1,0 +1,1 @@
+COMPILE PASS: DesktopProgram.cs + ModernShell.cs; Release x64; referências .NET 8 locais. Motor binário preservado (fontes ausentes).

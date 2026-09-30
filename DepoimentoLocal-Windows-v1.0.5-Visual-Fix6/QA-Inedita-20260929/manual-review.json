@@ -1,0 +1,212 @@
+[
+  {
+    "number": 1,
+    "verdict": "Reprovado",
+    "severity": "Alta + falha operacional",
+    "semanticChange": true,
+    "manualFirstPerson": [
+      "abri",
+      "Fechei",
+      "Não abri"
+    ],
+    "style": "Concordância inadequada em «o depoente abri».",
+    "findings": "A geração foi rejeitada, mas o rascunho permanece na tela. «Conferi os números das etiquetas e assinei o recibo» virou «O depoente viu conferir os números das etiquetas e assinar o recibo»: execução pelo depoente virou percepção de ação com agente indeterminado. «Vi Otávio colocar» virou afirmação direta «Otávio colocou», sem marcar a percepção. O cargo de zeladora foi omitido. «Berenice estava comigo» virou «Viu Berenice com o depoente», com sujeito elíptico e construção ambígua. Há primeira pessoa residual que o analisador externo não detectou; o validador do aplicativo detectou «fechei» e bloqueou.",
+    "preserved": "Duas caixas lacradas, localização, distribuição das caixas, horários oito/oito e vinte e negativa de abertura constam do rascunho, embora esta última permaneça em primeira pessoa. Não há citação, data ou grau de incerteza na entrada. Não há duplicação ou corte textual identificado.",
+    "truncation": false,
+    "duplication": false,
+    "outputSha256": "342474A705AF7EEFA5E93581E24F2152D912AEA7FC495D9A9150B8B845A99A29"
+  },
+  {
+    "number": 2,
+    "verdict": "Não concluído; rascunho semanticamente preservado",
+    "severity": "Falha operacional",
+    "semanticChange": false,
+    "manualFirstPerson": [],
+    "style": "Mantém «foi assim», «por aí» e outras marcas coloquiais.",
+    "findings": "O validador rejeitou a oração «eu falei que não tava com a chave», embora o rascunho a expresse como «O depoente respondeu que não tinha a chave». No contexto do episódio, a negativa de posse naquele momento permanece; trata-se de provável rejeição excessivamente lexical, e não de omissão factual observada. A geração não foi aceita, portanto o caso não é aprovado operacionalmente. «Respondeu»/«atendeu» são reformulações do diálogo e da ida atender, sem mudança relevante identificada nesta leitura.",
+    "preserved": "Pátio e proximidade do bebedouro, depois do sinal, horário aproximado, Davi como fonte/destinatário explícito, visão anterior de Elisa e alternativa abriu/olhou, chave desaparecida segundo Davi, negativa do depoente, ônibus/barulho/audição incompleta, chave vista sem identificação e fim do acompanhamento foram preservados. Não há citações ou cargos a preservar. Sem primeira pessoa, duplicação ou corte identificado.",
+    "truncation": false,
+    "duplication": false,
+    "outputSha256": "F83313DA474FD4E954FBBF4333CEA197A5BE1F41380178875C79955A71D649B0"
+  },
+  {
+    "number": 3,
+    "verdict": "Ressalva de redação; não aprovado integralmente",
+    "severity": "Moderada — autocorreção não consolidada",
+    "semanticChange": false,
+    "manualFirstPerson": [],
+    "style": "Mantém três falsos começos/autocorreções: sexta/quinta, recepcionista/estagiária e saída às dez/chegada às dez. Capitalização inadequada após ponto e vírgula.",
+    "findings": "Concluiu sem warning, mas reproduziu os fragmentos abandonados seguidos das correções, em vez de expressar somente a versão efetiva. A data correta e o horário de saída continuam recuperáveis pelas correções explícitas, portanto não classifico como inversão factual consumada. O comportamento geral de consolidação de autocorreções não generalizou para estas formas. A construção «Entregou para...» mantém elipse do depoente, recuperável pelo contexto.",
+    "preserved": "Quinta como data corrigida, folga na sexta, função efetiva de estagiária cobrindo recepção, nome desconhecido, chegada às dez e saída aproximada perto das onze, envelope azul e dupla marca de dúvida, além de não retratar a própria incerteza. Sem troca de fonte, certeza indevida, citações, omissão relevante ou duplicação factual identificadas.",
+    "truncation": false,
+    "duplication": false,
+    "outputSha256": "7B54A515FE5847A9EF2881B43E6D962EDFB2FAA28C75877AD8FE733A81D01F6A"
+  },
+  {
+    "number": 4,
+    "verdict": "Reprovado na revisão semântica",
+    "severity": "Moderada — ambiguidade nova de sujeito",
+    "semanticChange": true,
+    "manualFirstPerson": [],
+    "style": "Construção geral legível, mas a elipse de resposta é perigosa em relato com vários homens.",
+    "findings": "Após «Vicente lhe perguntou se o depoente tinha visto a nota fiscal», a saída usa «Respondeu que não». O original «Respondi que não» identifica inequivocamente o depoente; a nova elipse permite continuar com Vicente como sujeito da oração principal anterior. O contexto sugere o depoente, mas a atribuição ficou menos explícita justamente no caso de risco de pronomes. Não há troca nominal inequívoca, e sim ambiguidade introduzida. O retry restaurou o destinatário da fala posterior de Leandro.",
+    "preserved": "Presença inicial, possuidor desconhecido da ferramenta, alternativa Leandro/Natan para voltar no sábado, saída de Vicente da oficina, permanência do depoente com Natan, ausência de pergunta sobre a nota, retorno solitário de Leandro e fonte indireta da saída do prédio, que o depoente não viu. Ambiguidades originais permanecem, datas e negativas presentes, sem corte ou duplicação.",
+    "truncation": false,
+    "duplication": false,
+    "outputSha256": "1C6363627DED3A7668584A73B315508FBF03A5754AC4C81A5BA934D342034EE8"
+  },
+  {
+    "number": 5,
+    "verdict": "Reprovado",
+    "severity": "Moderada + falha operacional",
+    "semanticChange": true,
+    "manualFirstPerson": [
+      "li",
+      "examinei"
+    ],
+    "style": "«O depoente não examinei» apresenta erro de concordância.",
+    "findings": "Rejeitado por primeira pessoa residual, que também existe em «li» e não foi sinalizada pelo analisador externo. A cadeia «Sílvia lhe contou que Raul lhe disse» mantém os dois nomes, mas o primeiro «lhe» passa a designar o depoente, tornando menos claro se o segundo designa Sílvia ou o depoente. Na entrada, «Sílvia me contou que Raul lhe disse» distinguia os destinatários. Há ambiguidade nova de fonte/destinatário, sem troca comprovada de nome. O validador bloqueou pela forma verbal, não por essa ambiguidade.",
+    "preserved": "Copo quebrado junto da impressora, autoria desconhecida da queda, relato de Raul por Sílvia, ausência de audição direta, mensagem lida de Noemi e distinção ouviu/não viu, hipótese de trinca anterior, não exame dos cacos e limite final de conhecimento estão presentes. Funções técnica/motorista e ordem temporal permanecem. Sem corte ou duplicação; primeira pessoa impede conformidade formal.",
+    "truncation": false,
+    "duplication": false,
+    "outputSha256": "C62ED3EEEE48FF2EDA5EE28972401179657017103B738242343D28D0569D27CD"
+  },
+  {
+    "number": 6,
+    "verdict": "Reprovado na revisão semântica",
+    "severity": "Moderada — destinatário omitido",
+    "semanticChange": true,
+    "manualFirstPerson": [],
+    "style": "Redação legível, com repetição de «o depoente».",
+    "findings": "As negações de percepção passaram corretamente, inclusive a ressalva explícita de que não ver não permite concluir se ocorreu. Entretanto, «A gerente Yara me disse» virou «A gerente Yara disse»: a fonte nomeada permanece, mas desaparece que a informação foi transmitida ao depoente. Não há invenção de outro destinatário; há perda de uma relação explícita de relato. A geração foi aceita sem warning apesar dessa omissão.",
+    "preserved": "Não ver retirada, não saber se houve retirada, visão de Ícaro perto do balcão com sacola fechada, não ouvir autorização, não poder negar pedido por ausência temporária, valor de cinquenta reais, falta de conferência e dúvida sobre diferença anterior. Nome e cargo preservados, sem certeza indevida, primeira pessoa, corte ou duplicação.",
+    "truncation": false,
+    "duplication": false,
+    "outputSha256": "3D1D19AFD728425E5F96F6BAEC21A5C704F896BFBF77E6526E70E999580D1E08"
+  },
+  {
+    "number": 7,
+    "verdict": "Aprovado",
+    "severity": "Sem erro semântico identificado",
+    "semanticChange": false,
+    "manualFirstPerson": [],
+    "style": "«Lhe avisou» é coloquial; elipses continuam ligadas ao depoente no contexto.",
+    "findings": "As negativas encaixadas foram preservadas: não disse que Celso não entregou, mas disse que não viu; houve aviso, não telefônico; Lídia não negou e declarou desconhecimento; depoente não confirmou nem desmentiu, nunca entrou sem acompanhamento e não autorizou uso do nome. Nenhuma inversão de escopo identificada.",
+    "preserved": "Sujeitos, cargo de supervisora, bilhete e autoria desconhecida, fonte da declaração e limites de conhecimento permanecem. «Naquele depósito» ficou «no depósito», sem outro local concorrente no relato; não identificada troca de referente. Não há datas ou citações literais. Sem omissão factual relevante, acréscimo, primeira pessoa, corte ou duplicação.",
+    "truncation": false,
+    "duplication": false,
+    "outputSha256": "6584507B1BF08C6B8EBC4FC6A295EC56BF6C6CEF388A75DC364DDDC47A0B1C94"
+  },
+  {
+    "number": 8,
+    "verdict": "Aprovado",
+    "severity": "Sem erro semântico identificado",
+    "semanticChange": false,
+    "manualFirstPerson": [],
+    "style": "Repetição de «o depoente», sem duplicação de fatos.",
+    "findings": "Conserva todas as alternativas temporais e a negação de oito e meia. Não escolhe entre 12/13, entre nove/nove e quinze ou entre dois/três dias. Explicita a chegada do depoente como marco do caminhão.",
+    "preserved": "Feriado municipal no dia 15, certeza da anterioridade, intervalo sete e meia/oito, chegada do caminhão entre chegada do depoente e abertura do portão, ligação posterior de Tainá, cancelamento segundo ela na véspera da ligação e data desconhecida. Fontes, ordem, certeza e incertezas intactas. Sem citações, troca de cargo, omissão, acréscimo, primeira pessoa, corte ou duplicação.",
+    "truncation": false,
+    "duplication": false,
+    "outputSha256": "D3CE0A279BE9A29360157BDABC306DFC9DB64A120BB7AF3DF011F1AA0C3C8526"
+  },
+  {
+    "number": 9,
+    "verdict": "Aprovado",
+    "severity": "Sem erro semântico identificado",
+    "semanticChange": false,
+    "manualFirstPerson": [],
+    "style": "Introdução «Relatou que na segunda-feira» poderia receber pontuação mais natural; conteúdo legível.",
+    "findings": "Preserva as versões incompatíveis sem escolher uma. Não usa a hipótese do segurança como explicação confirmada. Mantém Hugo como fonte na segunda, Iracema na terça e o depoente ausente do local.",
+    "preserved": "Janela fechada antes da chuva versus aberta durante a chuva, esclarecimento copa/não corredor, reafirmação de Iracema sobre a copa, dúvida do depoente e ausência de percepção da eventual reabertura. Relato de Hugo ao depoente preservado por «lhe». Sem troca de sujeito, fonte, negação, cronologia ou grau de certeza; sem omissão, acréscimo, primeira pessoa, corte ou duplicação.",
+    "truncation": false,
+    "duplication": false,
+    "outputSha256": "3EC662BB200FD7B3FC940BFF76B1F0FF1D1C3E2A4DBA1BFEEA938A8DAF854546"
+  },
+  {
+    "number": 10,
+    "verdict": "Reprovado na revisão semântica",
+    "severity": "Alta — atribuição de relato comprometida",
+    "semanticChange": true,
+    "manualFirstPerson": [],
+    "style": "«Atrás de o depoente» é contração inadequada, sem mudar a posição espacial. «Mirela o depoente disse» compromete a estrutura da fala.",
+    "findings": "«Mirela me disse mais tarde» virou «Mirela o depoente disse mais tarde». O destinatário não foi convertido para uma construção gramatical válida, e «o depoente» aparece contíguo a «disse», concorrendo com Mirela como sujeito. A relação fonte/destinatário ficou comprometida; não é apenas polimento de estilo. O aplicativo aceitou sem warning. A elipse em «Não sabe» é recuperável pelo depoente da oração anterior e não foi tratada como outra falha.",
+    "preserved": "As duas falas principais e «nós já avisamos» permaneceram literais, inclusive a primeira pessoa legítima nas aspas; «amanhã» e a dúvida sobre seu dia também. Audição das duas frases, voz atrás do depoente não identificada, negativa sobre contrato e ausência de pergunta permanecem, embora a fonte da negativa tenha sido prejudicada. Sem corte, duplicação ou primeira pessoa fora de aspas.",
+    "truncation": false,
+    "duplication": false,
+    "outputSha256": "08AF2C0CFE8DF3DCCBFE6878C5F6C3EFF48D917714F73BE49CFA4813117E0281"
+  },
+  {
+    "number": 11,
+    "verdict": "Reprovado na revisão semântica",
+    "severity": "Moderada — ambiguidade nova de percepção",
+    "semanticChange": true,
+    "manualFirstPerson": [],
+    "style": "Demais construções legíveis.",
+    "findings": "«A diretora Célia ... não participou da conversa que ouvi» virou «A diretora Célia ... não participou da conversa que ouviu». A primeira pessoa identificava o depoente como ouvinte; a terceira pessoa sem sujeito permite atribuir a audição a Célia, sujeito da oração principal. Não se afirma que ocorreu troca inequívoca, mas houve perda da atribuição explícita de percepção. Aceito sem warning.",
+    "preserved": "Lívia/Lídia, Ari/Arlindo e Célia/Célio não foram fundidos. Todos os cargos, recebimento do formulário, assinaturas em campos diferentes, entrega por Ari não vista e relatada depois, presença de Célia no corredor, telefonema do vice-diretor à tarde e limites da função/autorização do depoente foram preservados. Sem citação, data específica, negação invertida, corte, duplicação ou primeira pessoa residual.",
+    "truncation": false,
+    "duplication": false,
+    "outputSha256": "FCF3EF46D87FA48DE1C736C72460922246B08F0093580EA45A828301D55F5370"
+  },
+  {
+    "number": 12,
+    "verdict": "Reprovado; saída parcial",
+    "severity": "Alta + falha operacional",
+    "semanticChange": true,
+    "manualFirstPerson": [
+      "trabalho",
+      "Consultei (duas ocorrências)",
+      "nossa"
+    ],
+    "style": "«O depoente trabalho» e a mistura «Consultei seu celular» rompem a pessoa gramatical. Elipses após a enumeração de participantes também reduzem clareza.",
+    "findings": "A execução parou por rejeição do bloco 1/5, após retry, por «consultei». Somente o início ficou na tela, até a entrada de Vilma com as sacolas. O relógio parado foi omitido já nesse trecho; a explicação do uso do celular perdeu sua causa. Todo o restante da entrada ficou ausente da saída disponível: guarda/devolução das sacolas, ligação e atraso sem cancelamento, impressão e destinatário das folhas, extensão, serviço elétrico, pincel e limites da percepção, veículo/grupo incerto, conversa no almoço, chave, fim do expediente, mensagens posteriores e ressalvas finais. Trata-se de interrupção por validação documentada, não evidência de estouro de contexto ou corte por limite de tokens. Não é possível avaliar como o modelo reformularia os quatro blocos não processados.",
+    "preserved": "No trecho disponível, constam data 18 de maio, chegada aproximada, nomes/cargos iniciais, mochila, ausência de discussão, pergunta e fonte da lista, não visão do envio e endereço desconhecido, consulta restrita à caixa de entrada, Neide sem resposta, relato de Bento, chiado ouvido com causa incerta, pedido para aguardar eletricista e ausência de afirmação de equipamento queimado. Esses acertos parciais não compensam a incompletude. Sem duplicação identificada. O detector automático marcou «nossa», mas não todas as formas de primeira pessoa; não marcou truncamento porque o rascunho termina com ponto.",
+    "truncation": true,
+    "duplication": false,
+    "outputSha256": "A144B67227F262B72C16404EC3F50F69B873A0ACA316FA2C944CA59CBAB61773"
+  },
+  {
+    "number": 13,
+    "verdict": "Aprovado",
+    "severity": "Sem erro semântico identificado",
+    "semanticChange": false,
+    "manualFirstPerson": [],
+    "style": "Mantém o histórico explícito da retratação, em vez de condensá-lo; acrescenta aspas metalinguísticas em «lacrado».",
+    "findings": "A correção Rubens→Amaro permanece explicitamente marcada, sem apresentar Rubens como autor confirmado da entrega. Amaro continua porteiro; certeza da entrega justificada pela assinatura é separada da dúvida do horário. «Fechado com fita» não vira «lacrado», e a negativa de afirmar lacre permanece. Diferentemente dos falsos começos do caso 3, aqui o histórico da declaração anterior é parte de uma retratação completa e inteligível, preservada como tal.",
+    "preserved": "Destinatário da chave, presença de Rubens ao lado de Amaro, assinatura diante de Amaro, alternativas seis/seis e meia, fita, falta de verificação de lacre e recusa de afirmar lacrado. Não há fonte indireta nova, resolução de dúvida, omissão relevante, primeira pessoa, corte ou duplicação factual.",
+    "truncation": false,
+    "duplication": false,
+    "outputSha256": "E8362C8A1B0A0DA015C86F99E6B081011D28B4E652043F6108F92BC20BD0FFDA"
+  },
+  {
+    "number": 14,
+    "verdict": "Reprovado",
+    "severity": "Moderada — primeira pessoa e destinatário omitido",
+    "semanticChange": true,
+    "manualFirstPerson": [
+      "li"
+    ],
+    "style": "«O depoente li um cartaz» apresenta primeira pessoa residual e concordância incorreta.",
+    "findings": "Aceito sem warning apesar de «o depoente li». O analisador externo também não marcou «li». «Ela me entregou uma via» virou «ela entregou uma via com o nome do depoente»: o destinatário explícito da entrega desaparece; o nome na via e a conferência permitem inferir a entrega ao depoente, mas não expressam a mesma relação. Os detalhes laterais não foram apagados.",
+    "preserved": "Pedido de segunda via, chuva, guarda-chuva amarelo pingando perto da porta, opinião de irrelevância da cor e lembrança do detalhe, espera solicitada por Dora, cartaz de vacinação, água, entrega observada a homem de boné com dúvida sobre qual recibo, nome e conferência da via, saída sem reclamar/conversar. Cargo de atendente e percepção visual preservados; sem corte ou duplicação.",
+    "truncation": false,
+    "duplication": false,
+    "outputSha256": "3525B9AA05E0623E50D42FF9DC46DA6DB1ABFEC6612351CEA2A02392861ACA63"
+  },
+  {
+    "number": 15,
+    "verdict": "Reprovado",
+    "severity": "Moderada + falha operacional",
+    "semanticChange": true,
+    "manualFirstPerson": [
+      "levei"
+    ],
+    "style": "Primeira pessoa residual em «Não levei a bolsa».",
+    "findings": "Rejeitado após retry por «levei», forma não detectada pelo analisador externo. As ambiguidades originais foram preservadas, mas «Não perguntei quem era ela» virou «Não perguntou quem era ela» após «Vera lhe disse...». A elipse pode atribuir a ausência de pergunta a Vera em vez do depoente; a entrada era explícita pela flexão de primeira pessoa. Não há solução inventada para irmã/carro/ela/problema, mas há uma ambiguidade nova sobre quem não perguntou.",
+    "preserved": "Presença na sala, fala Inês→Vera, irmã e carro desconhecidos, pedido de levar bolsa com autora desconhecida, depoente de costas, negativa de levar, fala de uma sobre a outra, problema desconhecido e relato posterior de Vera ao depoente. A palavra citada «ela» permanece literal. Sem corte ou duplicação identificados.",
+    "truncation": false,
+    "duplication": false,
+    "outputSha256": "B9CA3850959B21B10C6EA08481098E27594E833EA61C84421B2EF37F086B6861"
+  }
+]

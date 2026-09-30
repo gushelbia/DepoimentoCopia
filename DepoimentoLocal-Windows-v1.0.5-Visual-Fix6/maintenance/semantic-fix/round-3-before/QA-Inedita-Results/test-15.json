@@ -1,0 +1,47 @@
+﻿{
+    "number":  15,
+    "name":  "Ambiguidade real a preservar",
+    "objective":  "Não resolver possuidor, destinatário, pessoa ou local por inferência.",
+    "status":  "ERRO",
+    "input":  "Eu estava na sala quando Inês disse a Vera que sua irmã esperava no carro. Não sei de quem era a irmã nem qual carro era. Depois ela pediu que eu levasse a bolsa para lá. Não consegui identificar se quem fez o pedido foi Inês ou Vera, porque eu estava de costas. Não levei a bolsa. Ouvi uma delas dizer que a outra já sabia do problema. Não sei qual problema. Mais tarde Vera me disse que ela tinha resolvido aquilo. Não perguntei quem era “ela” nem o que tinha sido resolvido.",
+    "output":  "Relatou que o depoente estava na sala quando Inês disse a Vera que sua irmã esperava no carro. O depoente não sabe de quem era a irmã nem qual carro era. Depois ela pediu que o depoente levasse a bolsa para lá. O depoente não conseguiu identificar se quem fez o pedido foi Inês ou Vera, porque o depoente estava de costas. Não levei a bolsa. O depoente ouviu uma delas dizer que a outra já sabia do problema. O depoente não sabe qual problema. Mais tarde Vera lhe disse que ela tinha resolvido aquilo. Não perguntou quem era “ela” nem o que tinha sido resolvido.",
+    "inputChars":  477,
+    "outputChars":  562,
+    "inputWords":  93,
+    "outputWords":  106,
+    "generationSeconds":  46.165,
+    "totalSeconds":  48.95355,
+    "modelConfig":  "context=4096; batch=512; ubatch=256; threads=4; gpuLayers=8; mmap=true; temperature=0",
+    "modelFile":  "file=qwen2.5-3b-instruct-q4_k_m.gguf; bytes=2104932768",
+    "outputCaptureVerified":  null,
+    "warnings":  [
+                     "[2026-09-29 17:34:33.629 -03:00] [WARN] [BLOCK_RETRY_START] block=1/1; issue=fidelidade: possível perda de negação na oração: não levei a bolsa.",
+                     "[2026-09-29 17:34:57.419 -03:00] [WARN] [BLOCK_REJECTED] block=1/1; detail=fidelidade: possível primeira pessoa residual: levei"
+                 ],
+    "nativeWarnings":  [
+                           "[2026-09-29 17:34:10.434 -03:00] [NATIVE-WARNING] [LLAMASHARP] load: control-looking token: 128247 \u0027\u003c/s\u003e\u0027 was not control-type; this is probably a bug in the model. its type will be overridden",
+                           "[2026-09-29 17:34:11.149 -03:00] [NATIVE-WARNING] [LLAMASHARP] llama_context: n_ctx_seq (4096) \u003c n_ctx_train (32768) -- the full capacity of the model will not be utilized",
+                           "[2026-09-29 17:34:11.296 -03:00] [NATIVE-WARNING] [LLAMASHARP] llama_context: n_ctx_seq (4096) \u003c n_ctx_train (32768) -- the full capacity of the model will not be utilized",
+                           "[2026-09-29 17:34:33.636 -03:00] [NATIVE-WARNING] [LLAMASHARP] llama_context: n_ctx_seq (4096) \u003c n_ctx_train (32768) -- the full capacity of the model will not be utilized"
+                       ],
+    "retry":  true,
+    "exception":  "Geração falhou ou foi cancelada; exceção e stack trace, se presentes, constam no log integral.\n[ERROR] [GENERATION_FAILED] sourceChars=477; elapsedMs=46165\r\nSystem.InvalidOperationException: O bloco 1 ainda precisa de revisão: fidelidade: possível primeira pessoa residual: levei. O texto gerado foi mantido na tela.\r\n   at DepoimentoLocal.Windows.MainForm.Reformulate_Click(Object sender, EventArgs e)\r\n",
+    "hasException":  true,
+    "hasError":  true,
+    "contextOverflowException":  false,
+    "completedNormally":  false,
+    "emptyOutput":  false,
+    "fullDuplication":  false,
+    "repeatedParagraphs":  false,
+    "firstPerson":  [
+
+                    ],
+    "negationWarning":  true,
+    "truncationSuspected":  false,
+    "missingEndingMarkers":  [
+
+                             ],
+    "observations":  [
+                         "O validador de produção apontou possível perda de negação; não é conclusão semântica do QA."
+                     ]
+}

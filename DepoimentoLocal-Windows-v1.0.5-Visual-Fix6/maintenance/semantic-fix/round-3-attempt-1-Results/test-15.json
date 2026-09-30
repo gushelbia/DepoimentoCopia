@@ -1,0 +1,45 @@
+﻿{
+    "number":  15,
+    "name":  "Ambiguidade real a preservar",
+    "objective":  "Não resolver possuidor, destinatário, pessoa ou local por inferência.",
+    "status":  "CONCLUÍDO SEM ALERTAS AUTOMÁTICOS",
+    "input":  "Eu estava na sala quando Inês disse a Vera que sua irmã esperava no carro. Não sei de quem era a irmã nem qual carro era. Depois ela pediu que eu levasse a bolsa para lá. Não consegui identificar se quem fez o pedido foi Inês ou Vera, porque eu estava de costas. Não levei a bolsa. Ouvi uma delas dizer que a outra já sabia do problema. Não sei qual problema. Mais tarde Vera me disse que ela tinha resolvido aquilo. Não perguntei quem era “ela” nem o que tinha sido resolvido.",
+    "output":  "Relatou que o depoente estava na sala quando Inês disse a Vera que sua irmã esperava no carro. O depoente não sabe de quem era a irmã nem qual carro era. Depois ela pediu que o depoente levasse a bolsa para lá. O depoente não conseguiu identificar se quem fez o pedido foi Inês ou Vera, porque o depoente estava de costas. O depoente não levou a bolsa. O depoente ouviu uma delas dizer que a outra já sabia do problema. O depoente não sabe qual problema. Mais tarde Vera lhe disse que ela tinha resolvido aquilo. O depoente não perguntou quem era “ela” nem o que tinha sido resolvido.",
+    "inputChars":  477,
+    "outputChars":  584,
+    "inputWords":  93,
+    "outputWords":  110,
+    "generationSeconds":  24.542,
+    "totalSeconds":  27.165117799999997,
+    "modelConfig":  "context=4096; batch=512; ubatch=256; threads=4; gpuLayers=8; mmap=true; temperature=0",
+    "modelFile":  "file=qwen2.5-3b-instruct-q4_k_m.gguf; bytes=2104932768",
+    "outputCaptureVerified":  true,
+    "warnings":  [
+
+                 ],
+    "nativeWarnings":  [
+                           "[2026-09-29 18:44:17.256 -03:00] [NATIVE-WARNING] [LLAMASHARP] load: control-looking token: 128247 \u0027\u003c/s\u003e\u0027 was not control-type; this is probably a bug in the model. its type will be overridden",
+                           "[2026-09-29 18:44:18.066 -03:00] [NATIVE-WARNING] [LLAMASHARP] llama_context: n_ctx_seq (4096) \u003c n_ctx_train (32768) -- the full capacity of the model will not be utilized",
+                           "[2026-09-29 18:44:18.168 -03:00] [NATIVE-WARNING] [LLAMASHARP] llama_context: n_ctx_seq (4096) \u003c n_ctx_train (32768) -- the full capacity of the model will not be utilized"
+                       ],
+    "retry":  false,
+    "exception":  "",
+    "hasException":  false,
+    "hasError":  false,
+    "contextOverflowException":  false,
+    "completedNormally":  true,
+    "emptyOutput":  false,
+    "fullDuplication":  false,
+    "repeatedParagraphs":  false,
+    "firstPerson":  [
+
+                    ],
+    "negationWarning":  false,
+    "truncationSuspected":  false,
+    "missingEndingMarkers":  [
+
+                             ],
+    "observations":  [
+
+                     ]
+}

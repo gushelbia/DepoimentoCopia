@@ -1,0 +1,66 @@
+﻿[2026-09-29 20:45:34.252 -03:00] [INFO] [APP_START] version=0.1.9.0; os=Microsoft Windows 10.0.26200; arch=X64; processArch=X64; cpuLogical=8; framework=.NET 8.0.31
+[2026-09-29 20:45:34.280 -03:00] [INFO] [NATIVE_LOG] LLamaSharp native logging configured.
+[2026-09-29 20:45:34.543 -03:00] [INFO] [MODEL_LOAD_START] file=qwen2.5-3b-instruct-q4_k_m.gguf; bytes=2104932768
+[2026-09-29 20:45:34.546 -03:00] [INFO] [MODEL_CONFIG] context=4096; batch=512; ubatch=256; threads=4; gpuLayers=8; mmap=true; temperature=0
+[2026-09-29 20:45:34.796 -03:00] [NATIVE-DEBUG] [LLAMASHARP] Loading library: 'llama'
+[2026-09-29 20:45:34.798 -03:00] [NATIVE-INFO] [LLAMASHARP] Detected OS Platform: 'WINDOWS'
+[2026-09-29 20:45:34.799 -03:00] [NATIVE-DEBUG] [LLAMASHARP] Detected OS string: 'win-x64'
+[2026-09-29 20:45:34.802 -03:00] [NATIVE-INFO] [LLAMASHARP] NativeLibraryConfig Description: - LibraryName: LLama - Path: '' - PreferCuda: True - PreferVulkan: True - PreferredAvxLevel: AVX2 - AllowFallback: True - SkipCheck: False - SearchDirectories and Priorities: { ./ }
+[2026-09-29 20:45:34.804 -03:00] [NATIVE-INFO] [LLAMASHARP] NativeLibraryConfig Description: - LibraryName: LLama - Path: '' - PreferCuda: True - PreferVulkan: True - PreferredAvxLevel: AVX2 - AllowFallback: True - SkipCheck: False - SearchDirectories and Priorities: { ./ }
+[2026-09-29 20:45:34.809 -03:00] [NATIVE-DEBUG] [LLAMASHARP] Got relative library path 'runtimes/win-x64/native/vulkan/llama.dll' from local with (NativeLibraryName: LLama, UseCuda: False, UseVulkan: True, AvxLevel: Avx2), trying to load it...
+[2026-09-29 20:45:34.815 -03:00] [NATIVE-INFO] [LLAMASHARP] Successfully loaded './runtimes\win-x64\native\vulkan\ggml-base.dll'
+[2026-09-29 20:45:34.816 -03:00] [NATIVE-INFO] [LLAMASHARP] Successfully loaded dependency 'runtimes\win-x64\native\vulkan\ggml-base.dll'
+[2026-09-29 20:45:34.820 -03:00] [NATIVE-INFO] [LLAMASHARP] Successfully loaded './runtimes/win-x64/native/avx2\ggml-cpu.dll'
+[2026-09-29 20:45:34.820 -03:00] [NATIVE-INFO] [LLAMASHARP] Successfully loaded dependency 'runtimes/win-x64/native/avx2\ggml-cpu.dll'
+[2026-09-29 20:45:34.826 -03:00] [NATIVE-INFO] [LLAMASHARP] Successfully loaded './runtimes\win-x64\native\vulkan\ggml-vulkan.dll'
+[2026-09-29 20:45:34.827 -03:00] [NATIVE-INFO] [LLAMASHARP] Successfully loaded dependency 'runtimes\win-x64\native\vulkan\ggml-vulkan.dll'
+[2026-09-29 20:45:34.830 -03:00] [NATIVE-INFO] [LLAMASHARP] Successfully loaded './runtimes\win-x64\native\vulkan\ggml.dll'
+[2026-09-29 20:45:34.831 -03:00] [NATIVE-INFO] [LLAMASHARP] Successfully loaded dependency 'runtimes\win-x64\native\vulkan\ggml.dll'
+[2026-09-29 20:45:34.834 -03:00] [NATIVE-INFO] [LLAMASHARP] Successfully loaded './runtimes/win-x64/native/vulkan/llama.dll'
+[2026-09-29 20:45:34.971 -03:00] [NATIVE-INFO] [LLAMASHARP] llama_model_loader: loaded meta data with 26 key-value pairs and 435 tensors from ..\modelo\qwen2.5-3b-instruct-q4_k_m.gguf (version GGUF V3 (latest))
+[2026-09-29 20:45:35.141 -03:00] [NATIVE-INFO] [LLAMASHARP] print_info: file type   = Q4_K - Medium
+[2026-09-29 20:45:35.141 -03:00] [NATIVE-INFO] [LLAMASHARP] print_info: file size   = 1.95 GiB (4.94 BPW)
+[2026-09-29 20:45:35.361 -03:00] [NATIVE-WARNING] [LLAMASHARP] load: control-looking token: 128247 '</s>' was not control-type; this is probably a bug in the model. its type will be overridden
+[2026-09-29 20:45:35.426 -03:00] [NATIVE-INFO] [LLAMASHARP] print_info: model type            = 3B
+[2026-09-29 20:45:36.105 -03:00] [NATIVE-WARNING] [LLAMASHARP] llama_context: n_ctx_seq (4096) < n_ctx_train (32768) -- the full capacity of the model will not be utilized
+[2026-09-29 20:45:36.179 -03:00] [INFO] [MODEL_LOAD_OK] file=qwen2.5-3b-instruct-q4_k_m.gguf
+[2026-09-29 20:45:36.212 -03:00] [INFO] [GENERATION_START] sourceChars=5184; blocks=5
+[2026-09-29 20:45:36.213 -03:00] [INFO] [BLOCK_START] block=1/5; chars=1183; maxTokens=474
+[2026-09-29 20:45:36.235 -03:00] [INFO] [CONTEXT_BUDGET] context=4096; promptTokens=1171; maxTokens=474; safetyTokens=32; requiredTokens=1677; remainingTokens=2419
+[2026-09-29 20:45:36.241 -03:00] [NATIVE-WARNING] [LLAMASHARP] llama_context: n_ctx_seq (4096) < n_ctx_train (32768) -- the full capacity of the model will not be utilized
+[2026-09-29 20:46:23.125 -03:00] [INFO] [BLOCK_FIRST_PASS] block=1/5; elapsedMs=46911; pieces=352; outputChars=1215
+[2026-09-29 20:46:23.716 -03:00] [INFO] [LOCAL_REPAIR] block=1/5; before=fidelidade: possível primeira pessoa residual: consultei; after=ok
+[2026-09-29 20:46:23.719 -03:00] [INFO] [BLOCK_OK] block=1/5; outputChars=1349
+[2026-09-29 20:46:23.719 -03:00] [INFO] [BLOCK_START] block=2/5; chars=1180; maxTokens=473
+[2026-09-29 20:46:23.729 -03:00] [INFO] [CONTEXT_BUDGET] context=4096; promptTokens=1165; maxTokens=473; safetyTokens=32; requiredTokens=1670; remainingTokens=2426
+[2026-09-29 20:46:23.730 -03:00] [NATIVE-WARNING] [LLAMASHARP] llama_context: n_ctx_seq (4096) < n_ctx_train (32768) -- the full capacity of the model will not be utilized
+[2026-09-29 20:47:10.232 -03:00] [INFO] [BLOCK_FIRST_PASS] block=2/5; elapsedMs=46512; pieces=352; outputChars=1240
+[2026-09-29 20:47:10.350 -03:00] [INFO] [LOCAL_REPAIR] block=2/5; before=fidelidade: destinatário do relato omitido: Gaspar me pediu; after=fidelidade: ação de participante atribuída ao depoente: o depoente pediu
+[2026-09-29 20:47:10.355 -03:00] [WARN] [BLOCK_RETRY_START] block=2/5; issue=fidelidade: ação de participante atribuída ao depoente: o depoente pediu
+[2026-09-29 20:47:10.362 -03:00] [INFO] [CONTEXT_BUDGET] context=4096; promptTokens=1257; maxTokens=473; safetyTokens=32; requiredTokens=1762; remainingTokens=2334
+[2026-09-29 20:47:10.362 -03:00] [NATIVE-WARNING] [LLAMASHARP] llama_context: n_ctx_seq (4096) < n_ctx_train (32768) -- the full capacity of the model will not be utilized
+[2026-09-29 20:47:55.669 -03:00] [INFO] [BLOCK_RETRY_END] block=2/5; elapsedMs=45025; pieces=331; outputChars=1180; issue=ok
+[2026-09-29 20:47:55.672 -03:00] [INFO] [BLOCK_OK] block=2/5; outputChars=1359
+[2026-09-29 20:47:55.673 -03:00] [INFO] [BLOCK_START] block=3/5; chars=1173; maxTokens=471
+[2026-09-29 20:47:55.682 -03:00] [INFO] [CONTEXT_BUDGET] context=4096; promptTokens=1163; maxTokens=471; safetyTokens=32; requiredTokens=1666; remainingTokens=2430
+[2026-09-29 20:47:55.683 -03:00] [NATIVE-WARNING] [LLAMASHARP] llama_context: n_ctx_seq (4096) < n_ctx_train (32768) -- the full capacity of the model will not be utilized
+[2026-09-29 20:48:38.812 -03:00] [INFO] [BLOCK_FIRST_PASS] block=3/5; elapsedMs=43139; pieces=323; outputChars=1156
+[2026-09-29 20:48:38.878 -03:00] [INFO] [LOCAL_REPAIR] block=3/5; before=fidelidade: possível primeira pessoa residual: vi; after=fidelidade: percepção acrescentada ao relato
+[2026-09-29 20:48:38.883 -03:00] [WARN] [BLOCK_RETRY_START] block=3/5; issue=fidelidade: percepção acrescentada ao relato
+[2026-09-29 20:48:38.889 -03:00] [INFO] [CONTEXT_BUDGET] context=4096; promptTokens=1245; maxTokens=471; safetyTokens=32; requiredTokens=1748; remainingTokens=2348
+[2026-09-29 20:48:38.890 -03:00] [NATIVE-WARNING] [LLAMASHARP] llama_context: n_ctx_seq (4096) < n_ctx_train (32768) -- the full capacity of the model will not be utilized
+[2026-09-29 20:49:24.044 -03:00] [INFO] [BLOCK_RETRY_END] block=3/5; elapsedMs=44893; pieces=326; outputChars=1164; issue=ok
+[2026-09-29 20:49:24.049 -03:00] [INFO] [BLOCK_OK] block=3/5; outputChars=1362
+[2026-09-29 20:49:24.049 -03:00] [INFO] [BLOCK_START] block=4/5; chars=1124; maxTokens=454
+[2026-09-29 20:49:24.060 -03:00] [INFO] [CONTEXT_BUDGET] context=4096; promptTokens=1145; maxTokens=454; safetyTokens=32; requiredTokens=1631; remainingTokens=2465
+[2026-09-29 20:49:24.060 -03:00] [NATIVE-WARNING] [LLAMASHARP] llama_context: n_ctx_seq (4096) < n_ctx_train (32768) -- the full capacity of the model will not be utilized
+[2026-09-29 20:50:09.447 -03:00] [INFO] [BLOCK_FIRST_PASS] block=4/5; elapsedMs=45397; pieces=311; outputChars=1124
+[2026-09-29 20:50:09.700 -03:00] [INFO] [LOCAL_REPAIR] block=4/5; before=fidelidade: possível primeira pessoa residual: voltei; after=ok
+[2026-09-29 20:50:09.705 -03:00] [INFO] [BLOCK_OK] block=4/5; outputChars=1240
+[2026-09-29 20:50:09.706 -03:00] [INFO] [BLOCK_START] block=5/5; chars=506; maxTokens=248
+[2026-09-29 20:50:09.717 -03:00] [INFO] [CONTEXT_BUDGET] context=4096; promptTokens=969; maxTokens=248; safetyTokens=32; requiredTokens=1249; remainingTokens=2847
+[2026-09-29 20:50:09.717 -03:00] [NATIVE-WARNING] [LLAMASHARP] llama_context: n_ctx_seq (4096) < n_ctx_train (32768) -- the full capacity of the model will not be utilized
+[2026-09-29 20:50:33.232 -03:00] [INFO] [BLOCK_FIRST_PASS] block=5/5; elapsedMs=23526; pieces=135; outputChars=506
+[2026-09-29 20:50:33.320 -03:00] [INFO] [LOCAL_REPAIR] block=5/5; before=fidelidade: possível primeira pessoa residual: recebi; after=ok
+[2026-09-29 20:50:33.326 -03:00] [INFO] [BLOCK_OK] block=5/5; outputChars=597
+[2026-09-29 20:50:33.327 -03:00] [INFO] [GENERATION_OK] blocks=5; elapsedMs=297119; outputChars=5911

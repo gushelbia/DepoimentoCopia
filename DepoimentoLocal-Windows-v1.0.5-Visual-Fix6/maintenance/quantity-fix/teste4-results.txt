@@ -1,0 +1,8 @@
+PASS geração real pelo DepoimentoLocal.exe atualizado
+PASS mesmo original: 1369 caracteres, 11 linhas
+PASS conclusão: 2 blocos, 01:10
+PASS saída: 1355 caracteres
+PASS contém: Depois os três começaram a falar quase ao mesmo tempo.
+PASS igualdade integral com a saída anterior alterando apenas eles -> os três
+PASS prompt, parâmetros e demais métodos inalterados (verification.txt)
+PASS 45 verificações de unidade e regressão

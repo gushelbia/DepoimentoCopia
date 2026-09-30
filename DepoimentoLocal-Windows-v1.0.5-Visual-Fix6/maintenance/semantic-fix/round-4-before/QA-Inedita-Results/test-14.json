@@ -1,0 +1,45 @@
+﻿{
+    "number":  14,
+    "name":  "Detalhes laterais relevantes ou não",
+    "objective":  "Não apagar conteúdo sem autorização, mesmo quando parece irrelevante.",
+    "status":  "CONCLUÍDO SEM ALERTAS AUTOMÁTICOS",
+    "input":  "Eu fui ao balcão pedir uma segunda via do recibo. Estava chovendo, e meu guarda-chuva amarelo ficou pingando perto da porta. Não acho que a cor do guarda-chuva tenha relação com o atendimento, mas lembro desse detalhe. A atendente Dora pediu que eu esperasse. Enquanto esperava, li um cartaz sobre vacinação e tomei água. Vi Dora entregar um papel a um homem de boné; não sei se era o meu recibo. Depois ela me entregou uma via com meu nome, que conferi. Saí sem reclamar e sem conversar com o homem.",
+    "output":  "Relatou que o depoente foi ao balcão pedir uma segunda via do recibo. Estava chovendo, e o guarda-chuva amarelo do depoente ficou pingando perto da porta. O depoente não acredita que a cor do guarda-chuva tenha relação com o atendimento, mas o depoente lembra desse detalhe. A atendente Dora pediu que o depoente esperasse. Enquanto esperava, o depoente leu um cartaz sobre vacinação e tomou água. O depoente viu Dora entregar um papel a um homem de boné; o depoente não sabe se era o recibo do depoente. Depois ela lhe entregou uma via com o nome do depoente, que o depoente conferiu. O depoente saiu sem reclamar e sem conversar com o homem.",
+    "inputChars":  500,
+    "outputChars":  643,
+    "inputWords":  91,
+    "outputWords":  114,
+    "generationSeconds":  26.946,
+    "totalSeconds":  29.5316205,
+    "modelConfig":  "context=4096; batch=512; ubatch=256; threads=4; gpuLayers=8; mmap=true; temperature=0",
+    "modelFile":  "file=qwen2.5-3b-instruct-q4_k_m.gguf; bytes=2104932768",
+    "outputCaptureVerified":  true,
+    "warnings":  [
+
+                 ],
+    "nativeWarnings":  [
+                           "[2026-09-29 19:23:57.558 -03:00] [NATIVE-WARNING] [LLAMASHARP] load: control-looking token: 128247 \u0027\u003c/s\u003e\u0027 was not control-type; this is probably a bug in the model. its type will be overridden",
+                           "[2026-09-29 19:23:58.323 -03:00] [NATIVE-WARNING] [LLAMASHARP] llama_context: n_ctx_seq (4096) \u003c n_ctx_train (32768) -- the full capacity of the model will not be utilized",
+                           "[2026-09-29 19:23:58.436 -03:00] [NATIVE-WARNING] [LLAMASHARP] llama_context: n_ctx_seq (4096) \u003c n_ctx_train (32768) -- the full capacity of the model will not be utilized"
+                       ],
+    "retry":  false,
+    "exception":  "",
+    "hasException":  false,
+    "hasError":  false,
+    "contextOverflowException":  false,
+    "completedNormally":  true,
+    "emptyOutput":  false,
+    "fullDuplication":  false,
+    "repeatedParagraphs":  false,
+    "firstPerson":  [
+
+                    ],
+    "negationWarning":  false,
+    "truncationSuspected":  false,
+    "missingEndingMarkers":  [
+
+                             ],
+    "observations":  [
+
+                     ]
+}

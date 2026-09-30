@@ -1,0 +1,47 @@
+﻿{
+    "number":  2,
+    "name":  "Coloquial e desorganizado",
+    "objective":  "Preservar aproximações, destinatários e ordem sem polir fatos.",
+    "status":  "ERRO",
+    "input":  "Foi assim, eu tava no pátio, perto do bebedouro, isso já depois do sinal, umas dez para as onze, por aí. O Davi veio falar comigo do portão. Antes disso eu tinha visto a Elisa mexendo no cadeado, mas não sei se ela abriu ou só olhou. Aí o Davi falou pra mim que a chave tinha sumido. Eu falei que não tava com a chave. Tinha um ônibus ligado, fazia barulho, então uma parte do que ele disse eu perdi. No fim a Elisa passou com uma chave na mão, só que eu não sei se era aquela. Depois fui atender um telefonema e não acompanhei mais.",
+    "output":  "Relatou que foi assim, o depoente estava no pátio, perto do bebedouro, isso já depois do sinal, por volta de dez para as onze, por aí. O Davi veio falar com o depoente do portão. Antes disso, o depoente já tinha visto a Elisa mexendo no cadeado, mas o depoente não sabe se ela abriu ou só olhou. Então o Davi falou ao depoente que a chave tinha sumido. O depoente respondeu que não tinha a chave. Havia um ônibus ligado, fazia barulho, então uma parte do que o Davi disse o depoente perdeu. No final, a Elisa passou com uma chave na mão, mas o depoente não sabe se era aquela. Depois, o depoente atendeu um telefonema e não acompanhou mais.",
+    "inputChars":  533,
+    "outputChars":  640,
+    "inputWords":  108,
+    "outputWords":  122,
+    "generationSeconds":  57.485,
+    "totalSeconds":  60.260930699999996,
+    "modelConfig":  "context=4096; batch=512; ubatch=256; threads=4; gpuLayers=8; mmap=true; temperature=0",
+    "modelFile":  "file=qwen2.5-3b-instruct-q4_k_m.gguf; bytes=2104932768",
+    "outputCaptureVerified":  null,
+    "warnings":  [
+                     "[2026-09-29 17:26:35.819 -03:00] [WARN] [BLOCK_RETRY_START] block=1/1; issue=fidelidade: marcador temporal ou de certeza omitido: perto",
+                     "[2026-09-29 17:27:04.196 -03:00] [WARN] [BLOCK_REJECTED] block=1/1; detail=fidelidade: possível omissão de oração: eu falei que não tava com a chave."
+                 ],
+    "nativeWarnings":  [
+                           "[2026-09-29 17:26:05.968 -03:00] [NATIVE-WARNING] [LLAMASHARP] load: control-looking token: 128247 \u0027\u003c/s\u003e\u0027 was not control-type; this is probably a bug in the model. its type will be overridden",
+                           "[2026-09-29 17:26:06.644 -03:00] [NATIVE-WARNING] [LLAMASHARP] llama_context: n_ctx_seq (4096) \u003c n_ctx_train (32768) -- the full capacity of the model will not be utilized",
+                           "[2026-09-29 17:26:06.739 -03:00] [NATIVE-WARNING] [LLAMASHARP] llama_context: n_ctx_seq (4096) \u003c n_ctx_train (32768) -- the full capacity of the model will not be utilized",
+                           "[2026-09-29 17:26:35.825 -03:00] [NATIVE-WARNING] [LLAMASHARP] llama_context: n_ctx_seq (4096) \u003c n_ctx_train (32768) -- the full capacity of the model will not be utilized"
+                       ],
+    "retry":  true,
+    "exception":  "Geração falhou ou foi cancelada; exceção e stack trace, se presentes, constam no log integral.\n[ERROR] [GENERATION_FAILED] sourceChars=533; elapsedMs=57485\r\nSystem.InvalidOperationException: O bloco 1 ainda precisa de revisão: fidelidade: possível omissão de oração: eu falei que não tava com a chave.. O texto gerado foi mantido na tela.\r\n   at DepoimentoLocal.Windows.MainForm.Reformulate_Click(Object sender, EventArgs e)\r\n",
+    "hasException":  true,
+    "hasError":  true,
+    "contextOverflowException":  false,
+    "completedNormally":  false,
+    "emptyOutput":  false,
+    "fullDuplication":  false,
+    "repeatedParagraphs":  false,
+    "firstPerson":  [
+
+                    ],
+    "negationWarning":  false,
+    "truncationSuspected":  false,
+    "missingEndingMarkers":  [
+
+                             ],
+    "observations":  [
+
+                     ]
+}

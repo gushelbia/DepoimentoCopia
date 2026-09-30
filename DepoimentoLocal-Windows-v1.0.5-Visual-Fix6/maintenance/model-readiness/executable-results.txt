@@ -1,0 +1,6 @@
+START 2026-09-27T15:34:26
+PASS executável instalado abriu a partir de outro diretório
+PASS clique real sem modelo: aviso local, saída vazia, janela responsiva
+PASS carga real do GGUF e habilitação do botão
+PASS geração real concluída; 173 verificações de resposta da janela; status=Concluído. Revise o texto antes de adicionar.; saída=Relatou que ousou ao mercado naquele dia. Comprou arroz e retornou para casa.
+ALL PASS executável instalado

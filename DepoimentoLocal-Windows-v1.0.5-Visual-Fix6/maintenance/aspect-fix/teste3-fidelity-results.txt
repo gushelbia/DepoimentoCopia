@@ -1,0 +1,16 @@
+PASS Ação concluída preservada
+PASS Sem batia indevido
+PASS Anterioridade de dito
+PASS Versão de Carlos sobre a porta
+PASS Nenhuma versão escolhida
+PASS Versão sala / versão reunião
+PASS Limitação de memória
+PASS Incerteza na ordem
+PASS Relato da servidora e negativa pessoal
+PASS Ana mesmo dia / Carlos dia seguinte
+PASS Desconhecimento e não participação
+PASS Terceira pessoa
+PASS Validação aceita
+PASS Sem retry
+PASS Sem overflow
+PASS Parâmetros preservados

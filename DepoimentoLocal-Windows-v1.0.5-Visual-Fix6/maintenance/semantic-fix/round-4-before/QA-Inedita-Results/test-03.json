@@ -1,0 +1,45 @@
+﻿{
+    "number":  3,
+    "name":  "Autocorreções de transcrição",
+    "objective":  "Distinguir fragmento abandonado, confirmação e dúvida não resolvida.",
+    "status":  "CONCLUÍDO COM ALERTAS",
+    "input":  "Eu entreguei a pasta na sexta... não, na quinta-feira. Foi quinta, porque sexta eu estava de folga. Entreguei para a recepcionista, quer dizer, para a estagiária que estava cobrindo a recepção. Não sei o nome dela. Eu saí às dez... corrigindo, isso foi quando cheguei; saí perto das onze. Acho que o envelope azul ficou dentro da pasta, mas não tenho certeza. Não estou corrigindo essa dúvida: eu realmente não lembro se coloquei o envelope lá.",
+    "output":  "Relatou que o depoente entregou a pasta na quinta-feira. Foi quinta, porque sexta o depoente estava de folga. O depoente entregou para a estagiária que estava cobrindo a recepção. O depoente não sabe o nome dela. O depoente saiu às dez... Corrigindo, isso foi quando o depoente chegou; o depoente saiu perto das onze. O depoente acredita que o envelope azul ficou dentro da pasta, mas o depoente não tem certeza. O depoente não está corrigindo essa dúvida: o depoente realmente não lembra se colocou o envelope lá.",
+    "inputChars":  444,
+    "outputChars":  514,
+    "inputWords":  76,
+    "outputWords":  88,
+    "generationSeconds":  23.321,
+    "totalSeconds":  25.8228157,
+    "modelConfig":  "context=4096; batch=512; ubatch=256; threads=4; gpuLayers=8; mmap=true; temperature=0",
+    "modelFile":  "file=qwen2.5-3b-instruct-q4_k_m.gguf; bytes=2104932768",
+    "outputCaptureVerified":  true,
+    "warnings":  [
+                     "[2026-09-29 19:14:24.179 -03:00] [WARN] [BLOCK_ACCEPTED_WITH_WARNING] block=1/1; issue=uma negação pode ter sido omitida"
+                 ],
+    "nativeWarnings":  [
+                           "[2026-09-29 19:14:00.021 -03:00] [NATIVE-WARNING] [LLAMASHARP] load: control-looking token: 128247 \u0027\u003c/s\u003e\u0027 was not control-type; this is probably a bug in the model. its type will be overridden",
+                           "[2026-09-29 19:14:00.772 -03:00] [NATIVE-WARNING] [LLAMASHARP] llama_context: n_ctx_seq (4096) \u003c n_ctx_train (32768) -- the full capacity of the model will not be utilized",
+                           "[2026-09-29 19:14:00.880 -03:00] [NATIVE-WARNING] [LLAMASHARP] llama_context: n_ctx_seq (4096) \u003c n_ctx_train (32768) -- the full capacity of the model will not be utilized"
+                       ],
+    "retry":  false,
+    "exception":  "",
+    "hasException":  false,
+    "hasError":  false,
+    "contextOverflowException":  false,
+    "completedNormally":  true,
+    "emptyOutput":  false,
+    "fullDuplication":  false,
+    "repeatedParagraphs":  false,
+    "firstPerson":  [
+
+                    ],
+    "negationWarning":  true,
+    "truncationSuspected":  false,
+    "missingEndingMarkers":  [
+
+                             ],
+    "observations":  [
+                         "O validador de produção apontou possível perda de negação; não é conclusão semântica do QA."
+                     ]
+}

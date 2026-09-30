@@ -1,0 +1,726 @@
+IL_0000: ldarg.0
+IL_0001: ldfld System.Int32 LLama.StatelessExecutor/<InferAsync>d__24::<>1__state
+IL_0006: stloc.0
+IL_0007: ldarg.0
+IL_0008: ldfld LLama.StatelessExecutor LLama.StatelessExecutor/<InferAsync>d__24::<>4__this
+IL_000D: stloc.1
+IL_000E: ldloc.0
+IL_000F: ldc.i4.s -4
+IL_0011: sub
+IL_0012: switch(IL_0083,IL_0033,IL_0033,IL_0033,IL_0083,IL_0083,IL_0083)
+IL_0033: ldarg.0
+IL_0034: ldfld System.Boolean LLama.StatelessExecutor/<InferAsync>d__24::<>w__disposeMode
+IL_0039: brfalse.s IL_0040
+IL_003B: leave IL_0801
+IL_0040: ldarg.0
+IL_0041: ldc.i4.m1
+IL_0042: dup
+IL_0043: stloc.0
+IL_0044: stfld System.Int32 LLama.StatelessExecutor/<InferAsync>d__24::<>1__state
+IL_0049: ldloc.1
+IL_004A: call LLama.LLamaContext LLama.StatelessExecutor::get_Context()
+IL_004F: callvirt LLama.Native.SafeLLamaContextHandle LLama.LLamaContext::get_NativeHandle()
+IL_0054: callvirt System.Boolean System.Runtime.InteropServices.SafeHandle::get_IsClosed()
+IL_0059: brtrue.s IL_0066
+IL_005B: ldloc.1
+IL_005C: call LLama.LLamaContext LLama.StatelessExecutor::get_Context()
+IL_0061: callvirt System.Void LLama.LLamaContext::Dispose()
+IL_0066: ldarg.0
+IL_0067: ldloc.1
+IL_0068: ldfld LLama.LLamaWeights LLama.StatelessExecutor::_weights
+IL_006D: ldloc.1
+IL_006E: ldfld LLama.Abstractions.IContextParams LLama.StatelessExecutor::_params
+IL_0073: ldloc.1
+IL_0074: ldfld Microsoft.Extensions.Logging.ILogger LLama.StatelessExecutor::_logger
+IL_0079: callvirt LLama.LLamaContext LLama.LLamaWeights::CreateContext(LLama.Abstractions.IContextParams,Microsoft.Extensions.Logging.ILogger)
+IL_007E: stfld LLama.LLamaContext LLama.StatelessExecutor/<InferAsync>d__24::<context>5__2
+IL_0083: nop
+IL_0084: ldloc.0
+IL_0085: ldc.i4.s -4
+IL_0087: sub
+IL_0088: switch(IL_039E,IL_00A9,IL_00A9,IL_00A9,IL_02A4,IL_05F0,IL_06DA)
+IL_00A9: ldloc.1
+IL_00AA: ldarg.0
+IL_00AB: ldfld LLama.LLamaContext LLama.StatelessExecutor/<InferAsync>d__24::<context>5__2
+IL_00B0: call System.Void LLama.StatelessExecutor::set_Context(LLama.LLamaContext)
+IL_00B5: ldarg.0
+IL_00B6: ldfld LLama.Abstractions.IInferenceParams LLama.StatelessExecutor/<InferAsync>d__24::inferenceParams
+IL_00BB: dup
+IL_00BC: brtrue.s IL_00C1
+IL_00BE: pop
+IL_00BF: br.s IL_00CB
+IL_00C1: callvirt LLama.Sampling.ISamplingPipeline LLama.Abstractions.IInferenceParams::get_SamplingPipeline()
+IL_00C6: callvirt System.Void LLama.Sampling.ISamplingPipeline::Reset()
+IL_00CB: ldarg.0
+IL_00CC: ldfld LLama.Abstractions.IInferenceParams LLama.StatelessExecutor/<InferAsync>d__24::inferenceParams
+IL_00D1: brtrue.s IL_00DE
+IL_00D3: ldarg.0
+IL_00D4: newobj System.Void LLama.Common.InferenceParams::.ctor()
+IL_00D9: stfld LLama.Abstractions.IInferenceParams LLama.StatelessExecutor/<InferAsync>d__24::inferenceParams
+IL_00DE: ldarg.0
+IL_00DF: ldfld LLama.Abstractions.IInferenceParams LLama.StatelessExecutor/<InferAsync>d__24::inferenceParams
+IL_00E4: callvirt System.Int32 LLama.Abstractions.IInferenceParams::get_TokensKeep()
+IL_00E9: conv.i8
+IL_00EA: ldloc.1
+IL_00EB: call LLama.LLamaContext LLama.StatelessExecutor::get_Context()
+IL_00F0: callvirt System.UInt32 LLama.LLamaContext::get_ContextSize()
+IL_00F5: conv.u8
+IL_00F6: ble.s IL_015C
+IL_00F8: ldstr "inferenceParams"
+IL_00FD: ldc.i4.s 50
+IL_00FF: ldc.i4.2
+IL_0100: newobj System.Void System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::.ctor(System.Int32,System.Int32)
+IL_0105: stloc.s V_4
+IL_0107: ldloca.s V_4
+IL_0109: ldstr "TokensKeep ("
+IL_010E: call System.Void System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendLiteral(System.String)
+IL_0113: ldloca.s V_4
+IL_0115: ldarg.0
+IL_0116: ldfld LLama.Abstractions.IInferenceParams LLama.StatelessExecutor/<InferAsync>d__24::inferenceParams
+IL_011B: callvirt System.Int32 LLama.Abstractions.IInferenceParams::get_TokensKeep()
+IL_0120: call System.Void System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted<System.Int32>(System.Int32)
+IL_0125: ldloca.s V_4
+IL_0127: ldstr ") cannot be larger than ContextSize ("
+IL_012C: call System.Void System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendLiteral(System.String)
+IL_0131: ldloca.s V_4
+IL_0133: ldloc.1
+IL_0134: call LLama.LLamaContext LLama.StatelessExecutor::get_Context()
+IL_0139: callvirt System.UInt32 LLama.LLamaContext::get_ContextSize()
+IL_013E: call System.Void System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendFormatted<System.UInt32>(System.UInt32)
+IL_0143: ldloca.s V_4
+IL_0145: ldstr ")"
+IL_014A: call System.Void System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::AppendLiteral(System.String)
+IL_014F: ldloca.s V_4
+IL_0151: call System.String System.Runtime.CompilerServices.DefaultInterpolatedStringHandler::ToStringAndClear()
+IL_0156: newobj System.Void System.ArgumentOutOfRangeException::.ctor(System.String,System.String)
+IL_015B: throw
+IL_015C: ldarg.0
+IL_015D: ldloc.1
+IL_015E: call LLama.LLamaContext LLama.StatelessExecutor::get_Context()
+IL_0163: newobj System.Void LLama.StreamingTokenDecoder::.ctor(LLama.LLamaContext)
+IL_0168: dup
+IL_0169: ldarg.0
+IL_016A: ldfld LLama.Abstractions.IInferenceParams LLama.StatelessExecutor/<InferAsync>d__24::inferenceParams
+IL_016F: callvirt System.Boolean LLama.Abstractions.IInferenceParams::get_DecodeSpecialTokens()
+IL_0174: callvirt System.Void LLama.StreamingTokenDecoder::set_DecodeSpecialTokens(System.Boolean)
+IL_0179: stfld LLama.StreamingTokenDecoder LLama.StatelessExecutor/<InferAsync>d__24::<decoder>5__3
+IL_017E: ldarg.0
+IL_017F: ldarg.0
+IL_0180: ldfld LLama.Abstractions.IInferenceParams LLama.StatelessExecutor/<InferAsync>d__24::inferenceParams
+IL_0185: callvirt System.Collections.Generic.IReadOnlyList`1<System.String> LLama.Abstractions.IInferenceParams::get_AntiPrompts()
+IL_018A: newobj System.Void LLama.AntipromptProcessor::.ctor(System.Collections.Generic.IEnumerable`1<System.String>)
+IL_018F: stfld LLama.AntipromptProcessor LLama.StatelessExecutor/<InferAsync>d__24::<antiprocessor>5__4
+IL_0194: ldloc.1
+IL_0195: call System.Boolean LLama.StatelessExecutor::get_ApplyTemplate()
+IL_019A: brfalse.s IL_01F2
+IL_019C: ldloc.1
+IL_019D: ldfld LLama.LLamaWeights LLama.StatelessExecutor::_weights
+IL_01A2: callvirt LLama.Native.SafeLlamaModelHandle LLama.LLamaWeights::get_NativeHandle()
+IL_01A7: ldnull
+IL_01A8: ldc.i4.1
+IL_01A9: newobj System.Void LLama.LLamaTemplate::.ctor(LLama.Native.SafeLlamaModelHandle,System.String,System.Boolean)
+IL_01AE: dup
+IL_01AF: ldc.i4.1
+IL_01B0: callvirt System.Void LLama.LLamaTemplate::set_AddAssistant(System.Boolean)
+IL_01B5: stloc.s V_5
+IL_01B7: ldloc.1
+IL_01B8: call System.String LLama.StatelessExecutor::get_SystemMessage()
+IL_01BD: brfalse.s IL_01D2
+IL_01BF: ldloc.s V_5
+IL_01C1: ldstr "system"
+IL_01C6: ldloc.1
+IL_01C7: call System.String LLama.StatelessExecutor::get_SystemMessage()
+IL_01CC: callvirt LLama.LLamaTemplate LLama.LLamaTemplate::Add(System.String,System.String)
+IL_01D1: pop
+IL_01D2: ldloc.s V_5
+IL_01D4: ldstr "user"
+IL_01D9: ldarg.0
+IL_01DA: ldfld System.String LLama.StatelessExecutor/<InferAsync>d__24::prompt
+IL_01DF: callvirt LLama.LLamaTemplate LLama.LLamaTemplate::Add(System.String,System.String)
+IL_01E4: pop
+IL_01E5: ldarg.0
+IL_01E6: ldloc.s V_5
+IL_01E8: call System.String LLama.Transformers.PromptTemplateTransformer::ToModelPrompt(LLama.LLamaTemplate)
+IL_01ED: stfld System.String LLama.StatelessExecutor/<InferAsync>d__24::prompt
+IL_01F2: ldarg.0
+IL_01F3: ldloc.1
+IL_01F4: call LLama.LLamaContext LLama.StatelessExecutor::get_Context()
+IL_01F9: ldarg.0
+IL_01FA: ldfld System.String LLama.StatelessExecutor/<InferAsync>d__24::prompt
+IL_01FF: ldc.i4.1
+IL_0200: ldc.i4.1
+IL_0201: callvirt LLama.Native.LLamaToken[] LLama.LLamaContext::Tokenize(System.String,System.Boolean,System.Boolean)
+IL_0206: call System.Collections.Generic.List`1<LLama.Native.LLamaToken> System.Linq.Enumerable::ToList<LLama.Native.LLamaToken>(System.Collections.Generic.IEnumerable`1<LLama.Native.LLamaToken>)
+IL_020B: stfld System.Collections.Generic.List`1<LLama.Native.LLamaToken> LLama.StatelessExecutor/<InferAsync>d__24::<tokens>5__5
+IL_0210: ldarg.0
+IL_0211: ldarg.0
+IL_0212: ldfld System.Collections.Generic.List`1<LLama.Native.LLamaToken> LLama.StatelessExecutor/<InferAsync>d__24::<tokens>5__5
+IL_0217: callvirt System.Int32 System.Collections.Generic.List`1<LLama.Native.LLamaToken>::get_Count()
+IL_021C: stfld System.Int32 LLama.StatelessExecutor/<InferAsync>d__24::<initialPromptLength>5__6
+IL_0221: ldarg.0
+IL_0222: ldarg.0
+IL_0223: ldfld System.Collections.Generic.List`1<LLama.Native.LLamaToken> LLama.StatelessExecutor/<InferAsync>d__24::<tokens>5__5
+IL_0228: newobj System.Void System.Collections.Generic.List`1<LLama.Native.LLamaToken>::.ctor(System.Collections.Generic.IEnumerable`1<LLama.Native.LLamaToken>)
+IL_022D: stfld System.Collections.Generic.List`1<LLama.Native.LLamaToken> LLama.StatelessExecutor/<InferAsync>d__24::<all_tokens>5__7
+IL_0232: ldarg.0
+IL_0233: ldc.i4.0
+IL_0234: stfld System.Int32 LLama.StatelessExecutor/<InferAsync>d__24::<n_past>5__8
+IL_0239: ldarg.0
+IL_023A: ldnull
+IL_023B: stfld System.String LLama.StatelessExecutor/<InferAsync>d__24::<>2__current
+IL_0240: ldloc.1
+IL_0241: call LLama.LLamaContext LLama.StatelessExecutor::get_Context()
+IL_0246: ldarg.0
+IL_0247: ldfld System.Collections.Generic.List`1<LLama.Native.LLamaToken> LLama.StatelessExecutor/<InferAsync>d__24::<tokens>5__5
+IL_024C: ldsfld LLama.Native.LLamaSeqId LLama.Native.LLamaSeqId::Zero
+IL_0251: ldloc.1
+IL_0252: ldfld LLama.Native.LLamaBatch LLama.StatelessExecutor::_batch
+IL_0257: ldarg.0
+IL_0258: ldfld System.Int32 LLama.StatelessExecutor/<InferAsync>d__24::<n_past>5__8
+IL_025D: ldloca.s V_7
+IL_025F: initobj System.Threading.CancellationToken
+IL_0265: ldloc.s V_7
+IL_0267: callvirt System.Threading.Tasks.Task`1<System.ValueTuple`3<LLama.Native.DecodeResult,System.Int32,System.Int32>> LLama.LLamaContext::DecodeAsync(System.Collections.Generic.List`1<LLama.Native.LLamaToken>,LLama.Native.LLamaSeqId,LLama.Native.LLamaBatch,System.Int32,System.Threading.CancellationToken)
+IL_026C: callvirt System.Runtime.CompilerServices.TaskAwaiter`1<System.ValueTuple`3<LLama.Native.DecodeResult,System.Int32,System.Int32>> System.Threading.Tasks.Task`1<System.ValueTuple`3<LLama.Native.DecodeResult,System.Int32,System.Int32>>::GetAwaiter()
+IL_0271: stloc.s V_6
+IL_0273: ldloca.s V_6
+IL_0275: call System.Boolean System.Runtime.CompilerServices.TaskAwaiter`1<System.ValueTuple`3<LLama.Native.DecodeResult,System.Int32,System.Int32>>::get_IsCompleted()
+IL_027A: brtrue.s IL_02C1
+IL_027C: ldarg.0
+IL_027D: ldc.i4.0
+IL_027E: dup
+IL_027F: stloc.0
+IL_0280: stfld System.Int32 LLama.StatelessExecutor/<InferAsync>d__24::<>1__state
+IL_0285: ldarg.0
+IL_0286: ldloc.s V_6
+IL_0288: stfld System.Runtime.CompilerServices.TaskAwaiter`1<System.ValueTuple`3<LLama.Native.DecodeResult,System.Int32,System.Int32>> LLama.StatelessExecutor/<InferAsync>d__24::<>u__1
+IL_028D: ldarg.0
+IL_028E: stloc.s V_8
+IL_0290: ldarg.0
+IL_0291: ldflda System.Runtime.CompilerServices.AsyncIteratorMethodBuilder LLama.StatelessExecutor/<InferAsync>d__24::<>t__builder
+IL_0296: ldloca.s V_6
+IL_0298: ldloca.s V_8
+IL_029A: call System.Void System.Runtime.CompilerServices.AsyncIteratorMethodBuilder::AwaitUnsafeOnCompleted<System.Runtime.CompilerServices.TaskAwaiter`1<System.ValueTuple`3<LLama.Native.DecodeResult,System.Int32,System.Int32>>,LLama.StatelessExecutor/<InferAsync>d__24>(System.Runtime.CompilerServices.TaskAwaiter`1<System.ValueTuple`3<LLama.Native.DecodeResult,System.Int32,System.Int32>>&,LLama.StatelessExecutor/<InferAsync>d__24&)
+IL_029F: leave IL_0878
+IL_02A4: ldarg.0
+IL_02A5: ldfld System.Runtime.CompilerServices.TaskAwaiter`1<System.ValueTuple`3<LLama.Native.DecodeResult,System.Int32,System.Int32>> LLama.StatelessExecutor/<InferAsync>d__24::<>u__1
+IL_02AA: stloc.s V_6
+IL_02AC: ldarg.0
+IL_02AD: ldflda System.Runtime.CompilerServices.TaskAwaiter`1<System.ValueTuple`3<LLama.Native.DecodeResult,System.Int32,System.Int32>> LLama.StatelessExecutor/<InferAsync>d__24::<>u__1
+IL_02B2: initobj System.Runtime.CompilerServices.TaskAwaiter`1<System.ValueTuple`3<LLama.Native.DecodeResult,System.Int32,System.Int32>>
+IL_02B8: ldarg.0
+IL_02B9: ldc.i4.m1
+IL_02BA: dup
+IL_02BB: stloc.0
+IL_02BC: stfld System.Int32 LLama.StatelessExecutor/<InferAsync>d__24::<>1__state
+IL_02C1: ldloca.s V_6
+IL_02C3: call System.ValueTuple`3<LLama.Native.DecodeResult,System.Int32,System.Int32> System.Runtime.CompilerServices.TaskAwaiter`1<System.ValueTuple`3<LLama.Native.DecodeResult,System.Int32,System.Int32>>::GetResult()
+IL_02C8: dup
+IL_02C9: ldfld LLama.Native.DecodeResult System.ValueTuple`3<LLama.Native.DecodeResult,System.Int32,System.Int32>::Item1
+IL_02CE: stloc.2
+IL_02CF: ldfld System.Int32 System.ValueTuple`3<LLama.Native.DecodeResult,System.Int32,System.Int32>::Item3
+IL_02D4: stloc.3
+IL_02D5: ldarg.0
+IL_02D6: ldloc.3
+IL_02D7: stfld System.Int32 LLama.StatelessExecutor/<InferAsync>d__24::<n_past>5__8
+IL_02DC: ldloc.2
+IL_02DD: brfalse.s IL_02E6
+IL_02DF: ldloc.2
+IL_02E0: newobj System.Void LLama.Exceptions.LLamaDecodeError::.ctor(LLama.Native.DecodeResult)
+IL_02E5: throw
+IL_02E6: ldarg.0
+IL_02E7: ldarg.0
+IL_02E8: ldfld LLama.Abstractions.IInferenceParams LLama.StatelessExecutor/<InferAsync>d__24::inferenceParams
+IL_02ED: callvirt System.Int32 LLama.Abstractions.IInferenceParams::get_MaxTokens()
+IL_02F2: ldc.i4.0
+IL_02F3: blt.s IL_0302
+IL_02F5: ldarg.0
+IL_02F6: ldfld LLama.Abstractions.IInferenceParams LLama.StatelessExecutor/<InferAsync>d__24::inferenceParams
+IL_02FB: callvirt System.Int32 LLama.Abstractions.IInferenceParams::get_MaxTokens()
+IL_0300: br.s IL_0307
+IL_0302: ldc.i4 2147483647
+IL_0307: stfld System.Int32 LLama.StatelessExecutor/<InferAsync>d__24::<maxTokens>5__9
+IL_030C: ldarg.0
+IL_030D: ldc.i4.0
+IL_030E: stfld System.Int32 LLama.StatelessExecutor/<InferAsync>d__24::<i>5__10
+IL_0313: br IL_0725
+IL_0318: ldarg.0
+IL_0319: ldarg.0
+IL_031A: ldfld LLama.Abstractions.IInferenceParams LLama.StatelessExecutor/<InferAsync>d__24::inferenceParams
+IL_031F: callvirt LLama.Sampling.ISamplingPipeline LLama.Abstractions.IInferenceParams::get_SamplingPipeline()
+IL_0324: ldloc.1
+IL_0325: call LLama.LLamaContext LLama.StatelessExecutor::get_Context()
+IL_032A: callvirt LLama.Native.SafeLLamaContextHandle LLama.LLamaContext::get_NativeHandle()
+IL_032F: ldloc.1
+IL_0330: ldfld LLama.Native.LLamaBatch LLama.StatelessExecutor::_batch
+IL_0335: callvirt System.Int32 LLama.Native.LLamaBatch::get_TokenCount()
+IL_033A: ldc.i4.1
+IL_033B: sub
+IL_033C: callvirt LLama.Native.LLamaToken LLama.Sampling.ISamplingPipeline::Sample(LLama.Native.SafeLLamaContextHandle,System.Int32)
+IL_0341: stfld LLama.Native.LLamaToken LLama.StatelessExecutor/<InferAsync>d__24::<id>5__11
+IL_0346: ldarg.0
+IL_0347: ldflda LLama.Native.LLamaToken LLama.StatelessExecutor/<InferAsync>d__24::<id>5__11
+IL_034C: ldloc.1
+IL_034D: ldfld LLama.LLamaWeights LLama.StatelessExecutor::_weights
+IL_0352: callvirt LLama.Native.SafeLlamaModelHandle/Vocabulary LLama.LLamaWeights::get_Vocab()
+IL_0357: call System.Boolean LLama.Native.LLamaToken::IsEndOfGeneration(LLama.Native.SafeLlamaModelHandle/Vocabulary)
+IL_035C: brtrue IL_0743
+IL_0361: ldarg.0
+IL_0362: ldfld LLama.StreamingTokenDecoder LLama.StatelessExecutor/<InferAsync>d__24::<decoder>5__3
+IL_0367: ldarg.0
+IL_0368: ldfld LLama.Native.LLamaToken LLama.StatelessExecutor/<InferAsync>d__24::<id>5__11
+IL_036D: callvirt System.Void LLama.StreamingTokenDecoder::Add(LLama.Native.LLamaToken)
+IL_0372: ldarg.0
+IL_0373: ldarg.0
+IL_0374: ldfld LLama.StreamingTokenDecoder LLama.StatelessExecutor/<InferAsync>d__24::<decoder>5__3
+IL_0379: callvirt System.String LLama.StreamingTokenDecoder::Read()
+IL_037E: stfld System.String LLama.StatelessExecutor/<InferAsync>d__24::<decoded>5__12
+IL_0383: ldarg.0
+IL_0384: ldarg.0
+IL_0385: ldfld System.String LLama.StatelessExecutor/<InferAsync>d__24::<decoded>5__12
+IL_038A: stfld System.String LLama.StatelessExecutor/<InferAsync>d__24::<>2__current
+IL_038F: ldarg.0
+IL_0390: ldc.i4.s -4
+IL_0392: dup
+IL_0393: stloc.0
+IL_0394: stfld System.Int32 LLama.StatelessExecutor/<InferAsync>d__24::<>1__state
+IL_0399: leave IL_086C
+IL_039E: ldarg.0
+IL_039F: ldc.i4.m1
+IL_03A0: dup
+IL_03A1: stloc.0
+IL_03A2: stfld System.Int32 LLama.StatelessExecutor/<InferAsync>d__24::<>1__state
+IL_03A7: ldarg.0
+IL_03A8: ldfld System.Boolean LLama.StatelessExecutor/<InferAsync>d__24::<>w__disposeMode
+IL_03AD: brfalse.s IL_03B4
+IL_03AF: leave IL_0760
+IL_03B4: ldarg.0
+IL_03B5: ldfld LLama.AntipromptProcessor LLama.StatelessExecutor/<InferAsync>d__24::<antiprocessor>5__4
+IL_03BA: ldarg.0
+IL_03BB: ldfld System.String LLama.StatelessExecutor/<InferAsync>d__24::<decoded>5__12
+IL_03C0: callvirt System.Boolean LLama.AntipromptProcessor::Add(System.String)
+IL_03C5: brtrue IL_0743
+IL_03CA: ldarg.0
+IL_03CB: ldfld System.Collections.Generic.List`1<LLama.Native.LLamaToken> LLama.StatelessExecutor/<InferAsync>d__24::<tokens>5__5
+IL_03D0: callvirt System.Void System.Collections.Generic.List`1<LLama.Native.LLamaToken>::Clear()
+IL_03D5: ldarg.0
+IL_03D6: ldfld System.Collections.Generic.List`1<LLama.Native.LLamaToken> LLama.StatelessExecutor/<InferAsync>d__24::<tokens>5__5
+IL_03DB: ldarg.0
+IL_03DC: ldfld LLama.Native.LLamaToken LLama.StatelessExecutor/<InferAsync>d__24::<id>5__11
+IL_03E1: callvirt System.Void System.Collections.Generic.List`1<LLama.Native.LLamaToken>::Add(LLama.Native.LLamaToken)
+IL_03E6: ldarg.0
+IL_03E7: ldfld System.Int32 LLama.StatelessExecutor/<InferAsync>d__24::<n_past>5__8
+IL_03EC: ldarg.0
+IL_03ED: ldfld System.Collections.Generic.List`1<LLama.Native.LLamaToken> LLama.StatelessExecutor/<InferAsync>d__24::<tokens>5__5
+IL_03F2: callvirt System.Int32 System.Collections.Generic.List`1<LLama.Native.LLamaToken>::get_Count()
+IL_03F7: add
+IL_03F8: conv.i8
+IL_03F9: ldloc.1
+IL_03FA: call LLama.LLamaContext LLama.StatelessExecutor::get_Context()
+IL_03FF: callvirt System.UInt32 LLama.LLamaContext::get_ContextSize()
+IL_0404: conv.u8
+IL_0405: blt IL_0637
+IL_040A: ldarg.0
+IL_040B: ldfld LLama.Abstractions.IInferenceParams LLama.StatelessExecutor/<InferAsync>d__24::inferenceParams
+IL_0410: callvirt LLama.Common.ContextOverflowStrategy LLama.Abstractions.IInferenceParams::get_OverflowStrategy()
+IL_0415: brtrue.s IL_041D
+IL_0417: newobj System.Void LLama.Exceptions.ContextOverflowException::.ctor()
+IL_041C: throw
+IL_041D: ldloc.1
+IL_041E: call LLama.LLamaContext LLama.StatelessExecutor::get_Context()
+IL_0423: callvirt LLama.Native.SafeLlamaModelHandle/Vocabulary LLama.LLamaContext::get_Vocab()
+IL_0428: callvirt System.Boolean LLama.Native.SafeLlamaModelHandle/Vocabulary::get_ShouldAddBOS()
+IL_042D: stloc.s V_10
+IL_042F: ldarg.0
+IL_0430: ldfld LLama.Abstractions.IInferenceParams LLama.StatelessExecutor/<InferAsync>d__24::inferenceParams
+IL_0435: callvirt System.Int32 LLama.Abstractions.IInferenceParams::get_TokensKeep()
+IL_043A: stloc.s V_11
+IL_043C: ldloc.s V_11
+IL_043E: ldc.i4.0
+IL_043F: blt.s IL_044B
+IL_0441: ldloc.s V_11
+IL_0443: ldarg.0
+IL_0444: ldfld System.Int32 LLama.StatelessExecutor/<InferAsync>d__24::<initialPromptLength>5__6
+IL_0449: ble.s IL_0455
+IL_044B: ldarg.0
+IL_044C: ldfld System.Int32 LLama.StatelessExecutor/<InferAsync>d__24::<initialPromptLength>5__6
+IL_0451: stloc.s V_11
+IL_0453: br.s IL_0461
+IL_0455: ldloc.s V_11
+IL_0457: ldloc.s V_10
+IL_0459: call System.Int32 System.Convert::ToInt32(System.Boolean)
+IL_045E: add
+IL_045F: stloc.s V_11
+IL_0461: ldarg.0
+IL_0462: ldfld System.Int32 LLama.StatelessExecutor/<InferAsync>d__24::<n_past>5__8
+IL_0467: ldloc.s V_11
+IL_0469: sub
+IL_046A: stloc.s V_12
+IL_046C: ldloc.s V_12
+IL_046E: ldc.i4.0
+IL_046F: bgt.s IL_0481
+IL_0471: ldstr "inferenceParams"
+IL_0476: ldstr "Cannot truncate context: TokensKeep exceeds or equals the current context size."
+IL_047B: newobj System.Void System.ArgumentOutOfRangeException::.ctor(System.String,System.String)
+IL_0480: throw
+IL_0481: ldc.r4 0,01
+IL_0486: ldc.r4 0,99
+IL_048B: ldarg.0
+IL_048C: ldfld LLama.Abstractions.IInferenceParams LLama.StatelessExecutor/<InferAsync>d__24::inferenceParams
+IL_0491: callvirt System.Single LLama.Abstractions.IInferenceParams::get_ContextTruncationPercentage()
+IL_0496: call System.Single System.Math::Min(System.Single,System.Single)
+IL_049B: call System.Single System.Math::Max(System.Single,System.Single)
+IL_04A0: stloc.s V_13
+IL_04A2: ldloc.s V_12
+IL_04A4: conv.r4
+IL_04A5: ldloc.s V_13
+IL_04A7: mul
+IL_04A8: conv.i4
+IL_04A9: stloc.s V_14
+IL_04AB: ldc.i4.1
+IL_04AC: ldloc.s V_14
+IL_04AE: ldloc.s V_12
+IL_04B0: call System.Int32 System.Math::Min(System.Int32,System.Int32)
+IL_04B5: call System.Int32 System.Math::Max(System.Int32,System.Int32)
+IL_04BA: stloc.s V_14
+IL_04BC: ldloc.1
+IL_04BD: call LLama.LLamaContext LLama.StatelessExecutor::get_Context()
+IL_04C2: callvirt LLama.Native.SafeLLamaContextHandle LLama.LLamaContext::get_NativeHandle()
+IL_04C7: callvirt System.Boolean LLama.Native.SafeLLamaContextHandle::get_MemoryCanShift()
+IL_04CC: brfalse.s IL_0544
+IL_04CE: ldloc.1
+IL_04CF: call LLama.LLamaContext LLama.StatelessExecutor::get_Context()
+IL_04D4: callvirt LLama.Native.SafeLLamaContextHandle LLama.LLamaContext::get_NativeHandle()
+IL_04D9: ldsfld LLama.Native.LLamaSeqId LLama.Native.LLamaSeqId::Zero
+IL_04DE: ldloc.s V_11
+IL_04E0: call LLama.Native.LLamaPos LLama.Native.LLamaPos::op_Implicit(System.Int32)
+IL_04E5: ldloc.s V_11
+IL_04E7: ldloc.s V_14
+IL_04E9: add
+IL_04EA: call LLama.Native.LLamaPos LLama.Native.LLamaPos::op_Implicit(System.Int32)
+IL_04EF: callvirt System.Void LLama.Native.SafeLLamaContextHandle::MemorySequenceRemove(LLama.Native.LLamaSeqId,LLama.Native.LLamaPos,LLama.Native.LLamaPos)
+IL_04F4: ldloc.1
+IL_04F5: call LLama.LLamaContext LLama.StatelessExecutor::get_Context()
+IL_04FA: callvirt LLama.Native.SafeLLamaContextHandle LLama.LLamaContext::get_NativeHandle()
+IL_04FF: ldsfld LLama.Native.LLamaSeqId LLama.Native.LLamaSeqId::Zero
+IL_0504: ldloc.s V_11
+IL_0506: ldloc.s V_14
+IL_0508: add
+IL_0509: call LLama.Native.LLamaPos LLama.Native.LLamaPos::op_Implicit(System.Int32)
+IL_050E: ldarg.0
+IL_050F: ldfld System.Int32 LLama.StatelessExecutor/<InferAsync>d__24::<n_past>5__8
+IL_0514: call LLama.Native.LLamaPos LLama.Native.LLamaPos::op_Implicit(System.Int32)
+IL_0519: ldloc.s V_14
+IL_051B: neg
+IL_051C: callvirt System.Void LLama.Native.SafeLLamaContextHandle::MemorySequenceAdd(LLama.Native.LLamaSeqId,LLama.Native.LLamaPos,LLama.Native.LLamaPos,System.Int32)
+IL_0521: ldarg.0
+IL_0522: ldarg.0
+IL_0523: ldfld System.Int32 LLama.StatelessExecutor/<InferAsync>d__24::<n_past>5__8
+IL_0528: ldloc.s V_14
+IL_052A: sub
+IL_052B: stfld System.Int32 LLama.StatelessExecutor/<InferAsync>d__24::<n_past>5__8
+IL_0530: ldarg.0
+IL_0531: ldfld System.Collections.Generic.List`1<LLama.Native.LLamaToken> LLama.StatelessExecutor/<InferAsync>d__24::<all_tokens>5__7
+IL_0536: ldloc.s V_11
+IL_0538: ldloc.s V_14
+IL_053A: callvirt System.Void System.Collections.Generic.List`1<LLama.Native.LLamaToken>::RemoveRange(System.Int32,System.Int32)
+IL_053F: br IL_0637
+IL_0544: ldloc.1
+IL_0545: ldfld Microsoft.Extensions.Logging.ILogger LLama.StatelessExecutor::_logger
+IL_054A: dup
+IL_054B: brtrue.s IL_0550
+IL_054D: pop
+IL_054E: br.s IL_055F
+IL_0550: ldstr "Model does not support native memory shifting. Falling back to context re-prefill."
+IL_0555: call System.Object[] System.Array::Empty<System.Object>()
+IL_055A: call System.Void Microsoft.Extensions.Logging.LoggerExtensions::LogInformation(Microsoft.Extensions.Logging.ILogger,System.String,System.Object[])
+IL_055F: ldarg.0
+IL_0560: ldfld System.Collections.Generic.List`1<LLama.Native.LLamaToken> LLama.StatelessExecutor/<InferAsync>d__24::<all_tokens>5__7
+IL_0565: ldloc.s V_11
+IL_0567: ldloc.s V_14
+IL_0569: callvirt System.Void System.Collections.Generic.List`1<LLama.Native.LLamaToken>::RemoveRange(System.Int32,System.Int32)
+IL_056E: ldloc.1
+IL_056F: ldfld LLama.Native.LLamaBatch LLama.StatelessExecutor::_batch
+IL_0574: callvirt System.Void LLama.Native.LLamaBatch::Clear()
+IL_0579: ldloc.1
+IL_057A: call LLama.LLamaContext LLama.StatelessExecutor::get_Context()
+IL_057F: callvirt LLama.Native.SafeLLamaContextHandle LLama.LLamaContext::get_NativeHandle()
+IL_0584: ldc.i4.1
+IL_0585: callvirt System.Void LLama.Native.SafeLLamaContextHandle::MemoryClear(System.Boolean)
+IL_058A: ldarg.0
+IL_058B: ldnull
+IL_058C: stfld System.String LLama.StatelessExecutor/<InferAsync>d__24::<>2__current
+IL_0591: ldloc.1
+IL_0592: call LLama.LLamaContext LLama.StatelessExecutor::get_Context()
+IL_0597: ldarg.0
+IL_0598: ldfld System.Collections.Generic.List`1<LLama.Native.LLamaToken> LLama.StatelessExecutor/<InferAsync>d__24::<all_tokens>5__7
+IL_059D: ldsfld LLama.Native.LLamaSeqId LLama.Native.LLamaSeqId::Zero
+IL_05A2: ldloc.1
+IL_05A3: ldfld LLama.Native.LLamaBatch LLama.StatelessExecutor::_batch
+IL_05A8: ldc.i4.0
+IL_05A9: ldloca.s V_7
+IL_05AB: initobj System.Threading.CancellationToken
+IL_05B1: ldloc.s V_7
+IL_05B3: callvirt System.Threading.Tasks.Task`1<System.ValueTuple`3<LLama.Native.DecodeResult,System.Int32,System.Int32>> LLama.LLamaContext::DecodeAsync(System.Collections.Generic.List`1<LLama.Native.LLamaToken>,LLama.Native.LLamaSeqId,LLama.Native.LLamaBatch,System.Int32,System.Threading.CancellationToken)
+IL_05B8: callvirt System.Runtime.CompilerServices.TaskAwaiter`1<System.ValueTuple`3<LLama.Native.DecodeResult,System.Int32,System.Int32>> System.Threading.Tasks.Task`1<System.ValueTuple`3<LLama.Native.DecodeResult,System.Int32,System.Int32>>::GetAwaiter()
+IL_05BD: stloc.s V_6
+IL_05BF: ldloca.s V_6
+IL_05C1: call System.Boolean System.Runtime.CompilerServices.TaskAwaiter`1<System.ValueTuple`3<LLama.Native.DecodeResult,System.Int32,System.Int32>>::get_IsCompleted()
+IL_05C6: brtrue.s IL_060D
+IL_05C8: ldarg.0
+IL_05C9: ldc.i4.1
+IL_05CA: dup
+IL_05CB: stloc.0
+IL_05CC: stfld System.Int32 LLama.StatelessExecutor/<InferAsync>d__24::<>1__state
+IL_05D1: ldarg.0
+IL_05D2: ldloc.s V_6
+IL_05D4: stfld System.Runtime.CompilerServices.TaskAwaiter`1<System.ValueTuple`3<LLama.Native.DecodeResult,System.Int32,System.Int32>> LLama.StatelessExecutor/<InferAsync>d__24::<>u__1
+IL_05D9: ldarg.0
+IL_05DA: stloc.s V_8
+IL_05DC: ldarg.0
+IL_05DD: ldflda System.Runtime.CompilerServices.AsyncIteratorMethodBuilder LLama.StatelessExecutor/<InferAsync>d__24::<>t__builder
+IL_05E2: ldloca.s V_6
+IL_05E4: ldloca.s V_8
+IL_05E6: call System.Void System.Runtime.CompilerServices.AsyncIteratorMethodBuilder::AwaitUnsafeOnCompleted<System.Runtime.CompilerServices.TaskAwaiter`1<System.ValueTuple`3<LLama.Native.DecodeResult,System.Int32,System.Int32>>,LLama.StatelessExecutor/<InferAsync>d__24>(System.Runtime.CompilerServices.TaskAwaiter`1<System.ValueTuple`3<LLama.Native.DecodeResult,System.Int32,System.Int32>>&,LLama.StatelessExecutor/<InferAsync>d__24&)
+IL_05EB: leave IL_0878
+IL_05F0: ldarg.0
+IL_05F1: ldfld System.Runtime.CompilerServices.TaskAwaiter`1<System.ValueTuple`3<LLama.Native.DecodeResult,System.Int32,System.Int32>> LLama.StatelessExecutor/<InferAsync>d__24::<>u__1
+IL_05F6: stloc.s V_6
+IL_05F8: ldarg.0
+IL_05F9: ldflda System.Runtime.CompilerServices.TaskAwaiter`1<System.ValueTuple`3<LLama.Native.DecodeResult,System.Int32,System.Int32>> LLama.StatelessExecutor/<InferAsync>d__24::<>u__1
+IL_05FE: initobj System.Runtime.CompilerServices.TaskAwaiter`1<System.ValueTuple`3<LLama.Native.DecodeResult,System.Int32,System.Int32>>
+IL_0604: ldarg.0
+IL_0605: ldc.i4.m1
+IL_0606: dup
+IL_0607: stloc.0
+IL_0608: stfld System.Int32 LLama.StatelessExecutor/<InferAsync>d__24::<>1__state
+IL_060D: ldloca.s V_6
+IL_060F: call System.ValueTuple`3<LLama.Native.DecodeResult,System.Int32,System.Int32> System.Runtime.CompilerServices.TaskAwaiter`1<System.ValueTuple`3<LLama.Native.DecodeResult,System.Int32,System.Int32>>::GetResult()
+IL_0614: dup
+IL_0615: ldfld LLama.Native.DecodeResult System.ValueTuple`3<LLama.Native.DecodeResult,System.Int32,System.Int32>::Item1
+IL_061A: stloc.s V_15
+IL_061C: ldfld System.Int32 System.ValueTuple`3<LLama.Native.DecodeResult,System.Int32,System.Int32>::Item3
+IL_0621: stloc.s V_16
+IL_0623: ldloc.s V_15
+IL_0625: brfalse.s IL_062F
+IL_0627: ldloc.s V_15
+IL_0629: newobj System.Void LLama.Exceptions.LLamaDecodeError::.ctor(LLama.Native.DecodeResult)
+IL_062E: throw
+IL_062F: ldarg.0
+IL_0630: ldloc.s V_16
+IL_0632: stfld System.Int32 LLama.StatelessExecutor/<InferAsync>d__24::<n_past>5__8
+IL_0637: ldarg.0
+IL_0638: ldfld System.Collections.Generic.List`1<LLama.Native.LLamaToken> LLama.StatelessExecutor/<InferAsync>d__24::<all_tokens>5__7
+IL_063D: ldarg.0
+IL_063E: ldfld LLama.Native.LLamaToken LLama.StatelessExecutor/<InferAsync>d__24::<id>5__11
+IL_0643: callvirt System.Void System.Collections.Generic.List`1<LLama.Native.LLamaToken>::Add(LLama.Native.LLamaToken)
+IL_0648: ldloc.1
+IL_0649: ldfld LLama.Native.LLamaBatch LLama.StatelessExecutor::_batch
+IL_064E: callvirt System.Void LLama.Native.LLamaBatch::Clear()
+IL_0653: ldloc.1
+IL_0654: ldfld LLama.Native.LLamaBatch LLama.StatelessExecutor::_batch
+IL_0659: ldarg.0
+IL_065A: ldfld LLama.Native.LLamaToken LLama.StatelessExecutor/<InferAsync>d__24::<id>5__11
+IL_065F: ldarg.0
+IL_0660: ldfld System.Int32 LLama.StatelessExecutor/<InferAsync>d__24::<n_past>5__8
+IL_0665: stloc.s V_17
+IL_0667: ldarg.0
+IL_0668: ldloc.s V_17
+IL_066A: ldc.i4.1
+IL_066B: add
+IL_066C: stfld System.Int32 LLama.StatelessExecutor/<InferAsync>d__24::<n_past>5__8
+IL_0671: ldloc.s V_17
+IL_0673: call LLama.Native.LLamaPos LLama.Native.LLamaPos::op_Implicit(System.Int32)
+IL_0678: ldsfld LLama.Native.LLamaSeqId LLama.Native.LLamaSeqId::Zero
+IL_067D: ldc.i4.1
+IL_067E: callvirt System.Int32 LLama.Native.LLamaBatch::Add(LLama.Native.LLamaToken,LLama.Native.LLamaPos,LLama.Native.LLamaSeqId,System.Boolean)
+IL_0683: pop
+IL_0684: ldarg.0
+IL_0685: ldnull
+IL_0686: stfld System.String LLama.StatelessExecutor/<InferAsync>d__24::<>2__current
+IL_068B: ldarg.0
+IL_068C: ldfld LLama.LLamaContext LLama.StatelessExecutor/<InferAsync>d__24::<context>5__2
+IL_0691: ldloc.1
+IL_0692: ldfld LLama.Native.LLamaBatch LLama.StatelessExecutor::_batch
+IL_0697: ldarg.0
+IL_0698: ldfld System.Threading.CancellationToken LLama.StatelessExecutor/<InferAsync>d__24::cancellationToken
+IL_069D: callvirt System.Threading.Tasks.Task`1<LLama.Native.DecodeResult> LLama.LLamaContext::DecodeAsync(LLama.Native.LLamaBatch,System.Threading.CancellationToken)
+IL_06A2: callvirt System.Runtime.CompilerServices.TaskAwaiter`1<LLama.Native.DecodeResult> System.Threading.Tasks.Task`1<LLama.Native.DecodeResult>::GetAwaiter()
+IL_06A7: stloc.s V_18
+IL_06A9: ldloca.s V_18
+IL_06AB: call System.Boolean System.Runtime.CompilerServices.TaskAwaiter`1<LLama.Native.DecodeResult>::get_IsCompleted()
+IL_06B0: brtrue.s IL_06F7
+IL_06B2: ldarg.0
+IL_06B3: ldc.i4.2
+IL_06B4: dup
+IL_06B5: stloc.0
+IL_06B6: stfld System.Int32 LLama.StatelessExecutor/<InferAsync>d__24::<>1__state
+IL_06BB: ldarg.0
+IL_06BC: ldloc.s V_18
+IL_06BE: stfld System.Runtime.CompilerServices.TaskAwaiter`1<LLama.Native.DecodeResult> LLama.StatelessExecutor/<InferAsync>d__24::<>u__2
+IL_06C3: ldarg.0
+IL_06C4: stloc.s V_8
+IL_06C6: ldarg.0
+IL_06C7: ldflda System.Runtime.CompilerServices.AsyncIteratorMethodBuilder LLama.StatelessExecutor/<InferAsync>d__24::<>t__builder
+IL_06CC: ldloca.s V_18
+IL_06CE: ldloca.s V_8
+IL_06D0: call System.Void System.Runtime.CompilerServices.AsyncIteratorMethodBuilder::AwaitUnsafeOnCompleted<System.Runtime.CompilerServices.TaskAwaiter`1<LLama.Native.DecodeResult>,LLama.StatelessExecutor/<InferAsync>d__24>(System.Runtime.CompilerServices.TaskAwaiter`1<LLama.Native.DecodeResult>&,LLama.StatelessExecutor/<InferAsync>d__24&)
+IL_06D5: leave IL_0878
+IL_06DA: ldarg.0
+IL_06DB: ldfld System.Runtime.CompilerServices.TaskAwaiter`1<LLama.Native.DecodeResult> LLama.StatelessExecutor/<InferAsync>d__24::<>u__2
+IL_06E0: stloc.s V_18
+IL_06E2: ldarg.0
+IL_06E3: ldflda System.Runtime.CompilerServices.TaskAwaiter`1<LLama.Native.DecodeResult> LLama.StatelessExecutor/<InferAsync>d__24::<>u__2
+IL_06E8: initobj System.Runtime.CompilerServices.TaskAwaiter`1<LLama.Native.DecodeResult>
+IL_06EE: ldarg.0
+IL_06EF: ldc.i4.m1
+IL_06F0: dup
+IL_06F1: stloc.0
+IL_06F2: stfld System.Int32 LLama.StatelessExecutor/<InferAsync>d__24::<>1__state
+IL_06F7: ldloca.s V_18
+IL_06F9: call LLama.Native.DecodeResult System.Runtime.CompilerServices.TaskAwaiter`1<LLama.Native.DecodeResult>::GetResult()
+IL_06FE: stloc.s V_9
+IL_0700: ldloc.s V_9
+IL_0702: brfalse.s IL_070C
+IL_0704: ldloc.s V_9
+IL_0706: newobj System.Void LLama.Exceptions.LLamaDecodeError::.ctor(LLama.Native.DecodeResult)
+IL_070B: throw
+IL_070C: ldarg.0
+IL_070D: ldnull
+IL_070E: stfld System.String LLama.StatelessExecutor/<InferAsync>d__24::<decoded>5__12
+IL_0713: ldarg.0
+IL_0714: ldfld System.Int32 LLama.StatelessExecutor/<InferAsync>d__24::<i>5__10
+IL_0719: stloc.s V_17
+IL_071B: ldarg.0
+IL_071C: ldloc.s V_17
+IL_071E: ldc.i4.1
+IL_071F: add
+IL_0720: stfld System.Int32 LLama.StatelessExecutor/<InferAsync>d__24::<i>5__10
+IL_0725: ldarg.0
+IL_0726: ldfld System.Int32 LLama.StatelessExecutor/<InferAsync>d__24::<i>5__10
+IL_072B: ldarg.0
+IL_072C: ldfld System.Int32 LLama.StatelessExecutor/<InferAsync>d__24::<maxTokens>5__9
+IL_0731: bge.s IL_0743
+IL_0733: ldarg.0
+IL_0734: ldflda System.Threading.CancellationToken LLama.StatelessExecutor/<InferAsync>d__24::cancellationToken
+IL_0739: call System.Boolean System.Threading.CancellationToken::get_IsCancellationRequested()
+IL_073E: brfalse IL_0318
+IL_0743: leave IL_0801
+IL_0748: ldloc.0
+IL_0749: ldc.i4.m1
+IL_074A: bne.un.s IL_075F
+IL_074C: ldarg.0
+IL_074D: ldfld LLama.LLamaContext LLama.StatelessExecutor/<InferAsync>d__24::<context>5__2
+IL_0752: brfalse.s IL_075F
+IL_0754: ldarg.0
+IL_0755: ldfld LLama.LLamaContext LLama.StatelessExecutor/<InferAsync>d__24::<context>5__2
+IL_075A: callvirt System.Void System.IDisposable::Dispose()
+IL_075F: endfinally
+IL_0760: ldarg.0
+IL_0761: ldfld System.Boolean LLama.StatelessExecutor/<InferAsync>d__24::<>w__disposeMode
+IL_0766: brfalse.s IL_076D
+IL_0768: leave IL_0801
+IL_076D: ldarg.0
+IL_076E: ldnull
+IL_076F: stfld LLama.LLamaContext LLama.StatelessExecutor/<InferAsync>d__24::<context>5__2
+IL_0774: ldarg.0
+IL_0775: ldnull
+IL_0776: stfld LLama.StreamingTokenDecoder LLama.StatelessExecutor/<InferAsync>d__24::<decoder>5__3
+IL_077B: ldarg.0
+IL_077C: ldnull
+IL_077D: stfld LLama.AntipromptProcessor LLama.StatelessExecutor/<InferAsync>d__24::<antiprocessor>5__4
+IL_0782: ldarg.0
+IL_0783: ldnull
+IL_0784: stfld System.Collections.Generic.List`1<LLama.Native.LLamaToken> LLama.StatelessExecutor/<InferAsync>d__24::<tokens>5__5
+IL_0789: ldarg.0
+IL_078A: ldnull
+IL_078B: stfld System.Collections.Generic.List`1<LLama.Native.LLamaToken> LLama.StatelessExecutor/<InferAsync>d__24::<all_tokens>5__7
+IL_0790: leave.s IL_0801
+IL_0792: stloc.s V_19
+IL_0794: ldarg.0
+IL_0795: ldc.i4.s -2
+IL_0797: stfld System.Int32 LLama.StatelessExecutor/<InferAsync>d__24::<>1__state
+IL_079C: ldarg.0
+IL_079D: ldnull
+IL_079E: stfld LLama.LLamaContext LLama.StatelessExecutor/<InferAsync>d__24::<context>5__2
+IL_07A3: ldarg.0
+IL_07A4: ldnull
+IL_07A5: stfld LLama.StreamingTokenDecoder LLama.StatelessExecutor/<InferAsync>d__24::<decoder>5__3
+IL_07AA: ldarg.0
+IL_07AB: ldnull
+IL_07AC: stfld LLama.AntipromptProcessor LLama.StatelessExecutor/<InferAsync>d__24::<antiprocessor>5__4
+IL_07B1: ldarg.0
+IL_07B2: ldnull
+IL_07B3: stfld System.Collections.Generic.List`1<LLama.Native.LLamaToken> LLama.StatelessExecutor/<InferAsync>d__24::<tokens>5__5
+IL_07B8: ldarg.0
+IL_07B9: ldnull
+IL_07BA: stfld System.Collections.Generic.List`1<LLama.Native.LLamaToken> LLama.StatelessExecutor/<InferAsync>d__24::<all_tokens>5__7
+IL_07BF: ldarg.0
+IL_07C0: ldnull
+IL_07C1: stfld System.String LLama.StatelessExecutor/<InferAsync>d__24::<decoded>5__12
+IL_07C6: ldarg.0
+IL_07C7: ldfld System.Threading.CancellationTokenSource LLama.StatelessExecutor/<InferAsync>d__24::<>x__combinedTokens
+IL_07CC: brfalse.s IL_07E0
+IL_07CE: ldarg.0
+IL_07CF: ldfld System.Threading.CancellationTokenSource LLama.StatelessExecutor/<InferAsync>d__24::<>x__combinedTokens
+IL_07D4: callvirt System.Void System.Threading.CancellationTokenSource::Dispose()
+IL_07D9: ldarg.0
+IL_07DA: ldnull
+IL_07DB: stfld System.Threading.CancellationTokenSource LLama.StatelessExecutor/<InferAsync>d__24::<>x__combinedTokens
+IL_07E0: ldarg.0
+IL_07E1: ldnull
+IL_07E2: stfld System.String LLama.StatelessExecutor/<InferAsync>d__24::<>2__current
+IL_07E7: ldarg.0
+IL_07E8: ldflda System.Runtime.CompilerServices.AsyncIteratorMethodBuilder LLama.StatelessExecutor/<InferAsync>d__24::<>t__builder
+IL_07ED: call System.Void System.Runtime.CompilerServices.AsyncIteratorMethodBuilder::Complete()
+IL_07F2: ldarg.0
+IL_07F3: ldflda System.Threading.Tasks.Sources.ManualResetValueTaskSourceCore`1<System.Boolean> LLama.StatelessExecutor/<InferAsync>d__24::<>v__promiseOfValueOrEnd
+IL_07F8: ldloc.s V_19
+IL_07FA: call System.Void System.Threading.Tasks.Sources.ManualResetValueTaskSourceCore`1<System.Boolean>::SetException(System.Exception)
+IL_07FF: leave.s IL_0878
+IL_0801: ldarg.0
+IL_0802: ldc.i4.s -2
+IL_0804: stfld System.Int32 LLama.StatelessExecutor/<InferAsync>d__24::<>1__state
+IL_0809: ldarg.0
+IL_080A: ldnull
+IL_080B: stfld LLama.LLamaContext LLama.StatelessExecutor/<InferAsync>d__24::<context>5__2
+IL_0810: ldarg.0
+IL_0811: ldnull
+IL_0812: stfld LLama.StreamingTokenDecoder LLama.StatelessExecutor/<InferAsync>d__24::<decoder>5__3
+IL_0817: ldarg.0
+IL_0818: ldnull
+IL_0819: stfld LLama.AntipromptProcessor LLama.StatelessExecutor/<InferAsync>d__24::<antiprocessor>5__4
+IL_081E: ldarg.0
+IL_081F: ldnull
+IL_0820: stfld System.Collections.Generic.List`1<LLama.Native.LLamaToken> LLama.StatelessExecutor/<InferAsync>d__24::<tokens>5__5
+IL_0825: ldarg.0
+IL_0826: ldnull
+IL_0827: stfld System.Collections.Generic.List`1<LLama.Native.LLamaToken> LLama.StatelessExecutor/<InferAsync>d__24::<all_tokens>5__7
+IL_082C: ldarg.0
+IL_082D: ldnull
+IL_082E: stfld System.String LLama.StatelessExecutor/<InferAsync>d__24::<decoded>5__12
+IL_0833: ldarg.0
+IL_0834: ldfld System.Threading.CancellationTokenSource LLama.StatelessExecutor/<InferAsync>d__24::<>x__combinedTokens
+IL_0839: brfalse.s IL_084D
+IL_083B: ldarg.0
+IL_083C: ldfld System.Threading.CancellationTokenSource LLama.StatelessExecutor/<InferAsync>d__24::<>x__combinedTokens
+IL_0841: callvirt System.Void System.Threading.CancellationTokenSource::Dispose()
+IL_0846: ldarg.0
+IL_0847: ldnull
+IL_0848: stfld System.Threading.CancellationTokenSource LLama.StatelessExecutor/<InferAsync>d__24::<>x__combinedTokens
+IL_084D: ldarg.0
+IL_084E: ldnull
+IL_084F: stfld System.String LLama.StatelessExecutor/<InferAsync>d__24::<>2__current
+IL_0854: ldarg.0
+IL_0855: ldflda System.Runtime.CompilerServices.AsyncIteratorMethodBuilder LLama.StatelessExecutor/<InferAsync>d__24::<>t__builder
+IL_085A: call System.Void System.Runtime.CompilerServices.AsyncIteratorMethodBuilder::Complete()
+IL_085F: ldarg.0
+IL_0860: ldflda System.Threading.Tasks.Sources.ManualResetValueTaskSourceCore`1<System.Boolean> LLama.StatelessExecutor/<InferAsync>d__24::<>v__promiseOfValueOrEnd
+IL_0865: ldc.i4.0
+IL_0866: call System.Void System.Threading.Tasks.Sources.ManualResetValueTaskSourceCore`1<System.Boolean>::SetResult(System.Boolean)
+IL_086B: ret
+IL_086C: ldarg.0
+IL_086D: ldflda System.Threading.Tasks.Sources.ManualResetValueTaskSourceCore`1<System.Boolean> LLama.StatelessExecutor/<InferAsync>d__24::<>v__promiseOfValueOrEnd
+IL_0872: ldc.i4.1
+IL_0873: call System.Void System.Threading.Tasks.Sources.ManualResetValueTaskSourceCore`1<System.Boolean>::SetResult(System.Boolean)
+IL_0878: ret

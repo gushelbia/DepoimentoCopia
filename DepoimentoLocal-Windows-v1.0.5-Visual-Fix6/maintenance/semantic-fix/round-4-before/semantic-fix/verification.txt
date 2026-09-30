@@ -1,0 +1,3 @@
+PASS DepoimentoLocal.dll : only prompts, assistant prefill, semantic guard, supplemental conjugations, retry classification and unsafe positional repair changed.
+PASS DepoimentoLocal.Vulkan8.dll : only prompts, assistant prefill, semantic guard, supplemental conjugations, retry classification and unsafe positional repair changed.
+PASS DepoimentoLocal.CPU-original.dll : only prompts, assistant prefill, semantic guard, supplemental conjugations, retry classification and unsafe positional repair changed.

@@ -1,0 +1,46 @@
+﻿{
+    "number":  4,
+    "name":  "Pessoas e pronomes ambíguos",
+    "objective":  "Garantir que o modelo não tente descobrir referentes que o original deixa ambíguos.",
+    "status":  "CONCLUÍDO SEM ALERTAS AUTOMÁTICOS",
+    "input":  "Eu cheguei na sala e estavam lá o Marcos, o Felipe e a Renata. Eu não sei quem chegou primeiro. Quando entrei, o Marcos estava falando com o Felipe e a Renata estava perto da porta. Eu ouvi alguém falar que aquilo já tinha passado do limite, mas não consegui identificar quem falou.\r\n\r\nDepois o Felipe saiu da sala e o Marcos continuou falando com a Renata. Ela disse alguma coisa sobre a reunião anterior, mas eu não ouvi direito. Em seguida ele respondeu que não concordava. Eu acho que foi o Marcos que respondeu, porque o Felipe já tinha saído, mas posso estar enganado.\r\n\r\nPouco depois o Felipe voltou. A Renata perguntou para ele se tinha falado com o diretor. Ele respondeu que sim, mas não disse o que foi tratado. Nesse momento o Marcos falou que também queria conversar com ele. Eu não sei se o Marcos estava se referindo ao Felipe ou ao diretor.\r\n\r\nDepois os três começaram a falar quase ao mesmo tempo. Eu ouvi a Renata dizer \"ele já sabe disso\", mas não sei a quem ela estava se referindo. O Felipe respondeu alguma coisa, só que eu não consegui entender.\r\n\r\nMais tarde, o Marcos saiu da sala. A Renata me disse que ele estava irritado. Eu não sei se ela estava falando do Marcos ou do Felipe, porque os dois tinham discutido durante a conversa. Eu não perguntei.\r\n\r\nNo final, o Felipe e a Renata ficaram na sala. Eu saí antes deles e não sei o que aconteceu depois.",
+    "output":  "Relatou que chegou na sala e estavam lá o Marcos, Felipe e a Renata. Não sabe quem chegou primeiro. Quando entrou, o Marcos estava conversando com o Felipe e a Renata estava próxima à porta. Ouviu alguém dizer que aquilo já tinha passado do limite, mas não conseguiu identificar quem falou. Depois o Felipe saiu da sala e o Marcos continuou conversando com a Renata. Ela disse alguma coisa sobre a reunião anterior, mas não ouviu direito. Em seguida ele respondeu que não concordava. Acredita que foi o Marcos quem respondeu, pois o Felipe já tinha saído, mas pode estar enganado. Pouco depois o Felipe voltou. A Renata perguntou se ele já havia falado com o diretor. Ele respondeu que sim, mas não disse o que foi tratado. Nesse momento Marcos falou que também queria conversar com ele. Não sabe se Marcos estava se referindo ao Felipe ou ao diretor. Depois os três começaram a falar quase ao mesmo tempo. Ouviu a Renata dizer \"ele já sabe disso\", mas não sabe a quem ela estava se referindo. O Felipe respondeu alguma coisa, só que não conseguiu entender. Mais tarde, Marcos saiu da sala. A Renata lhe disse que ele estava irritado. Não sabe se ela estava falando do Marcos ou do Felipe, porque os dois tinham discutido durante a conversa. Não perguntou. No final, o Felipe e a Renata ficaram na sala. Saiu antes deles e não sabe o que aconteceu depois.",
+    "inputChars":  1379,
+    "outputChars":  1355,
+    "inputWords":  255,
+    "outputWords":  242,
+    "generationSeconds":  66.131,
+    "totalSeconds":  68.792564099999993,
+    "modelConfig":  "context=4096; batch=512; ubatch=256; threads=4; gpuLayers=8; mmap=true; temperature=0",
+    "modelFile":  "file=qwen2.5-3b-instruct-q4_k_m.gguf; bytes=2104932768",
+    "outputCaptureVerified":  true,
+    "warnings":  [
+
+                 ],
+    "nativeWarnings":  [
+                           "[2026-09-27 16:03:50.099 -03:00] [NATIVE-WARNING] [LLAMASHARP] load: control-looking token: 128247 \u0027\u003c/s\u003e\u0027 was not control-type; this is probably a bug in the model. its type will be overridden",
+                           "[2026-09-27 16:03:50.828 -03:00] [NATIVE-WARNING] [LLAMASHARP] llama_context: n_ctx_seq (4096) \u003c n_ctx_train (32768) -- the full capacity of the model will not be utilized",
+                           "[2026-09-27 16:03:50.950 -03:00] [NATIVE-WARNING] [LLAMASHARP] llama_context: n_ctx_seq (4096) \u003c n_ctx_train (32768) -- the full capacity of the model will not be utilized",
+                           "[2026-09-27 16:04:40.245 -03:00] [NATIVE-WARNING] [LLAMASHARP] llama_context: n_ctx_seq (4096) \u003c n_ctx_train (32768) -- the full capacity of the model will not be utilized"
+                       ],
+    "retry":  false,
+    "exception":  "",
+    "hasException":  false,
+    "hasError":  false,
+    "contextOverflowException":  false,
+    "completedNormally":  true,
+    "emptyOutput":  false,
+    "fullDuplication":  false,
+    "repeatedParagraphs":  false,
+    "firstPerson":  [
+
+                    ],
+    "negationWarning":  false,
+    "truncationSuspected":  false,
+    "missingEndingMarkers":  [
+
+                             ],
+    "observations":  [
+
+                     ]
+}

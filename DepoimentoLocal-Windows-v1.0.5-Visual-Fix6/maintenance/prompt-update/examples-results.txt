@@ -1,0 +1,17 @@
+﻿Prompt examples 2026-09-26T23:39:22
+CASE 1
+INPUT: Não entendi o que aconteceu porque fiquei fora da sala. Acho que era o Paulo. Não sei quem abriu a porta. Não lembro a hora. Posso estar enganado e posso estar confundindo os nomes.
+OUTPUT: Relatou que não compreendeu o que ocorreu, pois estava ausente da sala. Acredita que era Paulo. Não sabe quem abriu a porta. Não se lembra da hora. Pode estar enganado e pode estar confundindo os nomes.
+STATUS: Concluído. Revise o texto antes de adicionar.
+CASE 2
+INPUT: Quer dizer, acho que era o Paulo.
+OUTPUT: Relatou que ialhe era o Paulo.
+STATUS: Concluído. Revise o texto antes de adicionar.
+CASE 3
+INPUT: Eu saí... não, eu acho que antes de sair entrou o Carlos. É, o Carlos entrou antes.
+OUTPUT: Relatou que ousentiu antes de sua saída, pois acredita que Carlos entrou antes.
+STATUS: Concluído com 1 alerta(s). Revise com atenção antes de adicionar.
+CASE 4
+INPUT: Carlos me falou que o Paulo tentou encostar na porta. Me disseram que ela estava fechada. Eu não vi isso.
+OUTPUT: Relatou que carlos lhe falou que o Paulo tentou encostar na porta. Lhe disseram que a porta estava fechada. Não viu isso.
+STATUS: Concluído. Revise o texto antes de adicionar.

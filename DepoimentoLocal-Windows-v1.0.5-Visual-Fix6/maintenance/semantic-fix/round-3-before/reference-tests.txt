@@ -1,0 +1,32 @@
+PASS unique implicit narrator predicate
+PASS same predicate with two actors is ambiguous
+PASS named subject never replaced
+PASS adverb after explicit narrator does not duplicate it
+PASS adverb after named subject does not replace it
+PASS coordinated narrator verbs
+PASS only modifies predicate not narrator
+PASS also modifies predicate not narrator
+PASS source explicit exclusive subject focus retained
+PASS source explicit additive subject focus retained
+PASS post-verbal narrator with predicate focus
+PASS source-proven post-verbal narrator
+PASS source-proven post-verbal visual narrator
+PASS post-verbal object of third party remains object
+PASS same perception in source by multiple people is ambiguous
+PASS knowledge categories never interchanged
+PASS quotation untouched
+PASS same output frame across quotation segments is ambiguous
+PASS explicit recipient from unique source frame
+PASS two source recipients are not merged
+PASS restore explicit subordinate pronoun
+PASS two source subordinate frames are ambiguous
+PASS restore complete approximate alternatives
+PASS restore repeated approximate quantity
+PASS another source interval prevents restoration
+PASS run-on estimate retains place and uncertainty
+PASS explicit correction with repeated confirmation
+PASS temporal owner in explicit correction
+PASS masculine temporal nominalization
+PASS another temporal owner is not reassigned
+PASS no confirmation means no consolidation
+PASS different temporal confirmation is not redundant

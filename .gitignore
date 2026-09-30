@@ -1,0 +1,55 @@
+# .gitignore - arquivos que o Git NÃO deve enviar ao GitHub.
+
+# ===== Modelos de IA (2 GB; baixados separadamente) =====
+*.gguf
+*.safetensors
+*.onnx
+*.bin
+**/modelo/
+
+# ===== Ambientes virtuais =====
+venv/
+.venv/
+env/
+
+# ===== Saídas de compilação e executáveis =====
+build/
+dist/
+bin/
+obj/
+**/QA/Build/
+*.exe
+
+# ===== Motor compilado: runtime do .NET e bibliotecas do llama (~229 MB) =====
+# Fica só o que não existe em outro lugar: as 3 DLLs do motor com as correções
+# (o código-fonte do motor não acompanha a distribuição) e os arquivos de
+# configuração delas.
+DepoimentoLocal-Windows-v1.0.5-Visual-Fix6/engine/*
+!DepoimentoLocal-Windows-v1.0.5-Visual-Fix6/engine/DepoimentoLocal.dll
+!DepoimentoLocal-Windows-v1.0.5-Visual-Fix6/engine/DepoimentoLocal.Vulkan8.dll
+!DepoimentoLocal-Windows-v1.0.5-Visual-Fix6/engine/DepoimentoLocal.CPU-original.dll
+!DepoimentoLocal-Windows-v1.0.5-Visual-Fix6/engine/DepoimentoLocal*.json
+
+# ===== Textos reais de oitiva: NUNCA enviar =====
+# Guarde depoimentos reais na pasta "oitivas-reais" (ou com "oitiva" no nome).
+oitivas-reais/
+*oitiva*
+*Oitiva*
+*rascunho*
+*Rascunho*
+*.docx
+*.doc
+*.rtf
+*.odt
+*.pdf
+*.wav
+*.mp3
+*.m4a
+*.ogg
+*.mp4
+# Logs do aplicativo podem conter o texto digitado.
+*.log
+
+# ===== Arquivos do Windows =====
+Thumbs.db
+desktop.ini

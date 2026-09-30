@@ -1,0 +1,6 @@
+﻿UI input chars after normal Trim: 1155
+Automatic retry started: False
+Automatic retry completed: False
+ContextOverflowException: False
+Generation accepted: True
+Generation rejected: False

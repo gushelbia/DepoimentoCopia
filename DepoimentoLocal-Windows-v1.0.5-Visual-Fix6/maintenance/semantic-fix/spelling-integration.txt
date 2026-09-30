@@ -1,0 +1,1 @@
+PASS: bloco 3 do retry real preserva nomes, sujeito e incerteza após reparo ortográfico, sem alterações dos papéis.

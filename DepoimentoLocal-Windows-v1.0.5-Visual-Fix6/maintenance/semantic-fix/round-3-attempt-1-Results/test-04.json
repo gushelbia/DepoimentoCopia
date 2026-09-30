@@ -1,0 +1,46 @@
+﻿{
+    "number":  4,
+    "name":  "Três participantes do mesmo gênero",
+    "objective":  "Manter sujeito do depoimento e distinguir pronomes definidos de ambíguos.",
+    "status":  "CONCLUÍDO COM ALERTAS",
+    "input":  "Eu estava com Leandro e Natan quando Vicente entrou na oficina. Leandro pediu a Natan que guardasse a ferramenta dele. Eu não sei de quem era a ferramenta. Vicente me perguntou se eu tinha visto a nota fiscal. Respondi que não. Natan disse a Leandro que ele precisava voltar no sábado. Não ficou claro para mim qual dos dois precisava voltar. Depois Vicente saiu, e eu fiquei com Natan. Eu não perguntei a Natan sobre a nota. Leandro voltou sozinho e me disse que Vicente já tinha ido embora. Eu não vi Vicente sair do prédio.",
+    "output":  "Relatou que o depoente estava com Leandro e Natan quando Vicente entrou na oficina. Leandro pediu a Natan que guardasse a ferramenta dele. O depoente não sabe de quem era a ferramenta. Vicente lhe perguntou se o depoente tinha visto a nota fiscal. O depoente respondeu que não. Natan disse a Leandro que ele precisava voltar no sábado. Não ficou claro para o depoente qual dos dois precisava voltar. Depois Vicente saiu, e o depoente ficou com Natan. O depoente não perguntou a Natan sobre a nota. Leandro voltou sozinho e lhe disse que Vicente já tinha ido embora. O depoente não viu Vicente sair do prédio.",
+    "inputChars":  526,
+    "outputChars":  608,
+    "inputWords":  96,
+    "outputWords":  107,
+    "generationSeconds":  52.616,
+    "totalSeconds":  55.1153389,
+    "modelConfig":  "context=4096; batch=512; ubatch=256; threads=4; gpuLayers=8; mmap=true; temperature=0",
+    "modelFile":  "file=qwen2.5-3b-instruct-q4_k_m.gguf; bytes=2104932768",
+    "outputCaptureVerified":  true,
+    "warnings":  [
+                     "[2026-09-29 18:38:05.840 -03:00] [WARN] [BLOCK_RETRY_START] block=1/1; issue=fidelidade: perda de destinatário do relato: leandro voltou sozinho e me disse que vicente já tinha ido embora."
+                 ],
+    "nativeWarnings":  [
+                           "[2026-09-29 18:37:37.722 -03:00] [NATIVE-WARNING] [LLAMASHARP] load: control-looking token: 128247 \u0027\u003c/s\u003e\u0027 was not control-type; this is probably a bug in the model. its type will be overridden",
+                           "[2026-09-29 18:37:38.542 -03:00] [NATIVE-WARNING] [LLAMASHARP] llama_context: n_ctx_seq (4096) \u003c n_ctx_train (32768) -- the full capacity of the model will not be utilized",
+                           "[2026-09-29 18:37:38.653 -03:00] [NATIVE-WARNING] [LLAMASHARP] llama_context: n_ctx_seq (4096) \u003c n_ctx_train (32768) -- the full capacity of the model will not be utilized",
+                           "[2026-09-29 18:38:05.847 -03:00] [NATIVE-WARNING] [LLAMASHARP] llama_context: n_ctx_seq (4096) \u003c n_ctx_train (32768) -- the full capacity of the model will not be utilized"
+                       ],
+    "retry":  true,
+    "exception":  "",
+    "hasException":  false,
+    "hasError":  false,
+    "contextOverflowException":  false,
+    "completedNormally":  true,
+    "emptyOutput":  false,
+    "fullDuplication":  false,
+    "repeatedParagraphs":  false,
+    "firstPerson":  [
+
+                    ],
+    "negationWarning":  false,
+    "truncationSuspected":  false,
+    "missingEndingMarkers":  [
+
+                             ],
+    "observations":  [
+
+                     ]
+}

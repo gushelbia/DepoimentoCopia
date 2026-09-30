@@ -1,0 +1,6 @@
+{
+  "number": 7,
+  "name": "Falas diretas entre aspas",
+  "objective": "Testar preservação de falas diretas sem converter indevidamente o conteúdo da citação.",
+  "input": "Eu estava perto quando a Daniela falou para o Ricardo: “eu não vou assinar isso agora”. Eu ouvi essa frase claramente. Depois o Ricardo respondeu alguma coisa, mas eu não consegui entender. Mais tarde a Daniela me disse que ele tinha pedido para ela rever o documento. Eu não ouvi esse pedido pessoalmente. Também ouvi o Ricardo dizer “isso precisa ser resolvido hoje”, mas não sei exatamente a quem ele estava se dirigindo quando falou isso."
+}

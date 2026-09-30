@@ -1,0 +1,72 @@
+PASS unique implicit narrator predicate
+PASS same predicate with two actors is ambiguous
+PASS named subject never replaced
+PASS adverb after explicit narrator does not duplicate it
+PASS adverb after named subject does not replace it
+PASS coordinated narrator verbs
+PASS only modifies predicate not narrator
+PASS also modifies predicate not narrator
+PASS source explicit exclusive subject focus retained
+PASS source explicit additive subject focus retained
+PASS post-verbal narrator with predicate focus
+PASS source-proven post-verbal narrator
+PASS source-proven post-verbal visual narrator
+PASS post-verbal object of third party remains object
+PASS same perception in source by multiple people is ambiguous
+PASS knowledge categories never interchanged
+PASS quotation untouched
+PASS same output frame across quotation segments is ambiguous
+PASS explicit recipient from unique source frame
+PASS two source recipients are not merged
+PASS restore explicit subordinate pronoun
+PASS two source subordinate frames are ambiguous
+PASS restore complete approximate alternatives
+PASS restore repeated approximate quantity
+PASS another source interval prevents restoration
+PASS run-on estimate retains place and uncertainty
+PASS explicit correction with repeated confirmation
+PASS temporal owner in explicit correction
+PASS masculine temporal nominalization
+PASS another temporal owner is not reassigned
+PASS no confirmation means no consolidation
+PASS different temporal confirmation is not redundant
+PASS copied first-person verbs get narrator subject
+PASS irregular form after explicit narrator
+PASS present form after explicit narrator
+PASS noun homograph untouched
+PASS adverbial before copied verb
+PASS spelling of -quei and -guei preterites
+PASS quoted first person untouched while narration converted
+PASS recipient restored after named speaker
+PASS recipient restored after pronoun speaker
+PASS recipient turned into subject
+PASS two recipients kept distinct
+PASS participant own speech without recipient untouched
+PASS elliptical reply after participant question
+PASS cross-category draft not aligned by position
+PASS same reply by participant stays ambiguous
+PASS relative clause narrator explicit
+PASS complement of narrator belief not duplicated
+PASS narrator rendered as ele restored
+PASS participant ele kept
+PASS parallel correction with quer dizer
+PASS parallel false start with não
+PASS non-parallel correction kept
+PASS preposition contraction
+PASS infinitive subject keeps preposition
+PASS model attribution error not smoothed
+PASS narrator moved from subordinate to main verb
+PASS shared interaction without inferring participants
+PASS whole narrator sentence after participant sentence
+PASS whole sentence disambiguates repeated verb frame
+PASS same-form verb after sentence only of narrator
+PASS NEG same-form verb after sentence with participant subject
+PASS NEG same-form verb after sentence with pronoun
+PASS NEG same-form verb after third-person verb
+PASS NEG same-form verb at start of text
+PASS NEG same-form verb after same-form sentence
+PASS NEG repeated narrator sentence is ambiguous
+PASS narrator possessive named
+PASS narrator possessive at sentence start
+PASS NEG possessive kept when narrator is subject
+PASS NEG possessive kept when input has participant possessive

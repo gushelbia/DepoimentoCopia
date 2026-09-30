@@ -1,0 +1,45 @@
+﻿{
+    "number":  7,
+    "name":  "Falas diretas entre aspas",
+    "objective":  "Testar preservação de falas diretas sem converter indevidamente o conteúdo da citação.",
+    "status":  "CONCLUÍDO SEM ALERTAS AUTOMÁTICOS",
+    "input":  "Eu estava perto quando a Daniela falou para o Ricardo: “eu não vou assinar isso agora”. Eu ouvi essa frase claramente. Depois o Ricardo respondeu alguma coisa, mas eu não consegui entender. Mais tarde a Daniela me disse que ele tinha pedido para ela rever o documento. Eu não ouvi esse pedido pessoalmente. Também ouvi o Ricardo dizer “isso precisa ser resolvido hoje”, mas não sei exatamente a quem ele estava se dirigindo quando falou isso.",
+    "output":  "Relatou que o depoente estava perto quando a Daniela falou para o Ricardo: “eu não vou assinar isso agora”. O depoente ouviu essa frase claramente. Depois o Ricardo respondeu alguma coisa, mas o depoente não conseguiu entender. Mais tarde a Daniela lhe disse que ele tinha pedido para ela rever o documento. O depoente não ouviu esse pedido pessoalmente. Também o depoente ouviu o Ricardo dizer “isso precisa ser resolvido hoje”, mas não sabe exatamente a quem ele estava se dirigindo quando falou isso.",
+    "inputChars":  442,
+    "outputChars":  503,
+    "inputWords":  76,
+    "outputWords":  84,
+    "generationSeconds":  20.95,
+    "totalSeconds":  23.3269081,
+    "modelConfig":  "context=4096; batch=512; ubatch=256; threads=4; gpuLayers=8; mmap=true; temperature=0",
+    "modelFile":  "file=qwen2.5-3b-instruct-q4_k_m.gguf; bytes=2104932768",
+    "outputCaptureVerified":  true,
+    "warnings":  [
+
+                 ],
+    "nativeWarnings":  [
+                           "[2026-09-29 06:51:10.170 -03:00] [NATIVE-WARNING] [LLAMASHARP] load: control-looking token: 128247 \u0027\u003c/s\u003e\u0027 was not control-type; this is probably a bug in the model. its type will be overridden",
+                           "[2026-09-29 06:51:10.820 -03:00] [NATIVE-WARNING] [LLAMASHARP] llama_context: n_ctx_seq (4096) \u003c n_ctx_train (32768) -- the full capacity of the model will not be utilized",
+                           "[2026-09-29 06:51:10.938 -03:00] [NATIVE-WARNING] [LLAMASHARP] llama_context: n_ctx_seq (4096) \u003c n_ctx_train (32768) -- the full capacity of the model will not be utilized"
+                       ],
+    "retry":  false,
+    "exception":  "",
+    "hasException":  false,
+    "hasError":  false,
+    "contextOverflowException":  false,
+    "completedNormally":  true,
+    "emptyOutput":  false,
+    "fullDuplication":  false,
+    "repeatedParagraphs":  false,
+    "firstPerson":  [
+
+                    ],
+    "negationWarning":  false,
+    "truncationSuspected":  false,
+    "missingEndingMarkers":  [
+
+                             ],
+    "observations":  [
+
+                     ]
+}

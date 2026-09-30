@@ -1,0 +1,11 @@
+PASS Validador aceitou a geração
+PASS Sem estouro de contexto
+PASS Presente: significado da fala
+PASS Presente: mesmo dia
+PASS Sem não sabia indevido
+PASS Autocorreção consolidada
+PASS Sem falso começo saiu
+PASS Fonte Carlos e ação Paulo
+PASS Limitação de memória preservada
+PASS Incerteza de ordem preservada
+PASS Contexto 4096

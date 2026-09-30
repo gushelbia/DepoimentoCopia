@@ -1,0 +1,43 @@
+﻿COMPILE PASS 2026-09-26T23:19:15
+ENGINE PID=13316 MODEL=C:\Users\gusta\Downloads\qwen2.5-3b-instruct-q4_k_m.gguf
+LOADED | status=Modelo carregado • CPU • 4 threads | reformulate=True | cancel=False
+editor=2820532 valid=True enabled=True length=56
+editor=1705736 valid=True enabled=True length=0
+editor=3082944 valid=True enabled=True length=0
+editor=4786700 valid=True enabled=True length=0
+START 1 | status=Preparando reformulação… | reformulate=False | cancel=True
+editor=2820532 valid=True enabled=True length=56
+editor=1705736 valid=True enabled=True length=119
+editor=3082944 valid=True enabled=True length=0
+editor=4786700 valid=True enabled=True length=0
+END 1 | status=Concluído. Revise o texto antes de adicionar. | reformulate=True | cancel=False
+editor=2820532 valid=True enabled=True length=56
+editor=1705736 valid=True enabled=True length=119
+editor=3082944 valid=True enabled=True length=130
+editor=4786700 valid=True enabled=True length=0
+PASS 1 OUTPUT=Relatou que estava em casa na segunda-feira quando ouviu um barulho na rua. Foi até a janela e viu uma bicicleta caída na calcada.
+START 2 | status=Preparando reformulação… | reformulate=False | cancel=True
+editor=2820532 valid=True enabled=True length=56
+editor=1705736 valid=True enabled=True length=99
+editor=3082944 valid=True enabled=True length=0
+editor=4786700 valid=True enabled=True length=0
+END 2 | status=Concluído. Revise o texto antes de adicionar. | reformulate=True | cancel=False
+editor=2820532 valid=True enabled=True length=56
+editor=1705736 valid=True enabled=True length=99
+editor=3082944 valid=True enabled=True length=110
+editor=4786700 valid=True enabled=True length=0
+PASS 2 OUTPUT=Relatou que na terça-feira, chegou ao mercado às nove horas. Compreu pão e leite e voltou para casa de ônibus.
+START 3 | status=Preparando reformulação… | reformulate=False | cancel=True
+editor=2820532 valid=True enabled=True length=56
+editor=1705736 valid=True enabled=True length=112
+editor=3082944 valid=True enabled=True length=0
+editor=4786700 valid=True enabled=True length=0
+END 3 | status=Concluído. Revise o texto antes de adicionar. | reformulate=True | cancel=False
+editor=2820532 valid=True enabled=True length=56
+editor=1705736 valid=True enabled=True length=112
+editor=3082944 valid=True enabled=True length=131
+editor=4786700 valid=True enabled=True length=0
+PASS 3 OUTPUT=Relatou que na quarta-feira, encontrou seu vizinho na portaria. Ele entregou a encomenda que havia recebido pela manhã ao depoente.
+CANCEL PASS status=Concluído com 1 alerta(s). Revise com atenção antes de adicionar.
+AFTER CANCEL PASS OUTPUT=Relatou que na terça-feira, chegou ao mercado às nove horas. Compreu pão e leite e voltou para casa de ônibus.
+ERROR RECOVERY PASS status=O motor do Depoimento Local foi encerrado. Reabra o programa.

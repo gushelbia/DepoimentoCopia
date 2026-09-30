@@ -1,0 +1,5 @@
+PASS: 10 casos presentes com entrada e saída integrais no relatório.
+PASS: saídas JSON idênticas aos TXT capturados.
+PASS: context=4096, gpuLayers=8 e temperature=0 nos dez logs.
+PASS: tamanho das nove saídas normais idêntico ao registrado pelo motor.
+PASS: falha e retry do Teste 9 preservados, seguido pela execução do Teste 10.

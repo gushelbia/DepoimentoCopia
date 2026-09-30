@@ -1,0 +1,39 @@
+## Bateria inédita (saídas finais da rodada 3)
+- caso 01 : INALTERADA ; validação=fidelidade: percepção acrescentada ao relato
+- caso 02 : INALTERADA ; validação=ok
+- caso 03 : INALTERADA ; validação=uma negação pode ter sido omitida
+- caso 04 : INALTERADA ; validação=ok
+- caso 05 : INALTERADA ; validação=ok
+- caso 06 : INALTERADA ; validação=ok
+- caso 07 : ALTERADA ; validação=ok
+    + Nunca entrou no depósito sem acompanhamento e não autorizou ninguém a usar o nome do depoente.
+    - Nunca entrou no depósito sem acompanhamento e não autorizou ninguém a usar seu nome.
+- caso 08 : INALTERADA ; validação=ok
+- caso 09 : INALTERADA ; validação=ok
+- caso 10 : INALTERADA ; validação=ok
+- caso 11 : INALTERADA ; validação=ok
+- caso 12 : ALTERADA ; validação=ok
+    + O depoente respondeu que ainda não tinha recebido nenhuma lista.
+    + Mais tarde Neide comentou que uma das sacolas parecia conter tintas, mas ela também não abriu a sacola na presença do depoente.
+    + O depoente não perguntou.
+    + Não marcou uma data na presença do depoente.
+    + O relato do depoente reúne o que o depoente observou, as informações que lhe passaram e os pontos que o depoente não conseguiu confirmar.
+    - Respondeu que ainda não tinha recebido nenhuma lista.
+    - Mais tarde Neide comentou que uma das sacolas parecia conter tintas, mas ela também não abriu a sacola na sua presença.
+    - Não perguntou.
+    - Não marcou uma data na sua presença.
+    - Seu relato reúne o que o depoente observou, as informações que lhe passaram e os pontos que o depoente não conseguiu confirmar.
+- caso 13 : INALTERADA ; validação=ok
+- caso 14 : INALTERADA ; validação=ok
+- caso 15 : INALTERADA ; validação=ok
+## Bateria anterior (saídas finais da rodada 3)
+- caso 01 : INALTERADA ; validação=ok
+- caso 02 : INALTERADA ; validação=uma negação pode ter sido omitida
+- caso 03 : INALTERADA ; validação=ok
+- caso 04 : INALTERADA ; validação=ok
+- caso 05 : INALTERADA ; validação=ok
+- caso 06 : INALTERADA ; validação=ok
+- caso 07 : INALTERADA ; validação=ok
+- caso 08 : INALTERADA ; validação=ok
+- caso 09 : INALTERADA ; validação=ok
+- caso 10 : INALTERADA ; validação=ok

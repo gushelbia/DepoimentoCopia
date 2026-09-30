@@ -1,0 +1,8 @@
+PASS DepoimentoLocal.dll : only 2 prompt literals and 2 prompt constants updated; all method instructions, locals, exception handlers and other field constants preserved.
+PASS DepoimentoLocal.Vulkan8.dll : only 2 prompt literals and 2 prompt constants updated; all method instructions, locals, exception handlers and other field constants preserved.
+PASS DepoimentoLocal.CPU-original.dll : only 2 prompt literals and 2 prompt constants updated; all method instructions, locals, exception handlers and other field constants preserved.
+PASS INICIAR.ps1 : only expectedHash updated.
+PASS INICIAR-ORIGINAL.ps1 : only expectedHash updated.
+PASS INICIAR-CPU.ps1 : only expectedHash updated.
+PASS INICIAR-CPU-ORIGINAL.ps1 : only expectedHash updated.
+APPLIED to the existing package. UI source, model and execution logic unchanged.

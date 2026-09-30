@@ -1,0 +1,4 @@
+PASS DepoimentoLocal.dll : context=4096; compiled token-budget guard embedded; explicit ThrowException; concise retry. Validator, first prompt, GPU layers, temperature and UI unchanged.
+PASS DepoimentoLocal.Vulkan8.dll : context=4096; compiled token-budget guard embedded; explicit ThrowException; concise retry. Validator, first prompt, GPU layers, temperature and UI unchanged.
+PASS DepoimentoLocal.CPU-original.dll : context=4096; compiled token-budget guard embedded; explicit ThrowException; concise retry. Validator, first prompt, GPU layers, temperature and UI unchanged.
+APPLIED; launchers and manifest hashes updated.

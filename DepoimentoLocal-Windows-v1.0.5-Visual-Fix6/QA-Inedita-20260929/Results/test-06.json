@@ -1,0 +1,45 @@
+﻿{
+    "number":  6,
+    "name":  "Negação da percepção",
+    "objective":  "Não transformar não ver/não ouvir em negativa do acontecimento.",
+    "status":  "CONCLUÍDO SEM ALERTAS AUTOMÁTICOS",
+    "input":  "Eu não vi Ícaro retirar dinheiro da gaveta. Isso não significa que eu saiba se ele retirou ou não. Vi Ícaro perto do balcão, com uma sacola fechada. Não ouvi ele pedir autorização à gerente. Também não posso afirmar que ele não pediu, porque fiquei fora da loja por alguns minutos. A gerente Yara me disse que faltavam cinquenta reais, mas eu não conferi o caixa e não sei se essa diferença já existia antes.",
+    "output":  "Relatou que o depoente não viu Ícaro retirar dinheiro da gaveta. Isso não significa que o depoente saiba se ele retirou ou não. O depoente viu Ícaro perto do balcão, com uma sacola fechada. O depoente não ouviu ele pedir autorização à gerente. O depoente também não pode afirmar que ele não pediu, porque o depoente ficou fora da loja por alguns minutos. A gerente Yara lhe disse que faltavam cinquenta reais, mas o depoente não conferiu o caixa e não sabe se essa diferença já existia antes.",
+    "inputChars":  408,
+    "outputChars":  492,
+    "inputWords":  75,
+    "outputWords":  88,
+    "generationSeconds":  22.912,
+    "totalSeconds":  25.687281199999997,
+    "modelConfig":  "context=4096; batch=512; ubatch=256; threads=4; gpuLayers=8; mmap=true; temperature=0",
+    "modelFile":  "file=qwen2.5-3b-instruct-q4_k_m.gguf; bytes=2104932768",
+    "outputCaptureVerified":  true,
+    "warnings":  [
+
+                 ],
+    "nativeWarnings":  [
+                           "[2026-09-29 19:15:47.700 -03:00] [NATIVE-WARNING] [LLAMASHARP] load: control-looking token: 128247 \u0027\u003c/s\u003e\u0027 was not control-type; this is probably a bug in the model. its type will be overridden",
+                           "[2026-09-29 19:15:48.452 -03:00] [NATIVE-WARNING] [LLAMASHARP] llama_context: n_ctx_seq (4096) \u003c n_ctx_train (32768) -- the full capacity of the model will not be utilized",
+                           "[2026-09-29 19:15:48.617 -03:00] [NATIVE-WARNING] [LLAMASHARP] llama_context: n_ctx_seq (4096) \u003c n_ctx_train (32768) -- the full capacity of the model will not be utilized"
+                       ],
+    "retry":  false,
+    "exception":  "",
+    "hasException":  false,
+    "hasError":  false,
+    "contextOverflowException":  false,
+    "completedNormally":  true,
+    "emptyOutput":  false,
+    "fullDuplication":  false,
+    "repeatedParagraphs":  false,
+    "firstPerson":  [
+
+                    ],
+    "negationWarning":  false,
+    "truncationSuspected":  false,
+    "missingEndingMarkers":  [
+
+                             ],
+    "observations":  [
+
+                     ]
+}

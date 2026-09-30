@@ -1,0 +1,50 @@
+﻿CHAVE DE CONFERENCIA (para quem for revisar; nao mostrar ao programa)
+
+TEXTO 01 - Encomenda no condomínio
+  Armadilhas: Formas de 1ª pessoa irregulares (trouxe, pus, dei, fiz, fui); 'trouxe' tem a mesma forma na 3ª pessoa; ações do depoente sem perceção.
+  Tamanho: 305 caracteres
+
+TEXTO 02 - Barulho na cozinha (coloquial, 'a gente')
+  Armadilhas: Primeira pessoa do plural (a gente, nós, fomos, nossa, nosso, pra gente); deve preservar quem ouviu, quem foi ver e o destinatário da fala.
+  Tamanho: 374 caracteres
+
+TEXTO 03 - Prazo e correções de nome, dia e prazo
+  Armadilhas: Três autocorreções legítimas (nome, dia, prazo) devem ser consolidadas; a dúvida final sobre o valor deve ser mantida.
+  Tamanho: 293 caracteres
+
+TEXTO 04 - Três mulheres na sala
+  Armadilhas: Pronomes ambíguos ('Ela não fechou', 'era dela') não podem ser resolvidos; nomes e gênero preservados; 'me perguntou' vira 'lhe perguntou'.
+  Tamanho: 303 caracteres
+
+TEXTO 05 - Cadeia de relato
+  Armadilhas: Cadeia Sérgio → depoente / Olinda → gerente: ninguém pode trocar de lugar; 'me contou' e 'me falou' preservam o destinatário; negações de percepção.
+  Tamanho: 301 caracteres
+
+TEXTO 06 - Não presenciei a discussão
+  Armadilhas: Não presenciar/ouvir não pode virar 'não aconteceu'; ressalva explícita de que não pode negar.
+  Tamanho: 287 caracteres
+
+TEXTO 07 - Citações e versões conflitantes
+  Armadilhas: Citações literais com 1ª pessoa dentro das aspas devem ficar intactas; 'iria me ligar' fora das aspas vira 'lhe ligar'; versões conflitantes mantidas.
+  Tamanho: 263 caracteres
+
+TEXTO 08 - Carregador emprestado (destinatários)
+  Armadilhas: Destinatários variados (me emprestasse, me entregou, devolvi a ele, entreguei ao Josué, falei com a Débora); 'poderia' tem a mesma forma na 1ª e 3ª pessoa.
+  Tamanho: 295 caracteres
+
+TEXTO 09 - TEXTO LONGO - Prédio residencial (vários blocos)
+  Armadilhas: Texto longo (vários blocos): verifica se uma rejeição deixa saída parcial, se o marcador de incompleto aparece e se as fontes de cada informação são mantidas ao longo do texto.
+  Tamanho: 2474 caracteres
+
+TEXTO 10 - Data incerta e retratação
+  Armadilhas: Incerteza temporal; retratação explícita deve ser mantida como retratação; fonte desconhecida do vizinho; 'não vi a moto'.
+  Tamanho: 404 caracteres
+
+TEXTO 11 - Formas com pronome enclítico
+  Armadilhas: Formas 'sentei-me', 'levantei-me', 'lembrei-me', 'encontrei-o', 'despedi-me'; sujeito elíptico logo depois de frase com outra pessoa ('Quando subi').
+  Tamanho: 237 caracteres
+
+TEXTO 12 - Contrato lido e assinado
+  Armadilhas: Ação do depoente (li, conferi, assinei) NÃO pode virar percepção ('viu conferir...'); 'vi o Wagner carimbar' precisa continuar como percepção.
+  Tamanho: 283 caracteres
+

@@ -1,0 +1,6 @@
+{
+  "number": 8,
+  "name": "Nomes e cargos",
+  "objective": "Evitar troca indevida entre nome, cargo e pessoa.",
+  "input": "Eu vi a professora Helena entrando na sala da direção. Depois o diretor Paulo chegou e conversou com ela. Não ouvi o que eles falaram. Mais tarde uma servidora me disse que a professora tinha procurado o diretor para falar sobre uma turma. Eu não sei se isso é verdade. Depois Paulo saiu da sala e falou com o coordenador Marcos. Não sei se eles conversaram sobre o mesmo assunto. A professora Helena saiu alguns minutos depois. Eu não vi o coordenador entrar na sala da direção."
+}

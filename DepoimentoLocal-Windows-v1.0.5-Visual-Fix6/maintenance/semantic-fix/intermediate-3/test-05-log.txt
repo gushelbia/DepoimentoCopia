@@ -1,0 +1,51 @@
+﻿[2026-09-28 19:59:33.223 -03:00] [INFO] [APP_START] version=0.1.9.0; os=Microsoft Windows 10.0.26200; arch=X64; processArch=X64; cpuLogical=8; framework=.NET 8.0.31
+[2026-09-28 19:59:33.251 -03:00] [INFO] [NATIVE_LOG] LLamaSharp native logging configured.
+[2026-09-28 19:59:33.497 -03:00] [INFO] [MODEL_LOAD_START] file=qwen2.5-3b-instruct-q4_k_m.gguf; bytes=2104932768
+[2026-09-28 19:59:33.500 -03:00] [INFO] [MODEL_CONFIG] context=4096; batch=512; ubatch=256; threads=4; gpuLayers=8; mmap=true; temperature=0
+[2026-09-28 19:59:33.708 -03:00] [NATIVE-DEBUG] [LLAMASHARP] Loading library: 'llama'
+[2026-09-28 19:59:33.709 -03:00] [NATIVE-INFO] [LLAMASHARP] Detected OS Platform: 'WINDOWS'
+[2026-09-28 19:59:33.710 -03:00] [NATIVE-DEBUG] [LLAMASHARP] Detected OS string: 'win-x64'
+[2026-09-28 19:59:33.712 -03:00] [NATIVE-INFO] [LLAMASHARP] NativeLibraryConfig Description: - LibraryName: LLama - Path: '' - PreferCuda: True - PreferVulkan: True - PreferredAvxLevel: AVX2 - AllowFallback: True - SkipCheck: False - SearchDirectories and Priorities: { ./ }
+[2026-09-28 19:59:33.713 -03:00] [NATIVE-INFO] [LLAMASHARP] NativeLibraryConfig Description: - LibraryName: LLama - Path: '' - PreferCuda: True - PreferVulkan: True - PreferredAvxLevel: AVX2 - AllowFallback: True - SkipCheck: False - SearchDirectories and Priorities: { ./ }
+[2026-09-28 19:59:33.716 -03:00] [NATIVE-DEBUG] [LLAMASHARP] Got relative library path 'runtimes/win-x64/native/vulkan/llama.dll' from local with (NativeLibraryName: LLama, UseCuda: False, UseVulkan: True, AvxLevel: Avx2), trying to load it...
+[2026-09-28 19:59:33.719 -03:00] [NATIVE-INFO] [LLAMASHARP] Successfully loaded './runtimes\win-x64\native\vulkan\ggml-base.dll'
+[2026-09-28 19:59:33.720 -03:00] [NATIVE-INFO] [LLAMASHARP] Successfully loaded dependency 'runtimes\win-x64\native\vulkan\ggml-base.dll'
+[2026-09-28 19:59:33.723 -03:00] [NATIVE-INFO] [LLAMASHARP] Successfully loaded './runtimes/win-x64/native/avx2\ggml-cpu.dll'
+[2026-09-28 19:59:33.723 -03:00] [NATIVE-INFO] [LLAMASHARP] Successfully loaded dependency 'runtimes/win-x64/native/avx2\ggml-cpu.dll'
+[2026-09-28 19:59:33.729 -03:00] [NATIVE-INFO] [LLAMASHARP] Successfully loaded './runtimes\win-x64\native\vulkan\ggml-vulkan.dll'
+[2026-09-28 19:59:33.729 -03:00] [NATIVE-INFO] [LLAMASHARP] Successfully loaded dependency 'runtimes\win-x64\native\vulkan\ggml-vulkan.dll'
+[2026-09-28 19:59:33.731 -03:00] [NATIVE-INFO] [LLAMASHARP] Successfully loaded './runtimes\win-x64\native\vulkan\ggml.dll'
+[2026-09-28 19:59:33.732 -03:00] [NATIVE-INFO] [LLAMASHARP] Successfully loaded dependency 'runtimes\win-x64\native\vulkan\ggml.dll'
+[2026-09-28 19:59:33.734 -03:00] [NATIVE-INFO] [LLAMASHARP] Successfully loaded './runtimes/win-x64/native/vulkan/llama.dll'
+[2026-09-28 19:59:33.868 -03:00] [NATIVE-INFO] [LLAMASHARP] llama_model_loader: loaded meta data with 26 key-value pairs and 435 tensors from ..\modelo\qwen2.5-3b-instruct-q4_k_m.gguf (version GGUF V3 (latest))
+[2026-09-28 19:59:34.016 -03:00] [NATIVE-INFO] [LLAMASHARP] print_info: file type   = Q4_K - Medium
+[2026-09-28 19:59:34.016 -03:00] [NATIVE-INFO] [LLAMASHARP] print_info: file size   = 1.95 GiB (4.94 BPW)
+[2026-09-28 19:59:34.196 -03:00] [NATIVE-WARNING] [LLAMASHARP] load: control-looking token: 128247 '</s>' was not control-type; this is probably a bug in the model. its type will be overridden
+[2026-09-28 19:59:34.253 -03:00] [NATIVE-INFO] [LLAMASHARP] print_info: model type            = 3B
+[2026-09-28 19:59:34.891 -03:00] [NATIVE-WARNING] [LLAMASHARP] llama_context: n_ctx_seq (4096) < n_ctx_train (32768) -- the full capacity of the model will not be utilized
+[2026-09-28 19:59:34.958 -03:00] [INFO] [MODEL_LOAD_OK] file=qwen2.5-3b-instruct-q4_k_m.gguf
+[2026-09-28 19:59:34.986 -03:00] [INFO] [GENERATION_START] sourceChars=6042; blocks=6
+[2026-09-28 19:59:34.987 -03:00] [INFO] [BLOCK_START] block=1/6; chars=1199; maxTokens=479
+[2026-09-28 19:59:35.005 -03:00] [INFO] [CONTEXT_BUDGET] context=4096; promptTokens=1144; maxTokens=479; safetyTokens=32; requiredTokens=1655; remainingTokens=2441
+[2026-09-28 19:59:35.010 -03:00] [NATIVE-WARNING] [LLAMASHARP] llama_context: n_ctx_seq (4096) < n_ctx_train (32768) -- the full capacity of the model will not be utilized
+[2026-09-28 20:00:20.120 -03:00] [INFO] [BLOCK_FIRST_PASS] block=1/6; elapsedMs=45132; pieces=345; outputChars=1253
+[2026-09-28 20:00:20.214 -03:00] [INFO] [BLOCK_OK] block=1/6; outputChars=1265
+[2026-09-28 20:00:20.215 -03:00] [INFO] [BLOCK_START] block=2/6; chars=1138; maxTokens=459
+[2026-09-28 20:00:20.224 -03:00] [INFO] [CONTEXT_BUDGET] context=4096; promptTokens=1115; maxTokens=459; safetyTokens=32; requiredTokens=1606; remainingTokens=2490
+[2026-09-28 20:00:20.225 -03:00] [NATIVE-WARNING] [LLAMASHARP] llama_context: n_ctx_seq (4096) < n_ctx_train (32768) -- the full capacity of the model will not be utilized
+[2026-09-28 20:01:02.641 -03:00] [INFO] [BLOCK_FIRST_PASS] block=2/6; elapsedMs=42426; pieces=317; outputChars=1196
+[2026-09-28 20:01:02.661 -03:00] [INFO] [LOCAL_REPAIR] block=2/6; before=fidelidade: possível primeira pessoa residual: ouvi; after=ok
+[2026-09-28 20:01:02.664 -03:00] [INFO] [BLOCK_OK] block=2/6; outputChars=1200
+[2026-09-28 20:01:02.665 -03:00] [INFO] [BLOCK_START] block=3/6; chars=1059; maxTokens=433
+[2026-09-28 20:01:02.674 -03:00] [INFO] [CONTEXT_BUDGET] context=4096; promptTokens=1100; maxTokens=433; safetyTokens=32; requiredTokens=1565; remainingTokens=2531
+[2026-09-28 20:01:02.676 -03:00] [NATIVE-WARNING] [LLAMASHARP] llama_context: n_ctx_seq (4096) < n_ctx_train (32768) -- the full capacity of the model will not be utilized
+[2026-09-28 20:01:44.585 -03:00] [INFO] [BLOCK_FIRST_PASS] block=3/6; elapsedMs=41920; pieces=297; outputChars=1095
+[2026-09-28 20:01:44.592 -03:00] [INFO] [LOCAL_REPAIR] block=3/6; before=fidelidade: possível primeira pessoa residual: voltei; after=fidelidade: participante explícito omitido ou substituído na oração: a patrícia respondeu que não estava culpando ninguém e que só queria saber onde estava o documento.
+[2026-09-28 20:01:44.597 -03:00] [WARN] [BLOCK_RETRY_START] block=3/6; issue=fidelidade: participante explícito omitido ou substituído na oração: a patrícia respondeu que não estava culpando ninguém e que só queria saber onde estava o documento.
+[2026-09-28 20:01:44.603 -03:00] [INFO] [CONTEXT_BUDGET] context=4096; promptTokens=1211; maxTokens=433; safetyTokens=32; requiredTokens=1676; remainingTokens=2420
+[2026-09-28 20:01:44.604 -03:00] [NATIVE-WARNING] [LLAMASHARP] llama_context: n_ctx_seq (4096) < n_ctx_train (32768) -- the full capacity of the model will not be utilized
+[2026-09-28 20:02:21.467 -03:00] [INFO] [BLOCK_RETRY_END] block=3/6; elapsedMs=36865; pieces=260; outputChars=1034; issue=fidelidade: participante explícito omitido ou substituído na oração: a patrícia respondeu que não estava culpando ninguém e que só queria saber onde estava o documento.
+[2026-09-28 20:02:21.472 -03:00] [WARN] [BLOCK_REJECTED] block=3/6; detail=fidelidade: participante explícito omitido ou substituído na oração: a patrícia respondeu que não estava culpando ninguém e que só queria saber onde estava o documento.
+[2026-09-28 20:02:21.782 -03:00] [ERROR] [GENERATION_FAILED] sourceChars=6042; elapsedMs=166498
+System.InvalidOperationException: O bloco 3 ainda precisa de revisão: fidelidade: participante explícito omitido ou substituído na oração: a patrícia respondeu que não estava culpando ninguém e que só queria saber onde estava o documento.. O texto gerado foi mantido na tela.
+   at DepoimentoLocal.Windows.MainForm.Reformulate_Click(Object sender, EventArgs e)

@@ -1,0 +1,6 @@
+{
+  "number": 15,
+  "name": "Ambiguidade real a preservar",
+  "objective": "Não resolver possuidor, destinatário, pessoa ou local por inferência.",
+  "input": "Eu estava na sala quando Inês disse a Vera que sua irmã esperava no carro. Não sei de quem era a irmã nem qual carro era. Depois ela pediu que eu levasse a bolsa para lá. Não consegui identificar se quem fez o pedido foi Inês ou Vera, porque eu estava de costas. Não levei a bolsa. Ouvi uma delas dizer que a outra já sabia do problema. Não sei qual problema. Mais tarde Vera me disse que ela tinha resolvido aquilo. Não perguntei quem era “ela” nem o que tinha sido resolvido."
+}

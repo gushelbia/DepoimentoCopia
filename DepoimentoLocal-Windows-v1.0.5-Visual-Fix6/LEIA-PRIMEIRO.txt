@@ -1,0 +1,18 @@
+DEPOIMENTO LOCAL — COMO ABRIR
+
+Dê dois cliques em DepoimentoLocal.exe, nesta pasta.
+Não é necessário abrir INICIAR.bat, PowerShell ou terminal, nem instalar o .NET Runtime.
+
+O modelo atual está em modelo\qwen2.5-3b-instruct-q4_k_m.gguf.
+O programa o localiza automaticamente. O botão Carregar modelo continua funcionando como antes.
+O funcionamento é offline. O perfil Vulkan8 e as configurações atuais foram preservados.
+
+Mantenha a pasta completa:
+  DepoimentoLocal.exe  — executável de entrada
+  modelo\              — GGUF local
+  engine\              — motor, interface compilada, runtime .NET e backends nativos
+  ui\                  — ícone e fonte da interface
+
+Você pode mover/copiar a pasta inteira. Não copie apenas o EXE.
+Os arquivos INICIAR*.bat e scripts antigos foram mantidos para compatibilidade/diagnóstico; não são usados pelo novo executável.
+A pasta launcher contém o projeto WinExe/self-contained Windows x64 e as instruções de compilação.

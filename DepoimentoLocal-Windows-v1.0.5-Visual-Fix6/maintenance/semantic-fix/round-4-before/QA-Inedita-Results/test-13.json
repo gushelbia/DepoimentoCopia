@@ -1,0 +1,45 @@
+﻿{
+    "number":  13,
+    "name":  "Correção explícita do próprio depoente",
+    "objective":  "Aplicar retratação efetiva sem manter alegação abandonada ou inventar certeza.",
+    "status":  "CONCLUÍDO SEM ALERTAS AUTOMÁTICOS",
+    "input":  "Eu disse há pouco que Rubens me entregou a chave, mas preciso corrigir isso: quem me entregou foi o porteiro Amaro. Rubens estava ao lado dele. Tenho certeza de quem fez a entrega porque assinei o livro diante de Amaro. Sobre o horário, mantenho a dúvida: pode ter sido às seis ou às seis e meia. Também preciso corrigir a palavra lacrado; o pacote estava fechado com fita, mas eu não verifiquei se havia lacre. Não quero afirmar que o pacote estava lacrado.",
+    "output":  "Relatou que o depoente disse há pouco que Rubens lhe entregou a chave, mas precisa corrigir isso: quem lhe entregou foi o porteiro Amaro. Rubens estava ao lado dele. O depoente tem certeza de quem fez a entrega porque o depoente assinou o livro diante de Amaro. Sobre o horário, mantém a dúvida: pode ter sido às seis ou às seis e meia. Também precisa corrigir a palavra \"lacrado\"; o pacote estava fechado com fita, mas o depoente não verificou se havia lacre. O depoente não quer afirmar que o pacote estava lacrado.",
+    "inputChars":  458,
+    "outputChars":  517,
+    "inputWords":  83,
+    "outputWords":  93,
+    "generationSeconds":  23.142,
+    "totalSeconds":  25.7476429,
+    "modelConfig":  "context=4096; batch=512; ubatch=256; threads=4; gpuLayers=8; mmap=true; temperature=0",
+    "modelFile":  "file=qwen2.5-3b-instruct-q4_k_m.gguf; bytes=2104932768",
+    "outputCaptureVerified":  true,
+    "warnings":  [
+
+                 ],
+    "nativeWarnings":  [
+                           "[2026-09-29 19:23:31.764 -03:00] [NATIVE-WARNING] [LLAMASHARP] load: control-looking token: 128247 \u0027\u003c/s\u003e\u0027 was not control-type; this is probably a bug in the model. its type will be overridden",
+                           "[2026-09-29 19:23:32.553 -03:00] [NATIVE-WARNING] [LLAMASHARP] llama_context: n_ctx_seq (4096) \u003c n_ctx_train (32768) -- the full capacity of the model will not be utilized",
+                           "[2026-09-29 19:23:32.707 -03:00] [NATIVE-WARNING] [LLAMASHARP] llama_context: n_ctx_seq (4096) \u003c n_ctx_train (32768) -- the full capacity of the model will not be utilized"
+                       ],
+    "retry":  false,
+    "exception":  "",
+    "hasException":  false,
+    "hasError":  false,
+    "contextOverflowException":  false,
+    "completedNormally":  true,
+    "emptyOutput":  false,
+    "fullDuplication":  false,
+    "repeatedParagraphs":  false,
+    "firstPerson":  [
+
+                    ],
+    "negationWarning":  false,
+    "truncationSuspected":  false,
+    "missingEndingMarkers":  [
+
+                             ],
+    "observations":  [
+
+                     ]
+}

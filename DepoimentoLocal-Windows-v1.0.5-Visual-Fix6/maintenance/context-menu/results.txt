@@ -1,0 +1,6 @@
+﻿PASS Resposta / transcrição original / claro: clique direito, seleção, recortar/copiar/colar/selecionar tudo, atalhos e estados vazios
+PASS Texto reformulado / claro: clique direito, seleção, recortar/copiar/colar/selecionar tudo, atalhos e estados vazios
+PASS Depoimento consolidado / claro: clique direito, seleção, recortar/copiar/colar/selecionar tudo, atalhos e estados vazios
+PASS Resposta / transcrição original / escuro: clique direito, seleção, recortar/copiar/colar/selecionar tudo, atalhos e estados vazios
+PASS Texto reformulado / escuro: clique direito, seleção, recortar/copiar/colar/selecionar tudo, atalhos e estados vazios
+PASS Depoimento consolidado / escuro: clique direito, seleção, recortar/copiar/colar/selecionar tudo, atalhos e estados vazios

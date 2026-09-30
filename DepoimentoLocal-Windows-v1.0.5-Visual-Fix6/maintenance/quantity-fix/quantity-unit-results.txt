@@ -1,0 +1,16 @@
+PASS tres
+PASS feminino
+PASS digitos
+PASS composto
+PASS ambos
+PASS sem quantidade
+PASS ja preservado
+PASS negacao
+PASS outro evento
+PASS citacao fonte
+PASS saida ambigua
+PASS fonte ambigua
+PASS genero diferente
+PASS quantidade objeto
+PASS Teste 4 completo: somente eles -> os tres
+PASS Teste 4 idempotencia

@@ -1,0 +1,9 @@
+﻿PASS abertura direta do EXE a partir de outro diretório; interface visível
+PASS GGUF localizado automaticamente em modelo/
+PASS runtime self-contained carregado de engine/coreclr.dll com DOTNET_ROOT inválido
+PASS carregamento offline do modelo pela interface do novo executável
+PASS texto original integral inserido, sem alterações; chars=1195
+Generation accepted: True
+Automatic retry: False
+Context overflow: False
+PASS encerramento normal

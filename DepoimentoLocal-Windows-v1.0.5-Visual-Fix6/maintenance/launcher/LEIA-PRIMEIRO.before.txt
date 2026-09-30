@@ -1,0 +1,31 @@
+﻿DEPOIMENTO LOCAL — ATUALIZAÇÃO VISUAL FIX 5
+
+Este pacote mantém o motor da versão 1.0.5 e atualiza somente a camada visual.
+
+O QUE MUDOU
+- campos Original, Reformulado e Consolidado redesenhados com RichTextBox;
+- mais espaço entre título e conteúdo;
+- caixa interna branca/grafite com padding e borda suave;
+- tema Claro, Escuro ou Sistema;
+- a preferência de tema é lembrada;
+- visual no estilo Windows 11 mantido;
+- fluxo Original → Reformulado → Consolidado preservado.
+- seletor de tema totalmente integrado ao modo escuro;
+- placeholder no consolidado vazio;
+- barra de progresso mais discreta;
+
+O QUE NÃO MUDOU
+- modelo GGUF;
+- prompt interno e regras de reformulação;
+- LLamaSharp/Vulkan8;
+- contexto, batch, ubatch, threads e temperature;
+- validação e retry da versão 1.0.5.
+
+COMO ABRIR
+1. Extraia o ZIP inteiro para uma pasta nova.
+2. Dê dois cliques em INICIAR.bat para usar Vulkan8.
+3. Use INICIAR-CPU.bat somente se quiser rodar em CPU.
+4. No topo da janela, escolha Tema: Sistema, Claro ou Escuro.
+
+FALLBACK
+Se houver algum problema específico com a interface nova, use INICIAR-ORIGINAL.bat ou INICIAR-CPU-ORIGINAL.bat para abrir a interface anterior da versão 1.0.5.

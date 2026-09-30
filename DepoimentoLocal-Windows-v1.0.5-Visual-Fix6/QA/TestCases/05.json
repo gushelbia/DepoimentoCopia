@@ -1,0 +1,7 @@
+{
+  "number": 5,
+  "name": "Texto longo e contexto",
+  "objective": "Testar truncamento, contexto, repetição e degradação ao longo de texto maior.",
+  "input": "",
+  "inputFile": "05.txt"
+}

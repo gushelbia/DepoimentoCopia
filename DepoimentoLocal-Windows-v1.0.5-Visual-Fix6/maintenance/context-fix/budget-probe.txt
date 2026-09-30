@@ -1,0 +1,4 @@
+﻿SYNTHETIC token-budget probe. Matches logged character counts, NOT the original case.
+originalChars=1155; firstResponseChars=1076; maxTokens=465
+FIRST context=4096; promptTokens=1530; maxTokens=465; safetyTokens=32; requiredTokens=2027; remainingTokens=2069
+RETRY context=4096; promptTokens=1192; maxTokens=465; safetyTokens=32; requiredTokens=1689; remainingTokens=2407

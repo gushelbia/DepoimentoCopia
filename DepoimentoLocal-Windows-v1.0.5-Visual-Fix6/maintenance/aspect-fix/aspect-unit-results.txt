@@ -1,0 +1,17 @@
+PASS Teste 3 batido
+PASS feito
+PASS havia dito
+PASS saído
+PASS anterioridade do perfeito
+PASS plural
+PASS regular
+PASS habitual legítimo
+PASS outra fonte
+PASS outro ator
+PASS negação diferente
+PASS incerteza diferente
+PASS ação habitual distinta
+PASS citação literal
+PASS ambiguidade de saída
+PASS tinha existencial
+PASS versão colapsada ambígua

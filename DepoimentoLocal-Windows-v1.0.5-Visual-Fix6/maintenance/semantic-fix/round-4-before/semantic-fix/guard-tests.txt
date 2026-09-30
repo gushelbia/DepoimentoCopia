@@ -1,0 +1,61 @@
+PASS negative perception cannot become denial of event
+PASS preserve negative perception with different participants
+PASS negative hearing cannot become denial of speech
+PASS anonymous source lost
+PASS anonymous source preserved
+PASS missing opening sentence
+PASS certainty marker lost
+PASS first person outside old vocabulary
+PASS quotation first person unchanged
+PASS quotation content changed
+PASS omitted visual witness
+PASS factual third person unchanged
+PASS narrator replaced with participant
+PASS narrator remains explicit
+PASS participant really perceived
+PASS witness proximity omitted
+PASS shared first and third person conjugation
+PASS short negative perception omitted
+PASS event negation omitted
+PASS approximate duration converted to exact
+PASS approximation rephrased
+PASS nested source collapsed
+PASS nested source preserved
+PASS named participant replaced by narrator
+PASS named participant preserved
+PASS participant action and narrator uncertainty
+PASS apparent uncertainty paraphrase
+PASS apparent uncertainty removed
+PASS narrator action turned into perception
+PASS presence turned into perception
+PASS recipient dropped
+PASS recipient preserved with lhe
+PASS recipient preserved explicitly
+PASS recipient turned into subject
+PASS two lhe recipients ambiguous
+PASS irregular first person after narrator
+PASS copied -ir first person
+PASS present first person after narrator
+PASS noun homograph accepted
+PASS plural first person residual
+PASS elliptical narrator after participant sentence
+PASS elliptical narrator after narrator sentence
+PASS relative clause narrator implicit
+PASS speech paraphrase is not omission
+PASS narrator displaced to subordinate clause
+PASS participant request attributed to narrator
+PASS narrator own act with same verb accepted
+PASS same number of perceptions accepted
+PASS source-anchored name accents and quotes
+PASS distinct source spellings not conflated
+PASS spelling repair never assigns actor
+PASS supplemental conjugation repair preserves quotes
+PASS explicit recipient cannot become third-party pronoun
+PASS explicit recipient with pronoun elsewhere is still checked
+PASS explicit recipient preserved
+PASS recipient clitic paraphrase
+PASS subordinate subject lost
+PASS subordinate subject retained
+PASS approximate interval shortened
+PASS approximate alternatives retained
+PASS post-verbal eu reordered without changing object or quotes

@@ -1,0 +1,45 @@
+﻿{
+    "number":  10,
+    "name":  "Citações e primeira pessoa legítima",
+    "objective":  "Preservar palavras entre aspas e identidade de quem as pronunciou.",
+    "status":  "CONCLUÍDO SEM ALERTAS AUTOMÁTICOS",
+    "input":  "Ouvi Mirela dizer a Jonas: “Eu não prometi entregar hoje; prometi tentar”. Jonas respondeu: “Você me disse amanhã, não hoje”. Eu ouvi as duas frases. Não sei a que dia Jonas se referia com “amanhã”. Depois alguém atrás de mim falou “nós já avisamos”, mas não identifiquei a voz. Mirela me disse mais tarde que não estava falando do contrato. Eu não perguntei de qual documento ela estava falando.",
+    "output":  "Relatou que o depoente ouviu Mirela dizer a Jonas: “Eu não prometi entregar hoje; prometi tentar”. Jonas respondeu: “Você me disse amanhã, não hoje”. O depoente ouviu as duas frases. O depoente não sabe a que dia Jonas se referia com “amanhã”. Depois alguém atrás do depoente falou: “nós já avisamos”, mas o depoente não identificou a voz. Mirela lhe disse mais tarde que não estava falando do contrato. O depoente não perguntou de qual documento ela estava falando.",
+    "inputChars":  396,
+    "outputChars":  466,
+    "inputWords":  69,
+    "outputWords":  79,
+    "generationSeconds":  22.688,
+    "totalSeconds":  25.2354783,
+    "modelConfig":  "context=4096; batch=512; ubatch=256; threads=4; gpuLayers=8; mmap=true; temperature=0",
+    "modelFile":  "file=qwen2.5-3b-instruct-q4_k_m.gguf; bytes=2104932768",
+    "outputCaptureVerified":  true,
+    "warnings":  [
+
+                 ],
+    "nativeWarnings":  [
+                           "[2026-09-29 19:17:34.696 -03:00] [NATIVE-WARNING] [LLAMASHARP] load: control-looking token: 128247 \u0027\u003c/s\u003e\u0027 was not control-type; this is probably a bug in the model. its type will be overridden",
+                           "[2026-09-29 19:17:35.452 -03:00] [NATIVE-WARNING] [LLAMASHARP] llama_context: n_ctx_seq (4096) \u003c n_ctx_train (32768) -- the full capacity of the model will not be utilized",
+                           "[2026-09-29 19:17:35.587 -03:00] [NATIVE-WARNING] [LLAMASHARP] llama_context: n_ctx_seq (4096) \u003c n_ctx_train (32768) -- the full capacity of the model will not be utilized"
+                       ],
+    "retry":  false,
+    "exception":  "",
+    "hasException":  false,
+    "hasError":  false,
+    "contextOverflowException":  false,
+    "completedNormally":  true,
+    "emptyOutput":  false,
+    "fullDuplication":  false,
+    "repeatedParagraphs":  false,
+    "firstPerson":  [
+
+                    ],
+    "negationWarning":  false,
+    "truncationSuspected":  false,
+    "missingEndingMarkers":  [
+
+                             ],
+    "observations":  [
+
+                     ]
+}

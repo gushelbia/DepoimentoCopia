@@ -1,0 +1,14 @@
+﻿{
+    "Total de testes previstos":  10,
+    "Testes executados":  10,
+    "Concluídos (GENERATION_OK)":  10,
+    "Com warning do validador":  3,
+    "Com primeira pessoa fora de citações (indício)":  0,
+    "Com retry":  3,
+    "Com erro":  0,
+    "Com indício de truncamento":  0,
+    "Com duplicação integral":  0,
+    "Com parágrafos repetidos":  0,
+    "Com ContextOverflowException":  0,
+    "Tempo total (s)":  705.12
+}

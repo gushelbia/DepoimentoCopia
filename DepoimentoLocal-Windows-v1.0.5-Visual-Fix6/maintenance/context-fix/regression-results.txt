@@ -1,0 +1,15 @@
+﻿2026-09-27T00:07:30
+PARAMETERS PASS context=4096; gpuLayers=8
+FIXTURE=synthetic regression, NOT the missing 1155-character original; chars=111
+FIRST context=4096; promptTokens=1216; maxTokens=220; safetyTokens=32; requiredTokens=1468; remainingTokens=2628
+FIRST OUTPUT=Relatou que carlos abriu a porta. Paulo gritou, conforme informou Carlos, mas o depoente não ouviu o grito. Não lembra o horário.
+FIRST VALIDATION=a saída alterou o sentido de 'não sei'/'não sabe'
+VALIDATOR PASS: a saída alterou o sentido de 'não sei'/'não sabe'
+RETRY context=4096; promptTokens=515; maxTokens=220; safetyTokens=32; requiredTokens=767; remainingTokens=3329
+FRESH CONTEXT PASS
+RETRY OUTPUT=Relatou que não se lembra quem abriu a porta.
+RETRY VALIDATION=a saída alterou o sentido de 'não sei'/'não sabe'
+REPEATED RETRY PASS: fresh context and identical output
+OVERSIZE REJECTED WITHOUT TRUNCATION: O texto completo, as instruções e a reserva de resposta excedem o contexto disponível. Nenhum conteúdo foi cortado. Divida a entrada em trechos menores. context=4096; promptTokens=8717; maxTokens=465; safetyTokens=32; requiredTokens=9214; remainingTokens=-5118
+RECOVERY AFTER BUDGET ERROR PASS
+CONTEXT REGRESSION PASS

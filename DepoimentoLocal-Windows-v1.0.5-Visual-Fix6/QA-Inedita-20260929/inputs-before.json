@@ -1,0 +1,77 @@
+[
+  {
+    "Algorithm": "SHA256",
+    "Hash": "6D4D089F0A58D064796AE4F73B3F972CB284A7B029E60A5E29FE423DDE6DF7B7",
+    "Path": "C:\\Users\\gusta\\OneDrive\\Área de Trabalho\\Depoimento - Copia\\DepoimentoLocal-Windows-v1.0.5-Visual-Fix6\\QA-Inedita-20260929\\TestCases\\01.json"
+  },
+  {
+    "Algorithm": "SHA256",
+    "Hash": "19A87FB9AD9582C1ABB24067924CC98F609AD2BE96058E0EAA7070CF0262A865",
+    "Path": "C:\\Users\\gusta\\OneDrive\\Área de Trabalho\\Depoimento - Copia\\DepoimentoLocal-Windows-v1.0.5-Visual-Fix6\\QA-Inedita-20260929\\TestCases\\02.json"
+  },
+  {
+    "Algorithm": "SHA256",
+    "Hash": "306BD70783F0E6D576AB414ADE4AA38245A9DF605DA9CC6EE0D56CD6F91B5CB4",
+    "Path": "C:\\Users\\gusta\\OneDrive\\Área de Trabalho\\Depoimento - Copia\\DepoimentoLocal-Windows-v1.0.5-Visual-Fix6\\QA-Inedita-20260929\\TestCases\\03.json"
+  },
+  {
+    "Algorithm": "SHA256",
+    "Hash": "51150185329972713B44D5E59EC8127108A49BBD2A280A94FF8CC1DF9AFFF01E",
+    "Path": "C:\\Users\\gusta\\OneDrive\\Área de Trabalho\\Depoimento - Copia\\DepoimentoLocal-Windows-v1.0.5-Visual-Fix6\\QA-Inedita-20260929\\TestCases\\04.json"
+  },
+  {
+    "Algorithm": "SHA256",
+    "Hash": "CBABB3B4A9ED53311C539034ED368C1C2B9109926CBF9D21D166BA020A4AC93F",
+    "Path": "C:\\Users\\gusta\\OneDrive\\Área de Trabalho\\Depoimento - Copia\\DepoimentoLocal-Windows-v1.0.5-Visual-Fix6\\QA-Inedita-20260929\\TestCases\\05.json"
+  },
+  {
+    "Algorithm": "SHA256",
+    "Hash": "21E66B84849AF5D8D82538C93A63213E211285389E9C47DD9E8162B3469587D4",
+    "Path": "C:\\Users\\gusta\\OneDrive\\Área de Trabalho\\Depoimento - Copia\\DepoimentoLocal-Windows-v1.0.5-Visual-Fix6\\QA-Inedita-20260929\\TestCases\\06.json"
+  },
+  {
+    "Algorithm": "SHA256",
+    "Hash": "8254532627D26D2A73CE3C57C159935811C780F35373D34BCDCA94F257B55FB5",
+    "Path": "C:\\Users\\gusta\\OneDrive\\Área de Trabalho\\Depoimento - Copia\\DepoimentoLocal-Windows-v1.0.5-Visual-Fix6\\QA-Inedita-20260929\\TestCases\\07.json"
+  },
+  {
+    "Algorithm": "SHA256",
+    "Hash": "177D20F185339555A8C10CD31AF0987B6EE97BE9CECE8C3E071250FC13C37A76",
+    "Path": "C:\\Users\\gusta\\OneDrive\\Área de Trabalho\\Depoimento - Copia\\DepoimentoLocal-Windows-v1.0.5-Visual-Fix6\\QA-Inedita-20260929\\TestCases\\08.json"
+  },
+  {
+    "Algorithm": "SHA256",
+    "Hash": "8BB4917D0F1074FC7284B6E9CE7E2495D79AC435363009051D7A0844FAD9495B",
+    "Path": "C:\\Users\\gusta\\OneDrive\\Área de Trabalho\\Depoimento - Copia\\DepoimentoLocal-Windows-v1.0.5-Visual-Fix6\\QA-Inedita-20260929\\TestCases\\09.json"
+  },
+  {
+    "Algorithm": "SHA256",
+    "Hash": "2662ECE10EFA33A19E5A675866E4CD2E310E16D1CD59ED74B7DF6D65D549E1F5",
+    "Path": "C:\\Users\\gusta\\OneDrive\\Área de Trabalho\\Depoimento - Copia\\DepoimentoLocal-Windows-v1.0.5-Visual-Fix6\\QA-Inedita-20260929\\TestCases\\10.json"
+  },
+  {
+    "Algorithm": "SHA256",
+    "Hash": "7B30DECC91DE103267621D9F52FC4C38225982F452DED235DBCD183AC3BDAD19",
+    "Path": "C:\\Users\\gusta\\OneDrive\\Área de Trabalho\\Depoimento - Copia\\DepoimentoLocal-Windows-v1.0.5-Visual-Fix6\\QA-Inedita-20260929\\TestCases\\11.json"
+  },
+  {
+    "Algorithm": "SHA256",
+    "Hash": "34DD6D65F2E3C51011536D137723464793FD9D69B9AD485C49E2177331256DF4",
+    "Path": "C:\\Users\\gusta\\OneDrive\\Área de Trabalho\\Depoimento - Copia\\DepoimentoLocal-Windows-v1.0.5-Visual-Fix6\\QA-Inedita-20260929\\TestCases\\12.json"
+  },
+  {
+    "Algorithm": "SHA256",
+    "Hash": "CC288A7BE2965320E6A25FF451F46E143576310A40DB6533D9B11EEDB732B57D",
+    "Path": "C:\\Users\\gusta\\OneDrive\\Área de Trabalho\\Depoimento - Copia\\DepoimentoLocal-Windows-v1.0.5-Visual-Fix6\\QA-Inedita-20260929\\TestCases\\13.json"
+  },
+  {
+    "Algorithm": "SHA256",
+    "Hash": "CF04A1E8AB5E62C9D51B1997C10624A9069F99C32CF31E212F074DE74434CEFA",
+    "Path": "C:\\Users\\gusta\\OneDrive\\Área de Trabalho\\Depoimento - Copia\\DepoimentoLocal-Windows-v1.0.5-Visual-Fix6\\QA-Inedita-20260929\\TestCases\\14.json"
+  },
+  {
+    "Algorithm": "SHA256",
+    "Hash": "49ACCE0C7EAC2CC2814C652F2939D53A268F8A981B60555C61D07118B0723214",
+    "Path": "C:\\Users\\gusta\\OneDrive\\Área de Trabalho\\Depoimento - Copia\\DepoimentoLocal-Windows-v1.0.5-Visual-Fix6\\QA-Inedita-20260929\\TestCases\\15.json"
+  }
+]

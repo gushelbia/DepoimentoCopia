@@ -1,0 +1,4 @@
+PASS DepoimentoLocal.dll : compiled repair before validation in first/retry; unrelated methods, prompts and parameters unchanged.
+PASS DepoimentoLocal.Vulkan8.dll : compiled repair before validation in first/retry; unrelated methods, prompts and parameters unchanged.
+PASS DepoimentoLocal.CPU-original.dll : compiled repair before validation in first/retry; unrelated methods, prompts and parameters unchanged.
+APPLIED; launchers and manifest hashes updated.

@@ -1,0 +1,45 @@
+﻿{
+    "number":  8,
+    "name":  "Nomes e cargos",
+    "objective":  "Evitar troca indevida entre nome, cargo e pessoa.",
+    "status":  "CONCLUÍDO SEM ALERTAS AUTOMÁTICOS",
+    "input":  "Eu vi a professora Helena entrando na sala da direção. Depois o diretor Paulo chegou e conversou com ela. Não ouvi o que eles falaram. Mais tarde uma servidora me disse que a professora tinha procurado o diretor para falar sobre uma turma. Eu não sei se isso é verdade. Depois Paulo saiu da sala e falou com o coordenador Marcos. Não sei se eles conversaram sobre o mesmo assunto. A professora Helena saiu alguns minutos depois. Eu não vi o coordenador entrar na sala da direção.",
+    "output":  "Relatou que o depoente viu a professora Helena entrando na sala da direção. Depois o diretor Paulo chegou e conversou com ela. O depoente não ouviu o que eles falaram. Mais tarde uma servidora lhe disse que a professora tinha procurado o diretor para falar sobre uma turma. O depoente não sabe se isso é verdade. Depois Paulo saiu da sala e falou com o coordenador Marcos. O depoente não sabe se eles conversaram sobre o mesmo assunto. A professora Helena saiu alguns minutos depois. O depoente não viu o coordenador entrar na sala da direção.",
+    "inputChars":  479,
+    "outputChars":  543,
+    "inputWords":  87,
+    "outputWords":  96,
+    "generationSeconds":  24.114,
+    "totalSeconds":  26.6449851,
+    "modelConfig":  "context=4096; batch=512; ubatch=256; threads=4; gpuLayers=8; mmap=true; temperature=0",
+    "modelFile":  "file=qwen2.5-3b-instruct-q4_k_m.gguf; bytes=2104932768",
+    "outputCaptureVerified":  true,
+    "warnings":  [
+
+                 ],
+    "nativeWarnings":  [
+                           "[2026-09-29 07:52:17.509 -03:00] [NATIVE-WARNING] [LLAMASHARP] load: control-looking token: 128247 \u0027\u003c/s\u003e\u0027 was not control-type; this is probably a bug in the model. its type will be overridden",
+                           "[2026-09-29 07:52:18.227 -03:00] [NATIVE-WARNING] [LLAMASHARP] llama_context: n_ctx_seq (4096) \u003c n_ctx_train (32768) -- the full capacity of the model will not be utilized",
+                           "[2026-09-29 07:52:18.333 -03:00] [NATIVE-WARNING] [LLAMASHARP] llama_context: n_ctx_seq (4096) \u003c n_ctx_train (32768) -- the full capacity of the model will not be utilized"
+                       ],
+    "retry":  false,
+    "exception":  "",
+    "hasException":  false,
+    "hasError":  false,
+    "contextOverflowException":  false,
+    "completedNormally":  true,
+    "emptyOutput":  false,
+    "fullDuplication":  false,
+    "repeatedParagraphs":  false,
+    "firstPerson":  [
+
+                    ],
+    "negationWarning":  false,
+    "truncationSuspected":  false,
+    "missingEndingMarkers":  [
+
+                             ],
+    "observations":  [
+
+                     ]
+}

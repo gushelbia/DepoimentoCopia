@@ -1,0 +1,31 @@
+PASS embedded validation detects perception scope
+PASS embedded scope failure requires retry
+PASS embedded validation detects lost hearsay
+PASS embedded hearsay failure requires retry
+PASS embedded validation detects participant replaced by narrator
+PASS embedded actor substitution requires retry
+PASS embedded conjugation repair preserves quotation
+PASS explicit narrator is preserved rather than deleted
+PASS post-verbal subject and explicit recipient in production repair
+PASS source-anchored subject and referent repair in production
+PASS source-proven post-verbal narrator in production
+PASS correction retains uncertainty and explicit temporal owner in production
+PASS predicate focus is not transferred to narrator
+PASS positional cross-category repair is disabled
+PASS legacy count-only warning remains advisory
+PASS faithful conversion accepted
+PASS copied first person and recipient repaired in production
+PASS repaired draft accepted in production
+PASS two recipients kept distinct in production
+PASS elliptical narrator made explicit in production
+PASS narrator action turned into perception requires retry
+PASS lost recipient requires retry
+PASS speech paraphrase not rejected as omission
+PASS production marker has header, reason and footer
+PASS production marker does not duplicate
+PASS production marker keeps empty screen empty
+PASS rejection/error and cancellation handlers mark the on-screen text
+PASS rejection message no longer says the text was kept as is
+PASS no assistant prefill that drops opening clauses
+PASS retry uses original and diagnostic, never incomplete draft
+PASS helper embedded without deployment assembly dependency

@@ -1,0 +1,1 @@
+PASS correção local isolada: apenas batia -> tinha batido; média de 100 execuções: 0,452 ms

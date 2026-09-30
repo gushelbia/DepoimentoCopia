@@ -1,0 +1,50 @@
+[
+  {
+    "path": "engine/DepoimentoLocal.dll",
+    "before": "32440D9564218F55541AA947999E2992F10C4CF6919712E63392D71047983FB9",
+    "after": "2C99C0006991A6E836DBDFE498EB495CABC2CF4039B18CB45EFA4435A2E633A7",
+    "reason": "Prompt, validação, classificação do retry, conjugações e reparo ortográfico incorporados; demais métodos preservados."
+  },
+  {
+    "path": "engine/DepoimentoLocal.Vulkan8.dll",
+    "before": "32440D9564218F55541AA947999E2992F10C4CF6919712E63392D71047983FB9",
+    "after": "2C99C0006991A6E836DBDFE498EB495CABC2CF4039B18CB45EFA4435A2E633A7",
+    "reason": "Prompt, validação, classificação do retry, conjugações e reparo ortográfico incorporados; demais métodos preservados."
+  },
+  {
+    "path": "engine/DepoimentoLocal.CPU-original.dll",
+    "before": "80396C2BDD812628C6BB7001FE804FF1C28424650609A681BB3A051C38BBC061",
+    "after": "E4759A306A1FEFF48559F37E9FBD1A98607B7CAF2C407215E4E09CCB8390E912",
+    "reason": "Prompt, validação, classificação do retry, conjugações e reparo ortográfico incorporados; demais métodos preservados."
+  },
+  {
+    "path": "INICIAR.ps1",
+    "before": "58D3F89DF4E967A73957C174459906443B1B9063A30C76844670C6F7B98BC816",
+    "after": "23CD93CADC60B6E58B0B5E88919A7ECF3A3CE9C08AF3505829076E79E0176222",
+    "reason": "Hashes dos binários atualizados."
+  },
+  {
+    "path": "INICIAR-ORIGINAL.ps1",
+    "before": "BA33B83097CAA146551FA7D4835C3954B208AF2E77F5FF50072FE8DA2F5AF194",
+    "after": "B3B48CE19ACDC169DC6B50EB6F77DE33C4A9470DCD4A47A3C4BF9C388FC7A4EC",
+    "reason": "Hashes dos binários atualizados."
+  },
+  {
+    "path": "INICIAR-CPU.ps1",
+    "before": "DC376AA23CE668DDC7921EDC905A06514448420547123781825A7844AE45024C",
+    "after": "2F83AF7A78A07AB7C16CB373E557C8C4724B28DC1BB7C530506C4B69CF4B506B",
+    "reason": "Hashes dos binários atualizados."
+  },
+  {
+    "path": "INICIAR-CPU-ORIGINAL.ps1",
+    "before": "CFC7ABD29F69FBD5AD7D9031F4A391ECD1FD8A7E9A2E05080FFB02688841D070",
+    "after": "7866EB0BD77D1ACC8B57E577F753601FA2859D507AA67BA1141B9729FE8C20AD",
+    "reason": "Hashes dos binários atualizados."
+  },
+  {
+    "path": "SHA256SUMS.txt",
+    "before": "ADE577FE0AB8457D788204EEF2027D24EC9FC843447FE329EEBCE572C99B5D73",
+    "after": "99C6CE1250AB156CA64CB3C99B87697C1678CDE3E1F0CA24984CBDAA4D0F06E0",
+    "reason": "Hashes dos binários atualizados."
+  }
+]

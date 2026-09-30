@@ -1,0 +1,82 @@
+[
+  {
+    "number": 1,
+    "before": "Agressividade perdeu o destinatário; pronomes ambíguos na saída.",
+    "verdict": "Não aprovado integralmente",
+    "after": "Recupera destinatário da agressividade e preserva fontes; introduz ambiguidade no destinatário da fala de Carlos.",
+    "details": "A saída preserva o horário aproximado, Carlos como fonte da batida na mesa, a negativa de percepção do depoente, a dúvida entre bater e colocar a mão, Maria como fonte da agressividade com ela, a ausência de agressão física observada, a dúvida sobre quem chamou o chefe e a reunião posterior recebida de terceiros. Porém “Carlos falou pra mim” vira “Carlos falou para ele”, deixando um destinatário que era explícito menos claro após citar João. A primeira frase também tem pontuação inadequada (“chegou lá acredita...”); “Depoente foi embora” perde o artigo. Não se identificou primeira pessoa, truncamento ou duplicação. A pendência de referente impede aprovação integral, apesar da ausência de warning.",
+    "outputSha256": "9E722EE710FF2CB36D9C312286822F3188FD60D59F49A3881CD181C3E6204288"
+  },
+  {
+    "number": 2,
+    "before": "Warning de contagem de não; autocorreção consolidada, fontes e negativas majoritariamente preservadas.",
+    "verdict": "Não aprovado integralmente",
+    "after": "Primeira pessoa corrigida e fontes recuperadas no retry; persistem perda de referente, redução do horário e falso começo.",
+    "details": "O retry mantém a percepção negada, o grito informado por Carlos, a pessoa não identificada como fonte da porta, a ordem incerta de saída e o desconhecimento sobre a conversa da chefia. Os reparos agora preservam “o depoente não entendeu”, “o depoente não ouviu esse grito” e “o depoente não participou”. Porém a saída omite “ela” em “não sabe o que quis dizer com isso”, deixando o sujeito menos claro, e mantém outros sujeitos elípticos após mencionar Paulo. O horário “três, três e pouco” fica reduzido a “uns três e pouco”. Mantém ainda o falso começo “Então saiu... Não, acredita que Carlos entrou antes de sua saída. Sim, o Carlos entrou antes”, enquanto o baseline consolidava melhor a autocorreção. Não se trata de duplicação integral, mas há repetição discursiva. São pendências reais; conclusão técnica não equivale a aprovação semântica.",
+    "outputSha256": "5CEF4F50311A6110203CFF55F5F291A086923F3AFC6328554069804065B02BE6"
+  },
+  {
+    "number": 3,
+    "before": "tinha batido → batia; disse que ouviu → ouviu que; depoente virou ele após citar Carlos.",
+    "verdict": "Fiel nos pontos avaliados",
+    "after": "Tempo composto, cadeia de relato, versões conflitantes e sujeito do depoimento preservados.",
+    "details": "A nova saída mantém 'Ana lhe disse que Roberto tinha batido', 'Carlos ... disse que ouviu Roberto falar', as duas versões sobre a porta e sobre sala/reunião, a falta de compreensão da frase inteira e a incerteza da ordem de saída. O depoente permanece explicitamente como quem estava perto, não viu os dois saindo juntos e não participou da conversa. As versões de Ana e Carlos sobre o dia permanecem atribuídas, sem escolher uma delas. Nenhuma omissão relevante, primeira pessoa ou duplicação identificada.",
+    "outputSha256": "545CF024445BE157D893E6D5338BE94696FC8C62072C5D462C498FBF16D27F6C"
+  },
+  {
+    "number": 4,
+    "before": "Ambiguidades centrais preservadas; sujeito do depoente frequentemente elíptico.",
+    "verdict": "Fiel nos pontos avaliados",
+    "after": "Preserva as ambiguidades e torna explícito o depoente nas percepções e dúvidas.",
+    "details": "Mantém não identificar quem falou, a hipótese de Marcos ter respondido, a dúvida Felipe/diretor, a fala literal 'ele já sabe disso' e a ambiguidade Marcos/Felipe na informação de Renata. Mantém os três falando quase ao mesmo tempo, o depoente saindo antes e desconhecendo o que aconteceu depois. Não atribui referentes por adivinhação. Nenhuma perda relevante, primeira pessoa fora de aspas ou duplicação identificada.",
+    "outputSha256": "B7D0B18B29C80855D73F815090D8CF2766A6B5A0447EADD9291BDD759BD10E6B"
+  },
+  {
+    "number": 5,
+    "before": "Patrícia tomou o lugar do depoente; destinatário virou ela; restou verifiquei; perdeu alcance de toda a conversa.",
+    "verdict": "Correção substancial, sem aprovação integral",
+    "after": "Recupera papéis explícitos, fontes e primeira pessoa; persistem elipses de sujeito e uma construção inadequada.",
+    "details": "O validador rejeitou no bloco 3/6 a substituição da ação explícita de Patrícia; o retry recuperou esse papel. Na saída final, o depoente volta a ser quem ouviu Fernanda, não entendeu o endereço, não ouviu mais discussão, não presenciou conversa particular e recebeu o comentário de Marcelo. Preserva o alcance de 'não prestou atenção em toda a conversa' e corrige 'não verifiquei' para 'o depoente não verificou'. Mantém horários aproximados, durações, sequência antes/depois do almoço, suposição sobre Fernanda/coordenador, relatos posteriores com fontes e dúvidas, a ausência de participação em reuniões e o encerramento integral. Não se identificaram omissões factuais relevantes, duplicação ou truncamento. Contudo, 'Ouviu o depoente ela dizer' é uma construção inadequada na passagem Patrícia/Marcelo; o reparo que conserva eu pode produzir ordem pós-verbal ruim. Também persistem elipses como 'Não sabe quem ligou para ela' após Patrícia sair e 'Não perguntou exatamente...' após Eduardo falar, tornando o depoente menos explícito que no original. As trocas nominais graves e a primeira pessoa do baseline foram corrigidas, mas não há aprovação integral de fidelidade/referência.",
+    "outputSha256": "4BC78001E9CF713261C095CF28A3CAD6BA326DB404D2F34D9E0DB8920E2BD526"
+  },
+  {
+    "number": 6,
+    "before": "Me disseram virou Informou que; warning de fonte indireta aceito sem retry.",
+    "verdict": "Fiel nos pontos avaliados",
+    "after": "Preserva lhe disseram, participação, ausência, fontes nomeadas e graus de certeza.",
+    "details": "A saída mantém terça-feira e presença do depoente, horário desconhecido e estimado depois das duas com possibilidade de engano, Patrícia como fonte da atribuição ao diretor e ausência de confirmação. Mantém certeza sobre Carlos chegar depois do depoente, incerteza sobre Ana e ausência de lembrança de sua entrada. A segunda reunião é explicitamente recebida de terceiros ('Depois lhe disseram que houve outra reunião na quinta-feira'); o depoente não participou e desconhece os presentes. Não transforma esse relato em conhecimento presencial. Sem primeira pessoa fora de citações, omissão relevante, truncamento ou duplicação identificados.",
+    "outputSha256": "F99042C720C6E0156EC427595A259DA2A32D07AC00E805B293E27BD3C3CFA20A"
+  },
+  {
+    "number": 7,
+    "before": "Perdeu a proximidade e a condição de testemunha na primeira oração.",
+    "verdict": "Fiel nos pontos avaliados",
+    "after": "Recupera estava perto, preserva citações e separa percepção direta de relato posterior.",
+    "details": "Mantém o depoente perto, a percepção clara da primeira frase e ambas as citações sem alterar a primeira pessoa legítima dentro das aspas. Preserva a resposta incompreendida de Ricardo, Daniela como fonte posterior do pedido e o depoente não ter ouvido pessoalmente esse pedido. Mantém a dúvida sobre a quem Ricardo dirigiu a segunda frase. Não se identificaram omissões relevantes, atribuição indevida, truncamento ou duplicação; 'Também o depoente ouviu' tem ordem pouco natural, sem perda factual.",
+    "outputSha256": "9D7D424E0CAB3274ED93A2ABB46BA16AB9D9E41F67B7E59CD9C0081145AB4EB2"
+  },
+  {
+    "number": 8,
+    "before": "Eu vi a professora entrando virou simples afirmação da entrada.",
+    "verdict": "Fiel nos pontos avaliados",
+    "after": "Preserva a percepção visual, nomes/cargos, fonte indireta e dúvidas.",
+    "details": "A primeira oração agora registra 'o depoente viu a professora Helena entrando', mantendo a condição de testemunha. Preserva professora Helena, diretor Paulo e coordenador Marcos sem trocar os cargos, a servidora como fonte do motivo da visita, o desconhecimento da veracidade e do assunto posterior, a ausência de audição da conversa e de visão da entrada do coordenador. Preserva a saída alguns minutos depois. Nenhuma omissão relevante, primeira pessoa fora de citações, truncamento ou duplicação identificados.",
+    "outputSha256": "651CB09F779C77D5C27A768957C570F96144E59174DA8E54675CA6B660B90098"
+  },
+  {
+    "number": 9,
+    "before": "Perdeu todo o início temporal; validador rejeitou, mas o retry repetiu a omissão.",
+    "verdict": "Fiel nos pontos avaliados",
+    "after": "Recupera quarta/quinta, conselho, mesmo dia/dia seguinte e antes do almoço; conclui após retry.",
+    "details": "A saída final conserva a hipótese quarta-feira versus quinta, a certeza de ter sido depois da reunião do conselho, a dúvida entre mesmo dia e dia seguinte e a chegada antes do almoço. Mantém a conversa após a chegada sem intervalo conhecido, a saída/retorno, 'no dia seguinte, ou talvez dois dias depois', Carla como fonte da segunda conversa e a incerteza de quando ocorreu. O retry desta rodada foi acionado por perda do destinatário do relato de Carla, não por perda do início; a versão final mantém 'Carla lhe contou'. Nenhum indício de omissão inicial/final, truncamento, duplicação ou primeira pessoa residual. A ausência de overflow no baseline e a inspeção dos reparos apontam omissão na geração; não há evidência para atribuir a perda antiga a falta de contexto ou a um motivo específico de parada.",
+    "outputSha256": "22CA28F86F69455C35EBC372E8DDC55D6D5A70A24926A79CA6857545DEBE2E1E"
+  },
+  {
+    "number": 10,
+    "before": "Eu não vi Pedro ameaçar ninguém virou Pedro não ameaçou ninguém, sem warning.",
+    "verdict": "Fiel nos pontos avaliados",
+    "after": "Mantém a negação da percepção, sem afirmar inexistência do fato.",
+    "details": "A saída inicia 'o depoente não viu Pedro ameaçar ninguém'. Mantém não ter ouvido ameaça contra Maria, ter visto discussão sem ver contato físico, Maria como fonte do medo sem relato de agressão, e Carlos como fonte de um barulho sem dizer ter visto Pedro bater. Conserva desconhecimento da origem do barulho e da presença do diretor, ausência de lembrança de sua entrada, reunião informada por terceiros, ausência de informação de punição, não participação e desconhecimento da decisão. Não se identificaram inversão do alcance de negação, omissões relevantes, primeira pessoa residual, truncamento ou duplicação.",
+    "outputSha256": "8305346DADBA35D7718FD9BED0439DB86759F9CE1BA25A92371B5423967495DB"
+  }
+]

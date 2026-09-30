@@ -1,0 +1,14 @@
+PASS INICIAR.ps1 : somente hash alterado
+PASS INICIAR-ORIGINAL.ps1 : somente hash alterado
+PASS INICIAR-CPU.ps1 : somente hash alterado
+PASS INICIAR-CPU-ORIGINAL.ps1 : somente hash alterado
+PASS manifest INICIAR-CPU-ORIGINAL.ps1
+PASS manifest INICIAR-CPU.ps1
+PASS manifest INICIAR-ORIGINAL.ps1
+PASS manifest INICIAR.ps1
+PASS manifest engine/DepoimentoLocal.CPU-original.dll
+PASS manifest engine/DepoimentoLocal.Vulkan8.dll
+PASS manifest engine/DepoimentoLocal.dll
+PASS manifest engine/DepoimentoLocal.Desktop.dll
+PASS hashes de todas as entradas preservados
+PASS prompt idêntico ao da execução anterior

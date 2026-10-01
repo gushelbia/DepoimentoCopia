@@ -3,17 +3,17 @@
     "before":  [
                    {
                        "Algorithm":  "SHA256",
-                       "Hash":  "B72BB74FE42A244A6E5D6F0AF52099057DFF1B4F4A59191A32A3B146025BE112",
+                       "Hash":  "FF6A335DF404D82E0F69D8A7E9818F5B3B940578FB53D5DCB8CC069A469BEEFE",
                        "Path":  "C:\\Users\\gusta\\OneDrive\\Área de Trabalho\\Depoimento - Copia\\Fidelis\\engine\\DepoimentoLocal.CPU-original.dll"
                    },
                    {
                        "Algorithm":  "SHA256",
-                       "Hash":  "BC8B0E5C9548465C973AEA0B9F0588AED56B66D6D237F5EB0ADE1B557D6EC65E",
+                       "Hash":  "25E5C56D3F3C2F398C4C75E0D457A17F50BAB40BE72A720150D955691C042A56",
                        "Path":  "C:\\Users\\gusta\\OneDrive\\Área de Trabalho\\Depoimento - Copia\\Fidelis\\engine\\DepoimentoLocal.Desktop.dll"
                    },
                    {
                        "Algorithm":  "SHA256",
-                       "Hash":  "E41E06F6DE4BC35F7B80C46844E13D61FA91B5BD6537A4DC8848B4A3A5EBC767",
+                       "Hash":  "687C90B523A7C9BC4E6F6CFEC8EA1E44ABC47389B890EA4495E5F489867763E1",
                        "Path":  "C:\\Users\\gusta\\OneDrive\\Área de Trabalho\\Depoimento - Copia\\Fidelis\\engine\\DepoimentoLocal.dll"
                    },
                    {
@@ -23,7 +23,7 @@
                    },
                    {
                        "Algorithm":  "SHA256",
-                       "Hash":  "E41E06F6DE4BC35F7B80C46844E13D61FA91B5BD6537A4DC8848B4A3A5EBC767",
+                       "Hash":  "687C90B523A7C9BC4E6F6CFEC8EA1E44ABC47389B890EA4495E5F489867763E1",
                        "Path":  "C:\\Users\\gusta\\OneDrive\\Área de Trabalho\\Depoimento - Copia\\Fidelis\\engine\\DepoimentoLocal.Vulkan8.dll"
                    },
                    {
@@ -35,22 +35,27 @@
                        "Algorithm":  "SHA256",
                        "Hash":  "5AC37064E35FDB68F044FF95A4BDA21976C20A9E0F6ED24FD2D9319E358D5AA9",
                        "Path":  "C:\\Users\\gusta\\OneDrive\\Área de Trabalho\\Depoimento - Copia\\Fidelis\\maintenance\\desktop-backups\\DepoimentoLocal.Desktop.before-rename-20260930183632.dll"
+                   },
+                   {
+                       "Algorithm":  "SHA256",
+                       "Hash":  "BC8B0E5C9548465C973AEA0B9F0588AED56B66D6D237F5EB0ADE1B557D6EC65E",
+                       "Path":  "C:\\Users\\gusta\\OneDrive\\Área de Trabalho\\Depoimento - Copia\\Fidelis\\maintenance\\desktop-backups\\DepoimentoLocal.Desktop.before-role-alerts-20260930214530.dll"
                    }
                ],
     "after":  [
                   {
                       "Algorithm":  "SHA256",
-                      "Hash":  "B72BB74FE42A244A6E5D6F0AF52099057DFF1B4F4A59191A32A3B146025BE112",
+                      "Hash":  "FF6A335DF404D82E0F69D8A7E9818F5B3B940578FB53D5DCB8CC069A469BEEFE",
                       "Path":  "C:\\Users\\gusta\\OneDrive\\Área de Trabalho\\Depoimento - Copia\\Fidelis\\engine\\DepoimentoLocal.CPU-original.dll"
                   },
                   {
                       "Algorithm":  "SHA256",
-                      "Hash":  "BC8B0E5C9548465C973AEA0B9F0588AED56B66D6D237F5EB0ADE1B557D6EC65E",
+                      "Hash":  "25E5C56D3F3C2F398C4C75E0D457A17F50BAB40BE72A720150D955691C042A56",
                       "Path":  "C:\\Users\\gusta\\OneDrive\\Área de Trabalho\\Depoimento - Copia\\Fidelis\\engine\\DepoimentoLocal.Desktop.dll"
                   },
                   {
                       "Algorithm":  "SHA256",
-                      "Hash":  "E41E06F6DE4BC35F7B80C46844E13D61FA91B5BD6537A4DC8848B4A3A5EBC767",
+                      "Hash":  "687C90B523A7C9BC4E6F6CFEC8EA1E44ABC47389B890EA4495E5F489867763E1",
                       "Path":  "C:\\Users\\gusta\\OneDrive\\Área de Trabalho\\Depoimento - Copia\\Fidelis\\engine\\DepoimentoLocal.dll"
                   },
                   {
@@ -60,7 +65,7 @@
                   },
                   {
                       "Algorithm":  "SHA256",
-                      "Hash":  "E41E06F6DE4BC35F7B80C46844E13D61FA91B5BD6537A4DC8848B4A3A5EBC767",
+                      "Hash":  "687C90B523A7C9BC4E6F6CFEC8EA1E44ABC47389B890EA4495E5F489867763E1",
                       "Path":  "C:\\Users\\gusta\\OneDrive\\Área de Trabalho\\Depoimento - Copia\\Fidelis\\engine\\DepoimentoLocal.Vulkan8.dll"
                   },
                   {
@@ -72,6 +77,11 @@
                       "Algorithm":  "SHA256",
                       "Hash":  "5AC37064E35FDB68F044FF95A4BDA21976C20A9E0F6ED24FD2D9319E358D5AA9",
                       "Path":  "C:\\Users\\gusta\\OneDrive\\Área de Trabalho\\Depoimento - Copia\\Fidelis\\maintenance\\desktop-backups\\DepoimentoLocal.Desktop.before-rename-20260930183632.dll"
+                  },
+                  {
+                      "Algorithm":  "SHA256",
+                      "Hash":  "BC8B0E5C9548465C973AEA0B9F0588AED56B66D6D237F5EB0ADE1B557D6EC65E",
+                      "Path":  "C:\\Users\\gusta\\OneDrive\\Área de Trabalho\\Depoimento - Copia\\Fidelis\\maintenance\\desktop-backups\\DepoimentoLocal.Desktop.before-role-alerts-20260930214530.dll"
                   }
               ]
 }

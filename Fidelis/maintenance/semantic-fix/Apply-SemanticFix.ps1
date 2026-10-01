@@ -175,6 +175,9 @@ foreach($name in $names) {
                 [dnlib.DotNet.Emit.Instruction]::new([dnlib.DotNet.Emit.OpCodes]::Call,$tokenCheck.Operand))
             $k=$at+2; foreach($ins in $check){$mi.Insert($k++,$ins)}
         }
+        # Round 6, option A: the opening becomes «O depoente relatou que» at the end of the
+        # final repair (SemanticGuard.FinalLead, called by RepairSourceAnchors); the internal
+        # opening «Relatou que » used by every repair and check is unchanged.
         foreach($method in @($validate,$critical,$repair,$residual,$move)+@($factory.Methods)+@($type.Methods)){if($method.HasBody){$method.Body.SimplifyBranches(); $method.Body.OptimizeBranches()}}
         $options=[dnlib.DotNet.Writer.ModuleWriterOptions]::new($m)
         $options.MetadataOptions.Flags=[dnlib.DotNet.Writer.MetadataFlags]::PreserveAll
@@ -190,7 +193,7 @@ foreach($name in $names) {
                 if($method.HasBody -and (($method.Body.Instructions | ForEach-Object ToString) -join "`n") -cne $before[$method.FullName]){throw "Unrelated method changed: $($method.FullName)"}
             }}
         } finally {$check.Dispose()}
-        $report.Add("PASS $name : only prompts, assistant prefill, semantic guard, supplemental conjugations, retry classification, unsafe positional repair, incomplete-output marking and post-generation cancellation check in Reformular changed.")
+        $report.Add("PASS $name : only prompts, assistant prefill, semantic guard, supplemental conjugations, retry classification, unsafe positional repair, incomplete-output marking, post-generation cancellation check, final opening «O depoente relatou que» (FinalLead) and swapped-subject/reflexive repair (round 6) changed.")
     } finally {$m.Dispose()}
 }
 $helper.Dispose()

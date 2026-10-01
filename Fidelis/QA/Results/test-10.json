@@ -4,13 +4,13 @@
     "objective":  "Testar preservação rigorosa de negações.",
     "status":  "CONCLUÍDO SEM ALERTAS AUTOMÁTICOS",
     "input":  "Eu não vi Pedro ameaçar ninguém. Também não ouvi ele dizer que faria alguma coisa contra Maria. Eu vi os dois discutindo, mas não vi contato físico. Maria depois me disse que ficou com medo, mas não falou que Pedro tinha batido nela. Carlos disse que ouviu um barulho, mas não disse que viu Pedro bater na mesa. Eu não sei de onde veio o barulho. Também não sei se o diretor estava na sala naquele momento. Não lembro de ter visto ele entrar. Depois me falaram que houve uma reunião, mas ninguém me disse que Pedro recebeu punição. Eu não participei dessa reunião e não tenho conhecimento do que foi decidido.",
-    "output":  "Relatou que o depoente não viu Pedro ameaçar ninguém. O depoente também não ouviu ele dizer que faria alguma coisa contra Maria. O depoente viu os dois discutindo, mas o depoente não viu contato físico. Maria depois lhe disse que ficou com medo, mas não falou que Pedro tinha batido nela. Carlos disse que ouviu um barulho, mas não disse que viu Pedro bater na mesa. O depoente não sabe de onde veio o barulho. O depoente também não sabe se o diretor estava na sala naquele momento. O depoente não lembra de ter visto ele entrar. Depois lhe disseram que houve uma reunião, mas ninguém lhe disse que Pedro recebeu punição. O depoente não participou dessa reunião e não tem conhecimento do que foi decidido.",
+    "output":  "O depoente relatou que não viu Pedro ameaçar ninguém. O depoente também não ouviu ele dizer que faria alguma coisa contra Maria. O depoente viu os dois discutindo, mas o depoente não viu contato físico. Maria depois lhe disse que ficou com medo, mas não falou que Pedro tinha batido nela. Carlos disse que ouviu um barulho, mas não disse que viu Pedro bater na mesa. O depoente não sabe de onde veio o barulho. O depoente também não sabe se o diretor estava na sala naquele momento. O depoente não lembra de ter visto ele entrar. Depois lhe disseram que houve uma reunião, mas ninguém lhe disse que Pedro recebeu punição. O depoente não participou dessa reunião e não tem conhecimento do que foi decidido.",
     "inputChars":  609,
     "outputChars":  705,
     "inputWords":  112,
     "outputWords":  126,
-    "generationSeconds":  42.17,
-    "totalSeconds":  44.9117123,
+    "generationSeconds":  27.959,
+    "totalSeconds":  30.8884217,
     "modelConfig":  "context=4096; batch=512; ubatch=256; threads=4; gpuLayers=8; mmap=true; temperature=0",
     "modelFile":  "file=qwen2.5-3b-instruct-q4_k_m.gguf; bytes=2104932768",
     "outputCaptureVerified":  true,
@@ -18,9 +18,9 @@
 
                  ],
     "nativeWarnings":  [
-                           "[2026-09-30 21:40:26.941 -03:00] [NATIVE-WARNING] [LLAMASHARP] load: control-looking token: 128247 \u0027\u003c/s\u003e\u0027 was not control-type; this is probably a bug in the model. its type will be overridden",
-                           "[2026-09-30 21:40:27.760 -03:00] [NATIVE-WARNING] [LLAMASHARP] llama_context: n_ctx_seq (4096) \u003c n_ctx_train (32768) -- the full capacity of the model will not be utilized",
-                           "[2026-09-30 21:40:27.911 -03:00] [NATIVE-WARNING] [LLAMASHARP] llama_context: n_ctx_seq (4096) \u003c n_ctx_train (32768) -- the full capacity of the model will not be utilized"
+                           "[2026-09-30 23:43:25.303 -03:00] [NATIVE-WARNING] [LLAMASHARP] load: control-looking token: 128247 \u0027\u003c/s\u003e\u0027 was not control-type; this is probably a bug in the model. its type will be overridden",
+                           "[2026-09-30 23:43:26.160 -03:00] [NATIVE-WARNING] [LLAMASHARP] llama_context: n_ctx_seq (4096) \u003c n_ctx_train (32768) -- the full capacity of the model will not be utilized",
+                           "[2026-09-30 23:43:26.287 -03:00] [NATIVE-WARNING] [LLAMASHARP] llama_context: n_ctx_seq (4096) \u003c n_ctx_train (32768) -- the full capacity of the model will not be utilized"
                        ],
     "retry":  false,
     "exception":  "",

@@ -1,0 +1,31 @@
+PASS caso 3: «o depoente lhe bateu» → «ele bateu no depoente» | O depoente relatou que ele bateu no depoente com um pedaço de pau e depois fugiu.
+PASS caso 6: restaura «ela» e mantém «o depoente respondeu» | O depoente relatou que ela xingou o depoente e o depoente respondeu que ia chamar a polícia.
+PASS caso 7: «o depoente lhe disse» → «ele lhe disse» | O depoente relatou que ele lhe disse que tinha visto ela sair com o carro.
+PASS caso 10: verbo de fala diferente (contou/disse) também restaura | O depoente relatou que ela lhe disse que ele tinha batido nela na noite anterior.
+PASS caso 14: «ameaçou o depoente» | O depoente relatou que ele ameaçou o depoente com uma faca e o depoente correu para dentro de casa.
+PASS caso 18 (1ª passagem): restaura «ela» e o sujeito de «se defendeu» | O depoente relatou que ela atacou o depoente primeiro e o depoente só se defendeu.
+PASS caso 18 (2ª tentativa): reflexivo «lhe defendeu» → «se defendeu» | O depoente relatou que ela lhe atacou primeiro e o depoente só se defendeu.
+PASS reflexivo com «me» restante → «se» | O depoente relatou que se escondeu atrás do carro.
+PASS fala entre aspas preservada byte a byte | O depoente relatou que ela lhe disse: “eu não volto”.
+PASS depoente que fala de fato («eu lhe disse»): sem mudança | O depoente relatou que lhe disse que ia embora.
+PASS depoente também fala no original: sem mudança | O depoente relatou que lhe contou e ela lhe disse que já sabia.
+PASS texto já correto: sem mudança | O depoente relatou que ela se defendeu quando ele empurrou o depoente.
+PASS dois candidatos no original: não adivinha | O depoente relatou que lhe disse que viria. Ela lhe disse que não.
+PASS sujeito correto («o Marcos lhe segurou»): sem mudança | O depoente relatou que o Marcos lhe segurou pelo braço.
+PASS «Depois me disseram» não vira sujeito | O depoente relatou que depois lhe disseram que houve reunião.
+PASS ação do próprio depoente («eu bati»): sem mudança | O depoente relatou que bateu nele porque ele o ameaçou.
+PASS validador: troca não reparável é acusada | fidelidade: autor da ação trocado com o depoente: no original «Ele me disse», na saída «o depoente lhe disse»
+PASS validador: caso 10 sem reparo seria acusado | fidelidade: autor da ação trocado com o depoente: no original «Ela me contou», na saída «o depoente lhe disse»
+PASS validador: depoente que fala de fato não é acusado
+PASS validador: texto corrigido do caso 18 aceito
+PASS validador: texto correto aceito
+PASS saída vazia continua rejeitada
+PASS saída só com espaços continua rejeitada
+PASS abertura: «Relatou que o depoente estava» → «O depoente relatou que estava» | O depoente relatou que estava correndo na praia.
+PASS abertura: com negação | O depoente relatou que não viu quem o acertou.
+PASS abertura: outro sujeito fica como está | O depoente relatou que ele lhe disse que viria.
+PASS abertura: «o depoente» que não abre a frase fica | O depoente relatou que quando o depoente chegou, ele já estava caído.
+PASS abertura: sujeito composto fica | O depoente relatou que o depoente e a esposa chegaram.
+PASS abertura: aplicar de novo não muda (idempotente) | O depoente relatou que estava em casa.
+PASS blocos seguintes (sem abertura): sem mudança | Ele chegou depois.
+PASS ordem: o sujeito trocado é corrigido antes da abertura final | O depoente relatou que ele bateu no depoente.

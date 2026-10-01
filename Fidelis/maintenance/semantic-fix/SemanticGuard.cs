@@ -493,6 +493,7 @@ namespace DepoimentoLocal.Windows
         {
             output = RepairNameSpelling(original, output);
             if (String.IsNullOrWhiteSpace(original) || String.IsNullOrWhiteSpace(output)) return output;
+            output = RepairSwappedSubject(original, output);
             // Exact lexical frames only. Never align by sentence number or by a
             // fuzzy similarity score, and never change quoted speech.
             string source = Unquote(original);
@@ -509,7 +510,163 @@ namespace DepoimentoLocal.Windows
                 }
                 output = result.ToString();
             }
-            return output;
+            return FinalLead(output);
+        }
+
+        // ---- Opening (round 6, option A) -----------------------------------
+        // The engine keeps its internal opening «Relatou que » while all repairs
+        // and checks run (they rely on «o depoente» being explicit). As the last
+        // step of the final repair, the first block's opening becomes
+        // «O depoente relatou que …»: «Relatou que o depoente estava…» →
+        // «O depoente relatou que estava…»; «Relatou que ele lhe disse…» →
+        // «O depoente relatou que ele lhe disse…». The repeated «o depoente» is
+        // kept where it is not the subject of a predicate («o depoente e a esposa»).
+        public static string FinalLead(string text)
+        {
+            if (String.IsNullOrEmpty(text)) return text;
+            Match lead = Regex.Match(text, @"^(?<ws>\s*)Relatou que\s+", RegexOptions.IgnoreCase);
+            if (!lead.Success) return text;
+            string rest = text.Substring(lead.Length);
+            Match dup = Regex.Match(rest, @"^o depoente\s+(?<next>\p{L}+)", RegexOptions.IgnoreCase);
+            if (dup.Success && !Regex.IsMatch(dup.Groups["next"].Value, @"^(?:e|ou|nem|com|junto|acompanhado|acompanhada|mais|assim|bem)$", RegexOptions.IgnoreCase))
+                rest = rest.Substring(dup.Groups["next"].Index);
+            return lead.Groups["ws"].Value + "O depoente relatou que " + rest;
+        }
+        // ---- Swapped subject / reflexive (round 6) -------------------------
+        // The model sometimes writes «O depoente me disse» for «Ela me contou»
+        // (narrator put in the other person's place, «me» kept); the residual
+        // first-person repair then turns «me» into «lhe», which hides the swap.
+        // With a unique correspondence in the source, restore the source's
+        // subject; a reflexive of the narrator («me defendi») becomes «se».
+        // Otherwise leave the text unchanged: Validate reports the swap.
+        public static string InvertibleSubjects()
+        {
+            return @"\b(?<subj>[Ee]les?|[Ee]las?|(?!(?:Depois|Então|Aí|Quando|Ontem|Hoje|Também|Já|Só|Não|Mas|Que|Se|Eu|Logo|Antes|Agora|Lá|Ali|Aqui|Ainda|Mesmo|Até|Nunca|Sempre|Talvez|Acho|Ninguém|Alguém|Todos|Cada|Um|Uma|Esse|Essa|Este|Esta|Isso|Aquele|Aquela|Outro|Outra|Meu|Minha|Seu|Sua|No|Na|Do|Da|Em|De|Por|Para|Com|Sem)\b)\p{Lu}[\p{Ll}\p{M}]+)\s+(?<neg>não\s+)?(?:(?:só|também|já|ainda|então|depois)\s+)?me\s+(?<v>\p{L}+)";
+        }
+
+        public static string NarratorSlot()
+        {
+            return @"\bo depoente\s+(?<neg>não\s+)?(?<adv>(?:só|também|já|ainda|então|depois|apenas)\s+)?(?<cl>lhe|me)\s+(?<v>\p{L}+)";
+        }
+
+        public static string VerbStem(string verb)
+        {
+            string v = verb.ToLowerInvariant();
+            string[] ends = { "aram", "eram", "iram", "ou", "eu", "iu", "ava", "ia", "sse", "ei", "i", "a", "e", "o" };
+            foreach (string end in ends)
+                if (v.Length > end.Length + 2 && v.EndsWith(end)) return v.Substring(0, v.Length - end.Length);
+            return v;
+        }
+
+        public static bool SpeechVerb(string verb)
+        {
+            return Regex.IsMatch(verb.ToLowerInvariant(), @"^(?:disse|diss|dis|cont|fal|inform|explic|relat|pergunt|ped|avis|respond|garant|confirm|coment|repet|mand|mostr|entreg|d[eá]|deu|pass|envi|devolv|apresent|indic|ensin|jur)");
+        }
+
+        // Same action: same stem («bateu»/«bateu»), or both speech verbs («contou»/«disse»).
+        public static bool SameAction(string sourceVerb, string outputVerb)
+        {
+            string a = VerbStem(sourceVerb), b = VerbStem(outputVerb);
+            int n = Math.Min(3, Math.Min(a.Length, b.Length));
+            if (n >= 3 && a.Substring(0, n) == b.Substring(0, n)) return true;
+            return SpeechVerb(sourceVerb) && SpeechVerb(outputVerb);
+        }
+
+        // The narrator did this action himself in the source («eu bati», «contei»).
+        public static bool NarratorDid(string source, string verb)
+        {
+            string stem = VerbStem(verb);
+            string head = stem.Length >= 3 ? stem.Substring(0, 3) : stem;
+            if (SpeechVerb(verb) && Regex.IsMatch(source, @"\b(?:eu\s+(?:não\s+)?(?:lhe\s+)?(?:disse|contei|falei|perguntei|pedi|avisei|expliquei|respondi|informei|garanti|confirmei|comentei|mandei|mostrei|dei|entreguei)|contei|falei|perguntei|avisei|expliquei|respondi|informei|garanti|comentei|mandei|mostrei|entreguei)\b", RegexOptions.IgnoreCase)) return true;
+            return Regex.IsMatch(source, @"\b(?:eu\s+)?(?:não\s+)?(?:lhe\s+|o\s+|a\s+)?" + Regex.Escape(head) + @"\p{L}*(?:ei|i)\b(?!\s+(?:ele|ela))", RegexOptions.IgnoreCase)
+                && !Regex.IsMatch(source, @"\bme\s+" + Regex.Escape(head), RegexOptions.IgnoreCase);
+        }
+
+        // «me defendi», «me escondi»: reflexive of the narrator in the source.
+        public static bool NarratorReflexive(string source, string verb)
+        {
+            string stem = VerbStem(verb);
+            string head = stem.Length >= 4 ? stem.Substring(0, 4) : stem;
+            foreach (Match m in Regex.Matches(source, @"(?<pre>\b\p{L}+\s+)?(?:(?:não|só|também|já|ainda|então|apenas)\s+)*me\s+(?<v>" + Regex.Escape(head) + @"\p{L}*(?:ei|i))\b", RegexOptions.IgnoreCase))
+            {
+                string pre = m.Groups["pre"].Value.Trim().ToLowerInvariant();
+                if (Regex.IsMatch(pre, @"^(?:ele|ela|eles|elas)$") || (pre.Length > 0 && Char.IsUpper(m.Groups["pre"].Value.Trim()[0]) && !Regex.IsMatch(pre, @"^(?:eu|e|depois|então|aí|quando|mas|só|também)$"))) continue;
+                return true;
+            }
+            return false;
+        }
+
+        public static string RepairSwappedSubject(string original, string output)
+        {
+            string source = Unquote(original);
+            var result = new System.Text.StringBuilder(); int start = 0;
+            foreach (Match quote in Regex.Matches(output, "\"[^\"]*\"|“[^”]*”|«[^»]*»|'[^']*'|$"))
+            {
+                string part = output.Substring(start, quote.Index - start);
+                result.Append(RepairSwappedPart(source, part, Unquote(output)));
+                result.Append(quote.Value); start = quote.Index + quote.Length;
+            }
+            return result.ToString();
+        }
+
+        public static string RepairSwappedPart(string source, string part, string fullOutput)
+        {
+            MatchCollection slots = Regex.Matches(part, NarratorSlot(), RegexOptions.IgnoreCase);
+            for (int s = slots.Count - 1; s >= 0; s--)
+            {
+                Match slot = slots[s];
+                string v = slot.Groups["v"].Value;
+                // 1) Reflexive of the narrator: «o depoente só lhe defendeu» → «… só se defendeu».
+                if (NarratorReflexive(source, v))
+                {
+                    Group cl = slot.Groups["cl"];
+                    part = part.Substring(0, cl.Index) + "se" + part.Substring(cl.Index + cl.Length);
+                    continue;
+                }
+                // 2) Swapped subject: exactly one «X me <same action>» in the source,
+                // one narrator slot with this action in the whole output, and the
+                // narrator never does this action himself in the source.
+                var candidates = new List<Match>();
+                foreach (Match c in Regex.Matches(source, InvertibleSubjects()))
+                    if (SameAction(c.Groups["v"].Value, v)) candidates.Add(c);
+                if (candidates.Count != 1 || NarratorDid(source, v)) continue;
+                int sameSlots = 0;
+                foreach (Match o in Regex.Matches(fullOutput, NarratorSlot(), RegexOptions.IgnoreCase))
+                    if (SameAction(candidates[0].Groups["v"].Value, o.Groups["v"].Value)) sameSlots++;
+                if (sameSlots != 1) continue;
+                string subj = candidates[0].Groups["subj"].Value;
+                if (Regex.IsMatch(subj, @"^(?:Ele|Ela|Eles|Elas)$")) subj = subj.ToLowerInvariant();
+                string neg = slot.Groups["neg"].Value, adv = slot.Groups["adv"].Value;
+                string replacement;
+                if (SpeechVerb(v)) replacement = subj + " " + neg + adv + "lhe " + v;
+                else if (VerbStem(v) == "bat") replacement = subj + " " + neg + adv + v + " no depoente";
+                else replacement = subj + " " + neg + adv + v + " o depoente";
+                if (Char.IsUpper(slot.Value[0])) replacement = Char.ToUpperInvariant(replacement[0]) + replacement.Substring(1);
+                string after = part.Substring(slot.Index + slot.Length);
+                // A coordinated verb that was the narrator's keeps the narrator:
+                // «ela xingou o depoente e respondeu» → «… e o depoente respondeu».
+                Match coord = Regex.Match(after, @"^(?<mid>[^.;!?]*?\s)e\s+(?<rest>(?:(?:só|também|já|ainda|então|depois)\s+)?(?:se\s+|lhe\s+)?(?<v2>\p{L}+(?:ou|eu|iu))\b)", RegexOptions.IgnoreCase);
+                if (coord.Success && !Regex.IsMatch(coord.Groups["mid"].Value, @"\b(?:o depoente|ele|ela|eles|elas)\b", RegexOptions.IgnoreCase)
+                    && Regex.IsMatch(source, @"\b(?:eu\s+)?(?:(?:só|também|já|ainda)\s+)?(?:me\s+)?" + Regex.Escape(VerbStem(coord.Groups["v2"].Value)) + @"\p{L}*(?:ei|i)\b", RegexOptions.IgnoreCase))
+                    after = coord.Groups["mid"].Value + "e o depoente " + coord.Groups["rest"].Value + after.Substring(coord.Length);
+                part = part.Substring(0, slot.Index) + replacement + after;
+            }
+            return part;
+        }
+
+        // The swap that could not be repaired is reported (retry, then rejection).
+        public static string SwappedSubjectIssue(string original, string output)
+        {
+            string source = Unquote(original);
+            foreach (Match slot in Regex.Matches(Unquote(output), NarratorSlot(), RegexOptions.IgnoreCase))
+            {
+                string v = slot.Groups["v"].Value;
+                if (NarratorReflexive(source, v) || NarratorDid(source, v)) continue;
+                foreach (Match c in Regex.Matches(source, InvertibleSubjects()))
+                    if (SameAction(c.Groups["v"].Value, v))
+                        return "fidelidade: autor da ação trocado com o depoente: no original «" + c.Value.Trim() + "», na saída «" + slot.Value.Trim() + "»";
+            }
+            return null;
         }
 
         public static string CorrectionKey(string text)
@@ -821,6 +978,8 @@ namespace DepoimentoLocal.Windows
         public static string Validate(string original, string output)
         {
             if (String.IsNullOrWhiteSpace(output)) return "fidelidade: saída vazia";
+            string swapped = SwappedSubjectIssue(original, output);
+            if (swapped != null) return swapped;
             string source = Normalize(Unquote(original));
             string rendered = Normalize(Unquote(output));
             var participants = new HashSet<string>();

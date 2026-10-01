@@ -1,0 +1,120 @@
+﻿=== 1: Eu estava correndo na praia quando ele me atacou por trás.
+  1 BRUTO DO MODELO   : O depoente estava correndo na praia quando ele o atacou por trás.
+  2 ABERTURA+REPAROS  : Relatou que o depoente estava correndo na praia quando ele o atacou por trás.   [validação: ok]
+  3a SÓ SemanticGuard : Relatou que o depoente estava correndo na praia quando ele o atacou por trás.
+  3 1ª PESSOA (motor) : Relatou que o depoente estava correndo na praia quando ele o atacou por trás.
+  4 ÂNCORAS (final)   : Relatou que o depoente estava correndo na praia quando ele o atacou por trás.   [validação: ok]
+=== 2: Eu estava saindo do mercado quando ela me empurrou contra a parede.
+  1 BRUTO DO MODELO   : O depoente estava saindo do mercado quando ela o empurrou contra a parede.
+  2 ABERTURA+REPAROS  : Relatou que o depoente estava saindo do mercado quando ela o empurrou contra a parede.   [validação: ok]
+  3a SÓ SemanticGuard : Relatou que o depoente estava saindo do mercado quando ela o empurrou contra a parede.
+  3 1ª PESSOA (motor) : Relatou que o depoente estava saindo do mercado quando ela o empurrou contra a parede.
+  4 ÂNCORAS (final)   : Relatou que o depoente estava saindo do mercado quando ela o empurrou contra a parede.   [validação: ok]
+=== 3: Ele me bateu com um pedaço de pau e depois fugiu.
+  1 BRUTO DO MODELO   : O depoente me bateu com um pedaço de pau e depois fugiu.
+  2 ABERTURA+REPAROS  : Relatou que o depoente me bateu com um pedaço de pau e depois fugiu.   [validação: a saída ainda contém primeira pessoa]
+  3a SÓ SemanticGuard : Relatou que o depoente me bateu com um pedaço de pau e depois fugiu.
+  3 1ª PESSOA (motor) : Relatou que o depoente lhe bateu com um pedaço de pau e depois fugiu.
+  4 ÂNCORAS (final)   : Relatou que o depoente lhe bateu com um pedaço de pau e depois fugiu.   [validação: fidelidade: ação de participante atribuída ao depoente: o depoente lhe bateu]
+=== 4: Quando eu cheguei, ele já estava caído no chão e eu chamei a ambulância.
+  1 BRUTO DO MODELO   : Quando o depoente chegou, ele já estava caído no chão e o depoente chamou a ambulância.
+  2 ABERTURA+REPAROS  : Relatou que quando o depoente chegou, ele já estava caído no chão e o depoente chamou a ambulância.   [validação: ok]
+  3a SÓ SemanticGuard : Relatou que quando o depoente chegou, ele já estava caído no chão e o depoente chamou a ambulância.
+  3 1ª PESSOA (motor) : Relatou que quando o depoente chegou, ele já estava caído no chão e o depoente chamou a ambulância.
+  4 ÂNCORAS (final)   : Relatou que quando o depoente chegou, ele já estava caído no chão e o depoente chamou a ambulância.   [validação: ok]
+=== 5: Eu empurrei ele porque ele estava me enforcando.
+  1 BRUTO DO MODELO   : O depoente empurrou ele porque ele estava o depoente enforcando.
+  2 ABERTURA+REPAROS  : Relatou que o depoente empurrou ele porque ele estava o depoente enforcando.   [validação: ok]
+  3a SÓ SemanticGuard : Relatou que o depoente empurrou ele porque ele estava o depoente enforcando.
+  3 1ª PESSOA (motor) : Relatou que o depoente empurrou ele porque ele estava o depoente enforcando.
+  4 ÂNCORAS (final)   : Relatou que o depoente empurrou ele porque ele estava o depoente enforcando.   [validação: ok]
+=== 6: Ela me xingou e eu respondi que ia chamar a polícia.
+  1 BRUTO DO MODELO   : O depoente me xingou e respondeu que ia chamar a polícia.
+  2 ABERTURA+REPAROS  : Relatou que o depoente me xingou e respondeu que ia chamar a polícia.   [validação: a saída ainda contém primeira pessoa]
+  3a SÓ SemanticGuard : Relatou que o depoente me xingou e respondeu que ia chamar a polícia.
+  3 1ª PESSOA (motor) : Relatou que o depoente lhe xingou e respondeu que ia chamar a polícia.
+  4 ÂNCORAS (final)   : Relatou que o depoente lhe xingou e respondeu que ia chamar a polícia.   [validação: fidelidade: ação de participante atribuída ao depoente: o depoente lhe xingou]
+=== 7: Ele me disse que tinha visto ela sair com o carro.
+  1 BRUTO DO MODELO   : O depoente lhe disse que tinha visto ela sair com o carro.
+  2 ABERTURA+REPAROS  : Relatou que o depoente lhe disse que tinha visto ela sair com o carro.   [validação: ok]
+  3a SÓ SemanticGuard : Relatou que o depoente lhe disse que tinha visto ela sair com o carro.
+  3 1ª PESSOA (motor) : Relatou que o depoente lhe disse que tinha visto ela sair com o carro.
+  4 ÂNCORAS (final)   : Relatou que o depoente lhe disse que tinha visto ela sair com o carro.   [validação: ok]
+=== 8: O Marcos me segurou pelo braço enquanto o outro rapaz pegava minha bolsa.
+  1 BRUTO DO MODELO   : O Marcos me segurou pelo braço enquanto o outro rapaz pegava minha bolsa.
+  2 ABERTURA+REPAROS  : Relatou que o Marcos me segurou pelo braço enquanto o outro rapaz pegava minha bolsa.   [validação: a saída ainda contém primeira pessoa]
+  3a SÓ SemanticGuard : Relatou que o Marcos me segurou pelo braço enquanto o outro rapaz pegava minha bolsa.
+  3 1ª PESSOA (motor) : Relatou que o Marcos lhe segurou pelo braço enquanto o outro rapaz pegava sua bolsa.
+  4 ÂNCORAS (final)   : Relatou que o Marcos lhe segurou pelo braço enquanto o outro rapaz pegava a bolsa do depoente.   [validação: ok]
+=== 9: Eu vi quando ele deu um soco nela.
+  1 BRUTO DO MODELO   : O depoente viu quando ele deu um soco nela.
+  2 ABERTURA+REPAROS  : Relatou que o depoente viu quando ele deu um soco nela.   [validação: ok]
+  3a SÓ SemanticGuard : Relatou que o depoente viu quando ele deu um soco nela.
+  3 1ª PESSOA (motor) : Relatou que o depoente viu quando ele deu um soco nela.
+  4 ÂNCORAS (final)   : Relatou que o depoente viu quando ele deu um soco nela.   [validação: ok]
+=== 10: Ela me contou que ele tinha batido nela na noite anterior.
+  1 BRUTO DO MODELO   : O depoente me disse que ele tinha batido nela na noite anterior.
+  2 ABERTURA+REPAROS  : Relatou que o depoente me disse que ele tinha batido nela na noite anterior.   [validação: a saída ainda contém primeira pessoa]
+  3a SÓ SemanticGuard : Relatou que o depoente me disse que ele tinha batido nela na noite anterior.
+  3 1ª PESSOA (motor) : Relatou que o depoente lhe disse que ele tinha batido nela na noite anterior.
+  4 ÂNCORAS (final)   : Relatou que o depoente lhe disse que ele tinha batido nela na noite anterior.   [validação: ok]
+=== 11: Eu estava grávida de cinco meses quando ele me chutou.
+  1 BRUTO DO MODELO   : O depoente estava grávida de cinco meses quando ele o chutou.
+  2 ABERTURA+REPAROS  : Relatou que o depoente estava grávida de cinco meses quando ele o chutou.   [validação: ok]
+  3a SÓ SemanticGuard : Relatou que o depoente estava grávida de cinco meses quando ele o chutou.
+  3 1ª PESSOA (motor) : Relatou que o depoente estava grávida de cinco meses quando ele o chutou.
+  4 ÂNCORAS (final)   : Relatou que o depoente estava grávida de cinco meses quando ele o chutou.   [validação: ok]
+=== 12: Eu fiquei nervosa e liguei para o meu irmão.
+  1 BRUTO DO MODELO   : O depoente ficou nervoso e ligou para o seu irmão.
+  2 ABERTURA+REPAROS  : Relatou que o depoente ficou nervoso e ligou para o seu irmão.   [validação: ok]
+  3a SÓ SemanticGuard : Relatou que o depoente ficou nervoso e ligou para o seu irmão.
+  3 1ª PESSOA (motor) : Relatou que o depoente ficou nervoso e ligou para o seu irmão.
+  4 ÂNCORAS (final)   : Relatou que o depoente ficou nervoso e ligou para o seu irmão.   [validação: ok]
+=== 13: Eu sou o pai da menina e fui buscá-la na escola quando ele apareceu.
+  1 BRUTO DO MODELO   : O depoente é o pai da menina e saiu para buscá-la na escola quando ele apareceu.
+  2 ABERTURA+REPAROS  : Relatou que o depoente é o pai da menina e saiu para buscá-la na escola quando ele apareceu.   [validação: ok]
+  3a SÓ SemanticGuard : Relatou que o depoente é o pai da menina e saiu para buscá-la na escola quando ele apareceu.
+  3 1ª PESSOA (motor) : Relatou que o depoente é o pai da menina e saiu para buscá-la na escola quando ele apareceu.
+  4 ÂNCORAS (final)   : Relatou que o depoente é o pai da menina e saiu para buscá-la na escola quando ele apareceu.   [validação: ok]
+=== 14: Ele me ameaçou com uma faca e eu corri para dentro de casa.
+  1 BRUTO DO MODELO   : O depoente me ameaçou com uma faca e o depoente corriu para dentro de casa.
+  2 ABERTURA+REPAROS  : Relatou que o depoente me ameaçou com uma faca e o depoente corriu para dentro de casa.   [validação: a saída ainda contém primeira pessoa]
+  3a SÓ SemanticGuard : Relatou que o depoente me ameaçou com uma faca e o depoente corriu para dentro de casa.
+  3 1ª PESSOA (motor) : Relatou que o depoente lhe ameaçou com uma faca e o depoente corriu para dentro de casa.
+  4 ÂNCORAS (final)   : Relatou que o depoente lhe ameaçou com uma faca e o depoente corriu para dentro de casa.   [validação: fidelidade: ação de participante atribuída ao depoente: o depoente lhe ameaçou]
+=== 15: Eu não vi quem me acertou, só senti a pancada na cabeça.
+  1 BRUTO DO MODELO   : O depoente não viu quem o acertou, só sentiu a pancada na cabeça.
+  2 ABERTURA+REPAROS  : Relatou que o depoente não viu quem o acertou, só sentiu a pancada na cabeça.   [validação: ok]
+  3a SÓ SemanticGuard : Relatou que o depoente não viu quem o acertou, só sentiu a pancada na cabeça.
+  3 1ª PESSOA (motor) : Relatou que o depoente não viu quem o acertou, só sentiu a pancada na cabeça.
+  4 ÂNCORAS (final)   : Relatou que o depoente não viu quem o acertou, o depoente só sentiu a pancada na cabeça.   [validação: ok]
+=== 16: Eles me cercaram na saída do bar e um deles me deu uma rasteira.
+  1 BRUTO DO MODELO   : O depoente foi cercado na saída do bar e um deles lhe deu uma rasteira.
+  2 ABERTURA+REPAROS  : Relatou que o depoente foi cercado na saída do bar e um deles lhe deu uma rasteira.   [validação: ok]
+  3a SÓ SemanticGuard : Relatou que o depoente foi cercado na saída do bar e um deles lhe deu uma rasteira.
+  3 1ª PESSOA (motor) : Relatou que o depoente foi cercado na saída do bar e um deles lhe deu uma rasteira.
+  4 ÂNCORAS (final)   : Relatou que o depoente foi cercado na saída do bar e um deles lhe deu uma rasteira.   [validação: ok]
+=== 17: Eu defendi ela quando ele tentou agarrá-la.
+  1 BRUTO DO MODELO   : O depoente defendeu ela quando ele tentou agarrá-la.
+  2 ABERTURA+REPAROS  : Relatou que o depoente defendeu ela quando ele tentou agarrá-la.   [validação: ok]
+  3a SÓ SemanticGuard : Relatou que o depoente defendeu ela quando ele tentou agarrá-la.
+  3 1ª PESSOA (motor) : Relatou que o depoente defendeu ela quando ele tentou agarrá-la.
+  4 ÂNCORAS (final)   : Relatou que o depoente defendeu ela quando ele tentou agarrá-la.   [validação: ok]
+=== 18: Ela me atacou primeiro e eu só me defendi.
+  1 BRUTO DO MODELO   : O depoente me atacou primeiro e só se defendeu.
+  2 ABERTURA+REPAROS  : Relatou que o depoente me atacou primeiro e só se defendeu.   [validação: a saída ainda contém primeira pessoa]
+  3a SÓ SemanticGuard : Relatou que o depoente me atacou primeiro e só se defendeu.
+  3 1ª PESSOA (motor) : Relatou que o depoente lhe atacou primeiro e só se defendeu.
+  4 ÂNCORAS (final)   : Relatou que o depoente lhe atacou primeiro e só se defendeu.   [validação: fidelidade: ação de participante atribuída ao depoente: o depoente lhe atacou]
+=== 19: Fui agredida pelo meu ex-companheiro na frente dos meus filhos.
+  1 BRUTO DO MODELO   : O depoente foi agredido pelo seu ex-companheiro na frente dos seus filhos.
+  2 ABERTURA+REPAROS  : Relatou que o depoente foi agredido pelo seu ex-companheiro na frente dos seus filhos.   [validação: ok]
+  3a SÓ SemanticGuard : Relatou que o depoente foi agredido pelo seu ex-companheiro na frente dos seus filhos.
+  3 1ª PESSOA (motor) : Relatou que o depoente foi agredido pelo seu ex-companheiro na frente dos seus filhos.
+  4 ÂNCORAS (final)   : Relatou que o depoente foi agredido pelo seu ex-companheiro na frente dos seus filhos.   [validação: ok]
+=== 20: Eu estava sozinho em casa quando ouvi ele arrombar a porta.
+  1 BRUTO DO MODELO   : O depoente estava sozinho em casa quando ouviu ele arrombar a porta.
+  2 ABERTURA+REPAROS  : Relatou que o depoente estava sozinho em casa quando ouviu ele arrombar a porta.   [validação: fidelidade: sujeito do depoente implícito em oração subordinada: casa quando ouvi]
+  3a SÓ SemanticGuard : Relatou que o depoente estava sozinho em casa quando ouviu ele arrombar a porta.
+  3 1ª PESSOA (motor) : Relatou que o depoente estava sozinho em casa quando ouviu ele arrombar a porta.
+  4 ÂNCORAS (final)   : Relatou que o depoente estava sozinho em casa quando o depoente ouviu ele arrombar a porta.   [validação: ok]

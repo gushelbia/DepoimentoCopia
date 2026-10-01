@@ -1,13 +1,16 @@
-START 2026-09-30T21:23:46
+START 2026-09-30T23:26:21
 PASS 1: abertura da interface com modelo ainda não carregado
 STATUS Carregue o modelo antes de reformular o texto.
-WAIT responsividade sem modelo 320ms
-PASS 2-3: clique sem modelo retornou em 6ms; apenas aviso local, sem envio ao motor; UI responsiva
+WAIT responsividade sem modelo 316ms
+PASS 2-3: clique sem modelo retornou em 3ms; apenas aviso local, sem envio ao motor; UI responsiva
 STATUS Carregando modelo local...
-WAIT falha de carregamento 950ms
+STATUS Falha ao carregar o modelo. Erro registrado no log.
+WAIT falha de carregamento 957ms
 PASS falha real de GGUF inválido: Reformular permanece desabilitado
+STATUS Carregando modelo local...
 STATUS Carregando modelo GGUF…
-WAIT carregamento real do GGUF 1814ms
+STATUS Modelo carregado  •  Vulkan  •  4 threads CPU
+WAIT carregamento real do GGUF 1777ms
 PASS 4: modelo carregado e confirmado; Reformular habilitado
 STATUS Processando localmente...
 STATUS Preparando reformulação…
@@ -15,10 +18,9 @@ STATUS Gerando… 1 partes recebidas
 STATUS Gerando… 8 partes recebidas
 STATUS Gerando… 16 partes recebidas
 STATUS Gerando… 24 partes recebidas
-STATUS Gerando… 32 partes recebidas
 STATUS Concluído. Revise o texto antes de adicionar.
-WAIT geracao 1 14468ms
-PASS 5 geracao 1: clique=9ms; UI ticks=230; maior intervalo=189ms; texto=Relatou que o depoente chegou em casa às oito horas e encontrou seu vizinho na portaria. Ele lhe entregou uma encomenda.
+WAIT geracao 1 14132ms
+PASS 5 geracao 1: clique=21ms; UI ticks=224; maior intervalo=196ms; texto=O depoente relatou que chegou em casa às oito horas e encontrou seu vizinho na portaria. Ele lhe entregou uma encomenda.
 STATUS Processando localmente...
 STATUS Preparando reformulação…
 STATUS Gerando… 1 partes recebidas
@@ -26,15 +28,15 @@ STATUS Gerando… 8 partes recebidas
 STATUS Gerando… 16 partes recebidas
 STATUS Gerando… 24 partes recebidas
 STATUS Concluído. Revise o texto antes de adicionar.
-WAIT geracao 2 13215ms
-PASS 5 geracao 2: clique=57ms; UI ticks=209; maior intervalo=194ms; texto=Relatou que na segunda-feira, o depoente foi ao mercado comprar arroz. O depoente pagou em dinheiro e voltou para casa de ônibus.
+WAIT geracao 2 12496ms
+PASS 5 geracao 2: clique=75ms; UI ticks=198; maior intervalo=157ms; texto=O depoente relatou que na segunda-feira, o depoente foi ao mercado comprar arroz. O depoente pagou em dinheiro e voltou para casa de ônibus.
 STATUS Processando localmente...
-WAIT dispatch antes de cancelar 78ms
+WAIT dispatch antes de cancelar 117ms
 STATUS Preparando reformulação…
 STATUS Geração cancelada.
-WAIT cancelamento 8018ms
+WAIT cancelamento 7955ms
 PASS cancelamento protegido e modelo preservado
 STATUS Processando localmente...
-WAIT motor encerrado 27ms
+WAIT motor encerrado 39ms
 PASS motor encerrado: UI continua responsiva e geração desabilitada
 ALL PASS

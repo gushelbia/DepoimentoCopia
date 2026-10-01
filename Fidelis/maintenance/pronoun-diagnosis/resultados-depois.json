@@ -1,0 +1,350 @@
+﻿[
+    {
+        "number":  1,
+        "gender":  "?",
+        "input":  "Eu estava correndo na praia quando ele me atacou por trás.",
+        "output":  "O depoente relatou que estava correndo na praia quando ele o atacou por trás.",
+        "seconds":  11.6,
+        "completed":  true,
+        "retry":  false,
+        "warnings":  [
+
+                     ],
+        "exception":  "",
+        "repairs":  [
+                        "[INFO] [BLOCK_FIRST_PASS] block=1/1; elapsedMs=11369; pieces=21; outputChars=65",
+                        "[INFO] [BLOCK_OK] block=1/1; outputChars=77"
+                    ]
+    },
+    {
+        "number":  2,
+        "gender":  "?",
+        "input":  "Eu estava saindo do mercado quando ela me empurrou contra a parede.",
+        "output":  "O depoente relatou que estava saindo do mercado quando ela o empurrou contra a parede.",
+        "seconds":  13.6,
+        "completed":  true,
+        "retry":  false,
+        "warnings":  [
+
+                     ],
+        "exception":  "",
+        "repairs":  [
+                        "[INFO] [BLOCK_FIRST_PASS] block=1/1; elapsedMs=13297; pieces=21; outputChars=74",
+                        "[INFO] [BLOCK_OK] block=1/1; outputChars=86"
+                    ]
+    },
+    {
+        "number":  3,
+        "gender":  "?",
+        "input":  "Ele me bateu com um pedaço de pau e depois fugiu.",
+        "output":  "O depoente relatou que ele bateu no depoente com um pedaço de pau e depois fugiu.",
+        "seconds":  11.2,
+        "completed":  true,
+        "retry":  false,
+        "warnings":  [
+
+                     ],
+        "exception":  "",
+        "repairs":  [
+                        "[INFO] [BLOCK_FIRST_PASS] block=1/1; elapsedMs=10909; pieces=20; outputChars=56",
+                        "[INFO] [LOCAL_REPAIR] block=1/1; before=fidelidade: autor da ação trocado com o depoente: no original «Ele me bateu», na saída «o depoente me bateu»; after=ok",
+                        "[INFO] [BLOCK_OK] block=1/1; outputChars=81"
+                    ]
+    },
+    {
+        "number":  4,
+        "gender":  "?",
+        "input":  "Quando eu cheguei, ele já estava caído no chão e eu chamei a ambulância.",
+        "output":  "O depoente relatou que quando o depoente chegou, ele já estava caído no chão e o depoente chamou a ambulância.",
+        "seconds":  12,
+        "completed":  true,
+        "retry":  false,
+        "warnings":  [
+
+                     ],
+        "exception":  "",
+        "repairs":  [
+                        "[INFO] [BLOCK_FIRST_PASS] block=1/1; elapsedMs=11800; pieces=29; outputChars=87",
+                        "[INFO] [BLOCK_OK] block=1/1; outputChars=110"
+                    ]
+    },
+    {
+        "number":  5,
+        "gender":  "?",
+        "input":  "Eu empurrei ele porque ele estava me enforcando.",
+        "output":  "O depoente relatou que empurrou ele porque ele estava o depoente enforcando.",
+        "seconds":  11.2,
+        "completed":  true,
+        "retry":  false,
+        "warnings":  [
+
+                     ],
+        "exception":  "",
+        "repairs":  [
+                        "[INFO] [BLOCK_FIRST_PASS] block=1/1; elapsedMs=10976; pieces=19; outputChars=64",
+                        "[INFO] [BLOCK_OK] block=1/1; outputChars=76"
+                    ]
+    },
+    {
+        "number":  6,
+        "gender":  "?",
+        "input":  "Ela me xingou e eu respondi que ia chamar a polícia.",
+        "output":  "O depoente relatou que ela xingou o depoente e o depoente respondeu que ia chamar a polícia.",
+        "seconds":  11.4,
+        "completed":  true,
+        "retry":  false,
+        "warnings":  [
+
+                     ],
+        "exception":  "",
+        "repairs":  [
+                        "[INFO] [BLOCK_FIRST_PASS] block=1/1; elapsedMs=11076; pieces=20; outputChars=57",
+                        "[INFO] [LOCAL_REPAIR] block=1/1; before=fidelidade: autor da ação trocado com o depoente: no original «Ela me xingou», na saída «o depoente me xingou»; after=ok",
+                        "[INFO] [BLOCK_OK] block=1/1; outputChars=92"
+                    ]
+    },
+    {
+        "number":  7,
+        "gender":  "?",
+        "input":  "Ele me disse que tinha visto ela sair com o carro.",
+        "output":  "O depoente relatou que ele lhe disse que tinha visto ela sair com o carro.",
+        "seconds":  10.7,
+        "completed":  true,
+        "retry":  false,
+        "warnings":  [
+
+                     ],
+        "exception":  "",
+        "repairs":  [
+                        "[INFO] [BLOCK_FIRST_PASS] block=1/1; elapsedMs=10523; pieces=17; outputChars=58",
+                        "[INFO] [LOCAL_REPAIR] block=1/1; before=fidelidade: autor da ação trocado com o depoente: no original «Ele me disse», na saída «o depoente lhe disse»; after=ok",
+                        "[INFO] [BLOCK_OK] block=1/1; outputChars=74"
+                    ]
+    },
+    {
+        "number":  8,
+        "gender":  "?",
+        "input":  "O Marcos me segurou pelo braço enquanto o outro rapaz pegava minha bolsa.",
+        "output":  "O depoente relatou que o Marcos lhe segurou pelo braço enquanto o outro rapaz pegava a bolsa do depoente.",
+        "seconds":  11.1,
+        "completed":  true,
+        "retry":  false,
+        "warnings":  [
+
+                     ],
+        "exception":  "",
+        "repairs":  [
+                        "[INFO] [BLOCK_FIRST_PASS] block=1/1; elapsedMs=10847; pieces=20; outputChars=73",
+                        "[INFO] [LOCAL_REPAIR] block=1/1; before=a saída ainda contém primeira pessoa; after=ok",
+                        "[INFO] [BLOCK_OK] block=1/1; outputChars=105"
+                    ]
+    },
+    {
+        "number":  9,
+        "gender":  "?",
+        "input":  "Eu vi quando ele deu um soco nela.",
+        "output":  "O depoente relatou que viu quando ele deu um soco nela.",
+        "seconds":  9.9,
+        "completed":  true,
+        "retry":  false,
+        "warnings":  [
+
+                     ],
+        "exception":  "",
+        "repairs":  [
+                        "[INFO] [BLOCK_FIRST_PASS] block=1/1; elapsedMs=9701; pieces=16; outputChars=43",
+                        "[INFO] [BLOCK_OK] block=1/1; outputChars=55"
+                    ]
+    },
+    {
+        "number":  10,
+        "gender":  "?",
+        "input":  "Ela me contou que ele tinha batido nela na noite anterior.",
+        "output":  "O depoente relatou que ela lhe disse que ele tinha batido nela na noite anterior.",
+        "seconds":  10.2,
+        "completed":  true,
+        "retry":  false,
+        "warnings":  [
+
+                     ],
+        "exception":  "",
+        "repairs":  [
+                        "[INFO] [BLOCK_FIRST_PASS] block=1/1; elapsedMs=9976; pieces=18; outputChars=64",
+                        "[INFO] [LOCAL_REPAIR] block=1/1; before=fidelidade: autor da ação trocado com o depoente: no original «Ela me contou», na saída «o depoente me disse»; after=ok",
+                        "[INFO] [BLOCK_OK] block=1/1; outputChars=81"
+                    ]
+    },
+    {
+        "number":  11,
+        "gender":  "F",
+        "input":  "Eu estava grávida de cinco meses quando ele me chutou.",
+        "output":  "O depoente relatou que estava grávida de cinco meses quando ele o chutou.",
+        "seconds":  10,
+        "completed":  true,
+        "retry":  false,
+        "warnings":  [
+
+                     ],
+        "exception":  "",
+        "repairs":  [
+                        "[INFO] [BLOCK_FIRST_PASS] block=1/1; elapsedMs=9867; pieces=18; outputChars=61",
+                        "[INFO] [BLOCK_OK] block=1/1; outputChars=73"
+                    ]
+    },
+    {
+        "number":  12,
+        "gender":  "F",
+        "input":  "Eu fiquei nervosa e liguei para o meu irmão.",
+        "output":  "O depoente relatou que ficou nervoso e ligou para o seu irmão.",
+        "seconds":  10,
+        "completed":  true,
+        "retry":  false,
+        "warnings":  [
+
+                     ],
+        "exception":  "",
+        "repairs":  [
+                        "[INFO] [BLOCK_FIRST_PASS] block=1/1; elapsedMs=9798; pieces=17; outputChars=50",
+                        "[INFO] [BLOCK_OK] block=1/1; outputChars=62"
+                    ]
+    },
+    {
+        "number":  13,
+        "gender":  "M",
+        "input":  "Eu sou o pai da menina e fui buscá-la na escola quando ele apareceu.",
+        "output":  "O depoente relatou que é o pai da menina e saiu para buscá-la na escola quando ele apareceu.",
+        "seconds":  11.4,
+        "completed":  true,
+        "retry":  false,
+        "warnings":  [
+
+                     ],
+        "exception":  "",
+        "repairs":  [
+                        "[INFO] [BLOCK_FIRST_PASS] block=1/1; elapsedMs=11097; pieces=25; outputChars=80",
+                        "[INFO] [BLOCK_OK] block=1/1; outputChars=92"
+                    ]
+    },
+    {
+        "number":  14,
+        "gender":  "?",
+        "input":  "Ele me ameaçou com uma faca e eu corri para dentro de casa.",
+        "output":  "O depoente relatou que ele ameaçou o depoente com uma faca e o depoente corriu para dentro de casa.",
+        "seconds":  11.4,
+        "completed":  true,
+        "retry":  false,
+        "warnings":  [
+
+                     ],
+        "exception":  "",
+        "repairs":  [
+                        "[INFO] [BLOCK_FIRST_PASS] block=1/1; elapsedMs=11234; pieces=26; outputChars=75",
+                        "[INFO] [LOCAL_REPAIR] block=1/1; before=fidelidade: autor da ação trocado com o depoente: no original «Ele me ameaçou», na saída «o depoente me ameaçou»; after=ok",
+                        "[INFO] [BLOCK_OK] block=1/1; outputChars=99"
+                    ]
+    },
+    {
+        "number":  15,
+        "gender":  "?",
+        "input":  "Eu não vi quem me acertou, só senti a pancada na cabeça.",
+        "output":  "O depoente relatou que não viu quem o acertou, o depoente só sentiu a pancada na cabeça.",
+        "seconds":  11.3,
+        "completed":  true,
+        "retry":  false,
+        "warnings":  [
+
+                     ],
+        "exception":  "",
+        "repairs":  [
+                        "[INFO] [BLOCK_FIRST_PASS] block=1/1; elapsedMs=11149; pieces=22; outputChars=65",
+                        "[INFO] [BLOCK_OK] block=1/1; outputChars=88"
+                    ]
+    },
+    {
+        "number":  16,
+        "gender":  "?",
+        "input":  "Eles me cercaram na saída do bar e um deles me deu uma rasteira.",
+        "output":  "O depoente relatou que foi cercado na saída do bar e um deles lhe deu uma rasteira.",
+        "seconds":  11.4,
+        "completed":  true,
+        "retry":  false,
+        "warnings":  [
+
+                     ],
+        "exception":  "",
+        "repairs":  [
+                        "[INFO] [BLOCK_FIRST_PASS] block=1/1; elapsedMs=11199; pieces=25; outputChars=71",
+                        "[INFO] [BLOCK_OK] block=1/1; outputChars=83"
+                    ]
+    },
+    {
+        "number":  17,
+        "gender":  "?",
+        "input":  "Eu defendi ela quando ele tentou agarrá-la.",
+        "output":  "O depoente relatou que defendeu ela quando ele tentou agarrá-la.",
+        "seconds":  10.7,
+        "completed":  true,
+        "retry":  false,
+        "warnings":  [
+
+                     ],
+        "exception":  "",
+        "repairs":  [
+                        "[INFO] [BLOCK_FIRST_PASS] block=1/1; elapsedMs=10554; pieces=16; outputChars=52",
+                        "[INFO] [BLOCK_OK] block=1/1; outputChars=64"
+                    ]
+    },
+    {
+        "number":  18,
+        "gender":  "?",
+        "input":  "Ela me atacou primeiro e eu só me defendi.",
+        "output":  "O depoente relatou que ela atacou o depoente primeiro e o depoente só se defendeu.",
+        "seconds":  10.2,
+        "completed":  true,
+        "retry":  false,
+        "warnings":  [
+
+                     ],
+        "exception":  "",
+        "repairs":  [
+                        "[INFO] [BLOCK_FIRST_PASS] block=1/1; elapsedMs=9961; pieces=15; outputChars=47",
+                        "[INFO] [LOCAL_REPAIR] block=1/1; before=fidelidade: autor da ação trocado com o depoente: no original «Ela me atacou», na saída «o depoente me atacou»; after=ok",
+                        "[INFO] [BLOCK_OK] block=1/1; outputChars=82"
+                    ]
+    },
+    {
+        "number":  19,
+        "gender":  "F",
+        "input":  "Fui agredida pelo meu ex-companheiro na frente dos meus filhos.",
+        "output":  "O depoente relatou que foi agredido pelo seu ex-companheiro na frente dos seus filhos.",
+        "seconds":  10.8,
+        "completed":  true,
+        "retry":  false,
+        "warnings":  [
+
+                     ],
+        "exception":  "",
+        "repairs":  [
+                        "[INFO] [BLOCK_FIRST_PASS] block=1/1; elapsedMs=10611; pieces=21; outputChars=74",
+                        "[INFO] [BLOCK_OK] block=1/1; outputChars=86"
+                    ]
+    },
+    {
+        "number":  20,
+        "gender":  "M",
+        "input":  "Eu estava sozinho em casa quando ouvi ele arrombar a porta.",
+        "output":  "O depoente relatou que estava sozinho em casa quando o depoente ouviu ele arrombar a porta.",
+        "seconds":  11.1,
+        "completed":  true,
+        "retry":  false,
+        "warnings":  [
+
+                     ],
+        "exception":  "",
+        "repairs":  [
+                        "[INFO] [BLOCK_FIRST_PASS] block=1/1; elapsedMs=10836; pieces=21; outputChars=68",
+                        "[INFO] [LOCAL_REPAIR] block=1/1; before=fidelidade: sujeito do depoente implícito em oração subordinada: casa quando ouvi; after=ok",
+                        "[INFO] [BLOCK_OK] block=1/1; outputChars=91"
+                    ]
+    }
+]

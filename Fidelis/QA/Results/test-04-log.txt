@@ -1,38 +1,38 @@
-﻿[2026-09-30 21:31:53.953 -03:00] [INFO] [APP_START] version=0.1.9.0; os=Microsoft Windows 10.0.26300; arch=X64; processArch=X64; cpuLogical=8; framework=.NET 8.0.31
-[2026-09-30 21:31:53.980 -03:00] [INFO] [NATIVE_LOG] LLamaSharp native logging configured.
-[2026-09-30 21:31:54.228 -03:00] [INFO] [MODEL_LOAD_START] file=qwen2.5-3b-instruct-q4_k_m.gguf; bytes=2104932768
-[2026-09-30 21:31:54.231 -03:00] [INFO] [MODEL_CONFIG] context=4096; batch=512; ubatch=256; threads=4; gpuLayers=8; mmap=true; temperature=0
-[2026-09-30 21:31:54.465 -03:00] [NATIVE-DEBUG] [LLAMASHARP] Loading library: 'llama'
-[2026-09-30 21:31:54.466 -03:00] [NATIVE-INFO] [LLAMASHARP] Detected OS Platform: 'WINDOWS'
-[2026-09-30 21:31:54.467 -03:00] [NATIVE-DEBUG] [LLAMASHARP] Detected OS string: 'win-x64'
-[2026-09-30 21:31:54.468 -03:00] [NATIVE-INFO] [LLAMASHARP] NativeLibraryConfig Description: - LibraryName: LLama - Path: '' - PreferCuda: True - PreferVulkan: True - PreferredAvxLevel: AVX2 - AllowFallback: True - SkipCheck: False - SearchDirectories and Priorities: { ./ }
-[2026-09-30 21:31:54.470 -03:00] [NATIVE-INFO] [LLAMASHARP] NativeLibraryConfig Description: - LibraryName: LLama - Path: '' - PreferCuda: True - PreferVulkan: True - PreferredAvxLevel: AVX2 - AllowFallback: True - SkipCheck: False - SearchDirectories and Priorities: { ./ }
-[2026-09-30 21:31:54.472 -03:00] [NATIVE-DEBUG] [LLAMASHARP] Got relative library path 'runtimes/win-x64/native/vulkan/llama.dll' from local with (NativeLibraryName: LLama, UseCuda: False, UseVulkan: True, AvxLevel: Avx2), trying to load it...
-[2026-09-30 21:31:54.476 -03:00] [NATIVE-INFO] [LLAMASHARP] Successfully loaded './runtimes\win-x64\native\vulkan\ggml-base.dll'
-[2026-09-30 21:31:54.476 -03:00] [NATIVE-INFO] [LLAMASHARP] Successfully loaded dependency 'runtimes\win-x64\native\vulkan\ggml-base.dll'
-[2026-09-30 21:31:54.479 -03:00] [NATIVE-INFO] [LLAMASHARP] Successfully loaded './runtimes/win-x64/native/avx2\ggml-cpu.dll'
-[2026-09-30 21:31:54.480 -03:00] [NATIVE-INFO] [LLAMASHARP] Successfully loaded dependency 'runtimes/win-x64/native/avx2\ggml-cpu.dll'
-[2026-09-30 21:31:54.483 -03:00] [NATIVE-INFO] [LLAMASHARP] Successfully loaded './runtimes\win-x64\native\vulkan\ggml-vulkan.dll'
-[2026-09-30 21:31:54.484 -03:00] [NATIVE-INFO] [LLAMASHARP] Successfully loaded dependency 'runtimes\win-x64\native\vulkan\ggml-vulkan.dll'
-[2026-09-30 21:31:54.486 -03:00] [NATIVE-INFO] [LLAMASHARP] Successfully loaded './runtimes\win-x64\native\vulkan\ggml.dll'
-[2026-09-30 21:31:54.486 -03:00] [NATIVE-INFO] [LLAMASHARP] Successfully loaded dependency 'runtimes\win-x64\native\vulkan\ggml.dll'
-[2026-09-30 21:31:54.488 -03:00] [NATIVE-INFO] [LLAMASHARP] Successfully loaded './runtimes/win-x64/native/vulkan/llama.dll'
-[2026-09-30 21:31:54.644 -03:00] [NATIVE-INFO] [LLAMASHARP] llama_model_loader: loaded meta data with 26 key-value pairs and 435 tensors from ..\modelo\qwen2.5-3b-instruct-q4_k_m.gguf (version GGUF V3 (latest))
-[2026-09-30 21:31:54.795 -03:00] [NATIVE-INFO] [LLAMASHARP] print_info: file type   = Q4_K - Medium
-[2026-09-30 21:31:54.795 -03:00] [NATIVE-INFO] [LLAMASHARP] print_info: file size   = 1.95 GiB (4.94 BPW)
-[2026-09-30 21:31:55.011 -03:00] [NATIVE-WARNING] [LLAMASHARP] load: control-looking token: 128247 '</s>' was not control-type; this is probably a bug in the model. its type will be overridden
-[2026-09-30 21:31:55.071 -03:00] [NATIVE-INFO] [LLAMASHARP] print_info: model type            = 3B
-[2026-09-30 21:31:55.822 -03:00] [NATIVE-WARNING] [LLAMASHARP] llama_context: n_ctx_seq (4096) < n_ctx_train (32768) -- the full capacity of the model will not be utilized
-[2026-09-30 21:31:55.923 -03:00] [INFO] [MODEL_LOAD_OK] file=qwen2.5-3b-instruct-q4_k_m.gguf
-[2026-09-30 21:31:55.955 -03:00] [INFO] [GENERATION_START] sourceChars=1379; blocks=2
-[2026-09-30 21:31:55.956 -03:00] [INFO] [BLOCK_START] block=1/2; chars=1137; maxTokens=459
-[2026-09-30 21:31:55.980 -03:00] [INFO] [CONTEXT_BUDGET] context=4096; promptTokens=1146; maxTokens=459; safetyTokens=32; requiredTokens=1637; remainingTokens=2459
-[2026-09-30 21:31:55.988 -03:00] [NATIVE-WARNING] [LLAMASHARP] llama_context: n_ctx_seq (4096) < n_ctx_train (32768) -- the full capacity of the model will not be utilized
-[2026-09-30 21:32:47.886 -03:00] [INFO] [BLOCK_FIRST_PASS] block=1/2; elapsedMs=51929; pieces=340; outputChars=1209
-[2026-09-30 21:32:48.853 -03:00] [INFO] [BLOCK_OK] block=1/2; outputChars=1258
-[2026-09-30 21:32:48.853 -03:00] [INFO] [BLOCK_START] block=2/2; chars=226; maxTokens=220
-[2026-09-30 21:32:48.862 -03:00] [INFO] [CONTEXT_BUDGET] context=4096; promptTokens=896; maxTokens=220; safetyTokens=32; requiredTokens=1148; remainingTokens=2948
-[2026-09-30 21:32:48.863 -03:00] [NATIVE-WARNING] [LLAMASHARP] llama_context: n_ctx_seq (4096) < n_ctx_train (32768) -- the full capacity of the model will not be utilized
-[2026-09-30 21:33:03.064 -03:00] [INFO] [BLOCK_FIRST_PASS] block=2/2; elapsedMs=14210; pieces=71; outputChars=253
-[2026-09-30 21:33:03.122 -03:00] [INFO] [BLOCK_OK] block=2/2; outputChars=253
-[2026-09-30 21:33:03.122 -03:00] [INFO] [GENERATION_OK] blocks=2; elapsedMs=67176; outputChars=1512
+﻿[2026-09-30 23:34:42.933 -03:00] [INFO] [APP_START] version=0.1.9.0; os=Microsoft Windows 10.0.26300; arch=X64; processArch=X64; cpuLogical=8; framework=.NET 8.0.31
+[2026-09-30 23:34:42.961 -03:00] [INFO] [NATIVE_LOG] LLamaSharp native logging configured.
+[2026-09-30 23:34:43.199 -03:00] [INFO] [MODEL_LOAD_START] file=qwen2.5-3b-instruct-q4_k_m.gguf; bytes=2104932768
+[2026-09-30 23:34:43.202 -03:00] [INFO] [MODEL_CONFIG] context=4096; batch=512; ubatch=256; threads=4; gpuLayers=8; mmap=true; temperature=0
+[2026-09-30 23:34:43.956 -03:00] [NATIVE-DEBUG] [LLAMASHARP] Loading library: 'llama'
+[2026-09-30 23:34:43.957 -03:00] [NATIVE-INFO] [LLAMASHARP] Detected OS Platform: 'WINDOWS'
+[2026-09-30 23:34:43.957 -03:00] [NATIVE-DEBUG] [LLAMASHARP] Detected OS string: 'win-x64'
+[2026-09-30 23:34:43.959 -03:00] [NATIVE-INFO] [LLAMASHARP] NativeLibraryConfig Description: - LibraryName: LLama - Path: '' - PreferCuda: True - PreferVulkan: True - PreferredAvxLevel: AVX2 - AllowFallback: True - SkipCheck: False - SearchDirectories and Priorities: { ./ }
+[2026-09-30 23:34:43.961 -03:00] [NATIVE-INFO] [LLAMASHARP] NativeLibraryConfig Description: - LibraryName: LLama - Path: '' - PreferCuda: True - PreferVulkan: True - PreferredAvxLevel: AVX2 - AllowFallback: True - SkipCheck: False - SearchDirectories and Priorities: { ./ }
+[2026-09-30 23:34:43.963 -03:00] [NATIVE-DEBUG] [LLAMASHARP] Got relative library path 'runtimes/win-x64/native/vulkan/llama.dll' from local with (NativeLibraryName: LLama, UseCuda: False, UseVulkan: True, AvxLevel: Avx2), trying to load it...
+[2026-09-30 23:34:43.969 -03:00] [NATIVE-INFO] [LLAMASHARP] Successfully loaded './runtimes\win-x64\native\vulkan\ggml-base.dll'
+[2026-09-30 23:34:43.970 -03:00] [NATIVE-INFO] [LLAMASHARP] Successfully loaded dependency 'runtimes\win-x64\native\vulkan\ggml-base.dll'
+[2026-09-30 23:34:43.973 -03:00] [NATIVE-INFO] [LLAMASHARP] Successfully loaded './runtimes/win-x64/native/avx2\ggml-cpu.dll'
+[2026-09-30 23:34:43.974 -03:00] [NATIVE-INFO] [LLAMASHARP] Successfully loaded dependency 'runtimes/win-x64/native/avx2\ggml-cpu.dll'
+[2026-09-30 23:34:43.978 -03:00] [NATIVE-INFO] [LLAMASHARP] Successfully loaded './runtimes\win-x64\native\vulkan\ggml-vulkan.dll'
+[2026-09-30 23:34:43.979 -03:00] [NATIVE-INFO] [LLAMASHARP] Successfully loaded dependency 'runtimes\win-x64\native\vulkan\ggml-vulkan.dll'
+[2026-09-30 23:34:43.981 -03:00] [NATIVE-INFO] [LLAMASHARP] Successfully loaded './runtimes\win-x64\native\vulkan\ggml.dll'
+[2026-09-30 23:34:43.982 -03:00] [NATIVE-INFO] [LLAMASHARP] Successfully loaded dependency 'runtimes\win-x64\native\vulkan\ggml.dll'
+[2026-09-30 23:34:43.985 -03:00] [NATIVE-INFO] [LLAMASHARP] Successfully loaded './runtimes/win-x64/native/vulkan/llama.dll'
+[2026-09-30 23:34:44.156 -03:00] [NATIVE-INFO] [LLAMASHARP] llama_model_loader: loaded meta data with 26 key-value pairs and 435 tensors from ..\modelo\qwen2.5-3b-instruct-q4_k_m.gguf (version GGUF V3 (latest))
+[2026-09-30 23:34:44.327 -03:00] [NATIVE-INFO] [LLAMASHARP] print_info: file type   = Q4_K - Medium
+[2026-09-30 23:34:44.330 -03:00] [NATIVE-INFO] [LLAMASHARP] print_info: file size   = 1.95 GiB (4.94 BPW)
+[2026-09-30 23:34:44.540 -03:00] [NATIVE-WARNING] [LLAMASHARP] load: control-looking token: 128247 '</s>' was not control-type; this is probably a bug in the model. its type will be overridden
+[2026-09-30 23:34:44.606 -03:00] [NATIVE-INFO] [LLAMASHARP] print_info: model type            = 3B
+[2026-09-30 23:34:45.386 -03:00] [NATIVE-WARNING] [LLAMASHARP] llama_context: n_ctx_seq (4096) < n_ctx_train (32768) -- the full capacity of the model will not be utilized
+[2026-09-30 23:34:45.474 -03:00] [INFO] [MODEL_LOAD_OK] file=qwen2.5-3b-instruct-q4_k_m.gguf
+[2026-09-30 23:34:45.496 -03:00] [INFO] [GENERATION_START] sourceChars=1379; blocks=2
+[2026-09-30 23:34:45.497 -03:00] [INFO] [BLOCK_START] block=1/2; chars=1137; maxTokens=459
+[2026-09-30 23:34:45.526 -03:00] [INFO] [CONTEXT_BUDGET] context=4096; promptTokens=1146; maxTokens=459; safetyTokens=32; requiredTokens=1637; remainingTokens=2459
+[2026-09-30 23:34:45.533 -03:00] [NATIVE-WARNING] [LLAMASHARP] llama_context: n_ctx_seq (4096) < n_ctx_train (32768) -- the full capacity of the model will not be utilized
+[2026-09-30 23:35:47.179 -03:00] [INFO] [BLOCK_FIRST_PASS] block=1/2; elapsedMs=61681; pieces=340; outputChars=1209
+[2026-09-30 23:35:48.122 -03:00] [INFO] [BLOCK_OK] block=1/2; outputChars=1258
+[2026-09-30 23:35:48.122 -03:00] [INFO] [BLOCK_START] block=2/2; chars=226; maxTokens=220
+[2026-09-30 23:35:48.136 -03:00] [INFO] [CONTEXT_BUDGET] context=4096; promptTokens=896; maxTokens=220; safetyTokens=32; requiredTokens=1148; remainingTokens=2948
+[2026-09-30 23:35:48.137 -03:00] [NATIVE-WARNING] [LLAMASHARP] llama_context: n_ctx_seq (4096) < n_ctx_train (32768) -- the full capacity of the model will not be utilized
+[2026-09-30 23:36:05.112 -03:00] [INFO] [BLOCK_FIRST_PASS] block=2/2; elapsedMs=16989; pieces=71; outputChars=253
+[2026-09-30 23:36:05.195 -03:00] [INFO] [BLOCK_OK] block=2/2; outputChars=253
+[2026-09-30 23:36:05.196 -03:00] [INFO] [GENERATION_OK] blocks=2; elapsedMs=79707; outputChars=1512

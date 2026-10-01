@@ -34,16 +34,16 @@ PASS textos vazios: nenhum alerta | esperado:  | obtido:
 PASS texto longo com outro «lhe»: inversão ainda é marcada | esperado: gênero presumido, inversão | obtido: gênero presumido, inversão
 PASS «posso estar enganado» indica homem: sem gênero presumido | esperado:  | obtido: 
 PASS «posso estar enganada» indica mulher | esperado: gênero trocado | obtido: gênero trocado
-PASS QA 1: sem falso alarme de sentido | alertas: sujeito
+PASS QA 1: sem falso alarme de sentido | alertas: 
 PASS QA 2: sem falso alarme de sentido | alertas: gênero presumido
-PASS QA 3: sem falso alarme de sentido | alertas: gênero presumido, sujeito
-PASS QA 4: sem falso alarme de sentido | alertas: sujeito
-PASS QA 5: sem falso alarme de sentido | alertas: gênero presumido, sujeito
-PASS QA 6: sem falso alarme de sentido | alertas: sujeito
-PASS QA 7: sem falso alarme de sentido | alertas: gênero presumido, sujeito
-PASS QA 8: sem falso alarme de sentido | alertas: gênero presumido, sujeito
-PASS QA 9: sem falso alarme de sentido | alertas: gênero presumido, sujeito
-PASS QA 10: sem falso alarme de sentido | alertas: gênero presumido, sujeito
+PASS QA 3: sem falso alarme de sentido | alertas: gênero presumido
+PASS QA 4: sem falso alarme de sentido | alertas: 
+PASS QA 5: sem falso alarme de sentido | alertas: gênero presumido
+PASS QA 6: sem falso alarme de sentido | alertas: 
+PASS QA 7: sem falso alarme de sentido | alertas: gênero presumido
+PASS QA 8: sem falso alarme de sentido | alertas: gênero presumido
+PASS QA 9: sem falso alarme de sentido | alertas: gênero presumido
+PASS QA 10: sem falso alarme de sentido | alertas: gênero presumido
 PASS resumo: alertas e avisos contados separados | 1 alerta de papéis e pronomes; 1 aviso informativo.
 PASS lista ao clicar: alertas primeiro, avisos informativos em seção própria |    • «o depoente lhe disse» — Confira quem fez ou disse: aqui o depoente age sobre outra pessoa, mas no original a ação foi dirigida ao depoente («… me …»).
 PASS alerta de papel usa a cor laranja (alerta), nunca a vermelha

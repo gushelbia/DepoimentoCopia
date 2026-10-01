@@ -1010,6 +1010,11 @@ public sealed class ModernDepoimentoForm : Form
     private bool syncInProgress;
     private bool closing;
     private string lastOutput = "";
+    // Gender (round 7): the engine's text («o depoente») and what the screen shows
+    // (converted to the feminine when the field says Feminino).
+    private string engineOutput = "", shownOutput = "", lastGender = "";
+    private ModernButton qualSuggest;
+    private string suggestedGender = "";
     private FlowLayoutPanel actions;
     private Panel generation;
     private ThemedComboBox themePicker;
@@ -1394,10 +1399,11 @@ public sealed class ModernDepoimentoForm : Form
         bar.Dock = DockStyle.Fill;
         bar.BackColor = Color.Transparent;
         bar.Margin = new Padding(0);
-        bar.ColumnCount = 4;
+        bar.ColumnCount = 5;
         bar.RowCount = 1;
         bar.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize));
         bar.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+        bar.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize));
         bar.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize));
         bar.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize));
         bar.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
@@ -1425,10 +1431,18 @@ public sealed class ModernDepoimentoForm : Form
         qualToggle.Margin = new Padding(8, 1, 0, 1);
         qualToggle.Click += delegate { SetQualExpanded(!qualExpanded); };
 
+        // Suggestion: only with a clear clue in the original and the field «Não informado».
+        // The user decides; the field never changes by itself.
+        qualSuggest = SecondaryButton("Usar Feminino");
+        qualSuggest.Margin = new Padding(8, 1, 0, 1);
+        qualSuggest.Visible = false;
+        qualSuggest.Click += delegate { ApplySuggestedGender(); };
+
         bar.Controls.Add(qualTitle, 0, 0);
         bar.Controls.Add(qualSummary, 1, 0);
-        bar.Controls.Add(qualClear, 2, 0);
-        bar.Controls.Add(qualToggle, 3, 0);
+        bar.Controls.Add(qualSuggest, 2, 0);
+        bar.Controls.Add(qualClear, 3, 0);
+        bar.Controls.Add(qualToggle, 4, 0);
 
         qualGrid = new TableLayoutPanel();
         qualGrid.Dock = DockStyle.Fill;
@@ -1443,7 +1457,7 @@ public sealed class ModernDepoimentoForm : Form
         int[,] place = {
             { Qualification.Procedimento, 0, 0, 1 }, { Qualification.Unidade, 1, 0, 1 }, { Qualification.Local, 2, 0, 1 }, { Qualification.DataHora, 3, 0, 1 },
             { Qualification.Depoente, 0, 1, 1 }, { Qualification.Documento, 1, 1, 1 }, { Qualification.Condicao, 2, 1, 1 }, { Qualification.Telefone, 3, 1, 1 },
-            { Qualification.Endereco, 0, 2, 2 }, { Qualification.Autoridade, 2, 2, 1 }, { Qualification.Escrivao, 3, 2, 1 } };
+            { Qualification.Endereco, 0, 2, 1 }, { Qualification.Genero, 1, 2, 1 }, { Qualification.Autoridade, 2, 2, 1 }, { Qualification.Escrivao, 3, 2, 1 } };
         for (int p = 0; p < place.GetLength(0); p++)
         {
             int field = place[p, 0];
@@ -1452,11 +1466,11 @@ public sealed class ModernDepoimentoForm : Form
             cell.Margin = new Padding(0, 0, 10, 2);
             cell.BackColor = Color.Transparent;
             Control input;
-            if (field == Qualification.Condicao)
+            if (field == Qualification.Condicao || field == Qualification.Genero)
             {
                 var combo = new ThemedComboBox();
-                combo.Items.Add("—");
-                foreach (string condition in Qualification.Conditions) combo.Items.Add(condition);
+                combo.Items.Add(field == Qualification.Genero ? "Não informado" : "—");
+                foreach (string option in field == Qualification.Genero ? Qualification.Genders : Qualification.Conditions) combo.Items.Add(option);
                 combo.SelectedIndex = 0;
                 combo.Dock = DockStyle.Top;
                 combo.AccessibleName = Qualification.Labels[field];
@@ -1584,8 +1598,80 @@ public sealed class ModernDepoimentoForm : Form
 
     private void QualChanged()
     {
+        GenderChanged();
         UpdateQualSummary();
         ScheduleAutosave();
+    }
+
+    // ---- Gender of the deponent (interface only; nothing goes to the model) ----
+
+    private string CurrentGender()
+    {
+        return qualInputs == null || qualInputs[Qualification.Genero] == null ? "" : ReadQualification()[Qualification.Genero];
+    }
+
+    // What the screen shows for a text produced by the engine.
+    private string DisplayFor(string output)
+    {
+        return GenderConverter.ForGender(CurrentGender(), originalCard.Editor.Text, output);
+    }
+
+    private void ShowEngineOutput(string output)
+    {
+        engineOutput = output ?? "";
+        shownOutput = DisplayFor(engineOutput);
+        reformulatedCard.Editor.Text = shownOutput;
+    }
+
+    // Changing the field rewrites the reformulated text only if it was not edited
+    // by hand; the consolidated text is never rewritten.
+    private void GenderChanged()
+    {
+        string gender = CurrentGender();
+        if (gender == lastGender) return;
+        lastGender = gender;
+        UpdateGenderSuggestion();
+        if (reformulatedCard == null || engineOutput.Length == 0 || generationWasRunning) return;
+        if (reformulatedCard.Editor.Text != shownOutput)
+        {
+            status.Text = "Gênero alterado. O texto reformulado foi editado à mão e não foi convertido.";
+            return;
+        }
+        shownOutput = DisplayFor(engineOutput);
+        reformulatedCard.Editor.Text = shownOutput;
+        if (combinedCard.Editor.Text.Trim().Length > 0)
+            status.Text = "Gênero alterado: o texto reformulado foi atualizado. O consolidado não muda; o que já foi adicionado continua como estava.";
+        ScheduleHighlights();
+    }
+
+    private void UpdateGenderSuggestion()
+    {
+        if (qualSuggest == null || originalCard == null) return;
+        suggestedGender = "";
+        string clue = "";
+        if (CurrentGender().Length == 0)
+        {
+            string original = originalCard.Editor.Text;
+            string fem = RoleScanner.FirstFeminine(original), masc = RoleScanner.FirstMasculine(original);
+            if (fem != null && masc == null) { suggestedGender = Qualification.Feminino; clue = fem; }
+            else if (masc != null && fem == null) { suggestedGender = Qualification.Masculino; clue = masc; }
+        }
+        qualSuggest.Visible = suggestedGender.Length > 0;
+        if (suggestedGender.Length > 0)
+        {
+            qualSuggest.Text = "Usar " + suggestedGender;
+            if (reviewTip != null) reviewTip.SetToolTip(qualSuggest, "O original indica depoente " + (suggestedGender == Qualification.Feminino ? "mulher" : "homem") + " («" + clue + "»). Clique para preencher o campo Gênero do depoente.");
+        }
+        UpdateQualSummary();
+    }
+
+    private void ApplySuggestedGender()
+    {
+        string gender = suggestedGender;
+        if (gender.Length == 0) return;
+        var combo = (ComboBox)qualInputs[Qualification.Genero];
+        combo.SelectedIndex = Math.Max(0, combo.FindStringExact(gender));
+        status.Text = "Gênero do depoente preenchido: " + gender + ".";
     }
 
     // One line when collapsed: what identifies this testimony, and any warning.
@@ -1599,6 +1685,8 @@ public sealed class ModernDepoimentoForm : Form
         if (q[Qualification.Condicao].Length > 0) parts.Add(q[Qualification.Condicao]);
         if (q[Qualification.DataHora].Length > 0) parts.Add(q[Qualification.DataHora]);
         string text = q.HasContentBesidesDate() ? String.Join("  •  ", parts.ToArray()) : "não preenchida (dados vão só para o Word e o rascunho, nunca para o modelo)";
+        if (q[Qualification.Genero].Length > 0) text = (q.HasContentBesidesDate() ? text + "  •  " : "") + "depoente: " + q[Qualification.Genero].ToLowerInvariant();
+        if (suggestedGender.Length > 0) text = (q.HasContentBesidesDate() ? text : "não preenchida") + "  •  o original indica depoente " + (suggestedGender == Qualification.Feminino ? "mulher" : "homem");
         bool warn = q.CpfWarning;
         if (warn) text += "  •  CPF inválido";
         qualSummary.Text = text;
@@ -1635,6 +1723,7 @@ public sealed class ModernDepoimentoForm : Form
         qualTitle.ForeColor = palette.Text;
         ApplySecondaryPalette(qualToggle);
         ApplySecondaryPalette(qualClear);
+        ApplySecondaryPalette(qualSuggest);
         for (int i = 0; i < Qualification.Count; i++)
         {
             if (qualLabels[i] != null) qualLabels[i].ForeColor = palette.Muted;
@@ -1766,6 +1855,7 @@ public sealed class ModernDepoimentoForm : Form
     {
         if (highlightTimer != null) highlightTimer.Stop();
         if (originalCard == null || reformulatedCard == null || applyingHighlights) return;
+        UpdateGenderSuggestion();
         applyingHighlights = true;
         try
         {
@@ -1778,7 +1868,7 @@ public sealed class ModernDepoimentoForm : Form
                 SetReviewSummary("", "");
                 return;
             }
-            ReviewResult review = ReviewScanner.Compare(originalCard.Editor.Text, reformulatedCard.Editor.Text);
+            ReviewResult review = ReviewScanner.Compare(originalCard.Editor.Text, reformulatedCard.Editor.Text, CurrentGender());
             ReviewPainter.Paint(originalCard.Editor, review.Original, palette.HighlightItem, palette.HighlightMismatch, palette.HighlightAlert);
             var reformulatedMarks = new List<ReviewItem>(review.Reformulated);
             reformulatedMarks.AddRange(review.Roles);
@@ -1963,7 +2053,7 @@ public sealed class ModernDepoimentoForm : Form
     {
         modelPath.Text = bridge.ModelPath;
         originalCard.Editor.Text = bridge.OriginalText;
-        reformulatedCard.Editor.Text = bridge.ReformulatedText;
+        ShowEngineOutput(bridge.ReformulatedText);
         combinedCard.Editor.Text = bridge.CombinedText;
         cancel.Enabled = false;
         string s = bridge.StatusText;
@@ -2193,13 +2283,13 @@ public sealed class ModernDepoimentoForm : Form
                 if (closing) return;
                 if (snapshot.CancellationSent) cancelRequested = false;
                 if (snapshot.Progress > 0) progress.Value = snapshot.Progress;
-                if (!String.IsNullOrEmpty(snapshot.Output) && snapshot.Output != lastOutput) reformulatedCard.Editor.Text = snapshot.Output;
+                if (!String.IsNullOrEmpty(snapshot.Output) && snapshot.Output != lastOutput) ShowEngineOutput(snapshot.Output);
                 if (!String.IsNullOrWhiteSpace(snapshot.Status)) status.Text = BeautifyStatus(snapshot.Status, snapshot.Timer);
                 if (snapshot.GenerationFinished)
                 {
                     FinishGeneration();
                     progress.Value = 100;
-                    reformulatedCard.Editor.Text = snapshot.Output;
+                    ShowEngineOutput(snapshot.Output);
                     // Highlights only once the final text is in place.
                     ApplyHighlights();
                 }
@@ -2240,6 +2330,9 @@ public sealed class ModernDepoimentoForm : Form
     {
         string text = reformulatedCard.Editor.Text.Trim();
         if (text.Length == 0) return;
+        // Feminino: what goes to the consolidated (and so to the Word, the draft and the
+        // recovery copy) is the converted text, even if it was pasted or edited by hand.
+        if (CurrentGender() == Qualification.Feminino) text = GenderConverter.ToFeminine(originalCard.Editor.Text, text);
         string current = combinedCard.Editor.Text;
         if (current.Length > 0 && !current.EndsWith(Environment.NewLine)) current += Environment.NewLine + Environment.NewLine;
         current += text;
@@ -2278,6 +2371,7 @@ public sealed class ModernDepoimentoForm : Form
         try
         {
             lastOutput = "";
+            engineOutput = ""; shownOutput = "";
             reformulatedCard.Editor.Clear();
             progress.Value = 0;
             await bridge.InvokeAsync(delegate { bridge.ReformulatedText = ""; return true; });
@@ -2594,10 +2688,15 @@ public sealed class ModernDepoimentoForm : Form
 public sealed class Qualification
 {
     public const int Procedimento = 0, Unidade = 1, Local = 2, DataHora = 3, Depoente = 4, Documento = 5,
-        Condicao = 6, Endereco = 7, Telefone = 8, Autoridade = 9, Escrivao = 10, Count = 11;
-    public static readonly string[] Keys = { "procedimento", "unidade", "local", "data_hora", "depoente", "documento", "condicao", "endereco", "telefone", "autoridade", "escrivao" };
-    public static readonly string[] Labels = { "Nº do procedimento", "Unidade", "Local", "Data e hora", "Nome do depoente", "Documento (RG/CPF)", "Condição", "Endereço", "Telefone", "Autoridade", "Escrivão" };
+        Condicao = 6, Endereco = 7, Telefone = 8, Autoridade = 9, Escrivao = 10, Genero = 11, Count = 12;
+    public static readonly string[] Keys = { "procedimento", "unidade", "local", "data_hora", "depoente", "documento", "condicao", "endereco", "telefone", "autoridade", "escrivao", "genero" };
+    public static readonly string[] Labels = { "Nº do procedimento", "Unidade", "Local", "Data e hora", "Nome do depoente", "Documento (RG/CPF)", "Condição", "Endereço", "Telefone", "Autoridade", "Escrivão", "Gênero do depoente" };
     public static readonly string[] Conditions = { "vítima", "testemunha", "investigado", "declarante" };
+    // Gender of the deponent: "" (não informado), "Masculino" or "Feminino". Only used
+    // by the interface to write the text in the feminine; it never reaches the model.
+    public const string Masculino = "Masculino", Feminino = "Feminino";
+    public static readonly string[] Genders = { Masculino, Feminino };
+    public bool IsFeminine { get { return this[Genero] == Feminino; } }
     private readonly string[] values = new string[Count];
 
     public Qualification() { for (int i = 0; i < Count; i++) values[i] = ""; }
@@ -3124,13 +3223,18 @@ public static class ReviewScanner
 
     public static ReviewResult Compare(string original, string reformulated)
     {
+        return Compare(original, reformulated, "");
+    }
+
+    public static ReviewResult Compare(string original, string reformulated, string gender)
+    {
         var result = new ReviewResult();
         result.Original = Find(original);
         result.Reformulated = Find(reformulated);
         bool compare = !String.IsNullOrWhiteSpace(original) && !String.IsNullOrWhiteSpace(reformulated);
         if (compare)
         {
-            foreach (ReviewItem i in RoleScanner.Find(original, reformulated))
+            foreach (ReviewItem i in RoleScanner.Find(original, reformulated, gender))
                 (i.Kind == RoleScanner.Note ? result.Notes : result.Roles).Add(i);
         }
         if (!compare)
@@ -3255,6 +3359,198 @@ public static class ReviewScanner
     }
 }
 
+// Writes the reformulated text in the feminine when the qualification says the
+// deponent is a woman (Gênero do depoente: Feminino). The engine keeps generating
+// «o depoente»; only the interface converts, using the original as the guide, and
+// only what refers to the deponent. Terms about other people do not change; in
+// doubt nothing is converted and Doubts() reports it as an informational notice.
+public static class GenderConverter
+{
+    private const RegexOptions I = RegexOptions.IgnoreCase | RegexOptions.CultureInvariant;
+    // First-person verbs whose complement agrees with the narrator in the original.
+    // «estava», «era» and «andava» are also third person: they count only after «eu».
+    private const string NarratorVerbs = @"eu\s+(?:me\s+)?(?:estava|era|andava)|(?:eu\s+)?(?:me\s+)?(?:fiquei|fui|estou|sou|cheguei|caí|senti|sinto|permaneci|continuei|saí|acordei|voltei|terminei|estive|fico|ando)";
+    private const string Copulas = @"foi|ficou|estava|está|é|era|continuou|permaneceu|saiu|chegou|caiu|acabou|voltou|acordou|terminou|esteve|andava|anda|fica";
+    private const string AfterCopula = @"(?<head>(?:\ba depoente|A depoente relatou que)\s+(?:não\s+)?(?:(?:também|já|ainda|só)\s+)?(?:" + Copulas + @")\s+(?:muito\s+|bem\s+|tão\s+)?)(?<p>\p{L}+?)(?<end>ado|ido|oso|inho)\b";
+    private static readonly HashSet<string> NotAdjectives = new HashSet<string>(StringComparer.OrdinalIgnoreCase) {
+        "a", "uma", "na", "da", "para", "lá", "nada", "toda", "casa", "porta", "escola", "mãe", "vida", "ida", "hora", "rua", "festa", "conta", "volta", "sala", "frente", "embora", "agora", "fora" };
+
+    // What the screen shows for an engine output: only Feminino converts; Masculino
+    // and Não informado return the engine's text unchanged.
+    public static string ForGender(string gender, string source, string output)
+    {
+        if (String.IsNullOrEmpty(output) || gender != Qualification.Feminino) return output;
+        return ToFeminine(source ?? "", output);
+    }
+
+    // Feminine words that the original applies to the narrator («fiquei nervosa»).
+    public static List<string> NarratorFeminineWords(string source)
+    {
+        var words = new List<string>();
+        string plain = Unquote(source ?? "");
+        foreach (Match m in Regex.Matches(plain, @"(?:^|[\s,;.!?])(?:" + NarratorVerbs + @"|(?:eu\s+)?(?:posso|podia)\s+estar)\s+(?:muito\s+|bem\s+|tão\s+|meio\s+|toda\s+)?(?<w>\p{L}+a)\b", I))
+        {
+            string w = m.Groups["w"].Value;
+            if (NotAdjectives.Contains(w) || w.Length < 4 || words.Contains(w.ToLowerInvariant())) continue;
+            words.Add(w.ToLowerInvariant());
+        }
+        return words;
+    }
+
+    public static string ToFeminine(string source, string text)
+    {
+        if (String.IsNullOrEmpty(text)) return text;
+        var sb = new StringBuilder(); int start = 0;
+        foreach (Match quote in Regex.Matches(text, "\"[^\"]*\"|“[^”]*”|«[^»]*»|$"))
+        {
+            sb.Append(ConvertPart(source ?? "", text.Substring(start, quote.Index - start)));
+            sb.Append(quote.Value); start = quote.Index + quote.Length;
+        }
+        return sb.ToString();
+    }
+
+    private static string ConvertPart(string source, string t)
+    {
+        // 1) The deponent and its contractions: always the narrator.
+        t = Regex.Replace(t, @"\bO depoente\b", "A depoente");
+        t = Regex.Replace(t, @"\bo depoente\b", "a depoente");
+        t = Regex.Replace(t, @"\b([Dd])o depoente\b", "$1a depoente");
+        t = Regex.Replace(t, @"\b([Nn])o depoente\b", "$1a depoente");
+        t = Regex.Replace(t, @"\bao depoente\b", "à depoente");
+        t = Regex.Replace(t, @"\bAo depoente\b", "À depoente");
+        t = Regex.Replace(t, @"\b([Pp])elo depoente\b", "$1ela depoente");
+        // 2) Words the original puts in the feminine for the narrator, only inside
+        // the deponent's clause (no other subject in between).
+        foreach (string fem in NarratorFeminineWords(source))
+        {
+            string masc = fem.Substring(0, fem.Length - 1) + "o";
+            MatchCollection hits = Regex.Matches(t, @"\b" + Regex.Escape(masc) + @"\b", I);
+            for (int h = hits.Count - 1; h >= 0; h--)
+                if (InNarratorClause(t, hits[h].Index))
+                    t = t.Substring(0, hits[h].Index) + MatchCase(hits[h].Value, fem) + t.Substring(hits[h].Index + hits[h].Length);
+        }
+        // 3) Participle right after the deponent with «foi/ficou/estava…» (case F9),
+        // only when the original does not use that word for someone else («Ele
+        // estava nervoso»): then it is a doubt, left as is with a notice.
+        t = Regex.Replace(t, AfterCopula,
+            delegate (Match m)
+            {
+                if (UsedInSource(source, m.Groups["p"].Value + m.Groups["end"].Value)) return m.Value;
+                return m.Groups["head"].Value + m.Groups["p"].Value + Feminine(m.Groups["end"].Value);
+            }, I);
+        // 4) Object pronoun that came from «me»: «ele o ameaçou» ← «ele me ameaçou».
+        foreach (Match m in Regex.Matches(Unquote(source), @"\b(?<s>ele|ela|eles|elas)\s+(?:não\s+)?me\s+(?<v>\p{L}{3})", I))
+            t = Regex.Replace(t, @"\b(" + m.Groups["s"].Value + @")\s+(não\s+)?o\s+(" + Regex.Escape(m.Groups["v"].Value) + @"\p{L}*)", "$1 $2a $3", I);
+        return t;
+    }
+
+    // Masculine forms that may still refer to the deponent: informational notices.
+    public static List<ReviewItem> Doubts(string source, string text)
+    {
+        var items = new List<ReviewItem>();
+        if (String.IsNullOrEmpty(text)) return items;
+        string plain = Unquote(text);
+        foreach (string fem in NarratorFeminineWords(source))
+        {
+            string masc = fem.Substring(0, fem.Length - 1) + "o";
+            foreach (Match m in Regex.Matches(plain, @"\b" + Regex.Escape(masc) + @"\b", I))
+            {
+                if (OtherSubjectBefore(plain, m.Index)) continue; // about another person: no change, no notice
+                var item = new ReviewItem();
+                item.Start = m.Index; item.Length = m.Length; item.Kind = RoleScanner.Note; item.Text = m.Value;
+                item.Reason = "gênero: «" + m.Value + "» ficou no masculino porque não é claro que se refere à depoente (no original: «" + fem + "»). Confira.";
+                items.Add(item);
+            }
+        }
+        // A word the original uses for someone else, now after the deponent: not converted.
+        foreach (Match m in Regex.Matches(plain, AfterCopula, I))
+        {
+            string word = m.Groups["p"].Value + m.Groups["end"].Value;
+            int start = m.Groups["p"].Index;
+            if (!UsedInSource(source, word) || items.Exists(delegate (ReviewItem x) { return x.Start == start; })) continue;
+            var item = new ReviewItem();
+            item.Start = start; item.Length = word.Length; item.Kind = RoleScanner.Note; item.Text = word;
+            item.Reason = "gênero: «" + word + "» não foi convertido porque, no original, essa palavra se refere a outra pessoa. Confira quem é.";
+            items.Add(item);
+        }
+        // «dele» for «de mim»: who is it?
+        if (Regex.IsMatch(Unquote(source ?? ""), @"\bde\s+mim\b", I))
+            foreach (Match m in Regex.Matches(plain, @"\bdele\b", I))
+            {
+                var item = new ReviewItem();
+                item.Start = m.Index; item.Length = m.Length; item.Kind = RoleScanner.Note; item.Text = m.Value;
+                item.Reason = "gênero: «dele» pode ser a depoente (no original: «de mim»). Confira.";
+                items.Add(item);
+            }
+        return items;
+    }
+
+    // The word is in a clause whose subject is the deponent: «a depoente ficou nervosa»,
+    // «A depoente relatou que estava sozinha», with no other subject in between.
+    private static bool InNarratorClause(string t, int index)
+    {
+        string before = t.Substring(0, index);
+        int cut = Math.Max(before.LastIndexOfAny(new char[] { '.', ';', '!', '?', ':' }), -1);
+        string clause = before.Substring(cut + 1);
+        Match anchor = null;
+        foreach (Match m in Regex.Matches(clause, @"\ba depoente\b|A depoente relatou que", I)) anchor = m;
+        if (anchor == null) return false;
+        string between = clause.Substring(anchor.Index + anchor.Length);
+        if (Regex.Matches(between, @"\p{L}+").Count > 5) return false;
+        return !Regex.IsMatch(between, @"\b(?:ele|ela|eles|elas|você|alguém|ninguém|quem|que|se)\b", I) && !Regex.IsMatch(between, @"\s\p{Lu}\p{Ll}+") && !Regex.IsMatch(between, @"\b(?:o|a|os|as|um|uma)\s+\p{L}+", I);
+    }
+
+    // Another person is the subject right before the word («ele estava nervoso»,
+    // «o vizinho estava sozinho», «Carlos ficou assustado»), in the same clause.
+    public static bool OtherSubjectBefore(string t, int index)
+    {
+        string before = t.Substring(0, index);
+        // A subject in a previous clause («depois que o filho saiu, ficou…») is not clear.
+        int cut = before.LastIndexOfAny(new char[] { '.', ';', '!', '?', ':', ',' });
+        int clauseStart = cut + 1;
+        string clause = before.Substring(clauseStart);
+        // Up to four words before the term.
+        MatchCollection words = Regex.Matches(clause, @"[\p{L}-]+");
+        int from = Math.Max(0, words.Count - 4);
+        if (words.Count == 0) return false;
+        int windowStart = words[from].Index;
+        string window = clause.Substring(windowStart);
+        if (Regex.IsMatch(window, @"\b(?:o|a) depoente\b|\bA depoente relatou que\b", I)) return false;
+        if (Regex.IsMatch(window, @"\b(?:ele|ela|eles|elas)\b", I)) return true;
+        if (Regex.IsMatch(window, @"\b(?:o|a|os|as)\s+(?!depoente\b)\p{Ll}{3,}\b")) return true;
+        foreach (Match name in Regex.Matches(window, @"\b\p{Lu}\p{Ll}+\b"))
+        {
+            int absolute = clauseStart + windowStart + name.Index;
+            string prefix = t.Substring(0, absolute).TrimEnd();
+            bool sentenceStart = prefix.Length == 0 || ".!?:;".IndexOf(prefix[prefix.Length - 1]) >= 0;
+            if (!sentenceStart && !Regex.IsMatch(name.Value, @"^(?:Relatou|Depois|Então|Aí|Quando|Mais|Também|Já|Só|Ainda)$")) return true;
+        }
+        return false;
+    }
+    // The original uses this word (either gender or number) outside quotes and not
+    // as the narrator's own feminine word: it belongs to someone else.
+    private static bool UsedInSource(string source, string word)
+    {
+        string stem = word.Substring(0, word.Length - 1);
+        if (NarratorFeminineWords(source).Contains((stem + "a").ToLowerInvariant())) return false;
+        return Regex.IsMatch(Unquote(source ?? ""), @"\b" + Regex.Escape(stem) + @"(?:o|a|os|as)\b", I);
+    }
+
+    private static string Feminine(string ending)
+    {
+        switch (ending.ToLowerInvariant()) { case "ado": return "ada"; case "ido": return "ida"; case "oso": return "osa"; default: return "inha"; }
+    }
+
+    private static string MatchCase(string model, string word)
+    {
+        return model.Length > 0 && Char.IsUpper(model[0]) ? Char.ToUpperInvariant(word[0]) + word.Substring(1) : word;
+    }
+
+    private static string Unquote(string text)
+    {
+        return Regex.Replace(text, "\"[^\"]*\"|“[^”]*”|«[^»]*»", delegate (Match m) { return new string(' ', m.Length); });
+    }
+}
 // Role alerts (visual only, orange «conferir»): patterns where a small model
 // tends to change who did or said what when converting the narrator («eu») to
 // «o depoente». Never changes the text; each alert says what to check.
@@ -3274,6 +3570,12 @@ public static class RoleScanner
 
     public static List<ReviewItem> Find(string original, string reformulated)
     {
+        return Find(original, reformulated, "");
+    }
+
+    // gender: the qualification field ("", Masculino or Feminino).
+    public static List<ReviewItem> Find(string original, string reformulated, string gender)
+    {
         var items = new List<ReviewItem>();
         if (String.IsNullOrWhiteSpace(original) || String.IsNullOrWhiteSpace(reformulated)) return items;
         string o = original, r = reformulated;
@@ -3284,7 +3586,7 @@ public static class RoleScanner
         // 1. «o depoente lhe …»: the narrator acting on someone else, while in the
         // original the action was directed at the narrator («ele me disse»,
         // «ela me contou») or was reflexive («me defendi»).
-        foreach (Match m in Regex.Matches(r, @"\bo depoente\s+(?:não\s+)?(?:(?:só|também|já|ainda|então|depois)\s+)?lhe\s+(?<v>\p{L}+)", I))
+        foreach (Match m in Regex.Matches(r, @"\b(?:o|a) depoente\s+(?:não\s+)?(?:(?:só|também|já|ainda|então|depois)\s+)?lhe\s+(?<v>\p{L}+)", I))
         {
             if (!originalMe || InQuotes(quotes, m.Index)) continue;
             string v = m.Groups["v"].Value;
@@ -3317,26 +3619,40 @@ public static class RoleScanner
         }
         // 4. «quando o depoente chegou, ele já estava…»: a third-person subject right
         // after a clause of the narrator can be read as the narrator himself.
-        foreach (Match m in Regex.Matches(r, @"\bo depoente\s+\p{L}+[^.;!?\n]{0,50}?,\s*(?<p>ele|ela)\s+(?:já\s+|ainda\s+)?(?:estava|era|tinha|ficou|foi|está|parecia|continuava)\b", I))
+        foreach (Match m in Regex.Matches(r, @"\b(?:o|a) depoente\s+\p{L}+[^.;!?\n]{0,50}?,\s*(?<p>ele|ela)\s+(?:já\s+|ainda\s+)?(?:estava|era|tinha|ficou|foi|está|parecia|continuava)\b", I))
         {
             if (InQuotes(quotes, m.Index)) continue;
             Group p = m.Groups["p"];
             Add(items, p.Index, m.Index + m.Length - p.Index, r.Substring(p.Index, m.Index + m.Length - p.Index), "pronome ambíguo: «" + p.Value + "» pode ser lido como o próprio depoente. Confira a quem se refere.");
         }
         // 5. «estava o depoente enforcando»: «o depoente» inside a verbal phrase.
-        foreach (Match m in Regex.Matches(r, @"\b(?:estava|está|estavam|estão|foi|ia|vai|tinha|havia|queria|quis|começou a|continuou a|ficou|tentou|tentava)\s+o depoente\s+\p{L}+(?:ndo|ar|er|ir|ado|ido|ada|ida)\b", I))
+        foreach (Match m in Regex.Matches(r, @"\b(?:estava|está|estavam|estão|foi|ia|vai|tinha|havia|queria|quis|começou a|continuou a|ficou|tentou|tentava)\s+(?:o|a) depoente\s+\p{L}+(?:ndo|ar|er|ir|ado|ido|ada|ida)\b", I))
         {
             if (InQuotes(quotes, m.Index)) continue;
             Add(items, m.Index, m.Length, m.Value, "frase quebrada: «o depoente» no meio da locução verbal (no original: «… me …»). Confira quem fez o quê.");
         }
         // 6. Subject: «Relatou que o depoente…» reads as a third person talking about the narrator.
-        Match lead = Regex.Match(r, @"^\s*(?<t>Relatou que\s+o depoente)\b", I);
+        Match lead = Regex.Match(r, @"^\s*(?<t>Relatou que\s+(?:o|a) depoente)\b", I);
         if (lead.Success)
             AddNote(items, lead.Groups["t"].Index, lead.Groups["t"].Length, lead.Groups["t"].Value, "sujeito: «Relatou» fica sem sujeito e a frase parece falar de outra pessoa. Confira; o claro seria «O depoente relatou que…».");
         // 7. Gender of the narrator.
         string feminineWord = FirstFeminine(o), masculineWord = FirstMasculine(o);
-        Match depoente = Regex.Match(r, @"\bo depoente\b", I);
-        if (feminineWord != null)
+        Match depoente = Regex.Match(r, @"\b(?:o|do|ao|no|pelo) depoente\b", I);
+        bool fieldFeminine = gender == Qualification.Feminino, fieldMasculine = gender == Qualification.Masculino;
+        if (fieldFeminine)
+        {
+            // Field says woman: the masculine for the deponent contradicts it (orange);
+            // masculine words that may refer to her are informational (GenderConverter).
+            if (depoente.Success)
+                Add(items, depoente.Index, depoente.Length, depoente.Value, "gênero trocado: o campo Gênero do depoente diz Feminino, e o texto usa o masculino («" + depoente.Value + "»).");
+            items.AddRange(GenderConverter.Doubts(o, r));
+            if (masculineWord != null && feminineWord == null)
+            {
+                Match first = Regex.Match(r, @"\b(?:a|A) depoente\b");
+                if (first.Success) AddNote(items, first.Index, first.Length, first.Value, "gênero: o campo diz Feminino, mas o original indica homem («" + masculineWord + "»). Confira o campo.");
+            }
+        }
+        else if (feminineWord != null)
         {
             if (depoente.Success)
                 Add(items, depoente.Index, depoente.Length, depoente.Value, "gênero trocado: o original indica que quem fala é mulher («" + feminineWord + "»), e o texto usa o masculino.");
@@ -3346,10 +3662,12 @@ public static class RoleScanner
                 if (NotAdjectives.Contains(fw) || !fw.EndsWith("a", StringComparison.OrdinalIgnoreCase)) continue;
                 string mw = fw.Substring(0, fw.Length - 1) + "o";
                 foreach (Match x in Regex.Matches(r, @"\b" + Regex.Escape(mw) + @"\b", I))
-                    Add(items, x.Index, x.Length, x.Value, "gênero trocado: no original «" + fw + "» (feminino).");
+                    // A masculine word about another person («ele estava nervoso») is not the deponent.
+                    if (!GenderConverter.OtherSubjectBefore(r, x.Index))
+                        Add(items, x.Index, x.Length, x.Value, "gênero trocado: no original «" + fw + "» (feminino).");
             }
         }
-        else if (masculineWord == null && depoente.Success)
+        else if (!fieldMasculine && masculineWord == null && depoente.Success)
             AddNote(items, depoente.Index, depoente.Length, depoente.Value, "gênero presumido: o original não diz se quem fala é homem ou mulher; «o depoente» supõe homem. Confira.");
         // Alerts and notices are merged separately: a notice never colors the text.
         var alerts = new List<ReviewItem>(); var notes = new List<ReviewItem>();
@@ -3359,7 +3677,7 @@ public static class RoleScanner
         return all;
     }
 
-    private static string FirstFeminine(string o)
+    public static string FirstFeminine(string o)
     {
         Match role = FeminineRole.Match(o);
         if (role.Success) return role.Value.Trim();
@@ -3367,7 +3685,7 @@ public static class RoleScanner
         return null;
     }
 
-    private static string FirstMasculine(string o)
+    public static string FirstMasculine(string o)
     {
         Match role = MasculineRole.Match(o);
         if (role.Success) return role.Value.Trim();

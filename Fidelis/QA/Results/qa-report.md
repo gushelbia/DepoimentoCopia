@@ -1,6 +1,6 @@
 ﻿# QA / regressão — DepoimentoLocal
 
-Atualizado: 2026-09-30T23:43:54.7350584-03:00. Bateria finalizada: True.
+Atualizado: 2026-10-01T19:53:03.9275356-03:00. Bateria finalizada: True.
 
 Execução real, sequencial, via OriginalAppBridge da interface de produção e botão Reformular do motor. Mesmos binários, prompt, reparos locais, validador e retry do aplicativo; nenhum resultado foi corrigido pelo QA. Cada caso usa uma instância própria. A compilação dos fontes disponíveis (interface e runner) está em build.txt; o fonte/projeto do motor não acompanha a distribuição, portanto ele é reutilizado sem recompilação.
 
@@ -16,7 +16,7 @@ Objetivo: Testar terceira pessoa, incerteza, relato indireto e preservação das
 
 Status técnico: **CONCLUÍDO SEM ALERTAS AUTOMÁTICOS**. Geração terminou normalmente: True.
 
-Tempo: 60,493s de geração; 63,575s incluindo preparação.
+Tempo: 41,774s de geração; 44,252s incluindo preparação.
 
 Entrada: 1014 caracteres / 196 palavras. Saída: 1243 caracteres / 228 palavras.
 
@@ -54,7 +54,7 @@ Objetivo: Testar falsos começos, autocorreções, primeira pessoa, incerteza e 
 
 Status técnico: **CONCLUÍDO COM ALERTAS**. Geração terminou normalmente: True.
 
-Tempo: 119,414s de geração; 122,028s incluindo preparação.
+Tempo: 89,924s de geração; 92,340s incluindo preparação.
 
 Entrada: 1155 caracteres / 222 palavras. Saída: 1317 caracteres / 236 palavras.
 
@@ -66,8 +66,8 @@ Tamanho da saída confere com o log do motor: True
 
 Warnings do validador:
 
-- [2026-09-30 23:32:42.381 -03:00] [WARN] [BLOCK_RETRY_START] block=1/1; issue=fidelidade: negação de percepção omitida ou transferida para o fato
-- [2026-09-30 23:33:30.383 -03:00] [WARN] [BLOCK_ACCEPTED_WITH_WARNING] block=1/1; issue=uma negação pode ter sido omitida
+- [2026-10-01 19:43:38.275 -03:00] [WARN] [BLOCK_RETRY_START] block=1/1; issue=fidelidade: negação de percepção omitida ou transferida para o fato
+- [2026-10-01 19:44:20.386 -03:00] [WARN] [BLOCK_ACCEPTED_WITH_WARNING] block=1/1; issue=uma negação pode ter sido omitida
 
 Warnings nativos: 4. Log integral: [test-02-log.txt](test-02-log.txt).
 
@@ -93,7 +93,7 @@ Objetivo: Garantir que versões diferentes sejam preservadas sem escolher uma co
 
 Status técnico: **CONCLUÍDO SEM ALERTAS AUTOMÁTICOS**. Geração terminou normalmente: True.
 
-Tempo: 69,019s de geração; 71,940s incluindo preparação.
+Tempo: 45,618s de geração; 47,910s incluindo preparação.
 
 Entrada: 1201 caracteres / 223 palavras. Saída: 1337 caracteres / 243 palavras.
 
@@ -137,7 +137,7 @@ Objetivo: Garantir que o modelo não tente descobrir referentes que o original d
 
 Status técnico: **CONCLUÍDO SEM ALERTAS AUTOMÁTICOS**. Geração terminou normalmente: True.
 
-Tempo: 79,707s de geração; 82,961s incluindo preparação.
+Tempo: 57,923s de geração; 60,168s incluindo preparação.
 
 Entrada: 1379 caracteres / 255 palavras. Saída: 1512 caracteres / 274 palavras.
 
@@ -185,7 +185,7 @@ Objetivo: Testar truncamento, contexto, repetição e degradação ao longo de t
 
 Status técnico: **CONCLUÍDO COM ALERTAS**. Geração terminou normalmente: True.
 
-Tempo: 292,048s de geração; 295,127s incluindo preparação.
+Tempo: 257,789s de geração; 260,152s incluindo preparação.
 
 Entrada: 6042 caracteres / 1025 palavras. Saída: 6536 caracteres / 1104 palavras.
 
@@ -197,7 +197,7 @@ Tamanho da saída confere com o log do motor: True
 
 Warnings do validador:
 
-- [2026-09-30 23:38:41.512 -03:00] [WARN] [BLOCK_RETRY_START] block=3/6; issue=fidelidade: ação de participante atribuída ao depoente: o depoente respondeu
+- [2026-10-01 19:48:14.329 -03:00] [WARN] [BLOCK_RETRY_START] block=3/6; issue=fidelidade: ação de participante atribuída ao depoente: o depoente respondeu
 
 Warnings nativos: 9. Log integral: [test-05-log.txt](test-05-log.txt).
 
@@ -263,7 +263,7 @@ Objetivo: Testar diferenças entre saber, acreditar, lembrar, supor e ouvir de t
 
 Status técnico: **CONCLUÍDO SEM ALERTAS AUTOMÁTICOS**. Geração terminou normalmente: True.
 
-Tempo: 32,375s de geração; 35,129s incluindo preparação.
+Tempo: 26,343s de geração; 28,558s incluindo preparação.
 
 Entrada: 595 caracteres / 106 palavras. Saída: 715 caracteres / 124 palavras.
 
@@ -301,7 +301,7 @@ Objetivo: Testar preservação de falas diretas sem converter indevidamente o co
 
 Status técnico: **CONCLUÍDO SEM ALERTAS AUTOMÁTICOS**. Geração terminou normalmente: True.
 
-Tempo: 25,846s de geração; 28,506s incluindo preparação.
+Tempo: 21,364s de geração; 23,706s incluindo preparação.
 
 Entrada: 442 caracteres / 76 palavras. Saída: 514 caracteres / 86 palavras.
 
@@ -339,7 +339,7 @@ Objetivo: Evitar troca indevida entre nome, cargo e pessoa.
 
 Status técnico: **CONCLUÍDO SEM ALERTAS AUTOMÁTICOS**. Geração terminou normalmente: True.
 
-Tempo: 25,422s de geração; 28,009s incluindo preparação.
+Tempo: 21,785s de geração; 24,150s incluindo preparação.
 
 Entrada: 479 caracteres / 87 palavras. Saída: 543 caracteres / 96 palavras.
 
@@ -377,7 +377,7 @@ Objetivo: Preservar datas, sequência e dúvidas temporais sem inventar cronolog
 
 Status técnico: **CONCLUÍDO COM ALERTAS**. Geração terminou normalmente: True.
 
-Tempo: 48,424s de geração; 51,060s incluindo preparação.
+Tempo: 45,817s de geração; 48,079s incluindo preparação.
 
 Entrada: 517 caracteres / 92 palavras. Saída: 607 caracteres / 106 palavras.
 
@@ -389,7 +389,7 @@ Tamanho da saída confere com o log do motor: True
 
 Warnings do validador:
 
-- [2026-09-30 23:43:00.227 -03:00] [WARN] [BLOCK_RETRY_START] block=1/1; issue=fidelidade: perda de destinatário do relato: no dia seguinte, ou talvez dois dias depois, carla me contou que tinha conversado novamente com bruno.
+- [2026-10-01 19:52:10.653 -03:00] [WARN] [BLOCK_RETRY_START] block=1/1; issue=fidelidade: perda de destinatário do relato: no dia seguinte, ou talvez dois dias depois, carla me contou que tinha conversado novamente com bruno.
 
 Warnings nativos: 4. Log integral: [test-09-log.txt](test-09-log.txt).
 
@@ -415,7 +415,7 @@ Objetivo: Testar preservação rigorosa de negações.
 
 Status técnico: **CONCLUÍDO SEM ALERTAS AUTOMÁTICOS**. Geração terminou normalmente: True.
 
-Tempo: 27,959s de geração; 30,888s incluindo preparação.
+Tempo: 27,666s de geração; 30,048s incluindo preparação.
 
 Entrada: 609 caracteres / 112 palavras. Saída: 705 caracteres / 126 palavras.
 
@@ -460,4 +460,4 @@ Nenhum indício adicional detectado. Revisão humana pendente.
 - Com duplicação integral: 0
 - Com parágrafos repetidos: 0
 - Com ContextOverflowException: 0
-- Tempo total (s): 809.707
+- Tempo total (s): 659.78

@@ -1,12 +1,12 @@
-﻿START 2026-09-30T23:24:00
+﻿START 2026-10-01T19:36:22
 PASS 3: CPF válido reconhecido (formatado, só dígitos, com a palavra CPF)
 PASS 3: CPF inválido detectado (dígito errado, sequência repetida, dígito faltando)
 PASS 3: RG não é tratado como CPF
 PASS 3: painel começa fechado e ocupa pouco espaço | altura=47
-PASS 3: data e hora preenchidas com o momento atual | 30/09/2026 23:24
+PASS 3: data e hora preenchidas com o momento atual | 01/10/2026 19:36
 PASS 3: resumo indica painel não preenchido | não preenchida (dados vão só para o Word e o rascunho, nunca para o modelo)
 PASS 3: «Mostrar campos» abre o painel | altura=221
-PASS 3: os 11 campos aparecem com rótulo
+PASS 3: os 12 campos aparecem com rótulo (inclui Gênero do depoente)
 PASS 3: condição com vítima, testemunha, investigado, declarante | —, vítima, testemunha, investigado, declarante
 PASS 3: data e hora editáveis
 PASS 3: botões visíveis com o painel aberto (janela larga)
@@ -27,7 +27,7 @@ PASS 3: resumo do painel fechado mostra procedimento, nome e condição | Proc. 
 PASS 3: campos seguem o tema escuro
 PASS 3: campos seguem o tema claro
 PASS 3: «Limpar campos» pede confirmação, «Não» é o padrão e mantém os dados | padrão=7
-PASS 3: «Sim» limpa os campos e renova data e hora | 30/09/2026 23:24
+PASS 3: «Sim» limpa os campos e renova data e hora | 01/10/2026 19:36
 PASS 3: «Ocultar campos» fecha o painel (sem rolagem)
 PASS 3: qualificação nunca vai para o modelo (geração real) | motor recebeu: «Eu cheguei ao prédio às nove horas e esperei na recepção.»; saída: «O depoente relatou que chegou ao prédio às nove horas e esperou na recepção.»
 RESULT PASS

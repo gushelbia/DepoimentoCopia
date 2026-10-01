@@ -8,7 +8,7 @@
                    },
                    {
                        "Algorithm":  "SHA256",
-                       "Hash":  "25E5C56D3F3C2F398C4C75E0D457A17F50BAB40BE72A720150D955691C042A56",
+                       "Hash":  "B8042E24D38D0626BE98BE8BB5F94504EEDC94E49CF764B7FD6F76A1EBBADB3B",
                        "Path":  "C:\\Users\\gusta\\OneDrive\\Área de Trabalho\\Depoimento - Copia\\Fidelis\\engine\\DepoimentoLocal.Desktop.dll"
                    },
                    {
@@ -40,6 +40,11 @@
                        "Algorithm":  "SHA256",
                        "Hash":  "BC8B0E5C9548465C973AEA0B9F0588AED56B66D6D237F5EB0ADE1B557D6EC65E",
                        "Path":  "C:\\Users\\gusta\\OneDrive\\Área de Trabalho\\Depoimento - Copia\\Fidelis\\maintenance\\desktop-backups\\DepoimentoLocal.Desktop.before-role-alerts-20260930214530.dll"
+                   },
+                   {
+                       "Algorithm":  "SHA256",
+                       "Hash":  "25E5C56D3F3C2F398C4C75E0D457A17F50BAB40BE72A720150D955691C042A56",
+                       "Path":  "C:\\Users\\gusta\\OneDrive\\Área de Trabalho\\Depoimento - Copia\\Fidelis\\maintenance\\desktop-backups\\DepoimentoLocal.Desktop.before-round6-20261001061645.dll"
                    }
                ],
     "after":  [
@@ -50,7 +55,7 @@
                   },
                   {
                       "Algorithm":  "SHA256",
-                      "Hash":  "25E5C56D3F3C2F398C4C75E0D457A17F50BAB40BE72A720150D955691C042A56",
+                      "Hash":  "B8042E24D38D0626BE98BE8BB5F94504EEDC94E49CF764B7FD6F76A1EBBADB3B",
                       "Path":  "C:\\Users\\gusta\\OneDrive\\Área de Trabalho\\Depoimento - Copia\\Fidelis\\engine\\DepoimentoLocal.Desktop.dll"
                   },
                   {
@@ -82,6 +87,11 @@
                       "Algorithm":  "SHA256",
                       "Hash":  "BC8B0E5C9548465C973AEA0B9F0588AED56B66D6D237F5EB0ADE1B557D6EC65E",
                       "Path":  "C:\\Users\\gusta\\OneDrive\\Área de Trabalho\\Depoimento - Copia\\Fidelis\\maintenance\\desktop-backups\\DepoimentoLocal.Desktop.before-role-alerts-20260930214530.dll"
+                  },
+                  {
+                      "Algorithm":  "SHA256",
+                      "Hash":  "25E5C56D3F3C2F398C4C75E0D457A17F50BAB40BE72A720150D955691C042A56",
+                      "Path":  "C:\\Users\\gusta\\OneDrive\\Área de Trabalho\\Depoimento - Copia\\Fidelis\\maintenance\\desktop-backups\\DepoimentoLocal.Desktop.before-round6-20261001061645.dll"
                   }
               ]
 }

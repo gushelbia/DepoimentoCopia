@@ -1,0 +1,36 @@
+﻿PASS adjetivo da depoente vai para o feminino | A depoente relatou que ficou nervosa e ligou para o seu irmão.
+PASS particípio da depoente | A depoente relatou que foi agredida pelo seu ex-companheiro.
+PASS regra F9: particípio depois de «foi» | A depoente relatou que foi empurrada e caiu sentada no chão.
+PASS pronome «o» vindo de «me» vira «a» | A depoente relatou que estava grávida quando ele a ameaçou.
+PASS contração «ao» → «à» | A depoente relatou que ela disse à depoente que ia embora.
+PASS «com o depoente» → «com a depoente» | A depoente relatou que o Carlos falou com a depoente.
+PASS «do depoente» → «da depoente» | A depoente relatou que pegaram a bolsa da depoente.
+PASS termo de outra pessoa («ele estava nervoso») não muda | A depoente relatou que ficou nervosa e ele estava nervoso também.
+PASS nome próprio como sujeito: termo dele não muda | A depoente relatou que ficou assustada. O Carlos ficou assustado também.
+PASS «o vizinho estava sozinho» não muda | A depoente relatou que estava sozinha e o vizinho estava sozinho.
+PASS fala entre aspas preservada byte a byte | A depoente relatou que ela gritou: "estou cansado". A depoente ficou calada.
+PASS texto já no feminino: sem mudança | A depoente relatou que é a mãe do menino.
+PASS converter duas vezes não muda (idempotente) | A depoente relatou que ficou nervosa.
+PASS na dúvida (outra pessoa no meio) não converte | A depoente relatou que, depois que o filho saiu, ficou nervoso.
+PASS na dúvida aparece aviso informativo | nervoso
+PASS «dele» para «de mim»: aviso informativo, sem conversão | dele
+PASS termo claramente de outra pessoa: sem aviso
+PASS F13: «nervoso» é do «ele» no original: não vira «nervosa» | A depoente relatou que estava nervoso e a depoente ficou calada.
+PASS F13: aviso informativo em «nervoso» | nervoso
+PASS N1: «chegou nervoso» (do «ele») não muda | A depoente relatou que chegou nervoso e começou a gritar com a depoente.
+PASS N5: «calado» (do porteiro) não muda | A depoente relatou que ficou calado e não quis abrir o portão.
+PASS N3: «a vizinha estava assustada» não é palavra da depoente | A depoente relatou que estava assustado e bateu na porta da vizinha.
+PASS «estava» sem «eu» não é primeira pessoa
+PASS «eu estava assustada» é da depoente
+PASS inversão marcada com «a depoente» | laranja:confira quem fez ou disse
+PASS frase quebrada marcada com «a depoente» | laranja:frase quebrada
+PASS texto convertido correto: nenhum alerta nem aviso
+PASS campo Feminino com texto no masculino: laranja | aviso:gênero | laranja:gênero trocado
+PASS campo Masculino: sem aviso de gênero presumido
+PASS campo Não informado: aviso de gênero presumido continua | aviso:gênero presumido
+PASS masculino de outra pessoa não vira alerta de gênero trocado | laranja:gênero trocado
+PASS campo Feminino mas original indica homem: aviso para conferir o campo | aviso:gênero
+PASS pista clara de mulher («fiquei nervosa»)
+PASS sem pista («a porta estava fechada»): nenhuma sugestão
+PASS «ele estava nervoso» não é pista da depoente
+PASS 20 frases aprovadas: Masculino e Não informado idênticos | 20/20

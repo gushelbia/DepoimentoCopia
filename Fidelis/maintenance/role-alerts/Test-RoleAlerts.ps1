@@ -35,7 +35,7 @@ function Expect($name, $original, $output, [string[]]$expected) {
 $expected = @{
   1=@('sujeito','gênero presumido','ambíguo'); 2=@('sujeito','gênero presumido','ambíguo'); 3=@('inversão','sujeito','gênero presumido');
   4=@('gênero presumido','ambíguo'); 5=@('sujeito','gênero presumido','quebrada'); 6=@('lhe','gênero presumido'); 7=@('inversão','sujeito','gênero presumido');
-  8=@('lhe'); 9=@('sujeito','gênero presumido'); 10=@('inversão','sujeito','gênero presumido'); 11=@('sujeito','gênero trocado','ambíguo');
+  8=@('lhe','gênero presumido'); 9=@('sujeito','gênero presumido'); 10=@('inversão','sujeito','gênero presumido'); 11=@('sujeito','gênero trocado','ambíguo');
   12=@('sujeito','gênero trocado'); 13=@('sujeito'); 14=@('lhe','gênero presumido'); 15=@('sujeito','gênero presumido'); 16=@('sujeito','gênero presumido');
   17=@('sujeito','gênero presumido'); 18=@('lhe','reflexivo','gênero presumido'); 19=@('sujeito','gênero trocado'); 20=@('sujeito') }
 $battery = Get-Content -Raw -Encoding UTF8 (Join-Path $root 'maintenance/pronoun-diagnosis/resultados-20-frases.json') | ConvertFrom-Json
@@ -54,7 +54,7 @@ Expect 'corrigido 7: «ele lhe disse» é o certo' 'Ele me disse que tinha visto
 Expect 'corrigido 10: «ela lhe contou»' 'Ela me contou que ele tinha batido nela na noite anterior.' 'Relatou que ela lhe contou que ele tinha batido nela na noite anterior.' @()
 Expect 'corrigido 18: «atacou o depoente» e «se defendeu»' 'Ela me atacou primeiro e eu só me defendi.' 'Relatou que ela atacou o depoente primeiro e o depoente só se defendeu.' @('gênero presumido')
 Expect 'corrigido 5: «enforcando o depoente»' 'Eu empurrei ele porque ele estava me enforcando.' 'O depoente relatou que empurrou ele porque ele estava enforcando o depoente.' @('gênero presumido')
-Expect 'corrigido 12: «a depoente … nervosa»' 'Eu fiquei nervosa e liguei para o meu irmão.' 'Relatou que a depoente ficou nervosa e ligou para o seu irmão.' @()
+Expect 'corrigido 12: «a depoente … nervosa»' 'Eu fiquei nervosa e liguei para o meu irmão.' 'Relatou que a depoente ficou nervosa e ligou para o seu irmão.' @('sujeito')
 Expect 'corrigido 19: «a depoente foi agredida»' 'Fui agredida pelo meu ex-companheiro na frente dos meus filhos.' 'A depoente relatou que foi agredida pelo seu ex-companheiro na frente dos seus filhos.' @()
 Expect 'homem explícito («sozinho»): sem alerta de gênero' 'Eu estava sozinho em casa.' 'O depoente relatou que estava sozinho em casa.' @()
 Expect '«lhe deu» é destinatário normal' 'Ele me deu uma rasteira.' 'Relatou que ele lhe deu uma rasteira.' @()

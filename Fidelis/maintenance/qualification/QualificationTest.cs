@@ -158,7 +158,7 @@ public static class QualificationTest
             Check(grid.Visible && card.Height > 180 * k && toggle.Text == "Ocultar campos", "3: «Mostrar campos» abre o painel", "altura=" + card.Height);
             bool allFields = true;
             for (int i = 0; i < Qualification.Count; i++) if (inputs[i] == null || !inputs[i].Visible || labels[i].Text.Length == 0) allFields = false;
-            Check(allFields, "3: os 11 campos aparecem com rótulo", null);
+            Check(allFields, "3: os 12 campos aparecem com rótulo (inclui Gênero do depoente)", null);
             var condition = (ComboBox)inputs[Qualification.Condicao];
             var options = new List<string>(); foreach (object o in condition.Items) options.Add(Convert.ToString(o));
             Check(String.Join("|", options.ToArray()) == "—|vítima|testemunha|investigado|declarante", "3: condição com vítima, testemunha, investigado, declarante", String.Join(", ", options.ToArray()));
@@ -225,7 +225,7 @@ public static class QualificationTest
             Check(!grid.Visible && card.Height <= 60 * k && !Field<TableLayoutPanel>(form, "root").AutoScroll, "3: «Ocultar campos» fecha o painel (sem rolagem)", null);
 
             // Never sent to the model: a real generation with unique markers in every field.
-            string[] marks = { "PROC-X91", "UNID-X92", "LOCAL-X93", "30/09/2026 10:00", "NOME-X95", "529.982.247-25", "testemunha", "END-X97", "TEL-X98", "AUTO-X99", "ESCR-X90" };
+            string[] marks = { "PROC-X91", "UNID-X92", "LOCAL-X93", "30/09/2026 10:00", "NOME-X95", "529.982.247-25", "testemunha", "END-X97", "TEL-X98", "AUTO-X99", "ESCR-X90", "Masculino" };
             for (int i = 0; i < Qualification.Count; i++) SetField(form, i, marks[i]);
             string input = "Eu cheguei ao prédio às nove horas e esperei na recepção.";
             original.Editor.Text = input;

@@ -1,8 +1,8 @@
-﻿START 2026-09-30T23:23:54
+﻿START 2026-10-01T19:36:17
 PASS ícone ui/Fidelis.ico presente
 PASS o ícone novo é diferente do antigo (o teste distingue os dois)
 PASS janela usa o ícone Fidelis (16, 32 e 48 px)
-PASS ícones da barra de título e da barra de tarefas (WM_GETICON pequeno e grande) são os do Fidelis | pequeno=59377149 grande=11077663
+PASS ícones da barra de título e da barra de tarefas (WM_GETICON pequeno e grande) são os do Fidelis | pequeno=1246991 grande=23528243
 PASS atalho do Criar-Atalho usa ui/Fidelis.ico | C:\Users\gusta\OneDrive\Área de Trabalho\Depoimento - Copia\Fidelis\ui\Fidelis.ico,0
 PASS o atalho real da Área de Trabalho não foi tocado pelo teste
 RESULT PASS

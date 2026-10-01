@@ -1,0 +1,21 @@
+﻿START 2026-10-01T19:34:35
+PASS campo «Gênero do depoente»: Não informado, Masculino, Feminino (padrão: Não informado) | Não informado, Masculino, Feminino
+PASS pista clara («fiquei nervosa»): sugestão «Usar Feminino» aparece e o campo continua Não informado | Usar Feminino
+PASS sem pista clara: sem sugestão
+PASS pista de homem: «Usar Masculino», campo inalterado | Usar Masculino
+PASS clicar na sugestão preenche o campo (ação do usuário) e o status diz qual | Gênero do depoente preenchido: Feminino.
+PASS modelo carregado
+PASS motor continua gerando no masculino (motor não mudou) | O depoente relatou que ficou nervoso e ligou para o seu irmão.
+PASS Feminino: texto da tela no feminino | A depoente relatou que ficou nervosa e ligou para o seu irmão.
+PASS Feminino: nenhum alerta de gênero trocado no texto convertido
+PASS consolidado recebe o texto convertido | A depoente relatou que ficou nervosa e ligou para o seu irmão.
+PASS cópia de recuperação guarda o texto convertido e o gênero
+PASS rascunho guarda o texto convertido e o gênero
+PASS Word usa o texto convertido
+PASS trocar para Masculino: reformulado volta ao texto do motor; consolidado não muda | O depoente relatou que ficou nervoso e ligou para o seu irmão.
+PASS voltar para Feminino: converte de novo | A depoente relatou que ficou nervosa e ligou para o seu irmão.
+PASS texto editado à mão não é reescrito ao trocar o gênero
+PASS «Masculino»: texto da tela idêntico ao do motor | O depoente relatou que recebeu duas ligações do ele e não atendeu.
+PASS «Não informado»: texto da tela idêntico ao do motor | O depoente relatou que recebeu duas ligações do ele e não atendeu.
+PASS nenhuma janela inesperada
+RESULT PASS

@@ -5,7 +5,7 @@ PASS bateria 4: Quando eu cheguei, ele já estava caído no chão e eu chamei a 
 PASS bateria 5: Eu empurrei ele porque ele estava me enforcando. | esperado: gênero presumido, quebrada, sujeito | obtido: gênero presumido, quebrada, sujeito
 PASS bateria 6: Ela me xingou e eu respondi que ia chamar a polícia. | esperado: gênero presumido, lhe | obtido: gênero presumido, lhe
 PASS bateria 7: Ele me disse que tinha visto ela sair com o carro. | esperado: gênero presumido, inversão, sujeito | obtido: gênero presumido, inversão, sujeito
-PASS bateria 8: O Marcos me segurou pelo braço enquanto o outro rapaz pegava minha bolsa. | esperado: lhe | obtido: lhe
+PASS bateria 8: O Marcos me segurou pelo braço enquanto o outro rapaz pegava minha bolsa. | esperado: gênero presumido, lhe | obtido: gênero presumido, lhe
 PASS bateria 9: Eu vi quando ele deu um soco nela. | esperado: gênero presumido, sujeito | obtido: gênero presumido, sujeito
 PASS bateria 10: Ela me contou que ele tinha batido nela na noite anterior. | esperado: gênero presumido, inversão, sujeito | obtido: gênero presumido, inversão, sujeito
 PASS bateria 11: Eu estava grávida de cinco meses quando ele me chutou. | esperado: ambíguo, gênero trocado, sujeito | obtido: ambíguo, gênero trocado, sujeito
@@ -24,7 +24,7 @@ PASS corrigido 7: «ele lhe disse» é o certo | esperado:  | obtido:
 PASS corrigido 10: «ela lhe contou» | esperado:  | obtido: 
 PASS corrigido 18: «atacou o depoente» e «se defendeu» | esperado: gênero presumido | obtido: gênero presumido
 PASS corrigido 5: «enforcando o depoente» | esperado: gênero presumido | obtido: gênero presumido
-PASS corrigido 12: «a depoente … nervosa» | esperado:  | obtido: 
+PASS corrigido 12: «a depoente … nervosa» | esperado: sujeito | obtido: sujeito
 PASS corrigido 19: «a depoente foi agredida» | esperado:  | obtido: 
 PASS homem explícito («sozinho»): sem alerta de gênero | esperado:  | obtido: 
 PASS «lhe deu» é destinatário normal | esperado:  | obtido: 

@@ -1,0 +1,60 @@
+﻿=== F1: Eu fiquei assustada quando ele entrou gritando.
+  1 BRUTO DO MODELO   : A depoente ficou assustada quando ele entrou gritando.
+  2 ABERTURA+REPAROS  : Relatou que a depoente ficou assustada quando ele entrou gritando.   [validação: ok]
+  3 1ª PESSOA (motor) : Relatou que a depoente ficou assustada quando ele entrou gritando.
+  4 ÂNCORAS (final)   : O depoente relatou que a depoente ficou assustada quando ele entrou gritando.   [validação: ok]
+=== F2: Fui agredida pelo vizinho na frente do prédio.
+  1 BRUTO DO MODELO   : A depoente foi agredida pelo vizinho na frente do prédio.
+  2 ABERTURA+REPAROS  : Relatou que a depoente foi agredida pelo vizinho na frente do prédio.   [validação: ok]
+  3 1ª PESSOA (motor) : Relatou que a depoente foi agredida pelo vizinho na frente do prédio.
+  4 ÂNCORAS (final)   : O depoente relatou que a depoente foi agredida pelo vizinho na frente do prédio.   [validação: ok]
+=== F3: Eu estava sozinha em casa quando ouvi um barulho na porta.
+  1 BRUTO DO MODELO   : A depoente estava sozinha em casa quando ouviu um barulho na porta.
+  2 ABERTURA+REPAROS  : Relatou que a depoente estava sozinha em casa quando ouviu um barulho na porta.   [validação: fidelidade: sujeito do depoente implícito em oração subordinada: casa quando ouvi]
+  3 1ª PESSOA (motor) : Relatou que a depoente estava sozinha em casa quando ouviu um barulho na porta.
+  4 ÂNCORAS (final)   : O depoente relatou que a depoente estava sozinha em casa quando o depoente ouviu um barulho na porta.   [validação: ok]
+=== F4: Cheguei cansada do trabalho e encontrei a porta aberta.
+  1 BRUTO DO MODELO   : A depoente chegou cansada do trabalho e encontrei a porta aberta.
+  2 ABERTURA+REPAROS  : Relatou que a depoente chegou cansada do trabalho e encontrei a porta aberta.   [validação: fidelidade: possível primeira pessoa residual: encontrei]
+  3 1ª PESSOA (motor) : Relatou que a depoente chegou cansada do trabalho e encontrou a porta aberta.
+  4 ÂNCORAS (final)   : O depoente relatou que a depoente chegou cansada do trabalho e encontrou a porta aberta.   [validação: ok]
+=== F5: Ele disse que eu era culpada pelo que aconteceu.
+  1 BRUTO DO MODELO   : A depoente disse que ela era culpada pelo que aconteceu.
+  2 ABERTURA+REPAROS  : Relatou que a depoente disse que ela era culpada pelo que aconteceu.   [validação: ok]
+  3 1ª PESSOA (motor) : Relatou que a depoente disse que ela era culpada pelo que aconteceu.
+  4 ÂNCORAS (final)   : O depoente relatou que a depoente disse que o depoente era culpada pelo que aconteceu.   [validação: ok]
+=== F6: Eu sou a mãe do menino e fui chamada na escola.
+  1 BRUTO DO MODELO   : A depoente é a mãe do menino e foi chamada na escola.
+  2 ABERTURA+REPAROS  : Relatou que a depoente é a mãe do menino e foi chamada na escola.   [validação: ok]
+  3 1ª PESSOA (motor) : Relatou que a depoente é a mãe do menino e foi chamada na escola.
+  4 ÂNCORAS (final)   : O depoente relatou que a depoente é a mãe do menino e foi chamada na escola.   [validação: ok]
+=== F7: O Carlos entrou depois de mim e ficou me encarando.
+  1 BRUTO DO MODELO   : O Carlos entrou depois de mim e ficou me encarando.
+  2 ABERTURA+REPAROS  : Relatou que o Carlos entrou depois de mim e ficou me encarando.   [validação: a saída ainda contém primeira pessoa]
+  3 1ª PESSOA (motor) : Relatou que o Carlos entrou depois do depoente e ficou lhe encarando.
+  4 ÂNCORAS (final)   : O depoente relatou que o Carlos entrou depois do depoente e ficou lhe encarando.   [validação: ok]
+=== F8: Fiquei preocupada porque minha filha não atendia o telefone.
+  1 BRUTO DO MODELO   : A depoente ficou preocupada porque a filha não atendia o telefone.
+  2 ABERTURA+REPAROS  : Relatou que a depoente ficou preocupada porque a filha não atendia o telefone.   [validação: ok]
+  3 1ª PESSOA (motor) : Relatou que a depoente ficou preocupada porque a filha não atendia o telefone.
+  4 ÂNCORAS (final)   : O depoente relatou que a depoente ficou preocupada porque a filha não atendia o telefone.   [validação: ok]
+=== F9: Ele me empurrou e eu caí sentada no chão.
+  1 BRUTO DO MODELO   : Ele me empurrou e a depoente caí sentada no chão.
+  2 ABERTURA+REPAROS  : Relatou que ele me empurrou e a depoente caí sentada no chão.   [validação: fidelidade: possível primeira pessoa residual: caí]
+  3 1ª PESSOA (motor) : Relatou que ele lhe empurrou e a depoente caí sentada no chão.
+  4 ÂNCORAS (final)   : O depoente relatou que ele lhe empurrou e a depoente caiu sentada no chão.   [validação: ok]
+=== F10: Eu não fui ouvida pela polícia naquele dia.
+  1 BRUTO DO MODELO   : A depoente não foi ouvida pela polícia naquele dia.
+  2 ABERTURA+REPAROS  : Relatou que a depoente não foi ouvida pela polícia naquele dia.   [validação: ok]
+  3 1ª PESSOA (motor) : Relatou que a depoente não foi ouvida pela polícia naquele dia.
+  4 ÂNCORAS (final)   : O depoente relatou que a depoente não foi ouvida pela polícia naquele dia.   [validação: ok]
+=== F11: Eu estava grávida quando ele me ameaçou.
+  1 BRUTO DO MODELO   : A depoente estava grávida quando ele me ameaçou.
+  2 ABERTURA+REPAROS  : Relatou que a depoente estava grávida quando ele me ameaçou.   [validação: a saída ainda contém primeira pessoa]
+  3 1ª PESSOA (motor) : Relatou que a depoente estava grávida quando ele lhe ameaçou.
+  4 ÂNCORAS (final)   : O depoente relatou que a depoente estava grávida quando ele lhe ameaçou.   [validação: ok]
+=== F12: Fiquei calada porque estava com medo.
+  1 BRUTO DO MODELO   : A depoente ficou calada porque estava com medo.
+  2 ABERTURA+REPAROS  : Relatou que a depoente ficou calada porque estava com medo.   [validação: ok]
+  3 1ª PESSOA (motor) : Relatou que a depoente ficou calada porque estava com medo.
+  4 ÂNCORAS (final)   : O depoente relatou que a depoente ficou calada porque estava com medo.   [validação: ok]

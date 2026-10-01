@@ -226,12 +226,25 @@ public static class HighlightUiTest
             int approxRef = Reformulated.IndexOf("por volta das 14:30"), approxOrig = Original.IndexOf("por volta das 14h30");
             Check(BackAt(reform.Editor, approxRef) == light.HighlightAlert.ToArgb() && BackAt(reform.Editor, approxRef + 16) == light.HighlightAlert.ToArgb()
                 && BackAt(original.Editor, approxOrig) == light.HighlightAlert.ToArgb(), "ajuste 1: «por volta das 14h30» inteiro em cor de alerta, nos dois textos", null);
-            Check(review.Visible && review.Text == "7 itens para conferir, 2 não encontrados no original, 1 aproximado ou ambíguo; sumiram do reformulado: BRA2E19, 15h15.", "2: resumo na barra de status", review.Text);
+            Check(review.Visible && review.Text == "7 itens para conferir, 2 não encontrados no original, 1 aproximado ou ambíguo; sumiram do reformulado: BRA2E19, 15h15; 1 aviso informativo.", "2: resumo na barra de status", review.Text);
+            // Subject and presumed gender («Relatou que o depoente») are informational: never painted.
+            int lead = Reformulated.IndexOf("Relatou que o depoente");
+            int noColor = BackAt(reform.Editor, lead + 3), noColor2 = BackAt(reform.Editor, lead + 15);
+            Check(noColor != light.HighlightAlert.ToArgb() && noColor != light.HighlightMismatch.ToArgb() && noColor != light.HighlightItem.ToArgb() && noColor2 == noColor, "papéis: aviso informativo (sujeito/gênero) não pinta o texto", null);
+            Check(BackAt(original.Editor, 0) != light.HighlightAlert.ToArgb(), "papéis: o original não recebe alerta de papéis", null);
             Check(SummaryFits(review), "ajuste 2: resumo sem «…», em até duas linhas (janela larga)", "\"" + review.Text + "\"");
             string details = ClickSummary(review);
-            Check(details != null && details.Contains("BRA2E91") && details.Contains("BRA2E19") && details.Contains("15h15") && details.Contains("por volta das 14:30") && details.Contains("Conferidos nos dois textos"),
+            Check(details != null && details.Contains("BRA2E91") && details.Contains("BRA2E19") && details.Contains("15h15") && details.Contains("por volta das 14:30") && details.Contains("Conferidos nos dois textos") && details.Contains("Avisos informativos") && details.Contains("gênero presumido") && !details.Contains("Papéis e pronomes"),
                 "ajuste 2: clique no resumo mostra a lista completa", details == null ? "janela não apareceu" : details.Replace("\r\n", " | ").Replace("\n", " | "));
 
+            // A real role alert (battery case 7) is orange; the subject notice next to it is not.
+            original.Editor.Text = "Ele me disse que tinha visto ela sair com o carro.";
+            reform.Editor.Text = "Relatou que o depoente lhe disse que tinha visto ela sair com o carro.";
+            Pump(1200);
+            int inv = reform.Editor.Text.IndexOf("lhe disse");
+            Check(BackAt(reform.Editor, inv) == light.HighlightAlert.ToArgb() && BackAt(reform.Editor, 2) != light.HighlightAlert.ToArgb(), "papéis: inversão pintada de laranja; «Relatou» sem cor", null);
+            Check(review.Text == "1 alerta de papéis e pronomes; 1 aviso informativo.", "papéis: contagem separa alertas e avisos", review.Text);
+            original.Editor.Text = Original; reform.Editor.Text = Reformulated; Pump(1200);
             Shot(form, Path.Combine(dir, "print-claro.png"));
             Field<ThemedComboBox>(form, "themePicker").SelectedIndex = 2; Pump(400);
             Check(BackAt(reform.Editor, date) == dark.HighlightItem.ToArgb() && BackAt(reform.Editor, plate) == dark.HighlightMismatch.ToArgb(), "2: tema escuro repinta com as cores escuras", null);

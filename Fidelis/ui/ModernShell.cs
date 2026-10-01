@@ -1780,7 +1780,9 @@ public sealed class ModernDepoimentoForm : Form
             }
             ReviewResult review = ReviewScanner.Compare(originalCard.Editor.Text, reformulatedCard.Editor.Text);
             ReviewPainter.Paint(originalCard.Editor, review.Original, palette.HighlightItem, palette.HighlightMismatch, palette.HighlightAlert);
-            ReviewPainter.Paint(reformulatedCard.Editor, review.Reformulated, palette.HighlightItem, palette.HighlightMismatch, palette.HighlightAlert);
+            var reformulatedMarks = new List<ReviewItem>(review.Reformulated);
+            reformulatedMarks.AddRange(review.Roles);
+            ReviewPainter.Paint(reformulatedCard.Editor, reformulatedMarks, palette.HighlightItem, palette.HighlightMismatch, palette.HighlightAlert);
             lastReview = review;
             bool show = reformulatedCard.Editor.TextLength > 0;
             SetReviewSummary(show ? ReviewScanner.Summary(review) : "", show ? ReviewScanner.ShortSummary(review) : "");
@@ -2798,6 +2800,7 @@ public sealed class ReviewItem
     public bool Unmatched;        // nothing corresponding in the other text
     public bool Alert;            // only an approximate/ambiguous correspondence: never "bate"
     public string Normalized;     // lower-case text, single spaces (computed once)
+    public string Reason;         // role alerts: what to check and why
 }
 
 public sealed class ReviewResult
@@ -2807,6 +2810,11 @@ public sealed class ReviewResult
     public List<ReviewItem> MissingFromReformulated = new List<ReviewItem>();
     public int UnmatchedInReformulated;
     public int AlertInReformulated;
+    // Painted orange: who did or said what, broken sentence, «lhe», ambiguous pronoun,
+    // gender that contradicts the original («nervosa» → «nervoso»).
+    public List<ReviewItem> Roles = new List<ReviewItem>();
+    // Informational, never painted: subject («Relatou que o depoente») and presumed gender.
+    public List<ReviewItem> Notes = new List<ReviewItem>();
 }
 
 // Finds and compares review items. Names are deliberately out of scope.
@@ -3120,6 +3128,11 @@ public static class ReviewScanner
         result.Original = Find(original);
         result.Reformulated = Find(reformulated);
         bool compare = !String.IsNullOrWhiteSpace(original) && !String.IsNullOrWhiteSpace(reformulated);
+        if (compare)
+        {
+            foreach (ReviewItem i in RoleScanner.Find(original, reformulated))
+                (i.Kind == RoleScanner.Note ? result.Notes : result.Roles).Add(i);
+        }
         if (!compare)
         {
             // Nothing to compare with: uncertain items still ask for a check.
@@ -3146,15 +3159,20 @@ public static class ReviewScanner
     // the counts, for when the full one does not fit in two lines.
     public static string Summary(ReviewResult result)
     {
-        string s = Counts(result, false);
-        if (s.Length == 0) return "";
-        int missing = result.MissingFromReformulated.Count;
+        var itemsOnly = new ReviewResult();
+        itemsOnly.Reformulated = result.Reformulated; itemsOnly.MissingFromReformulated = result.MissingFromReformulated;
+        itemsOnly.UnmatchedInReformulated = result.UnmatchedInReformulated; itemsOnly.AlertInReformulated = result.AlertInReformulated;
+        string s = Counts(itemsOnly, false);
+        int missing = result.MissingFromReformulated.Count, roles = result.Roles.Count;
+        if (s.Length == 0 && roles == 0 && result.Notes.Count == 0) return "";
         if (missing > 0)
         {
             var names = new List<string>();
             foreach (ReviewItem o in result.MissingFromReformulated) names.Add(o.Text.Trim());
             s += (missing == 1 ? "; sumiu do reformulado: " : "; sumiram do reformulado: ") + String.Join(", ", names.ToArray());
         }
+        if (roles > 0) s += (s.Length > 0 ? "; " : "") + roles + (roles == 1 ? " alerta de papéis e pronomes" : " alertas de papéis e pronomes");
+        s += NotesCount(result, s.Length > 0);
         return s + ".";
     }
 
@@ -3167,28 +3185,54 @@ public static class ReviewScanner
     public static string CompactSummary(ReviewResult result)
     {
         if (result == null) return "";
-        int total = result.Reformulated.Count;
-        int alerts = result.UnmatchedInReformulated + result.AlertInReformulated + result.MissingFromReformulated.Count;
+        int total = result.Reformulated.Count + result.Roles.Count;
+        int alerts = result.UnmatchedInReformulated + result.AlertInReformulated + result.MissingFromReformulated.Count + result.Roles.Count;
         if (total == 0 && alerts == 0) return "";
         return total + (total == 1 ? " item" : " itens") + (alerts > 0 ? ", " + alerts + " com alerta" : "") + ". Clique para ver.";
     }
 
     private static string Counts(ReviewResult result, bool withMissing)
     {
-        int total = result.Reformulated.Count, missing = result.MissingFromReformulated.Count;
-        if (total == 0 && missing == 0) return "";
-        string s = total == 1 ? "1 item para conferir" : total + " itens para conferir";
-        int u = result.UnmatchedInReformulated, a = result.AlertInReformulated;
-        if (u > 0) s += ", " + u + (u == 1 ? " não encontrado no original" : " não encontrados no original");
-        if (a > 0) s += ", " + a + (a == 1 ? " aproximado ou ambíguo" : " aproximados ou ambíguos");
-        if (withMissing && missing > 0) s += "; " + missing + (missing == 1 ? " sumiu do reformulado" : " sumiram do reformulado");
+        int total = result.Reformulated.Count, missing = result.MissingFromReformulated.Count, roles = result.Roles.Count;
+        if (total == 0 && missing == 0 && roles == 0 && result.Notes.Count == 0) return "";
+        string s = "";
+        if (total > 0 || missing > 0)
+        {
+            s = total == 1 ? "1 item para conferir" : total + " itens para conferir";
+            int u = result.UnmatchedInReformulated, a = result.AlertInReformulated;
+            if (u > 0) s += ", " + u + (u == 1 ? " não encontrado no original" : " não encontrados no original");
+            if (a > 0) s += ", " + a + (a == 1 ? " aproximado ou ambíguo" : " aproximados ou ambíguos");
+            if (withMissing && missing > 0) s += "; " + missing + (missing == 1 ? " sumiu do reformulado" : " sumiram do reformulado");
+        }
+        if (roles > 0) s += (s.Length > 0 ? "; " : "") + roles + (roles == 1 ? " alerta de papéis e pronomes" : " alertas de papéis e pronomes");
+        s += NotesCount(result, s.Length > 0);
         return s;
+    }
+
+    // Informational notices are counted apart from the colored alerts.
+    private static string NotesCount(ReviewResult result, bool after)
+    {
+        int n = result.Notes.Count;
+        if (n == 0) return "";
+        return (after ? "; " : "") + n + (n == 1 ? " aviso informativo" : " avisos informativos");
     }
 
     // Complete list shown when the summary is clicked.
     public static string Details(ReviewResult result)
     {
         var sb = new StringBuilder();
+        if (result.Roles.Count > 0)
+        {
+            sb.AppendLine("Papéis e pronomes — conferir quem fez ou disse o quê (texto reformulado):");
+            foreach (ReviewItem r in result.Roles) sb.AppendLine("   • «" + r.Text.Trim() + "» — " + Char.ToUpperInvariant(r.Reason[0]) + r.Reason.Substring(1));
+            sb.AppendLine();
+        }
+        if (result.Notes.Count > 0)
+        {
+            sb.AppendLine("Avisos informativos — sujeito e gênero presumido (sem cor no texto):");
+            foreach (ReviewItem r in result.Notes) sb.AppendLine("   • «" + r.Text.Trim() + "» — " + Char.ToUpperInvariant(r.Reason[0]) + r.Reason.Substring(1));
+            sb.AppendLine();
+        }
         AppendGroup(sb, "Não encontrados no original (texto reformulado):", result.Reformulated, 2);
         AppendGroup(sb, "Aproximados ou ambíguos — conferir (texto reformulado):", result.Reformulated, 1);
         AppendGroup(sb, "Sumiram do reformulado (estavam no original):", result.MissingFromReformulated, -1);
@@ -3211,6 +3255,197 @@ public static class ReviewScanner
     }
 }
 
+// Role alerts (visual only, orange «conferir»): patterns where a small model
+// tends to change who did or said what when converting the narrator («eu») to
+// «o depoente». Never changes the text; each alert says what to check.
+public static class RoleScanner
+{
+    private const RegexOptions I = RegexOptions.IgnoreCase | RegexOptions.CultureInvariant;
+    public const string Alert = "papel";   // painted orange
+    public const string Note = "aviso";    // informational only (subject, presumed gender)
+    // Verbs where «lhe» is the normal recipient (disse-lhe, deu-lhe...).
+    private static readonly Regex RecipientVerb = new Regex(@"^(?:dis|diz|cont|fal|pergunt|ped|pedi|mand|avis|inform|explic|d[eá]|entreg|mostr|emprest|ofere|respond|telefon|lig|escrev|envi|pass|jur|garant|promet|confess|ensin|cobr|devolv|vend|pag|contou|trouxe|lev|oferec|sugeri|sugere|recomend|comunic|repass|agradec|desej|permit|proib|orden|negou|neg|apresent|indic|fornec|reserv|ced|dedic|atribu|revel|anunci|devolv|jog|atir)", I);
+    // «estava»/«era» are also third person: only with an explicit «eu».
+    private static readonly Regex FeminineNarrator = new Regex(@"(?:^|[\s,;.!?])(?:eu\s+(?:me\s+)?(?:estava|era|ficava|andava|sentia)|(?:eu\s+)?(?:me\s+)?(?:estou|fiquei|fico|sou|fui|senti|sinto|estive|continuo|continuei|permaneci|cheguei|saí|posso\s+estar|podia\s+estar|poderia\s+estar|posso\s+ter\s+ficado))\s+(?:muito\s+|bem\s+|tão\s+|meio\s+|toda\s+)?(?<w>\p{L}+(?:ada|ida|osa|inha|ívida|ávida|úva|eira|ona))\b", I);
+    private static readonly Regex MasculineNarrator = new Regex(@"(?:^|[\s,;.!?])(?:eu\s+(?:me\s+)?(?:estava|era|ficava|andava|sentia)|(?:eu\s+)?(?:me\s+)?(?:estou|fiquei|fico|sou|fui|senti|sinto|estive|continuo|continuei|permaneci|cheguei|saí|posso\s+estar|podia\s+estar|poderia\s+estar|posso\s+ter\s+ficado))\s+(?:muito\s+|bem\s+|tão\s+|meio\s+|todo\s+)?(?<w>\p{L}+(?:ado|ido|oso|inho|ívido|ávido|eiro|ão))\b", I);
+    private static readonly Regex FeminineRole = new Regex(@"\bsou\s+(?:a\s+)?(?:mãe|esposa|irmã|filha|avó|tia|companheira|namorada|mulher|vizinha|funcionária|professora|aluna)\b", I);
+    private static readonly Regex MasculineRole = new Regex(@"\bsou\s+(?:o\s+)?(?:pai|marido|irmão|filho|avô|tio|companheiro|namorado|homem|vizinho|funcionário|professor|aluno)\b", I);
+    private static readonly HashSet<string> NotAdjectives = new HashSet<string>(StringComparer.OrdinalIgnoreCase) { "nada", "vida", "ida", "toda", "cada", "chegada", "saída", "entrada", "madrugada", "estrada", "calçada", "escada", "porta", "casa", "pessoa", "lá", "para", "embora" };
+
+    public static List<ReviewItem> Find(string original, string reformulated)
+    {
+        var items = new List<ReviewItem>();
+        if (String.IsNullOrWhiteSpace(original) || String.IsNullOrWhiteSpace(reformulated)) return items;
+        string o = original, r = reformulated;
+        var quotes = QuoteRanges(r);
+        bool originalMe = Regex.IsMatch(o, @"\bme\b", I);
+        bool originalLhe = Regex.IsMatch(o, @"\blhe\b|\ba\s+el[ea]s?\b|\bpara\s+el[ea]s?\b", I);
+
+        // 1. «o depoente lhe …»: the narrator acting on someone else, while in the
+        // original the action was directed at the narrator («ele me disse»,
+        // «ela me contou») or was reflexive («me defendi»).
+        foreach (Match m in Regex.Matches(r, @"\bo depoente\s+(?:não\s+)?(?:(?:só|também|já|ainda|então|depois)\s+)?lhe\s+(?<v>\p{L}+)", I))
+        {
+            if (!originalMe || InQuotes(quotes, m.Index)) continue;
+            string v = m.Groups["v"].Value;
+            // Same verb with «me» in the original («ele me disse»), or a short text
+            // whose original has «me» and no other recipient at all.
+            bool sameVerb = Regex.IsMatch(o, @"\bme\s+" + Regex.Escape(Stem(v)), I);
+            if (!sameVerb && originalLhe) continue;
+            bool reflexive = Regex.IsMatch(o, @"\bme\s+" + Regex.Escape(Stem(v)) + @"\p{L}*i\b", I);
+            Add(items, m.Index, m.Length, m.Value, reflexive
+                ? "o original é reflexivo («me " + Stem(v) + "…»: o depoente fez a ação em si mesmo); «lhe» indica outra pessoa. Confira: o correto seria «se " + v + "»."
+                : "confira quem fez ou disse: aqui o depoente age sobre outra pessoa, mas no original a ação foi dirigida ao depoente («… me …»).");
+        }
+        // 2. «ele lhe atacou»: «lhe» with a verb of direct action (the engine's
+        // correction of «me»): wrong and ambiguous (lhe = a ele? a ela?).
+        foreach (Match m in Regex.Matches(r, @"\b(?<s>\p{L}+)\s+(?:não\s+)?(?:(?:só|também|já|ainda|então|depois)\s+)?lhe\s+(?<v>\p{L}+)", I))
+        {
+            if (!originalMe || InQuotes(quotes, m.Index) || Covered(items, m.Index)) continue;
+            string v = m.Groups["v"].Value;
+            if (RecipientVerb.IsMatch(v) || m.Groups["s"].Value.Equals("depoente", StringComparison.OrdinalIgnoreCase)) continue;
+            Add(items, m.Index, m.Length, m.Value, "«lhe» com verbo de ação direta: no original a ação foi contra o depoente («me " + Stem(v) + "…»). Confira: o claro seria «" + v + " o depoente».");
+        }
+        // 3. «ele o atacou»: clitic «o/a» after a third-person subject where the
+        // original had «me»: can be read as someone else.
+        foreach (Match m in Regex.Matches(r, @"\b(?<s>ele|ela|eles|elas)\s+(?:não\s+)?(?:já\s+)?(?<c>o|a)\s+(?<v>\p{L}+)", I))
+        {
+            if (InQuotes(quotes, m.Index)) continue;
+            string v = m.Groups["v"].Value;
+            if (!Regex.IsMatch(o, @"\b" + m.Groups["s"].Value + @"\s+(?:não\s+)?(?:já\s+)?me\s+" + Regex.Escape(Stem(v)), I)) continue;
+            Add(items, m.Index, m.Length, m.Value, "pronome ambíguo: «" + m.Groups["c"].Value + "» pode ser lido como outra pessoa (no original: «" + m.Groups["s"].Value + " me …»). Confira: o claro seria «" + m.Groups["s"].Value + " " + v + " o depoente».");
+        }
+        // 4. «quando o depoente chegou, ele já estava…»: a third-person subject right
+        // after a clause of the narrator can be read as the narrator himself.
+        foreach (Match m in Regex.Matches(r, @"\bo depoente\s+\p{L}+[^.;!?\n]{0,50}?,\s*(?<p>ele|ela)\s+(?:já\s+|ainda\s+)?(?:estava|era|tinha|ficou|foi|está|parecia|continuava)\b", I))
+        {
+            if (InQuotes(quotes, m.Index)) continue;
+            Group p = m.Groups["p"];
+            Add(items, p.Index, m.Index + m.Length - p.Index, r.Substring(p.Index, m.Index + m.Length - p.Index), "pronome ambíguo: «" + p.Value + "» pode ser lido como o próprio depoente. Confira a quem se refere.");
+        }
+        // 5. «estava o depoente enforcando»: «o depoente» inside a verbal phrase.
+        foreach (Match m in Regex.Matches(r, @"\b(?:estava|está|estavam|estão|foi|ia|vai|tinha|havia|queria|quis|começou a|continuou a|ficou|tentou|tentava)\s+o depoente\s+\p{L}+(?:ndo|ar|er|ir|ado|ido|ada|ida)\b", I))
+        {
+            if (InQuotes(quotes, m.Index)) continue;
+            Add(items, m.Index, m.Length, m.Value, "frase quebrada: «o depoente» no meio da locução verbal (no original: «… me …»). Confira quem fez o quê.");
+        }
+        // 6. Subject: «Relatou que o depoente…» reads as a third person talking about the narrator.
+        Match lead = Regex.Match(r, @"^\s*(?<t>Relatou que\s+o depoente)\b", I);
+        if (lead.Success)
+            AddNote(items, lead.Groups["t"].Index, lead.Groups["t"].Length, lead.Groups["t"].Value, "sujeito: «Relatou» fica sem sujeito e a frase parece falar de outra pessoa. Confira; o claro seria «O depoente relatou que…».");
+        // 7. Gender of the narrator.
+        string feminineWord = FirstFeminine(o), masculineWord = FirstMasculine(o);
+        Match depoente = Regex.Match(r, @"\bo depoente\b", I);
+        if (feminineWord != null)
+        {
+            if (depoente.Success)
+                Add(items, depoente.Index, depoente.Length, depoente.Value, "gênero trocado: o original indica que quem fala é mulher («" + feminineWord + "»), e o texto usa o masculino.");
+            foreach (Match f in FeminineNarrator.Matches(o))
+            {
+                string fw = f.Groups["w"].Value;
+                if (NotAdjectives.Contains(fw) || !fw.EndsWith("a", StringComparison.OrdinalIgnoreCase)) continue;
+                string mw = fw.Substring(0, fw.Length - 1) + "o";
+                foreach (Match x in Regex.Matches(r, @"\b" + Regex.Escape(mw) + @"\b", I))
+                    Add(items, x.Index, x.Length, x.Value, "gênero trocado: no original «" + fw + "» (feminino).");
+            }
+        }
+        else if (masculineWord == null && depoente.Success)
+            AddNote(items, depoente.Index, depoente.Length, depoente.Value, "gênero presumido: o original não diz se quem fala é homem ou mulher; «o depoente» supõe homem. Confira.");
+        // Alerts and notices are merged separately: a notice never colors the text.
+        var alerts = new List<ReviewItem>(); var notes = new List<ReviewItem>();
+        foreach (ReviewItem i in items) (i.Kind == Note ? notes : alerts).Add(i);
+        List<ReviewItem> all = Merge(alerts);
+        all.AddRange(Merge(notes));
+        return all;
+    }
+
+    private static string FirstFeminine(string o)
+    {
+        Match role = FeminineRole.Match(o);
+        if (role.Success) return role.Value.Trim();
+        foreach (Match m in FeminineNarrator.Matches(o)) if (!NotAdjectives.Contains(m.Groups["w"].Value)) return m.Groups["w"].Value;
+        return null;
+    }
+
+    private static string FirstMasculine(string o)
+    {
+        Match role = MasculineRole.Match(o);
+        if (role.Success) return role.Value.Trim();
+        foreach (Match m in MasculineNarrator.Matches(o)) if (!NotAdjectives.Contains(m.Groups["w"].Value)) return m.Groups["w"].Value;
+        return null;
+    }
+
+    // «atacou» → «atac», «defendeu» → «defend», «disse» → «dis».
+    private static string Stem(string verb)
+    {
+        string v = verb.ToLowerInvariant();
+        foreach (string end in new string[] { "ou", "eu", "iu", "ava", "ia", "sse", "ez", "e", "a", "i", "o" })
+            if (v.Length > end.Length + 2 && v.EndsWith(end)) return v.Substring(0, v.Length - end.Length);
+        return v;
+    }
+
+    private static bool Serious(string reason)
+    {
+        return reason.StartsWith("confira quem", StringComparison.OrdinalIgnoreCase) || reason.StartsWith("o original é reflexivo", StringComparison.OrdinalIgnoreCase) || reason.StartsWith("frase quebrada", StringComparison.OrdinalIgnoreCase);
+    }
+
+    private static string Capital(string s) { return s.Length == 0 ? s : Char.ToUpperInvariant(s[0]) + s.Substring(1); }
+
+    private static List<int[]> QuoteRanges(string text)
+    {
+        var ranges = new List<int[]>();
+        foreach (Match m in Regex.Matches(text, "[“\"«][^”\"»]*[”\"»]")) ranges.Add(new int[] { m.Index, m.Index + m.Length });
+        return ranges;
+    }
+
+    private static bool InQuotes(List<int[]> ranges, int index)
+    {
+        foreach (int[] q in ranges) if (index > q[0] && index < q[1]) return true;
+        return false;
+    }
+
+    private static bool Covered(List<ReviewItem> items, int index)
+    {
+        foreach (ReviewItem i in items) if (i.Kind == Alert && index >= i.Start && index < i.Start + i.Length) return true;
+        return false;
+    }
+
+    private static void Add(List<ReviewItem> items, int start, int length, string text, string reason)
+    {
+        var item = new ReviewItem();
+        item.Start = start; item.Length = length; item.Kind = Alert; item.Text = text; item.Reason = reason; item.Alert = true;
+        items.Add(item);
+    }
+
+    private static void AddNote(List<ReviewItem> items, int start, int length, string text, string reason)
+    {
+        var item = new ReviewItem();
+        item.Start = start; item.Length = length; item.Kind = Note; item.Text = text; item.Reason = reason;
+        items.Add(item);
+    }
+
+    // Overlapping alerts become one mark with all reasons.
+    private static List<ReviewItem> Merge(List<ReviewItem> items)
+    {
+        items.Sort(delegate (ReviewItem a, ReviewItem b) { return a.Start.CompareTo(b.Start); });
+        var merged = new List<ReviewItem>();
+        foreach (ReviewItem i in items)
+        {
+            ReviewItem last = merged.Count > 0 ? merged[merged.Count - 1] : null;
+            if (last != null && i.Start < last.Start + last.Length)
+            {
+                int end = Math.Max(last.Start + last.Length, i.Start + i.Length);
+                if (i.Start + i.Length > last.Start + last.Length) last.Text = last.Text + i.Text.Substring(last.Start + last.Length - i.Start);
+                last.Length = end - last.Start;
+                // The most serious reason (who did or said what) comes first.
+                if (last.Reason.IndexOf(i.Reason, StringComparison.Ordinal) < 0)
+                    last.Reason = Serious(i.Reason) && !Serious(last.Reason) ? Capital(i.Reason) + " Também: " + last.Reason : last.Reason + " Também: " + i.Reason;
+            }
+            else merged.Add(i);
+        }
+        return merged;
+    }
+}
 // Paints review highlights without touching the text, the caret, the scroll
 // position or the undo history of a RichTextBox.
 public static class ReviewPainter

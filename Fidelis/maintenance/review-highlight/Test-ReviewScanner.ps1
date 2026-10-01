@@ -64,7 +64,8 @@ $unmatched = @($r.Reformulated | Where-Object Unmatched | ForEach-Object Text) -
 Check ($r.Reformulated.Count -eq 4 -and $r.UnmatchedInReformulated -eq 1 -and $unmatched -eq 'ABC-1243') 'só o item alterado fica sem correspondência' $unmatched
 Check (($r.MissingFromReformulated | ForEach-Object Text) -join ',' -eq 'ABC-1234') 'item do original que sumiu é listado' ''
 $summary = [ReviewScanner]::Summary($r)
-Check ($summary -eq '4 itens para conferir, 1 não encontrado no original; sumiu do reformulado: ABC-1234.') 'resumo' $summary
+# The sample uses «o depoente» without saying the gender: one role alert (see maintenance/role-alerts).
+Check ($summary -eq '4 itens para conferir, 1 não encontrado no original; sumiu do reformulado: ABC-1234; 1 aviso informativo.') 'resumo' $summary
 Check ([ReviewScanner]::Summary([ReviewScanner]::Compare('Sem itens aqui.', 'Nada a conferir.')) -eq '') 'sem itens: resumo vazio' ''
 $r2 = [ReviewScanner]::Compare('Cheguei às 9h.', '')
 Check ($r2.Original.Count -eq 1 -and -not $r2.Original[0].Unmatched) 'sem reformulado: original destacado sem comparação' ''

@@ -7,7 +7,7 @@ PASS UI: editor da interface moderna recebe o texto marcado sem alteração (que
 PASS UI: Adicionar leva cabeçalho, trecho e rodapé ao consolidado
 PASS UI: Copiar leva o marcador byte a byte à área de transferência
 PASS UI: acentos do marcador preservados na cópia (sem '?' ou caractere de substituição)
-INFO tela renderizada em C:\Users\gusta\OneDrive\Área de Trabalho\Depoimento - Copia\DepoimentoLocal-Windows-v1.0.5-Visual-Fix6\maintenance\semantic-fix\round-4-marker-test\marker-screen.png
+INFO tela renderizada em C:\Users\gusta\OneDrive\Área de Trabalho\Depoimento - Copia\Fidelis\maintenance\semantic-fix\round-4-marker-test\marker-screen.png
 PASS B: novo Reformular começa sem o marcador anterior (não acumula)
 INFO B: desfecho registrado pelo motor = [GENERATION_CANCELLED] (tratador de cancelamento)
 PASS B: cancelamento com bloco 1 aceito marca o trecho parcial uma única vez

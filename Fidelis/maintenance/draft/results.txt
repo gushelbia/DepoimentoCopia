@@ -1,4 +1,4 @@
-﻿START 2026-09-30T16:20:31
+﻿START 2026-09-30T21:22:02
 PASS 2: rascunho guarda texto e campos juntos e reabre igual | procedimento=IP 0457/2026; unidade=1ª DP de Exemplópolis; local=Sala 2; data_hora=30/09/2026 14:30; depoente=Maria Exemplo da Silva; documento=CPF 529.982.247-25; condicao=testemunha; endereco=Rua A: nº 5 \ bloco B; telefone=(31) 99999-0000; autoridade=Dr. João Fictício; escrivao=Ana Modelo
 PASS 2: formato legível no Bloco de Notas (cabeçalho, um campo por linha, depois o texto)
 PASS 2: quebra de linha e barra invertida num campo não quebram o arquivo
@@ -26,18 +26,18 @@ PASS 2: campo não salvo também gera a pergunta
 PASS 2: cancelar a janela de abrir não muda nada
 PASS ajuste 1: .txt antigo pergunta se limpa os campos, com «Sim» como padrão | padrão=6 | O rascunho «rascunho-antigo.txt» é antigo e não tem campos de qualificação.  Deseja limpar os campos atuais, para não misturar os dados de um depoimento com o texto de outro?
 PASS ajuste 1: «Não» abre o texto e mantém os campos | Rascunho antigo aberto (só o texto): rascunho-antigo.txt. Os campos de qualificação não foram alterados.
-PASS ajuste 1: «Sim» abre o texto e limpa os campos (data e hora renovadas) | procedimento=; unidade=; local=; data_hora=30/09/2026 16:21; depoente=; documento=; condicao=; endereco=; telefone=; autoridade=; escrivao=
+PASS ajuste 1: «Sim» abre o texto e limpa os campos (data e hora renovadas) | procedimento=; unidade=; local=; data_hora=30/09/2026 21:22; depoente=; documento=; condicao=; endereco=; telefone=; autoridade=; escrivao=
 PASS ajuste 1: depois de abrir e limpar, nada pendente (arquivo com quebras de linha do Windows)
 PASS ajuste 1: sem campos preenchidos, abre o .txt antigo sem perguntar
 PASS 2: arquivo que não é texto é recusado sem apagar nada | Não foi possível abrir o rascunho.  O arquivo não é um rascunho de texto.
 PASS 2: rascunho só com os campos também é salvo
-PASS 2: salvamento automático guarda texto e campos | 1563 ms
+PASS 2: salvamento automático guarda texto e campos | 1538 ms
 PASS 2: mudar só um campo também dispara o salvamento automático
 PASS 2: desligamento do Windows mantém a cópia com os campos
-PASS 2: recuperação devolve texto e campos (inclusive data e hora) | Foi encontrado um depoimento consolidado, com os campos de qualificação, que não foi salvo na última sessão (30/09/2026 às 16:21).  Deseja recuperá-lo?  Se escolher «Não», esse texto será descartado.
+PASS 2: recuperação devolve texto e campos (inclusive data e hora) | Foi encontrado um depoimento consolidado, com os campos de qualificação, que não foi salvo na última sessão (30/09/2026 às 21:22).  Deseja recuperá-lo?  Se escolher «Não», esse texto será descartado.
 PASS 2: recuperado continua marcado como não salvo
 PASS 2: limpar o consolidado mantém a cópia dos campos não salvos
-PASS 2: recuperação só dos campos, com aviso próprio | Foram encontrados campos de qualificação que não foram salvos na última sessão (30/09/2026 às 16:21).  Deseja recuperá-los?  Se escolher «Não», esses dados serão descartados.
+PASS 2: recuperação só dos campos, com aviso próprio | Foram encontrados campos de qualificação que não foram salvos na última sessão (30/09/2026 às 21:22).  Deseja recuperá-los?  Se escolher «Não», esses dados serão descartados.
 PASS 2: ao fechar com campos não salvos, pergunta (e «Cancelar» mantém aberto) | O depoimento (texto consolidado ou campos de qualificação) não foi salvo.  Deseja salvá-lo antes de sair?
 PASS 2: nenhuma janela inesperada
 RESULT PASS

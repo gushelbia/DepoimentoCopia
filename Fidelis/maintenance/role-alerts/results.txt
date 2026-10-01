@@ -1,0 +1,56 @@
+﻿PASS bateria 1: Eu estava correndo na praia quando ele me atacou por trás. | esperado: ambíguo, gênero presumido, sujeito | obtido: ambíguo, gênero presumido, sujeito
+PASS bateria 2: Eu estava saindo do mercado quando ela me empurrou contra a parede. | esperado: ambíguo, gênero presumido, sujeito | obtido: ambíguo, gênero presumido, sujeito
+PASS bateria 3: Ele me bateu com um pedaço de pau e depois fugiu. | esperado: gênero presumido, inversão, sujeito | obtido: gênero presumido, inversão, sujeito
+PASS bateria 4: Quando eu cheguei, ele já estava caído no chão e eu chamei a ambulância. | esperado: ambíguo, gênero presumido | obtido: ambíguo, gênero presumido
+PASS bateria 5: Eu empurrei ele porque ele estava me enforcando. | esperado: gênero presumido, quebrada, sujeito | obtido: gênero presumido, quebrada, sujeito
+PASS bateria 6: Ela me xingou e eu respondi que ia chamar a polícia. | esperado: gênero presumido, lhe | obtido: gênero presumido, lhe
+PASS bateria 7: Ele me disse que tinha visto ela sair com o carro. | esperado: gênero presumido, inversão, sujeito | obtido: gênero presumido, inversão, sujeito
+PASS bateria 8: O Marcos me segurou pelo braço enquanto o outro rapaz pegava minha bolsa. | esperado: lhe | obtido: lhe
+PASS bateria 9: Eu vi quando ele deu um soco nela. | esperado: gênero presumido, sujeito | obtido: gênero presumido, sujeito
+PASS bateria 10: Ela me contou que ele tinha batido nela na noite anterior. | esperado: gênero presumido, inversão, sujeito | obtido: gênero presumido, inversão, sujeito
+PASS bateria 11: Eu estava grávida de cinco meses quando ele me chutou. | esperado: ambíguo, gênero trocado, sujeito | obtido: ambíguo, gênero trocado, sujeito
+PASS bateria 12: Eu fiquei nervosa e liguei para o meu irmão. | esperado: gênero trocado, sujeito | obtido: gênero trocado, sujeito
+PASS bateria 13: Eu sou o pai da menina e fui buscá-la na escola quando ele apareceu. | esperado: sujeito | obtido: sujeito
+PASS bateria 14: Ele me ameaçou com uma faca e eu corri para dentro de casa. | esperado: gênero presumido, lhe | obtido: gênero presumido, lhe
+PASS bateria 15: Eu não vi quem me acertou, só senti a pancada na cabeça. | esperado: gênero presumido, sujeito | obtido: gênero presumido, sujeito
+PASS bateria 16: Eles me cercaram na saída do bar e um deles me deu uma rasteira. | esperado: gênero presumido, sujeito | obtido: gênero presumido, sujeito
+PASS bateria 17: Eu defendi ela quando ele tentou agarrá-la. | esperado: gênero presumido, sujeito | obtido: gênero presumido, sujeito
+PASS bateria 18: Ela me atacou primeiro e eu só me defendi. | esperado: gênero presumido, lhe, reflexivo | obtido: gênero presumido, lhe, reflexivo
+PASS bateria 19: Fui agredida pelo meu ex-companheiro na frente dos meus filhos. | esperado: gênero trocado, sujeito | obtido: gênero trocado, sujeito
+PASS bateria 20: Eu estava sozinho em casa quando ouvi ele arrombar a porta. | esperado: sujeito | obtido: sujeito
+PASS os 8 casos com erro de sentido na bateria recebem alerta de sentido | 8 de 8
+PASS corrigido 1: voz passiva, sujeito explícito | esperado: gênero presumido | obtido: gênero presumido
+PASS corrigido 7: «ele lhe disse» é o certo | esperado:  | obtido: 
+PASS corrigido 10: «ela lhe contou» | esperado:  | obtido: 
+PASS corrigido 18: «atacou o depoente» e «se defendeu» | esperado: gênero presumido | obtido: gênero presumido
+PASS corrigido 5: «enforcando o depoente» | esperado: gênero presumido | obtido: gênero presumido
+PASS corrigido 12: «a depoente … nervosa» | esperado:  | obtido: 
+PASS corrigido 19: «a depoente foi agredida» | esperado:  | obtido: 
+PASS homem explícito («sozinho»): sem alerta de gênero | esperado:  | obtido: 
+PASS «lhe deu» é destinatário normal | esperado:  | obtido: 
+PASS sem «me» no original: «lhe» não é marcado | esperado:  | obtido: 
+PASS fala entre aspas não é marcada | esperado: gênero presumido | obtido: gênero presumido
+PASS textos vazios: nenhum alerta | esperado:  | obtido: 
+PASS texto longo com outro «lhe»: inversão ainda é marcada | esperado: gênero presumido, inversão | obtido: gênero presumido, inversão
+PASS «posso estar enganado» indica homem: sem gênero presumido | esperado:  | obtido: 
+PASS «posso estar enganada» indica mulher | esperado: gênero trocado | obtido: gênero trocado
+PASS QA 1: sem falso alarme de sentido | alertas: sujeito
+PASS QA 2: sem falso alarme de sentido | alertas: gênero presumido
+PASS QA 3: sem falso alarme de sentido | alertas: gênero presumido, sujeito
+PASS QA 4: sem falso alarme de sentido | alertas: sujeito
+PASS QA 5: sem falso alarme de sentido | alertas: gênero presumido, sujeito
+PASS QA 6: sem falso alarme de sentido | alertas: sujeito
+PASS QA 7: sem falso alarme de sentido | alertas: gênero presumido, sujeito
+PASS QA 8: sem falso alarme de sentido | alertas: gênero presumido, sujeito
+PASS QA 9: sem falso alarme de sentido | alertas: gênero presumido, sujeito
+PASS QA 10: sem falso alarme de sentido | alertas: gênero presumido, sujeito
+PASS resumo: alertas e avisos contados separados | 1 alerta de papéis e pronomes; 1 aviso informativo.
+PASS lista ao clicar: alertas primeiro, avisos informativos em seção própria |    • «o depoente lhe disse» — Confira quem fez ou disse: aqui o depoente age sobre outra pessoa, mas no original a ação foi dirigida ao depoente («… me …»).
+PASS alerta de papel usa a cor laranja (alerta), nunca a vermelha
+PASS aviso informativo não tem cor
+PASS bateria: laranja só para inversão, reflexivo, frase quebrada, «lhe», pronome ambíguo e gênero trocado | 0 itens indevidos
+PASS bateria: sujeito e gênero presumido ficam só como aviso informativo | 0 itens indevidos
+PASS bateria 11: gênero trocado pintado de laranja (contradiz o original) | o depoente
+PASS bateria 12: gênero trocado pintado de laranja (contradiz o original) | o depoente, nervoso
+PASS bateria 19: gênero trocado pintado de laranja (contradiz o original) | o depoente, agredido
+PASS «nervoso» em laranja; «Relatou que» continua aviso sem cor

@@ -1,0 +1,109 @@
+﻿[
+    {
+        "number":  1,
+        "gender":  "?",
+        "input":  "Eu estava correndo na praia quando ele me atacou por trás.",
+        "output":  "Relatou que o depoente estava correndo na praia quando ele o atacou por trás.",
+        "seconds":  10,
+        "completed":  true,
+        "retry":  false,
+        "warnings":  [
+
+                     ],
+        "exception":  "",
+        "repairs":  [
+                        "[INFO] [BLOCK_FIRST_PASS] block=1/1; elapsedMs=9898; pieces=21; outputChars=65",
+                        "[INFO] [BLOCK_OK] block=1/1; outputChars=77"
+                    ]
+    },
+    {
+        "number":  3,
+        "gender":  "?",
+        "input":  "Ele me bateu com um pedaço de pau e depois fugiu.",
+        "output":  "[SAÍDA INCOMPLETA E NÃO VALIDADA - NÃO UTILIZAR COMO REFORMULAÇÃO]\r\nMotivo: O bloco 1 ainda precisa de revisão: fidelidade: ação de participante atribuída ao depoente: o depoente lhe bateu. A reformulação foi interrompida: os blocos seguintes não foram processados e o trecho na tela foi marcado como incompleto.\r\n\r\nRelatou que o depoente lhe bateu com um pedaço de pau e depois fugiu.\r\n\r\n[FIM DO TRECHO PARCIAL - a transcrição não foi reformulada por completo]",
+        "seconds":  20.2,
+        "completed":  false,
+        "retry":  true,
+        "warnings":  [
+                         "[2026-09-30 19:46:48.919 -03:00] [WARN] [BLOCK_REJECTED] block=1/1; detail=fidelidade: ação de participante atribuída ao depoente: o depoente lhe bateu"
+                     ],
+        "exception":  "Geração falhou ou foi cancelada; exceção e stack trace, se presentes, constam no log integral.",
+        "repairs":  [
+                        "[INFO] [BLOCK_FIRST_PASS] block=1/1; elapsedMs=10018; pieces=20; outputChars=56",
+                        "[INFO] [LOCAL_REPAIR] block=1/1; before=a saída ainda contém primeira pessoa; after=fidelidade: ação de participante atribuída ao depoente: o depoente lhe bateu",
+                        "[WARN] [BLOCK_RETRY_START] block=1/1; issue=fidelidade: ação de participante atribuída ao depoente: o depoente lhe bateu",
+                        "[WARN] [BLOCK_REJECTED] block=1/1; detail=fidelidade: ação de participante atribuída ao depoente: o depoente lhe bateu"
+                    ]
+    },
+    {
+        "number":  5,
+        "gender":  "?",
+        "input":  "Eu empurrei ele porque ele estava me enforcando.",
+        "output":  "Relatou que o depoente empurrou ele porque ele estava o depoente enforcando.",
+        "seconds":  10.9,
+        "completed":  true,
+        "retry":  false,
+        "warnings":  [
+
+                     ],
+        "exception":  "",
+        "repairs":  [
+                        "[INFO] [BLOCK_FIRST_PASS] block=1/1; elapsedMs=10774; pieces=19; outputChars=64",
+                        "[INFO] [BLOCK_OK] block=1/1; outputChars=76"
+                    ]
+    },
+    {
+        "number":  7,
+        "gender":  "?",
+        "input":  "Ele me disse que tinha visto ela sair com o carro.",
+        "output":  "Relatou que o depoente lhe disse que tinha visto ela sair com o carro.",
+        "seconds":  10.9,
+        "completed":  true,
+        "retry":  false,
+        "warnings":  [
+
+                     ],
+        "exception":  "",
+        "repairs":  [
+                        "[INFO] [BLOCK_FIRST_PASS] block=1/1; elapsedMs=10690; pieces=17; outputChars=58",
+                        "[INFO] [BLOCK_OK] block=1/1; outputChars=70"
+                    ]
+    },
+    {
+        "number":  10,
+        "gender":  "?",
+        "input":  "Ela me contou que ele tinha batido nela na noite anterior.",
+        "output":  "Relatou que o depoente lhe disse que ele tinha batido nela na noite anterior.",
+        "seconds":  10.7,
+        "completed":  true,
+        "retry":  false,
+        "warnings":  [
+
+                     ],
+        "exception":  "",
+        "repairs":  [
+                        "[INFO] [BLOCK_FIRST_PASS] block=1/1; elapsedMs=10581; pieces=18; outputChars=64",
+                        "[INFO] [LOCAL_REPAIR] block=1/1; before=a saída ainda contém primeira pessoa; after=ok",
+                        "[INFO] [BLOCK_OK] block=1/1; outputChars=77"
+                    ]
+    },
+    {
+        "number":  18,
+        "gender":  "?",
+        "input":  "Ela me atacou primeiro e eu só me defendi.",
+        "output":  "Relatou que ela lhe atacou primeiro e o depoente só lhe defendeu.",
+        "seconds":  20.5,
+        "completed":  true,
+        "retry":  true,
+        "warnings":  [
+
+                     ],
+        "exception":  "",
+        "repairs":  [
+                        "[INFO] [BLOCK_FIRST_PASS] block=1/1; elapsedMs=10381; pieces=15; outputChars=47",
+                        "[INFO] [LOCAL_REPAIR] block=1/1; before=a saída ainda contém primeira pessoa; after=fidelidade: ação de participante atribuída ao depoente: o depoente lhe atacou",
+                        "[WARN] [BLOCK_RETRY_START] block=1/1; issue=fidelidade: ação de participante atribuída ao depoente: o depoente lhe atacou",
+                        "[INFO] [BLOCK_OK] block=1/1; outputChars=65"
+                    ]
+    }
+]

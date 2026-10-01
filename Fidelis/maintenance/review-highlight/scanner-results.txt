@@ -27,7 +27,7 @@ PASS telefone com e sem DDD
 PASS placa com e sem hífen; dígitos trocados não equivalem
 PASS só o item alterado fica sem correspondência | ABC-1243
 PASS item do original que sumiu é listado
-PASS resumo | 4 itens para conferir, 1 não encontrado no original; sumiu do reformulado: ABC-1234.
+PASS resumo | 4 itens para conferir, 1 não encontrado no original; sumiu do reformulado: ABC-1234; 1 aviso informativo.
 PASS sem itens: resumo vazio
 PASS sem reformulado: original destacado sem comparação
 PASS relativo «dez para as onze» marcado inteiro | «umas dez para as onze, por aí» aproximado=True

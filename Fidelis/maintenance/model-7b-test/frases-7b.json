@@ -1,0 +1,266 @@
+﻿[
+    {
+        "number":  1,
+        "gender":  "?",
+        "input":  "Eu estava correndo na praia quando ele me atacou por trás.",
+        "output":  "Relatou que o depoente estava correndo na praia quando ele o atacou por trás.",
+        "seconds":  40.2,
+        "completed":  true,
+        "retry":  false,
+        "exception":  "",
+        "repairs":  [
+                        "[INFO] [MODEL_LOAD_OK] file=qwen2.5-7b-instruct-q4_k_m-00001-of-00002.gguf"
+                    ]
+    },
+    {
+        "number":  2,
+        "gender":  "?",
+        "input":  "Eu estava saindo do mercado quando ela me empurrou contra a parede.",
+        "output":  "Relatou que o depoente estava saindo do mercado quando ela o empurrou contra a parede.",
+        "seconds":  36.9,
+        "completed":  true,
+        "retry":  false,
+        "exception":  "",
+        "repairs":  [
+                        "[INFO] [MODEL_LOAD_OK] file=qwen2.5-7b-instruct-q4_k_m-00001-of-00002.gguf"
+                    ]
+    },
+    {
+        "number":  3,
+        "gender":  "?",
+        "input":  "Ele me bateu com um pedaço de pau e depois fugiu.",
+        "output":  "Relatou que ele bateu o depoente com um pedaço de pau e depois fugiu.",
+        "seconds":  29,
+        "completed":  true,
+        "retry":  false,
+        "exception":  "",
+        "repairs":  [
+                        "[INFO] [MODEL_LOAD_OK] file=qwen2.5-7b-instruct-q4_k_m-00001-of-00002.gguf"
+                    ]
+    },
+    {
+        "number":  4,
+        "gender":  "?",
+        "input":  "Quando eu cheguei, ele já estava caído no chão e eu chamei a ambulância.",
+        "output":  "Relatou que quando o depoente chegou, ele já estava caído no chão e o depoente chamou a ambulância.",
+        "seconds":  22,
+        "completed":  true,
+        "retry":  false,
+        "exception":  "",
+        "repairs":  [
+                        "[INFO] [MODEL_LOAD_OK] file=qwen2.5-7b-instruct-q4_k_m-00001-of-00002.gguf"
+                    ]
+    },
+    {
+        "number":  5,
+        "gender":  "?",
+        "input":  "Eu empurrei ele porque ele estava me enforcando.",
+        "output":  "Relatou que o depoente empurrou ele porque ele estava empurrando o depoente.",
+        "seconds":  21.4,
+        "completed":  true,
+        "retry":  false,
+        "exception":  "",
+        "repairs":  [
+                        "[INFO] [MODEL_LOAD_OK] file=qwen2.5-7b-instruct-q4_k_m-00001-of-00002.gguf"
+                    ]
+    },
+    {
+        "number":  6,
+        "gender":  "?",
+        "input":  "Ela me xingou e eu respondi que ia chamar a polícia.",
+        "output":  "Relatou que ela lhe xingou e o depoente respondeu que ia chamar a polícia.",
+        "seconds":  22.2,
+        "completed":  true,
+        "retry":  false,
+        "exception":  "",
+        "repairs":  [
+                        "[INFO] [MODEL_LOAD_OK] file=qwen2.5-7b-instruct-q4_k_m-00001-of-00002.gguf",
+                        "[INFO] [LOCAL_REPAIR] block=1/1; before=a saída ainda contém primeira pessoa; after=ok"
+                    ]
+    },
+    {
+        "number":  7,
+        "gender":  "?",
+        "input":  "Ele me disse que tinha visto ela sair com o carro.",
+        "output":  "Relatou que ele lhe disse que tinha visto ela sair com o carro.",
+        "seconds":  19.8,
+        "completed":  true,
+        "retry":  false,
+        "exception":  "",
+        "repairs":  [
+                        "[INFO] [MODEL_LOAD_OK] file=qwen2.5-7b-instruct-q4_k_m-00001-of-00002.gguf"
+                    ]
+    },
+    {
+        "number":  8,
+        "gender":  "?",
+        "input":  "O Marcos me segurou pelo braço enquanto o outro rapaz pegava minha bolsa.",
+        "output":  "Relatou que o Marcos segurou o braço do depoente enquanto o outro rapaz pegava a bolsa do depoente.",
+        "seconds":  23.9,
+        "completed":  true,
+        "retry":  false,
+        "exception":  "",
+        "repairs":  [
+                        "[INFO] [MODEL_LOAD_OK] file=qwen2.5-7b-instruct-q4_k_m-00001-of-00002.gguf"
+                    ]
+    },
+    {
+        "number":  9,
+        "gender":  "?",
+        "input":  "Eu vi quando ele deu um soco nela.",
+        "output":  "Relatou que o depoente viu quando ele deu um soco nela.",
+        "seconds":  21,
+        "completed":  true,
+        "retry":  false,
+        "exception":  "",
+        "repairs":  [
+                        "[INFO] [MODEL_LOAD_OK] file=qwen2.5-7b-instruct-q4_k_m-00001-of-00002.gguf"
+                    ]
+    },
+    {
+        "number":  10,
+        "gender":  "?",
+        "input":  "Ela me contou que ele tinha batido nela na noite anterior.",
+        "output":  "Relatou que ela lhe contou que ele tinha batido nela na noite anterior.",
+        "seconds":  20.9,
+        "completed":  true,
+        "retry":  false,
+        "exception":  "",
+        "repairs":  [
+                        "[INFO] [MODEL_LOAD_OK] file=qwen2.5-7b-instruct-q4_k_m-00001-of-00002.gguf"
+                    ]
+    },
+    {
+        "number":  11,
+        "gender":  "F",
+        "input":  "Eu estava grávida de cinco meses quando ele me chutou.",
+        "output":  "Relatou que o depoente estava grávida de cinco meses quando ele a chutou.",
+        "seconds":  19.9,
+        "completed":  true,
+        "retry":  false,
+        "exception":  "",
+        "repairs":  [
+                        "[INFO] [MODEL_LOAD_OK] file=qwen2.5-7b-instruct-q4_k_m-00001-of-00002.gguf"
+                    ]
+    },
+    {
+        "number":  12,
+        "gender":  "F",
+        "input":  "Eu fiquei nervosa e liguei para o meu irmão.",
+        "output":  "Relatou que o depoente ficou nervoso e ligou para o seu irmão.",
+        "seconds":  20,
+        "completed":  true,
+        "retry":  false,
+        "exception":  "",
+        "repairs":  [
+                        "[INFO] [MODEL_LOAD_OK] file=qwen2.5-7b-instruct-q4_k_m-00001-of-00002.gguf"
+                    ]
+    },
+    {
+        "number":  13,
+        "gender":  "M",
+        "input":  "Eu sou o pai da menina e fui buscá-la na escola quando ele apareceu.",
+        "output":  "Relatou que o pai da menina foi buscá-la na escola quando ele apareceu.",
+        "seconds":  19.8,
+        "completed":  true,
+        "retry":  false,
+        "exception":  "",
+        "repairs":  [
+                        "[INFO] [MODEL_LOAD_OK] file=qwen2.5-7b-instruct-q4_k_m-00001-of-00002.gguf"
+                    ]
+    },
+    {
+        "number":  14,
+        "gender":  "?",
+        "input":  "Ele me ameaçou com uma faca e eu corri para dentro de casa.",
+        "output":  "Relatou que ele ameaçou o depoente com uma faca e o depoente correu para dentro de casa.",
+        "seconds":  21.9,
+        "completed":  true,
+        "retry":  false,
+        "exception":  "",
+        "repairs":  [
+                        "[INFO] [MODEL_LOAD_OK] file=qwen2.5-7b-instruct-q4_k_m-00001-of-00002.gguf",
+                        "[INFO] [LOCAL_REPAIR] block=1/1; before=fidelidade: possível primeira pessoa residual: corri; after=ok"
+                    ]
+    },
+    {
+        "number":  15,
+        "gender":  "?",
+        "input":  "Eu não vi quem me acertou, só senti a pancada na cabeça.",
+        "output":  "Relatou que o depoente não viu quem o acertou, o depoente só sentiu a pancada na cabeça.",
+        "seconds":  20.8,
+        "completed":  true,
+        "retry":  false,
+        "exception":  "",
+        "repairs":  [
+                        "[INFO] [MODEL_LOAD_OK] file=qwen2.5-7b-instruct-q4_k_m-00001-of-00002.gguf"
+                    ]
+    },
+    {
+        "number":  16,
+        "gender":  "?",
+        "input":  "Eles me cercaram na saída do bar e um deles me deu uma rasteira.",
+        "output":  "Relatou que eles lhe cercaram na saída do bar e um deles lhe deu uma rasteira.",
+        "seconds":  22.1,
+        "completed":  true,
+        "retry":  false,
+        "exception":  "",
+        "repairs":  [
+                        "[INFO] [MODEL_LOAD_OK] file=qwen2.5-7b-instruct-q4_k_m-00001-of-00002.gguf",
+                        "[INFO] [LOCAL_REPAIR] block=1/1; before=a saída ainda contém primeira pessoa; after=ok"
+                    ]
+    },
+    {
+        "number":  17,
+        "gender":  "?",
+        "input":  "Eu defendi ela quando ele tentou agarrá-la.",
+        "output":  "Relatou que o depoente defendeu ela quando ele tentou agarrá-la.",
+        "seconds":  20.4,
+        "completed":  true,
+        "retry":  false,
+        "exception":  "",
+        "repairs":  [
+                        "[INFO] [MODEL_LOAD_OK] file=qwen2.5-7b-instruct-q4_k_m-00001-of-00002.gguf"
+                    ]
+    },
+    {
+        "number":  18,
+        "gender":  "?",
+        "input":  "Ela me atacou primeiro e eu só me defendi.",
+        "output":  "Relatou que ela atacou o depoente primeiro e o depoente só se defendeu.",
+        "seconds":  22.2,
+        "completed":  true,
+        "retry":  false,
+        "exception":  "",
+        "repairs":  [
+                        "[INFO] [MODEL_LOAD_OK] file=qwen2.5-7b-instruct-q4_k_m-00001-of-00002.gguf"
+                    ]
+    },
+    {
+        "number":  19,
+        "gender":  "F",
+        "input":  "Fui agredida pelo meu ex-companheiro na frente dos meus filhos.",
+        "output":  "Relatou que o depoente foi agredida pelo seu ex-companheiro na frente dos seus filhos.",
+        "seconds":  22.7,
+        "completed":  true,
+        "retry":  false,
+        "exception":  "",
+        "repairs":  [
+                        "[INFO] [MODEL_LOAD_OK] file=qwen2.5-7b-instruct-q4_k_m-00001-of-00002.gguf"
+                    ]
+    },
+    {
+        "number":  20,
+        "gender":  "M",
+        "input":  "Eu estava sozinho em casa quando ouvi ele arrombar a porta.",
+        "output":  "Relatou que o depoente estava sozinho em casa quando o depoente ouviu ele arrombar a porta.",
+        "seconds":  20.8,
+        "completed":  true,
+        "retry":  false,
+        "exception":  "",
+        "repairs":  [
+                        "[INFO] [MODEL_LOAD_OK] file=qwen2.5-7b-instruct-q4_k_m-00001-of-00002.gguf",
+                        "[INFO] [LOCAL_REPAIR] block=1/1; before=fidelidade: sujeito do depoente implícito em oração subordinada: casa quando ouvi; after=ok"
+                    ]
+    }
+]

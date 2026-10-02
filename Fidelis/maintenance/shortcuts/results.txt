@@ -1,4 +1,4 @@
-﻿START 2026-10-02T07:03:52
+﻿START 2026-10-02T10:30:19
 PASS controle: sem bloqueio, Ctrl+R alinha à direita num RichTextBox comum (a simulação funciona) | Right
 PASS dica de cada botão mostra o atalho | Reformular texto (Ctrl+Enter) / Cancelar a geração (Esc) / Salvar rascunho (Ctrl+S) / Abrir rascunho (Ctrl+O) / Exportar Word (Ctrl+E) / Ligar ou desligar os destaques (Ctrl+D)
 PASS Ctrl+E/R/L/J e demais atalhos de formatação não mudam o texto nem o alinhamento (original)

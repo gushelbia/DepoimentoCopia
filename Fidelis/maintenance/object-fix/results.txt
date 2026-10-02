@@ -1,0 +1,37 @@
+PASS R05: objeto apagado («e ameaçou.») → «ameaçou o depoente» | O depoente relatou que aí ele tirou uma faca da cintura e ameaçou o depoente.
+PASS R05: «veio se xingando» → «veio xingando o depoente» | O depoente relatou que ele desceu e veio xingando o depoente.
+PASS R07: «aceitou como orientando» → «aceitou o depoente como orientando» | O depoente relatou que a professora Cecília aceitou o depoente como orientando.
+PASS R11: «perguntou as horas» → «lhe perguntou as horas» (objeto indireto) | O depoente relatou que um homem de moto parou e lhe perguntou as horas.
+PASS N7: «e lhe atacou» → «e ele atacou o depoente» (sujeito e objeto do original) | O depoente relatou que ficou até tarde e ele atacou o depoente na saída.
+PASS R10: «me pediu» virou «recebeu … do Diego»: validador acusa | fidelidade: depoente omitido ou trocado como objeto: no original «Diego me pediu», ação ausente na saída
+PASS duas ocorrências sem o depoente: não adivinha, validador acusa | fidelidade: depoente omitido ou trocado como objeto: no original «Ele me ameaçou»
+PASS duas ocorrências: o reparo não adivinha | O depoente relatou que ele ameaçou e depois ameaçou de novo.
+PASS passiva «relatou que foi empurrado» conta como o depoente
+PASS passiva «foi cercado» conta como o depoente
+PASS «ajudou o depoente» e «o levou»: depoente presente
+PASS «levar» tem as duas regências: sem mudança | O depoente relatou que uma moça o levou até o ambulatório.
+PASS reflexivo do depoente («me machuquei» → «se machucou»): sem acusação
+PASS gerúndio reflexivo do depoente («eu estava me arrumando»): sem acusação
+PASS verbo de fala com «lhe»: sem acusação
+PASS «o defendeu» certo: não vira «lhe» («defendeu» não é «deu») | O depoente relatou que o Tiago se levantou e o defendeu.
+PASS R07: «Meu orientador» → «o orientador do depoente» | O depoente relatou que o orientador do depoente, o professor Wanderley, foi afastado. O depoente ficou sem orientador.
+PASS F8: «minha filha» → «a filha do depoente» | O depoente relatou que ficou preocupado porque a filha do depoente não atendia.
+PASS outra «filha» no original: não adivinha | O depoente relatou que a filha e a filha dele brincavam.
+PASS R11: «puxou da minha mão» → «puxou da mão do depoente» (não «a mão») | O depoente relatou que quando o depoente foi olhar o celular, ele puxou da mão do depoente e saiu.
+PASS R11 sem reparo: validador acusa | fidelidade: papel do depoente trocado: no original «puxou da minha mão», na saída «puxou a mão do depoente»
+PASS R10: «cem e cinquenta» → «cento e cinquenta» | O depoente relatou que ele lhe disse que já tinha pago cento e cinquenta.
+PASS «cem reais» fica igual | O depoente relatou que pagou cem reais.
+PASS R06: «foi o depoente que o depoente achou» → «foi o depoente que achou» | O depoente relatou que mas foi o depoente que achou o processo.
+PASS outra repetição (sem «foi»): validador acusa | fidelidade: frase quebrada por repetição: «o depoente que o depoente»
+PASS «foi a Ana que achou» (sem repetição): sem mudança | O depoente relatou que ela disse que foi a Ana que achou.
+PASS versão correta: sem acusação
+PASS R01: «lhe chamou» → «chamou o depoente» | O depoente relatou que o professor Heitor chamou o depoente na sala dele.
+PASS  | O depoente relatou que ele lhe disse que ia reprovar o depoente.
+PASS R01: «eu» de outra oração não torna «ia me reprovar» reflexivo | O depoente relatou que ele lhe disse que se o depoente não fosse ele ia reprovar o depoente.
+PASS gerúndio reflexivo com auxiliar na 1ª pessoa («fiquei me perguntando»): sem acusação
+PASS R06: «lhe humilhou» depois de vírgula → «humilhou o depoente» | O depoente relatou que a chefe do depoente, a Dona Rosângela, humilhou o depoente na frente de todos.
+PASS R12: «o pediu» → «lhe pediu» | O depoente relatou que no final ela lhe pediu pra mandar a ata.
+PASS R02: «o procurou» fica; «o pediu» → «lhe pediu» | O depoente relatou que a aluna o procurou, ela que lhe pediu para conversar.
+PASS «o pedido» (substantivo) não vira «lhe» | O depoente relatou que o pedido dele foi negado. Ele lhe pediu ajuda.
+PASS saída vazia continua rejeitada | fidelidade: saída vazia
+PASS reparo idempotente | O depoente relatou que ele ameaçou o depoente e saiu.

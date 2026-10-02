@@ -69,3 +69,10 @@ PASS depoente também faz a ação no original («eu fiquei calado»): sem alert
 PASS mesmo predicado do depoente com verbo irregular c→qu («verifiquei isso»)
 PASS ação dirigida ao depoente («ela me atacou») fica com as regras de inversão
 PASS fala entre aspas não conta
+PASS R06: «lhe humilhou» depois de vírgula é marcado | Rosângela, lhe humilhou
+PASS R12: «ela o pediu» marcado como regência, com «lhe pediu» | regência: com «pediu», quem recebe a ação é objeto indireto (no original: «ela me pediu»). Confira: o certo seria «ela lhe pediu».
+PASS R02: «ela que o pediu» marcado como regência
+PASS «lhe defendeu» é marcado («defendeu» não é verbo de dar) | e lhe defendeu
+PASS R10: «cem e cinquenta» marcado como divergente; «cento e cinquenta» sumiu | cem e cinquenta
+PASS valor por extenso sem «reais» em contexto de dinheiro: conferido quando igual | cento e cinquenta
+PASS «deu um soco», «dois tapas»: não são valores

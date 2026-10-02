@@ -1038,6 +1038,239 @@ namespace DepoimentoLocal.Windows
             return x.Success ? "fidelidade: frase quebrada: «o depoente» no meio da locução verbal: «" + x.Value + "»" : null;
         }
 
+        // ---- The narrator as object (round 8, realistic battery) -------------
+        // Every «me»/«meu»/«minha» of the source needs a narrator reference in the
+        // output. Repaired from the source with a single correspondence; otherwise
+        // Validate reports it (retry, then rejection with the incomplete mark).
+
+        // Verbs whose narrator object is indirect («lhe disse», «lhe pediu», «lhe deu»).
+        public static bool RecipientVerb(string verb)
+        {
+            string v = verb.ToLowerInvariant();
+            if (Regex.IsMatch(v, @"^(?:deu|dá|dar|dava|dando|dado|dera|daria|deram)$")) return true;
+            return Regex.IsMatch(v, @"^(?:dis|diz|dit|cont|fal|pergunt|ped|mand|avis|inform|explic|entreg|mostr|emprest|ofere|respond|telefon|lig|escrev|envi|pass|jur|garant|promet|confess|ensin|devolv|vend|pag|sugeri|suger|recomend|comunic|repass|agradec|desej|permit|proib|orden|neg|apresent|indic|fornec|revel|anunci)");
+        }
+
+        // Either regency depending on the meaning («me levou até lá» / «me levou um café»):
+        // never changed between «o» and «lhe».
+        public static bool EitherRegencyVerb(string verb)
+        {
+            return Regex.IsMatch(verb.ToLowerInvariant(), @"^(?:lev|trouxe|traz|trag|cobr|jog|atir|serv|atend|pux)");
+        }
+
+        // «disse», «contou», «falou»…: paraphrased freely; checked by the recipient rules.
+        public static bool SayVerb(string verb)
+        {
+            return Regex.IsMatch(verb.ToLowerInvariant(), @"^(?:disse|diss|dis|diz|dit|cont|fal|inform|explic|relat|avis|respond|coment|garant|confirm|repet|jur)");
+        }
+
+        public static string StemHead(string verb)
+        {
+            string stem = VerbStem(verb);
+            return stem.Length >= 4 ? stem.Substring(0, 4) : stem;
+        }
+
+        // Source «me V» where the narrator is the object (not «eu me V», not «me machuquei»).
+        public static string MeObjectSource()
+        {
+            return @"(?<pre>\b\p{L}+\s+)?\bme\s+(?<v>\p{L}{3,})";
+        }
+
+        public static bool NarratorAsObject(string source, Match m)
+        {
+            string v = m.Groups["v"].Value, pre = m.Groups["pre"].Value.Trim().ToLowerInvariant();
+            if (pre == "eu") return false;
+            string third = ThirdPerson(v);
+            if (third != null && third != v.ToLowerInvariant()) return false;                 // «me machuquei», «me lembro»
+            if (Lookup(SubjectOnlyFirstPerson(), v) != null) return false;
+            // Gerund or infinitive of a narrator clause: «eu estava me arrumando», «fiquei me
+            // perguntando». Only the auxiliary right before «me» and its subject decide
+            // («se eu não fosse … ele ia me reprovar» is about «ele»).
+            if (Regex.IsMatch(v, @"(?:ndo|ar|er|ir)$", RegexOptions.IgnoreCase) && pre.Length > 0)
+            {
+                string auxThird = ThirdPerson(pre);
+                if (auxThird != null && auxThird != pre) return false;                      // «fiquei me perguntando»
+                int start = SentenceStart(source, m.Index);
+                Match subject = Regex.Match(source.Substring(start, m.Groups["pre"].Index - start), @"(?<w>\p{L}+)\s*$");
+                if (subject.Success && subject.Groups["w"].Value.ToLowerInvariant() == "eu") return false;   // «eu estava me arrumando»
+            }
+            return true;
+        }
+
+        // A narrator reference right at this word of the output: «lhe V», «o V», «V-o»,
+        // «V o depoente», «V ao depoente», «o depoente foi V-ado».
+        public static bool NarratorMarked(string text, int index, int length)
+        {
+            string before = text.Substring(0, index), word = text.Substring(index, length);
+            string after = text.Substring(index + length);
+            if (Regex.IsMatch(before, @"\b(?:lhe|o|a|me|os|as)\s+(?:(?:não|já|também|ainda|só)\s+)?$", RegexOptions.IgnoreCase)) return true;
+            if (Regex.IsMatch(after, @"^-(?:o|a|lhe)\b", RegexOptions.IgnoreCase)) return true;
+            if (Regex.IsMatch(after, @"^(?:\s+[\p{L}-]+){0,5}?\s+(?:o|a|ao|à|do|da|no|na|pelo|pela|com\s+o|com\s+a|para\s+o|para\s+a|pro|pra)\s+depoente\b", RegexOptions.IgnoreCase))
+            {
+                // The deponent must not be the subject of a new clause in between.
+                Match m = Regex.Match(after, @"^(?<mid>(?:\s+[\p{L}-]+){0,5}?)\s+(?:o|a|ao|à|do|da|no|na|pelo|pela|com\s+o|com\s+a|para\s+o|para\s+a|pro|pra)\s+depoente\b", RegexOptions.IgnoreCase);
+                if (!Regex.IsMatch(m.Groups["mid"].Value, @"\b(?:e|que|quando|mas|porque|enquanto|onde)\b", RegexOptions.IgnoreCase)) return true;
+            }
+            // Passive with the narrator as subject: «o depoente foi empurrado», «Relatou que
+            // foi cercado» (the opening's subject is the narrator).
+            if (Regex.IsMatch(word, @"(?:ad[oa]s?|id[oa]s?)$", RegexOptions.IgnoreCase)
+                && Regex.IsMatch(before, @"(?:\bdepoente|^\s*[Rr]elatou\s+que)(?:\s+\p{L}+){0,3}?\s+(?:não\s+)?(?:foi|era|ficou|estava|acabou|tinha\s+sido|havia\s+sido)\s+$", RegexOptions.IgnoreCase)) return true;
+            return false;
+        }
+
+        // 1) Object dropped («e me ameaçou» → «e ameaçou»), turned into «se» («veio me
+        // xingando» → «veio se xingando») or given as «lhe» with a direct-object verb
+        // («lhe chamou», «ia lhe reprovar»), and «o» with a recipient verb («o pediu»).
+        public static string RepairNarratorObject(string source, string text, string fullOutput)
+        {
+            foreach (Match m in Regex.Matches(source, MeObjectSource(), RegexOptions.IgnoreCase))
+            {
+                if (!NarratorAsObject(source, m)) continue;
+                string v = m.Groups["v"].Value, head = StemHead(v);
+                if (head.Length < 3 || SayVerb(v)) continue;
+                // One source use of this verb, one output form of it.
+                if (Regex.Matches(source, @"\b" + Regex.Escape(head) + @"\p{L}*", RegexOptions.IgnoreCase).Count != 1) continue;
+                string form = @"\b(?<w>" + Regex.Escape(head) + @"\p{L}*)\b";
+                if (Regex.Matches(fullOutput, form, RegexOptions.IgnoreCase).Count != 1) continue;
+                MatchCollection found = Regex.Matches(text, form, RegexOptions.IgnoreCase);
+                if (found.Count != 1) continue;
+                Group w = found[0].Groups["w"];
+                string before = text.Substring(0, w.Index);
+                if (EitherRegencyVerb(w.Value)) continue;
+                bool recipient = RecipientVerb(w.Value);
+                // «lhe chamou» → «chamou o depoente» (direct-object verb).
+                Match lhe = Regex.Match(before, @"\blhe\s+$", RegexOptions.IgnoreCase);
+                if (lhe.Success && !recipient && !Regex.IsMatch(before, @"\bdepoente\s+(?:\p{L}+\s+)?lhe\s+$", RegexOptions.IgnoreCase))
+                {
+                    // «e lhe atacou» right after a link word: the source's subject was
+                    // deleted too («e ele me atacou»); give it back with the object.
+                    string subject = "";
+                    string pre = m.Groups["pre"].Value.Trim();
+                    if (Regex.IsMatch(before, @"\b(?:e|que|mas|quando|porque)\s+lhe\s+$") && Regex.IsMatch(pre, @"^(?:ele|ela|eles|elas)$", RegexOptions.IgnoreCase))
+                        subject = pre.ToLowerInvariant() + " ";
+                    text = text.Substring(0, lhe.Index) + subject + w.Value + " o depoente" + text.Substring(w.Index + w.Length);
+                    continue;
+                }
+                // «o pediu» → «lhe pediu» (recipient verb, finite form).
+                Match o = Regex.Match(before, @"\bo\s+$");
+                if (o.Success && recipient && Regex.IsMatch(w.Value, @"(?:ou|eu|iu|ia|ava|isse|eu)$", RegexOptions.IgnoreCase))
+                {
+                    text = text.Substring(0, o.Index) + "lhe " + text.Substring(w.Index);
+                    continue;
+                }
+                // «veio se xingando» → «veio xingando o depoente» (another person's action).
+                Match se = Regex.Match(before, @"\bse\s+$", RegexOptions.IgnoreCase);
+                if (se.Success && !Regex.IsMatch(source, @"\bse\s+" + Regex.Escape(head), RegexOptions.IgnoreCase) && !NarratorReflexive(source, v)
+                    && !Regex.IsMatch(before.Substring(SentenceStart(before, before.Length)), @"\bo depoente\s+(?:(?:não|já|também|ainda|só)\s+)?se\s+$", RegexOptions.IgnoreCase))
+                {
+                    string fixedVerb = recipient ? "lhe " + w.Value : w.Value + " o depoente";
+                    text = text.Substring(0, se.Index) + fixedVerb + text.Substring(w.Index + w.Length);
+                    continue;
+                }
+                if (NarratorMarked(text, w.Index, w.Length)) continue;
+                // Dropped object of a finite verb: «e ameaçou.» → «e ameaçou o depoente.»;
+                // «perguntou as horas» → «lhe perguntou as horas».
+                if (!Regex.IsMatch(w.Value, @"(?:ou|eu|iu)$", RegexOptions.IgnoreCase)) continue;
+                if (Regex.IsMatch(before, @"\bdepoente\s+(?:(?:não|já|também|ainda|só)\s+)?$", RegexOptions.IgnoreCase)) continue;   // the deponent is the subject: not this case
+                if (recipient) text = text.Substring(0, w.Index) + "lhe " + text.Substring(w.Index);
+                else text = text.Substring(0, w.Index + w.Length) + " o depoente" + text.Substring(w.Index + w.Length);
+            }
+            return text;
+        }
+
+        public static string NarratorObjectIssue(string original, string output)
+        {
+            string source = Unquote(original), rendered = Unquote(output);
+            foreach (Match m in Regex.Matches(source, MeObjectSource(), RegexOptions.IgnoreCase))
+            {
+                if (!NarratorAsObject(source, m)) continue;
+                string v = m.Groups["v"].Value, head = StemHead(v);
+                if (head.Length < 3 || SayVerb(v)) continue;
+                MatchCollection forms = Regex.Matches(rendered, @"\b(?<w>" + Regex.Escape(head) + @"\p{L}*)\b", RegexOptions.IgnoreCase);
+                bool marked = false;
+                foreach (Match f in forms)
+                {
+                    Group w = f.Groups["w"];
+                    string before = rendered.Substring(0, w.Index);
+                    if (Regex.IsMatch(before, @"\bse\s+$", RegexOptions.IgnoreCase) && !NarratorReflexive(source, v)) continue;
+                    if (Regex.IsMatch(before, @"\blhe\s+$", RegexOptions.IgnoreCase) && !RecipientVerb(w.Value)) continue;
+                    if (NarratorMarked(rendered, w.Index, w.Length)) { marked = true; break; }
+                }
+                if (!marked) return "fidelidade: depoente omitido ou trocado como objeto: no original «" + m.Value.Trim() + "»" + (forms.Count == 0 ? ", ação ausente na saída" : "");
+            }
+            return null;
+        }
+
+        // 2) Narrator possessive dropped: «Meu orientador» → «o orientador» becomes
+        // «o orientador do depoente»; «puxou da minha mão» → «puxou a mão do depoente»
+        // gets its preposition back («puxou da mão do depoente»).
+        public static string RepairNarratorOwner(string source, string text, string fullOutput)
+        {
+            foreach (Match mine in Regex.Matches(source, @"\b(?<p>[Mm]eu|[Mm]inha|[Mm]eus|[Mm]inhas)\s+(?<n>\p{L}{3,})\b"))
+            {
+                string n = mine.Groups["n"].Value;
+                // One narrator «meu N» and no «o N» of someone else in the source.
+                if (Regex.Matches(source, @"\b(?:meu|minha|meus|minhas)\s+" + Regex.Escape(n) + @"\b", RegexOptions.IgnoreCase).Count != 1) continue;
+                if (Regex.IsMatch(source, @"\b(?:o|a|os|as|seu|sua|seus|suas|dele|dela)\s+" + Regex.Escape(n) + @"\b", RegexOptions.IgnoreCase)) continue;
+                if (Regex.IsMatch(fullOutput, @"\b(?:seu|sua|seus|suas)\s+" + Regex.Escape(n) + @"\b|\b" + Regex.Escape(n) + @"\s+d[oa]\s+depoente\b|\b" + Regex.Escape(n) + @"\s+(?:dele|dela)\b", RegexOptions.IgnoreCase)) continue;
+                string pattern = @"\b(?<art>[Oo]|[Aa]|[Oo]s|[Aa]s)\s+(?<n>" + Regex.Escape(n) + @")\b(?!\s+(?:d[oa]s?|de)\s)";
+                if (Regex.Matches(fullOutput, pattern).Count != 1) continue;
+                MatchCollection found = Regex.Matches(text, pattern);
+                if (found.Count != 1) continue;
+                Match x = found[0];
+                text = text.Substring(0, x.Index) + x.Value + " do depoente" + text.Substring(x.Index + x.Length);
+            }
+            foreach (Match from in Regex.Matches(source, @"\b(?<v>\p{L}{3,})\s+(?<p>da|do|das|dos)\s+(?:minha|meu|minhas|meus)\s+(?<n>\p{L}{3,})\b", RegexOptions.IgnoreCase))
+            {
+                string head = StemHead(from.Groups["v"].Value);
+                string pattern = @"\b(?<v>" + Regex.Escape(head) + @"\p{L}*)\s+(?<art>a|o|as|os)\s+(?<n>" + Regex.Escape(from.Groups["n"].Value) + @")\s+(?<own>d[oa]\s+depoente)\b";
+                if (Regex.Matches(fullOutput, pattern, RegexOptions.IgnoreCase).Count != 1) continue;
+                MatchCollection found = Regex.Matches(text, pattern, RegexOptions.IgnoreCase);
+                if (found.Count != 1) continue;
+                Match x = found[0];
+                string art = x.Groups["art"].Value.ToLowerInvariant();
+                string prep = art == "a" ? "da" : art == "o" ? "do" : art == "as" ? "das" : "dos";
+                text = text.Substring(0, x.Groups["art"].Index) + prep + text.Substring(x.Groups["art"].Index + x.Groups["art"].Length);
+            }
+            return text;
+        }
+
+        public static string NarratorOwnerIssue(string original, string output)
+        {
+            string source = Unquote(original), rendered = Unquote(output);
+            foreach (Match from in Regex.Matches(source, @"\b(?<v>\p{L}{3,})\s+(?<p>da|do|das|dos)\s+(?:minha|meu|minhas|meus)\s+(?<n>\p{L}{3,})\b", RegexOptions.IgnoreCase))
+            {
+                Match x = Regex.Match(rendered, @"\b" + Regex.Escape(StemHead(from.Groups["v"].Value)) + @"\p{L}*\s+(?:a|o|as|os)\s+" + Regex.Escape(from.Groups["n"].Value) + @"\s+d[oa]\s+depoente\b", RegexOptions.IgnoreCase);
+                if (x.Success) return "fidelidade: papel do depoente trocado: no original «" + from.Value.Trim() + "», na saída «" + x.Value.Trim() + "»";
+            }
+            return null;
+        }
+
+        // 3) «cento e cinquenta» never becomes «cem e cinquenta» («cem e …» is not a number).
+        public static string RepairNumberWords(string source, string text)
+        {
+            foreach (Match m in Regex.Matches(text, @"\b(?<c>[Cc])em\s+e\s+(?<n>\p{L}+)\b"))
+            {
+                if (!Regex.IsMatch(source, @"\bcento\s+e\s+" + Regex.Escape(m.Groups["n"].Value) + @"\b", RegexOptions.IgnoreCase)) continue;
+                text = Regex.Replace(text, @"\b" + Regex.Escape(m.Value) + @"\b", m.Groups["c"].Value + "ento e " + m.Groups["n"].Value);
+            }
+            return text;
+        }
+
+        // 4) Broken by repetition: «foi o depoente que o depoente achou» → «foi o depoente
+        // que achou». Only this exact pattern «foi X que X <verbo>»; any other
+        // repetition is reported by RepeatedNarratorIssue.
+        public static string RepairRepeatedSubject(string text)
+        {
+            return Regex.Replace(text, @"\b(?<head>[Ff]oi\s+(?<x>(?:o|a)\s+\p{L}+)\s+que)\s+\k<x>\s+(?<v>\p{L}+)\b", "${head} ${v}");
+        }
+
+        public static string RepeatedNarratorIssue(string output)
+        {
+            Match x = Regex.Match(Unquote(output), @"\b[Oo] depoente\s+(?:(?:que|quem)\s+)?o depoente\b");
+            return x.Success ? "fidelidade: frase quebrada por repetição: «" + x.Value + "»" : null;
+        }
+
         public static string CorrectionKey(string text)
         {
             text = Normalize(text);
@@ -1224,6 +1457,12 @@ namespace DepoimentoLocal.Windows
             step = text; text = RepairNarratorPossessive(source, text); NoteRepair("possessivo", step, text);
             step = text; text = RepairRecipients(source, text, fullOutput); NoteRepair("destinatario", step, text);
             step = text; text = RepairParallelCorrections(source, text); NoteRepair("autocorrecao", step, text);
+            // Round 8: the narrator as object and owner; number words. After the older
+            // possessive and recipient repairs, which rely on the sentence before them.
+            step = text; text = RepairNarratorObject(source, text, fullOutput); NoteRepair("depoente-objeto", step, text);
+            step = text; text = RepairNarratorOwner(source, text, fullOutput); NoteRepair("possessivo-do-depoente", step, text);
+            step = text; text = RepairNumberWords(source, text); NoteRepair("valores", step, text);
+            step = text; text = RepairRepeatedSubject(text); NoteRepair("repeticao", step, text);
             step = text;
             // "nossa conversa": an interaction the narrator took part in. Say
             // exactly that, without naming who else took part.
@@ -1369,6 +1608,10 @@ namespace DepoimentoLocal.Windows
             if (role == null) role = AmbiguousObjectIssue(original, output);
             if (role == null) role = GerundObjectIssue(original, output);
             if (role == null) role = BrokenPhraseIssue(output);
+            // Round 8: the narrator as object or owner; broken by repetition.
+            if (role == null) role = RepeatedNarratorIssue(output);
+            if (role == null) role = NarratorObjectIssue(original, output);
+            if (role == null) role = NarratorOwnerIssue(original, output);
             if (role != null) return role;
             string source = Normalize(Unquote(original));
             string rendered = Normalize(Unquote(output));

@@ -18,6 +18,6 @@ PASS log registra o modo técnico: Xavantina
 PASS sentinela «Xavantina» ausente do log
 PASS nenhum trecho entre aspas no log: Xavantina
 PASS nenhuma palavra da entrada ou da saída no log: Xavantina
-     reparos registrados: abertura
+     reparos registrados: depoente-objeto,abertura
 PASS modo diagnóstico (testes): registrado no log
 PASS modo diagnóstico: geração concluída

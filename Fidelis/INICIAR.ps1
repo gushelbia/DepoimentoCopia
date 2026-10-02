@@ -9,7 +9,7 @@ $vulkanDest = Join-Path $engine 'runtimes\win-x64\native\vulkan'
 $cpuDest = Join-Path $engine 'runtimes\win-x64\native\avx2'
 $vulkanRequired = @('ggml.dll','ggml-base.dll','ggml-vulkan.dll','llama.dll','mtmd.dll')
 $cpuRequired = @('ggml.dll','ggml-base.dll','ggml-cpu.dll','llama.dll','mtmd.dll')
-$expectedHash = 'A3F1EA9D6B93664983B4B60314EF54BE2786464B011B5F9FA5DB1D4143E05E8A'
+$expectedHash = 'B3D52152C904714E03DB4313F87EF6AE0AC828DB89D6FF35B57A5F79F99C89B8'
 $marker = Join-Path $root 'MODO-ATIVO.txt'
 
 function Fail([string]$msg) {

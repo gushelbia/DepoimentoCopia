@@ -2941,6 +2941,14 @@ public static class ReviewScanner
     private const string Period = @"(?:\s+da\s+(?<per>manhã|tarde|noite|madrugada))?";
     private const string MonthName = @"(?:janeiro|fevereiro|março|marco|abril|maio|junho|julho|agosto|setembro|outubro|novembro|dezembro)";
 
+    // «cem e cinquenta» is not a number (it is «cento e cinquenta»): its key never
+    // matches the original's, so the highlight marks the divergence.
+    private static string MoneyKey(string words, long cents)
+    {
+        if (Regex.IsMatch(words, @"\bcem\s+e\b", RegexOptions.IgnoreCase)) return "forma-inválida:" + Regex.Replace(words.ToLowerInvariant(), @"\s+", " ");
+        return cents.ToString();
+    }
+
     public static long ParseNumberWords(string phrase)
     {
         long total = 0, current = 0;
@@ -2985,7 +2993,16 @@ public static class ReviewScanner
             if (reais < 0) continue;
             long cents = m.Groups["c"].Success ? ParseNumberWords(m.Groups["c"].Value) : 0;
             if (cents < 0 || cents > 99) continue;
-            Add(items, m, "valor", (reais * 100 + cents).ToString());
+            Add(items, m, "valor", MoneyKey(m.Groups["n"].Value, reais * 100 + cents));
+        }
+        // Amounts in words without «reais» in a money context: «tinha me dado cento e
+        // cinquenta», «já tinha pago duzentos», «devia trezentos».
+        foreach (Match m in Regex.Matches(text, @"\b(?:pag[oa]u?|pagar|pagava|pagou|dad[oa]|deu|dei|dava|devia|devo|deve|dever|emprest\p{L}*|cobr\p{L}*|receb\p{L}*|gast\p{L}*|custou|custava|custa|valor|quantia|troco|dinheiro|sacou|depositou|transferiu)\s+(?:(?:mais|só|apenas|uns|umas|cerca\s+de|quase|o|a|me|lhe)\s+){0,2}(?<n>" + NumberWord + @"(?:(?:\s+e\s+|\s+)" + NumberWord + @")*)\b(?=\s*(?:[,.;!?]|$)|\s+(?:e|em|para|pra|no|na|de\s+volta|ao|à|pelo|pela|por|que|mas|quando|até)\b)", ci))
+        {
+            Group n = m.Groups["n"];
+            long value = ParseNumberWords(n.Value);
+            if (value < 2) continue;
+            Add(items, n.Index, n.Length, n.Value, "valor", MoneyKey(n.Value, value * 100));
         }
         // Dates: 12/08/2026, 12/08, 12.08.2026, 12-08-2026, 12 de agosto de 2026, dia 13.
         foreach (Match m in Regex.Matches(text, @"(?<![\d/.,-])(?<d>\d{1,2})(?:/(?<m>\d{1,2})(?:/(?<y>\d{2}|\d{4}))?|[.-](?<m>\d{1,2})[.-](?<y>\d{2}|\d{4}))(?![\d/.,-]\d)"))
@@ -3560,7 +3577,7 @@ public static class RoleScanner
     public const string Alert = "papel";   // painted orange
     public const string Note = "aviso";    // informational only (subject, presumed gender)
     // Verbs where «lhe» is the normal recipient (disse-lhe, deu-lhe...).
-    private static readonly Regex RecipientVerb = new Regex(@"^(?:dis|diz|cont|fal|pergunt|ped|pedi|mand|avis|inform|explic|d[eá]|entreg|mostr|emprest|ofere|respond|telefon|lig|escrev|envi|pass|jur|garant|promet|confess|ensin|cobr|devolv|vend|pag|contou|trouxe|lev|oferec|sugeri|sugere|recomend|comunic|repass|agradec|desej|permit|proib|orden|negou|neg|apresent|indic|fornec|reserv|ced|dedic|atribu|revel|anunci|devolv|jog|atir)", I);
+    private static readonly Regex RecipientVerb = new Regex(@"^(?:dis|diz|cont|fal|pergunt|ped|pedi|mand|avis|inform|explic|(?:deu|dá|dar|dava|dando|dado)$|entreg|mostr|emprest|ofere|respond|telefon|lig|escrev|envi|pass|jur|garant|promet|confess|ensin|cobr|devolv|vend|pag|contou|trouxe|lev|oferec|sugeri|sugere|recomend|comunic|repass|agradec|desej|permit|proib|orden|negou|neg|apresent|indic|fornec|reserv|ced|dedic|atribu|revel|anunci|devolv|jog|atir)", I);
     // «estava»/«era» are also third person: only with an explicit «eu».
     private static readonly Regex FeminineNarrator = new Regex(@"(?:^|[\s,;.!?])(?:eu\s+(?:me\s+)?(?:estava|era|ficava|andava|sentia)|(?:eu\s+)?(?:me\s+)?(?:estou|fiquei|fico|sou|fui|senti|sinto|estive|continuo|continuei|permaneci|cheguei|saí|posso\s+estar|podia\s+estar|poderia\s+estar|posso\s+ter\s+ficado))\s+(?:muito\s+|bem\s+|tão\s+|meio\s+|toda\s+)?(?<w>\p{L}+(?:ada|ida|osa|inha|ívida|ávida|úva|eira|ona))\b", I);
     private static readonly Regex MasculineNarrator = new Regex(@"(?:^|[\s,;.!?])(?:eu\s+(?:me\s+)?(?:estava|era|ficava|andava|sentia)|(?:eu\s+)?(?:me\s+)?(?:estou|fiquei|fico|sou|fui|senti|sinto|estive|continuo|continuei|permaneci|cheguei|saí|posso\s+estar|podia\s+estar|poderia\s+estar|posso\s+ter\s+ficado))\s+(?:muito\s+|bem\s+|tão\s+|meio\s+|todo\s+)?(?<w>\p{L}+(?:ado|ido|oso|inho|ívido|ávido|eiro|ão))\b", I);
@@ -3601,7 +3618,8 @@ public static class RoleScanner
         }
         // 2. «ele lhe atacou»: «lhe» with a verb of direct action (the engine's
         // correction of «me»): wrong and ambiguous (lhe = a ele? a ela?).
-        foreach (Match m in Regex.Matches(r, @"\b(?<s>\p{L}+)\s+(?:não\s+)?(?:(?:só|também|já|ainda|então|depois)\s+)?lhe\s+(?<v>\p{L}+)", I))
+        // Also after a comma: «a Dona Rosângela, lhe humilhou».
+        foreach (Match m in Regex.Matches(r, @"\b(?<s>\p{L}+),?\s+(?:não\s+)?(?:(?:só|também|já|ainda|então|depois)\s+)?lhe\s+(?<v>\p{L}+)", I))
         {
             if (!originalMe || InQuotes(quotes, m.Index) || Covered(items, m.Index)) continue;
             string v = m.Groups["v"].Value;
@@ -3610,12 +3628,16 @@ public static class RoleScanner
         }
         // 3. «ele o atacou»: clitic «o/a» after a third-person subject where the
         // original had «me»: can be read as someone else.
-        foreach (Match m in Regex.Matches(r, @"\b(?<s>ele|ela|eles|elas)\s+(?:não\s+)?(?:já\s+)?(?<c>o|a)\s+(?<v>\p{L}+)", I))
+        foreach (Match m in Regex.Matches(r, @"\b(?<s>ele|ela|eles|elas)\s+(?:que\s+)?(?:não\s+)?(?:já\s+)?(?<c>o|a)\s+(?<v>\p{L}+)", I))
         {
             if (InQuotes(quotes, m.Index)) continue;
             string v = m.Groups["v"].Value;
-            if (!Regex.IsMatch(o, @"\b" + m.Groups["s"].Value + @"\s+(?:não\s+)?(?:já\s+)?me\s+" + Regex.Escape(Stem(v)), I)) continue;
-            Add(items, m.Index, m.Length, m.Value, "pronome ambíguo: «" + m.Groups["c"].Value + "» pode ser lido como outra pessoa (no original: «" + m.Groups["s"].Value + " me …»). Confira: o claro seria «" + m.Groups["s"].Value + " " + v + " o depoente».");
+            if (!Regex.IsMatch(o, @"\b" + m.Groups["s"].Value + @"\s+(?:que\s+)?(?:não\s+)?(?:já\s+)?me\s+" + Regex.Escape(Stem(v)), I)) continue;
+            // «ela o pediu»: a verb whose person is an indirect object takes «lhe».
+            if (RecipientVerb.IsMatch(v) && Regex.IsMatch(v, @"(?:ou|eu|iu|ia|ava|isse)$", I))
+                Add(items, m.Index, m.Length, m.Value, "regência: com «" + v + "», quem recebe a ação é objeto indireto (no original: «" + m.Groups["s"].Value + " me " + v + "»). Confira: o certo seria «" + m.Groups["s"].Value + " lhe " + v + "».");
+            else
+                Add(items, m.Index, m.Length, m.Value, "pronome ambíguo: «" + m.Groups["c"].Value + "» pode ser lido como outra pessoa (no original: «" + m.Groups["s"].Value + " me …»). Confira: o claro seria «" + m.Groups["s"].Value + " " + v + " o depoente».");
         }
         // 4. «quando o depoente chegou, ele já estava…»: a third-person subject right
         // after a clause of the narrator can be read as the narrator himself.

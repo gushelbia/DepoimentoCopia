@@ -17,6 +17,7 @@ function Kinds($original, $output) {
             elseif ($p.StartsWith('frase quebrada')) { $k += 'quebrada' }
             elseif ($p.StartsWith('«lhe» com verbo')) { $k += 'lhe' }
             elseif ($p.StartsWith('pronome ambíguo')) { $k += 'ambíguo' }
+            elseif ($p.StartsWith('regência')) { $k += 'regência' }
             elseif ($p.StartsWith('sujeito de outra pessoa apagado')) { $k += 'apagado' }
             elseif ($p.StartsWith('sujeito')) { $k += 'sujeito' }
             elseif ($p.StartsWith('gênero trocado')) { $k += 'gênero trocado' }
@@ -118,6 +119,24 @@ HasNot 'depoente também faz a ação no original («eu fiquei calado»): sem al
 HasNot 'mesmo predicado do depoente com verbo irregular c→qu («verifiquei isso»)' 'Não sei se ele verificou isso. Eu não verifiquei isso pessoalmente.' 'O depoente não sabe se ele verificou isso. O depoente não verificou isso pessoalmente.'
 HasNot 'ação dirigida ao depoente («ela me atacou») fica com as regras de inversão' 'Ela me atacou primeiro e eu só me defendi.' 'O depoente relatou que ela o atacou primeiro e o depoente só se defendeu.'
 HasNot 'fala entre aspas não conta' 'Ela gritou: "ele foi preso".' 'O depoente relatou que ela gritou: "ele foi preso".'
+
+# 6) Rodada 8 (bateria realista): «lhe» depois de vírgula, regência «o pediu» e valores por extenso.
+$k = @([RoleScanner]::Find('A minha chefe, a Dona Rosângela, me humilhou.', 'O depoente relatou que a chefe do depoente, a Dona Rosângela, lhe humilhou.') | Where-Object { $_.Kind -eq [RoleScanner]::Alert })
+Check ($k.Count -eq 1 -and $k[0].Text -match 'lhe humilhou') 'R06: «lhe humilhou» depois de vírgula é marcado' (($k | ForEach-Object { $_.Text }) -join ', ')
+$k = @([RoleScanner]::Find('No final ela me pediu pra mandar a ata.', 'O depoente relatou que no final ela o pediu pra mandar a ata.') | Where-Object { $_.Reason -match '^regência' })
+Check ($k.Count -eq 1 -and $k[0].Reason -match 'lhe pediu') 'R12: «ela o pediu» marcado como regência, com «lhe pediu»' (($k | ForEach-Object { $_.Reason }) -join ' | ')
+$k = @([RoleScanner]::Find('A aluna me procurou, ela que me pediu pra conversar.', 'O depoente relatou que a aluna o procurou, ela que o pediu para conversar.') | Where-Object { $_.Reason -match '^regência' })
+Check ($k.Count -eq 1) 'R02: «ela que o pediu» marcado como regência' ''
+$k = @([RoleScanner]::Find('O Tiago se levantou e me defendeu.', 'O depoente relatou que o Tiago se levantou e lhe defendeu.') | Where-Object { $_.Kind -eq [RoleScanner]::Alert })
+Check ($k.Count -ge 1) '«lhe defendeu» é marcado («defendeu» não é verbo de dar)' (($k | ForEach-Object { $_.Text }) -join ', ')
+$rv = [ReviewScanner]::Compare('Em junho ele me disse que já tinha me dado cento e cinquenta.', 'O depoente relatou que em junho ele lhe disse que já tinha pago cem e cinquenta.')
+$v = @($rv.Reformulated | Where-Object { $_.Kind -eq 'valor' })
+Check ($v.Count -eq 1 -and $v[0].Unmatched -and @($rv.MissingFromReformulated | Where-Object { $_.Kind -eq 'valor' }).Count -eq 1) 'R10: «cem e cinquenta» marcado como divergente; «cento e cinquenta» sumiu' (($v | ForEach-Object { $_.Text }) -join ', ')
+$rv = [ReviewScanner]::Compare('Em junho ele me disse que já tinha me dado cento e cinquenta.', 'O depoente relatou que em junho ele lhe disse que já tinha dado cento e cinquenta.')
+$v = @($rv.Reformulated | Where-Object { $_.Kind -eq 'valor' })
+Check ($v.Count -eq 1 -and -not $v[0].Unmatched -and -not $v[0].Alert) 'valor por extenso sem «reais» em contexto de dinheiro: conferido quando igual' (($v | ForEach-Object { $_.Text }) -join ', ')
+$rv = [ReviewScanner]::Compare('Ele me deu um soco e dois tapas.', 'O depoente relatou que ele lhe deu um soco e dois tapas.')
+Check (@($rv.Reformulated | Where-Object { $_.Kind -eq 'valor' }).Count -eq 0) '«deu um soco», «dois tapas»: não são valores' ''
 $results | Set-Content -Encoding UTF8 (Join-Path $PSScriptRoot 'results.txt')
 Write-Output ($(if ($failures -eq 0) { 'RESULT PASS' } else { "RESULT FAIL ($failures)" }))
 if ($failures -ne 0) { exit 1 }

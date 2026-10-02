@@ -1,4 +1,4 @@
-﻿START 2026-10-02T07:06:16
+﻿START 2026-10-02T10:32:43
 PASS 1: janela larga (1280) — original e reformulado lado a lado, barra abaixo | original={X=22,Y=204,Width=603,Height=244} reformulado={X=639,Y=204,Width=603,Height=244}
 PASS 1: todos os botões visíveis e dentro da janela (lado a lado)
 PASS 1: janela estreita (1060) — volta ao layout empilhado | original={X=22,Y=204,Width=1000,Height=143} barra={X=25,Y=356,Width=994,Height=46} reformulado={X=22,Y=411,Width=1000,Height=143}
@@ -27,7 +27,7 @@ PASS 2: botão religa
 PASS 2: sem destaques durante a geração
 PASS 2: edição reaplica os destaques só após um pequeno atraso
 PASS 2: Ctrl+Z desfaz a digitação, não o destaque | texto após desfazer termina em: …91234-5678. Saí às 15h15.
-PASS 2: texto longo (31800 caracteres por quadro) sem travar | 278 ms
+PASS 2: texto longo (31800 caracteres por quadro) sem travar | 285 ms
 PASS 2: cursor, seleção e rolagem preservados | rolagem antes={X=0,Y=4560} depois={X=0,Y=4560}
 PASS 2: Ctrl+C copia só texto (sem RTF/cores)
 PASS 2: menu «Copiar» copia só texto

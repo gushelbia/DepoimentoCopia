@@ -1,4 +1,4 @@
-﻿START 2026-10-02T08:28:26
+﻿START 2026-10-02T10:20:49
 PASS textos aprovados (20 frases + 10 QA) idênticos com Masculino e Não informado | 30/30
 
 F1 [Feminino]  Eu fiquei assustada quando ele entrou gritando.
@@ -51,8 +51,8 @@ PASS F7: nenhum «o/do/ao/no/pelo depoente» na tela
 PASS F7: nenhum alerta laranja de gênero
 
 F8 [Feminino]  Fiquei preocupada porque minha filha não atendia o telefone.
-   motor: O depoente relatou que ficou preocupado porque a filha não atendia o telefone.
-   tela:  A depoente relatou que ficou preocupada porque a filha não atendia o telefone.
+   motor: O depoente relatou que ficou preocupado porque a filha do depoente não atendia o telefone.
+   tela:  A depoente relatou que ficou preocupada porque a filha da depoente não atendia o telefone.
 PASS F8: geração concluída
 PASS F8: nenhum «o/do/ao/no/pelo depoente» na tela
 PASS F8: nenhum alerta laranja de gênero
@@ -211,12 +211,11 @@ PASS N6: geração concluída
 PASS N6: texto da tela idêntico ao do motor
    (se o campo fosse Feminino: A depoente relatou que viu o carro parado na esquina por duas horas.)
 
-N7 [Não informado] (PENDENTE: «ele» apagado e «lhe» com verbo de ação; próxima correção)  Eu fiquei na Xavantina até tarde e ele me atacou na saída.
-   motor: O depoente relatou que ficou na Xavantina até tarde e lhe atacou na saída.
-   LARANJA: «lhe» com verbo de ação direta: no original a ação foi contra o depoente («me atac…»). Confira: o claro seria «atacou o depoente». [e lhe atacou]
+N7 [Não informado] («ele» apagado e «lhe» com verbo de ação; corrigido na rodada 8)  Eu fiquei na Xavantina até tarde e ele me atacou na saída.
+   motor: O depoente relatou que ficou na Xavantina até tarde e ele atacou o depoente na saída.
    aviso: gênero presumido: o original não diz se quem fala é homem ou mulher; «o depoente» supõe homem. Confira. [O depoente]
 PASS N7: geração concluída
 PASS N7: texto da tela idêntico ao do motor
-   (se o campo fosse Feminino: A depoente relatou que ficou na Xavantina até tarde e lhe atacou na saída.)
+   (se o campo fosse Feminino: A depoente relatou que ficou na Xavantina até tarde e ele atacou a depoente na saída.)
 
 RESULT PASS

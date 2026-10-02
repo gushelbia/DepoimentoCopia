@@ -4,14 +4,14 @@ PASS caso 7: «o depoente lhe disse» → «ele lhe disse» | O depoente relatou
 PASS caso 10: verbo de fala diferente (contou/disse) também restaura | O depoente relatou que ela lhe disse que ele tinha batido nela na noite anterior.
 PASS caso 14: «ameaçou o depoente» | O depoente relatou que ele ameaçou o depoente com uma faca e o depoente correu para dentro de casa.
 PASS caso 18 (1ª passagem): restaura «ela» e o sujeito de «se defendeu» | O depoente relatou que ela atacou o depoente primeiro e o depoente só se defendeu.
-PASS caso 18 (2ª tentativa): reflexivo «lhe defendeu» → «se defendeu» | O depoente relatou que ela lhe atacou primeiro e o depoente só se defendeu.
+PASS caso 18 (2ª tentativa): reflexivo «lhe defendeu» → «se defendeu»; «lhe atacou» → «atacou o depoente» (rodada 8) | O depoente relatou que ela atacou o depoente primeiro e o depoente só se defendeu.
 PASS reflexivo com «me» restante → «se» | O depoente relatou que se escondeu atrás do carro.
 PASS fala entre aspas preservada byte a byte | O depoente relatou que ela lhe disse: “eu não volto”.
 PASS depoente que fala de fato («eu lhe disse»): sem mudança | O depoente relatou que lhe disse que ia embora.
 PASS depoente também fala no original: sem mudança | O depoente relatou que lhe contou e ela lhe disse que já sabia.
 PASS texto já correto: sem mudança | O depoente relatou que ela se defendeu quando ele empurrou o depoente.
 PASS dois candidatos no original: não adivinha | O depoente relatou que lhe disse que viria. Ela lhe disse que não.
-PASS sujeito correto («o Marcos lhe segurou»): sem mudança | O depoente relatou que o Marcos lhe segurou pelo braço.
+PASS sujeito correto mantido; regência «lhe segurou» → «segurou o depoente» (rodada 8) | O depoente relatou que o Marcos segurou o depoente pelo braço.
 PASS «Depois me disseram» não vira sujeito | O depoente relatou que depois lhe disseram que houve reunião.
 PASS ação do próprio depoente («eu bati»): sujeito mantido; «ele o ameaçou» vira passiva (rodada 7) | O depoente relatou que bateu nele porque o depoente foi ameaçado por ele.
 PASS validador: troca não reparável é acusada | fidelidade: autor da ação trocado com o depoente: no original «Ele me disse», na saída «o depoente lhe disse»

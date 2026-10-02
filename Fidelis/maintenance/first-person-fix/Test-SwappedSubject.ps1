@@ -17,7 +17,7 @@ Repair 'Ele me disse que tinha visto ela sair com o carro.' 'Relatou que o depoe
 Repair 'Ela me contou que ele tinha batido nela na noite anterior.' 'Relatou que o depoente lhe disse que ele tinha batido nela na noite anterior.' 'Relatou que ela lhe disse que ele tinha batido nela na noite anterior.' 'caso 10: verbo de fala diferente (contou/disse) também restaura'
 Repair 'Ele me ameaçou com uma faca e eu corri para dentro de casa.' 'Relatou que o depoente lhe ameaçou com uma faca e o depoente correu para dentro de casa.' 'Relatou que ele ameaçou o depoente com uma faca e o depoente correu para dentro de casa.' 'caso 14: «ameaçou o depoente»'
 Repair 'Ela me atacou primeiro e eu só me defendi.' 'Relatou que o depoente lhe atacou primeiro e só se defendeu.' 'Relatou que ela atacou o depoente primeiro e o depoente só se defendeu.' 'caso 18 (1ª passagem): restaura «ela» e o sujeito de «se defendeu»'
-Repair 'Ela me atacou primeiro e eu só me defendi.' 'Relatou que ela lhe atacou primeiro e o depoente só lhe defendeu.' 'Relatou que ela lhe atacou primeiro e o depoente só se defendeu.' 'caso 18 (2ª tentativa): reflexivo «lhe defendeu» → «se defendeu»'
+Repair 'Ela me atacou primeiro e eu só me defendi.' 'Relatou que ela lhe atacou primeiro e o depoente só lhe defendeu.' 'Relatou que ela atacou o depoente primeiro e o depoente só se defendeu.' 'caso 18 (2ª tentativa): reflexivo «lhe defendeu» → «se defendeu»; «lhe atacou» → «atacou o depoente» (rodada 8)'
 Repair 'Eu me escondi atrás do carro.' 'Relatou que o depoente me escondeu atrás do carro.' 'Relatou que o depoente se escondeu atrás do carro.' 'reflexivo com «me» restante → «se»'
 Repair 'Ela me disse: “eu não volto”.' 'Relatou que o depoente lhe disse: “eu não volto”.' 'Relatou que ela lhe disse: “eu não volto”.' 'fala entre aspas preservada byte a byte'
 
@@ -26,7 +26,7 @@ Repair 'Eu lhe disse que ia embora.' 'Relatou que o depoente lhe disse que ia em
 Repair 'Eu contei para ela e ela me disse que já sabia.' 'Relatou que o depoente lhe contou e ela lhe disse que já sabia.' 'Relatou que o depoente lhe contou e ela lhe disse que já sabia.' 'depoente também fala no original: sem mudança'
 Repair 'Ela se defendeu quando ele me empurrou.' 'Relatou que ela se defendeu quando ele empurrou o depoente.' 'Relatou que ela se defendeu quando ele empurrou o depoente.' 'texto já correto: sem mudança'
 Repair 'Ele me disse que viria. Ela me disse que não.' 'Relatou que o depoente lhe disse que viria. Ela lhe disse que não.' 'Relatou que o depoente lhe disse que viria. Ela lhe disse que não.' 'dois candidatos no original: não adivinha'
-Repair 'O Marcos me segurou pelo braço.' 'Relatou que o Marcos lhe segurou pelo braço.' 'Relatou que o Marcos lhe segurou pelo braço.' 'sujeito correto («o Marcos lhe segurou»): sem mudança'
+Repair 'O Marcos me segurou pelo braço.' 'Relatou que o Marcos lhe segurou pelo braço.' 'Relatou que o Marcos segurou o depoente pelo braço.' 'sujeito correto mantido; regência «lhe segurou» → «segurou o depoente» (rodada 8)'
 Repair 'Depois me disseram que houve reunião.' 'Relatou que depois lhe disseram que houve reunião.' 'Relatou que depois lhe disseram que houve reunião.' '«Depois me disseram» não vira sujeito'
 Repair 'Eu bati nele porque ele me ameaçou.' 'Relatou que o depoente bateu nele porque ele o ameaçou.' 'Relatou que o depoente bateu nele porque o depoente foi ameaçado por ele.' 'ação do próprio depoente («eu bati»): sujeito mantido; «ele o ameaçou» vira passiva (rodada 7)'
 

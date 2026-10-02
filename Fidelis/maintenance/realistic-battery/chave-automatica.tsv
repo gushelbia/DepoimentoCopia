@@ -1,0 +1,60 @@
+# Chave automática da bateria realista (tirada da CHAVE de cada caso em bateria-realista.txt).
+# id, deve|não, expressão regular (sem diferenciar maiúsculas), o que confere. Aplicada à saída final (já convertida para o gênero).
+R01	deve	\ba depoente\b	depoente mulher: «a depoente»
+R01	deve	\bnervosa\b	«nervosa»
+R01	não	\bnervoso\b|\bo depoente\b	nada no masculino para a depoente
+R01	deve	Heitor	quem chamou: o professor Heitor
+R01	deve	14 de agosto	data
+R01	deve	cinco e pouco	horário aproximado mantido
+R01	não	lhe chamou|lhe segurou|lhe reprovar	regência: objeto direto
+R01	deve	(?:chamou|segurou) a depoente	Heitor chamou/segurou a depoente
+R01	deve	a depoente se soltou	quem se soltou: a depoente
+R02	deve	\bnega\b	o depoente nega
+R02	deve	nunca disse	negação mantida
+R02	deve	não fechou a porta	negação mantida
+R02	não	\ba depoente\b	depoente homem
+R02	não	o pediu	regência: «lhe pediu»
+R03	deve	quarta	autocorreção: quarta-feira
+R03	deve	Rafael	quem foi levado: Rafael
+R03	deve	por volta das dez	horário aproximado
+R03	não	o depoente (?:foi levado|ficou sentado)	Rafael e o outro rapaz não viram o depoente
+R04	deve	Larissa	quem passou o papel
+R04	deve	não abriu	negação mantida
+R04	deve	não contou	negação mantida
+R04	deve	dedo-duro	ofensa mantida
+R04	não	lhe ameaçou	regência: objeto direto
+R04	deve	ameaçou a depoente	Larissa ameaçou a depoente
+R05	deve	RJX4C21	placa
+R05	deve	duas e quarenta	horário aproximado
+R05	deve	xingando o depoente	o rapaz xingando o depoente
+R05	não	se xingando	não é reflexivo
+R05	deve	ameaçou o depoente	o rapaz ameaçou o depoente
+R06	deve	\bcalada\b	«calada»
+R06	deve	incompetente	Rosângela chamou a depoente de incompetente
+R06	deve	22 de setembro	data
+R06	não	depoente (?:que|quem) a depoente	frase quebrada por repetição
+R06	não	lhe humilhou	regência: objeto direto
+R07	deve	Wanderley	quem foi afastado: Wanderley
+R07	não	o depoente foi afastado	o depoente não foi afastado
+R07	deve	coordenador ficou calado	quem ficou calado: o coordenador
+R07	deve	aceitou o depoente	Cecília aceitou o depoente
+R07	deve	orientador do depoente	possessivo «meu orientador»
+R08	deve	\(21\) 3938-1100	telefone
+R08	deve	se machucou	reflexivo
+R08	não	\ba depoente\b	gênero não informado: não vira feminino
+R09	deve	acredita	incerteza mantida
+R09	deve	não tem certeza	incerteza mantida
+R09	deve	Renata	quem pode ter dado o tapa
+R10	deve	duzentos	valor
+R10	deve	cento e cinquenta|150	valor alegado
+R10	não	cem e cinquenta	valor por extenso errado
+R10	deve	mentira	o depoente nega
+R10	não	recebeu duzentos reais emprestados do Diego	quem emprestou: o depoente (não o Diego)
+R11	deve	\bassustada\b	«assustada»
+R11	deve	onze e meia	horário aproximado
+R11	não	puxou a mão	puxou o celular da mão, não a mão
+R12	deve	lhe pediu	regência: «lhe pediu»
+R12	não	o pediu	regência
+R12	deve	defendeu	Tiago defendeu o depoente
+R12	não	se defendeu	não é reflexivo
+R12	deve	eleito	o depoente foi eleito

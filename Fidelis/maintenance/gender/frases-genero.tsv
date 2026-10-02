@@ -2,7 +2,7 @@
 # Inversões de papel do próprio modelo (não são erros de gênero), corrigidas no motor na rodada 7 (maintenance/role-fix) e mantidas aqui como regressão:
 #   inversao-papel   = «eu era culpada» → «ele era culpado»; «depois de mim» → «depois do Carlos».
 #   inversao-sujeito = o modelo apagava o sujeito de outra pessoa e o fato passava para o depoente («Meu marido foi preso» → «relatou que foi preso»).
-#   pendente-lhe     = PENDENTE para a próxima correção: o modelo apaga «ele» e troca «me» por «lhe» com verbo de ação («ele me atacou» → «e lhe atacou na saída»).
+#   inversao-lhe     = corrigida na rodada 8 (maintenance/object-fix): o modelo apagava «ele» e trocava «me» por «lhe» com verbo de ação («ele me atacou» → «e lhe atacou na saída»).
 F1		Eu fiquei assustada quando ele entrou gritando.
 F2		Fui agredida pelo vizinho na frente do prédio.
 F3		Eu estava sozinha em casa quando ouvi um barulho na porta.
@@ -37,4 +37,4 @@ N3	inversao-sujeito	Minha vizinha estava assustada e bateu na minha porta.
 N4		Ele me ameaçou na saída do trabalho.
 N5	inversao-sujeito	O porteiro ficou calado e não quis abrir o portão.
 N6		Eu vi o carro parado na esquina por duas horas.
-N7	pendente-lhe	Eu fiquei na Xavantina até tarde e ele me atacou na saída.
+N7	inversao-lhe	Eu fiquei na Xavantina até tarde e ele me atacou na saída.

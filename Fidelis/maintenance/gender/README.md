@@ -53,7 +53,7 @@ São inversões do próprio modelo e acontecem também com homens. Foram corrigi
   - «**Meu marido** foi preso» saía «relatou que foi preso».
   - Hoje o motor devolve o sujeito do original. A interface também mostra um alerta laranja quando isso escapa.
 
-### Pendente para a próxima correção
+### Corrigido na rodada 8
 
-- **`pendente-lhe`** (N7): «Eu fiquei na Xavantina até tarde e ele **me atacou** na saída» sai «… e **lhe atacou** na saída». O modelo apaga «ele» e troca «me» por «lhe» com um verbo de ação, e o depoente parece ter atacado alguém.
-  - Hoje só o alerta laranja da interface marca o caso («lhe» com verbo de ação direta).
+- **`inversao-lhe`** (N7): «Eu fiquei na Xavantina até tarde e ele **me atacou** na saída» saía «… e **lhe atacou** na saída».
+  - Hoje o motor devolve o sujeito e o objeto do original: «… e **ele atacou o depoente** na saída» (`maintenance/object-fix`).

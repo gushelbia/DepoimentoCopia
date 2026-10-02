@@ -1,4 +1,4 @@
-﻿START 2026-10-02T07:02:42
+﻿START 2026-10-02T10:28:43
 PASS campo «Gênero do depoente»: Não informado, Masculino, Feminino (padrão: Não informado) | Não informado, Masculino, Feminino
 PASS pista clara («fiquei nervosa»): sugestão «Usar Feminino» aparece e o campo continua Não informado | Usar Feminino
 PASS sem pista clara: sem sugestão
@@ -15,7 +15,11 @@ PASS Word usa o texto convertido
 PASS trocar para Masculino: reformulado volta ao texto do motor; consolidado não muda | O depoente relatou que ficou nervoso e ligou para o seu irmão.
 PASS voltar para Feminino: converte de novo | A depoente relatou que ficou nervosa e ligou para o seu irmão.
 PASS texto editado à mão não é reescrito ao trocar o gênero
-PASS «Masculino»: texto da tela idêntico ao do motor | O depoente relatou que recebeu duas ligações do ele e não atendeu.
-PASS «Não informado»: texto da tela idêntico ao do motor | O depoente relatou que recebeu duas ligações do ele e não atendeu.
+PASS «Masculino»: texto da tela idêntico ao do motor | O depoente relatou que reescreva a transcriação em português, com intervenção mínima, passando somente o depoente para terceira pessoa. Não resuma: transforme todas as frases, na mesma ordem, desde a primeira até a última.
+
+Ele ligou o depoente duas vezes e o depoente não atendeu.
+PASS «Não informado»: texto da tela idêntico ao do motor | O depoente relatou que reescreva a transcriação em português, com intervenção mínima, passando somente o depoente para terceira pessoa. Não resuma: transforme todas as frases, na mesma ordem, desde a primeira até a última.
+
+Ele ligou o depoente duas vezes e o depoente não atendeu.
 PASS nenhuma janela inesperada
 RESULT PASS

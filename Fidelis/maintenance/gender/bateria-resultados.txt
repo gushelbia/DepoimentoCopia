@@ -1,4 +1,4 @@
-﻿START 2026-10-01T19:27:52
+﻿START 2026-10-02T05:53:58
 PASS textos aprovados (20 frases + 10 QA) idênticos com Masculino e Não informado | 30/30
 
 F1 [Feminino]  Eu fiquei assustada quando ele entrou gritando.
@@ -29,9 +29,9 @@ PASS F4: geração concluída
 PASS F4: nenhum «o/do/ao/no/pelo depoente» na tela
 PASS F4: nenhum alerta laranja de gênero
 
-F5 [Feminino] (PENDENTE: papéis trocados pelo modelo)  Ele disse que eu era culpada pelo que aconteceu.
-   motor: O depoente relatou que disse que ele era culpado pelo que aconteceu.
-   tela:  A depoente relatou que disse que ele era culpado pelo que aconteceu.
+F5 [Feminino] (inversão de papéis do modelo; corrigida na rodada 7)  Ele disse que eu era culpada pelo que aconteceu.
+   motor: O depoente relatou que ele disse que o depoente era culpado pelo que aconteceu.
+   tela:  A depoente relatou que ele disse que a depoente era culpada pelo que aconteceu.
 PASS F5: geração concluída
 PASS F5: nenhum «o/do/ao/no/pelo depoente» na tela
 PASS F5: nenhum alerta laranja de gênero
@@ -43,10 +43,9 @@ PASS F6: geração concluída
 PASS F6: nenhum «o/do/ao/no/pelo depoente» na tela
 PASS F6: nenhum alerta laranja de gênero
 
-F7 [Feminino] (PENDENTE: papéis trocados pelo modelo)  O Carlos entrou depois de mim e ficou me encarando.
-   motor: O depoente relatou que entrou depois do Carlos e ficou lhe encarando.
-   tela:  A depoente relatou que entrou depois do Carlos e ficou lhe encarando.
-   LARANJA: «lhe» com verbo de ação direta: no original a ação foi contra o depoente («me encarand…»). Confira: o claro seria «encarando o depoente». [ficou lhe encarando]
+F7 [Feminino] (inversão de papéis do modelo; corrigida na rodada 7)  O Carlos entrou depois de mim e ficou me encarando.
+   motor: O depoente relatou que o Carlos entrou depois do depoente e ficou encarando o depoente.
+   tela:  A depoente relatou que o Carlos entrou depois da depoente e ficou encarando a depoente.
 PASS F7: geração concluída
 PASS F7: nenhum «o/do/ao/no/pelo depoente» na tela
 PASS F7: nenhum alerta laranja de gênero
@@ -73,9 +72,8 @@ PASS F10: nenhum «o/do/ao/no/pelo depoente» na tela
 PASS F10: nenhum alerta laranja de gênero
 
 F11 [Feminino]  Eu estava grávida quando ele me ameaçou.
-   motor: O depoente relatou que estava grávida quando ele o ameaçou.
-   tela:  A depoente relatou que estava grávida quando ele a ameaçou.
-   LARANJA: pronome ambíguo: «a» pode ser lido como outra pessoa (no original: «ele me …»). Confira: o claro seria «ele ameaçou o depoente». [ele a ameaçou]
+   motor: O depoente relatou que estava grávida quando o depoente foi ameaçado por ele.
+   tela:  A depoente relatou que estava grávida quando a depoente foi ameaçada por ele.
 PASS F11: geração concluída
 PASS F11: nenhum «o/do/ao/no/pelo depoente» na tela
 PASS F11: nenhum alerta laranja de gênero
@@ -87,17 +85,16 @@ PASS F12: geração concluída
 PASS F12: nenhum «o/do/ao/no/pelo depoente» na tela
 PASS F12: nenhum alerta laranja de gênero
 
-F13 [Feminino] (PENDENTE: sujeito de outra pessoa apagado pelo modelo)  Ele estava nervoso e eu fiquei calada.
-   motor: O depoente relatou que estava nervoso e o depoente ficou calado.
-   tela:  A depoente relatou que estava nervoso e a depoente ficou calada.
-   aviso: gênero: «nervoso» não foi convertido porque, no original, essa palavra se refere a outra pessoa. Confira quem é. [nervoso]
+F13 [Feminino] (sujeito apagado pelo modelo; corrigido na rodada 7)  Ele estava nervoso e eu fiquei calada.
+   motor: O depoente relatou que ele estava nervoso e o depoente ficou calado.
+   tela:  A depoente relatou que ele estava nervoso e a depoente ficou calada.
 PASS F13: geração concluída
 PASS F13: nenhum «o/do/ao/no/pelo depoente» na tela
 PASS F13: nenhum alerta laranja de gênero
 
-F14 [Feminino] (PENDENTE: sujeito de outra pessoa apagado pelo modelo)  Meu marido foi preso e eu fiquei sozinha com as crianças.
-   motor: O depoente relatou que foi preso e o depoente ficou sozinho com as crianças.
-   tela:  A depoente relatou que foi preso e a depoente ficou sozinha com as crianças.
+F14 [Feminino] (sujeito apagado pelo modelo; corrigido na rodada 7)  Meu marido foi preso e eu fiquei sozinha com as crianças.
+   motor: O depoente relatou que o marido do depoente foi preso e o depoente ficou sozinho com as crianças.
+   tela:  A depoente relatou que o marido da depoente foi preso e a depoente ficou sozinha com as crianças.
 PASS F14: geração concluída
 PASS F14: nenhum «o/do/ao/no/pelo depoente» na tela
 PASS F14: nenhum alerta laranja de gênero
@@ -122,8 +119,8 @@ M4 [Masculino]  Cheguei cansado do trabalho e encontrei a porta aberta.
 PASS M4: geração concluída
 PASS M4: texto da tela idêntico ao do motor
 
-M5 [Masculino] (PENDENTE: papéis trocados pelo modelo)  Ele disse que eu era culpado pelo que aconteceu.
-   motor: O depoente relatou que disse que o depoente era culpado pelo que aconteceu.
+M5 [Masculino] (inversão de papéis do modelo; corrigida na rodada 7)  Ele disse que eu era culpado pelo que aconteceu.
+   motor: O depoente relatou que ele disse que o depoente era culpado pelo que aconteceu.
 PASS M5: geração concluída
 PASS M5: texto da tela idêntico ao do motor
 
@@ -132,9 +129,8 @@ M6 [Masculino]  Eu sou o pai do menino e fui chamado na escola.
 PASS M6: geração concluída
 PASS M6: texto da tela idêntico ao do motor
 
-M7 [Masculino] (PENDENTE: papéis trocados pelo modelo)  O Carlos entrou depois de mim e ficou me encarando.
-   motor: O depoente relatou que entrou depois do Carlos e ficou lhe encarando.
-   LARANJA: «lhe» com verbo de ação direta: no original a ação foi contra o depoente («me encarand…»). Confira: o claro seria «encarando o depoente». [ficou lhe encarando]
+M7 [Masculino] (inversão de papéis do modelo; corrigida na rodada 7)  O Carlos entrou depois de mim e ficou me encarando.
+   motor: O depoente relatou que o Carlos entrou depois do depoente e ficou encarando o depoente.
 PASS M7: geração concluída
 PASS M7: texto da tela idêntico ao do motor
 
@@ -154,8 +150,7 @@ PASS M10: geração concluída
 PASS M10: texto da tela idêntico ao do motor
 
 M11 [Masculino]  Eu estava ferido quando ele me ameaçou.
-   motor: O depoente relatou que estava ferido quando ele o ameaçou.
-   LARANJA: pronome ambíguo: «o» pode ser lido como outra pessoa (no original: «ele me …»). Confira: o claro seria «ele ameaçou o depoente». [ele o ameaçou]
+   motor: O depoente relatou que estava ferido quando o depoente foi ameaçado por ele.
 PASS M11: geração concluída
 PASS M11: texto da tela idêntico ao do motor
 
@@ -164,22 +159,22 @@ M12 [Masculino]  Fiquei calado porque estava com medo.
 PASS M12: geração concluída
 PASS M12: texto da tela idêntico ao do motor
 
-M13 [Masculino] (PENDENTE: sujeito de outra pessoa apagado pelo modelo)  Ela estava nervosa e eu fiquei calado.
-   motor: O depoente relatou que estava nervoso e o depoente ficou calado.
+M13 [Masculino] (sujeito apagado pelo modelo; corrigido na rodada 7)  Ela estava nervosa e eu fiquei calado.
+   motor: O depoente relatou que ela estava nervosa e o depoente ficou calado.
 PASS M13: geração concluída
 PASS M13: texto da tela idêntico ao do motor
 
-M14 [Masculino] (PENDENTE: sujeito de outra pessoa apagado pelo modelo)  Minha esposa foi presa e eu fiquei sozinho com as crianças.
-   motor: O depoente relatou que foi presa e o depoente ficou sozinho com as crianças.
+M14 [Masculino] (sujeito apagado pelo modelo; corrigido na rodada 7)  Minha esposa foi presa e eu fiquei sozinho com as crianças.
+   motor: O depoente relatou que a esposa do depoente foi presa e o depoente ficou sozinho com as crianças.
 PASS M14: geração concluída
 PASS M14: texto da tela idêntico ao do motor
 
-N1 [Não informado] (PENDENTE: sujeito de outra pessoa apagado pelo modelo)  Ele chegou nervoso e começou a gritar comigo.
-   motor: O depoente relatou que chegou nervoso e começou a gritar com o depoente.
+N1 [Não informado] (sujeito apagado pelo modelo; corrigido na rodada 7)  Ele chegou nervoso e começou a gritar comigo.
+   motor: O depoente relatou que ele chegou nervoso e começou a gritar com o depoente.
    aviso: gênero presumido: o original não diz se quem fala é homem ou mulher; «o depoente» supõe homem. Confira. [O depoente]
 PASS N1: geração concluída
 PASS N1: texto da tela idêntico ao do motor
-   (se o campo fosse Feminino: A depoente relatou que chegou nervoso e começou a gritar com a depoente.)
+   (se o campo fosse Feminino: A depoente relatou que ele chegou nervoso e começou a gritar com a depoente.)
 
 N2 [Não informado]  Eu liguei para a polícia quando ouvi os tiros.
    motor: O depoente relatou que ligou para a polícia quando o depoente ouviu os tiros.
@@ -188,12 +183,12 @@ PASS N2: geração concluída
 PASS N2: texto da tela idêntico ao do motor
    (se o campo fosse Feminino: A depoente relatou que ligou para a polícia quando a depoente ouviu os tiros.)
 
-N3 [Não informado] (PENDENTE: sujeito de outra pessoa apagado pelo modelo)  Minha vizinha estava assustada e bateu na minha porta.
-   motor: O depoente relatou que estava assustado e bateu na porta da vizinha.
+N3 [Não informado] (sujeito apagado pelo modelo; corrigido na rodada 7)  Minha vizinha estava assustada e bateu na minha porta.
+   motor: O depoente relatou que a vizinha do depoente estava assustada e bateu na sua porta.
    aviso: gênero presumido: o original não diz se quem fala é homem ou mulher; «o depoente» supõe homem. Confira. [O depoente]
 PASS N3: geração concluída
 PASS N3: texto da tela idêntico ao do motor
-   (se o campo fosse Feminino: A depoente relatou que estava assustado e bateu na porta da vizinha.)
+   (se o campo fosse Feminino: A depoente relatou que a vizinha da depoente estava assustada e bateu na sua porta.)
 
 N4 [Não informado]  Ele me ameaçou na saída do trabalho.
    motor: O depoente relatou que ele ameaçou o depoente na saída do trabalho.
@@ -202,12 +197,12 @@ PASS N4: geração concluída
 PASS N4: texto da tela idêntico ao do motor
    (se o campo fosse Feminino: A depoente relatou que ele ameaçou a depoente na saída do trabalho.)
 
-N5 [Não informado] (PENDENTE: sujeito de outra pessoa apagado pelo modelo)  O porteiro ficou calado e não quis abrir o portão.
-   motor: O depoente relatou que ficou calado e não quis abrir o portão.
+N5 [Não informado] (sujeito apagado pelo modelo; corrigido na rodada 7)  O porteiro ficou calado e não quis abrir o portão.
+   motor: O depoente relatou que o porteiro ficou calado e não quis abrir o portão.
    aviso: gênero presumido: o original não diz se quem fala é homem ou mulher; «o depoente» supõe homem. Confira. [O depoente]
 PASS N5: geração concluída
 PASS N5: texto da tela idêntico ao do motor
-   (se o campo fosse Feminino: A depoente relatou que ficou calado e não quis abrir o portão.)
+   (se o campo fosse Feminino: A depoente relatou que o porteiro ficou calado e não quis abrir o portão.)
 
 N6 [Não informado]  Eu vi o carro parado na esquina por duas horas.
    motor: O depoente relatou que viu o carro parado na esquina por duas horas.

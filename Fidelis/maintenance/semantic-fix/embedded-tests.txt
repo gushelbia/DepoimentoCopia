@@ -13,6 +13,9 @@ PASS correction retains uncertainty and explicit temporal owner in production
 PASS predicate focus is not transferred to narrator
 PASS positional cross-category repair is disabled
 PASS legacy count-only warning remains advisory
+PASS embedded: unrepaired swapped gerund is critical
+PASS embedded: broken gerund repaired from the source
+PASS embedded: deleted subject restored
 PASS faithful conversion accepted
 PASS copied first person and recipient repaired in production
 PASS repaired draft accepted in production

@@ -1,4 +1,4 @@
-﻿START 2026-10-01T19:34:35
+﻿START 2026-10-02T06:00:51
 PASS campo «Gênero do depoente»: Não informado, Masculino, Feminino (padrão: Não informado) | Não informado, Masculino, Feminino
 PASS pista clara («fiquei nervosa»): sugestão «Usar Feminino» aparece e o campo continua Não informado | Usar Feminino
 PASS sem pista clara: sem sugestão

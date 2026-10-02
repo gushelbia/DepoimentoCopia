@@ -1,0 +1,45 @@
+PASS F13: devolve «ele» | O depoente relatou que ele estava nervoso e o depoente ficou calado.
+PASS F14: «meu marido» → «o marido do depoente» | O depoente relatou que o marido do depoente foi preso e o depoente ficou sozinho com as crianças.
+PASS M13: devolve «ela» e a concordância do original («nervosa») | O depoente relatou que ela estava nervosa e o depoente ficou calado.
+PASS M14: «minha esposa» → «a esposa do depoente» | O depoente relatou que a esposa do depoente foi presa e o depoente ficou sozinho com as crianças.
+PASS N1: devolve «ele» | O depoente relatou que ele chegou nervoso e começou a gritar com o depoente.
+PASS N5: devolve «o porteiro» | O depoente relatou que o porteiro ficou calado e não quis abrir o portão.
+PASS «o depoente ficou calado» → «o porteiro ficou calado» | O depoente relatou que o porteiro ficou calado e o depoente foi embora.
+PASS N3: a vizinha já aparece na frase (dupla inversão): não adivinha | O depoente relatou que estava assustado e bateu na porta da vizinha.
+PASS N3: validador acusa (nova tentativa) | fidelidade: sujeito de outra pessoa apagado: no original «Minha vizinha estava assustada», na saída «relatou que estava assustado»
+PASS depoente também faz a ação no original: sem mudança | O depoente relatou que o porteiro ficou calado e o depoente ficou calado também.
+PASS dois sujeitos com o mesmo predicado: não adivinha | O depoente relatou que ficou calado.
+PASS texto já correto: sem mudança | O depoente relatou que ele estava nervoso e o depoente ficou calado.
+PASS fala entre aspas preservada | O depoente relatou que ela gritou: "ele foi preso".
+PASS texto correto: validador não acusa
+PASS depoente faz o mesmo verbo («peguei minha bolsa»): sem mudança | Ela pegou sua bolsa. O depoente pegou sua bolsa.
+PASS depoente faz o mesmo verbo: validador não acusa
+PASS F7: «depois de mim» e «me encarando» restaurados | O depoente relatou que o Carlos entrou depois do depoente e ficou encarando o depoente.
+PASS F5: «eu era culpada» → «o depoente era culpado» e sujeito de «disse» devolvido | O depoente relatou que ele disse que o depoente era culpado pelo que aconteceu.
+PASS M5: sujeito de «disse» devolvido | O depoente relatou que ele disse que o depoente era culpado pelo que aconteceu.
+PASS «antes de mim» com «o depoente» como sujeito trocado | O depoente relatou que a Maria chegou antes do depoente.
+PASS troca que ficou sem reparo: validador acusa | fidelidade: papéis trocados: no original «O Carlos entrou depois de mim», na saída «relatou que entrou depois do Carlos»
+PASS original já tem «depois do Carlos»: sem mudança | O depoente relatou que entrou depois do Carlos.
+PASS «ele era culpado» duas vezes: validador acusa | fidelidade: depoente trocado por outra pessoa: no original «eu era culpada», na saída «ele era culpado»
+PASS outra pessoa com o mesmo predicado no original: sem acusação
+PASS P1: «ele o atacou» → «o depoente foi atacado por ele» | O depoente relatou que estava correndo na praia quando o depoente foi atacado por ele por trás.
+PASS F11: «ameaçado por ele» | O depoente relatou que estava grávida quando o depoente foi ameaçado por ele.
+PASS «por ela» | O depoente relatou que estava saindo quando o depoente foi empurrado por ela.
+PASS negação mantida: «não foi agredido por ele» | O depoente relatou que não foi agredido por ele.
+PASS particípio irregular («visto»): não converte | O depoente relatou que ele o viu na rua.
+PASS «bater» não tem passiva natural: não converte | O depoente relatou que ele o bateu.
+PASS duas ocorrências: não adivinha | O depoente relatou que ele o atacou e depois ele o atacou de novo.
+PASS duas ocorrências: validador acusa | fidelidade: pronome ambíguo: no original «Ele me atacou», na saída «ele o atacou»
+PASS verbo de fala («lhe disse»): sem mudança | O depoente relatou que ela lhe disse que viria.
+PASS «ela o empurrou» do original (outra pessoa): sem mudança | O depoente relatou que ele atacou o depoente e ela o empurrou.
+PASS P5 (1ª passagem): «estava o depoente enforcando» → «estava enforcando o depoente» | O depoente relatou que empurrou ele porque ele estava enforcando o depoente.
+PASS P5 (nova tentativa): «o depoente estava enforcando» → «ele estava enforcando o depoente» | O depoente relatou que empurrou ele porque ele estava enforcando o depoente.
+PASS sujeito e objeto apagados: «ela estava seguindo o depoente» | O depoente relatou que ela estava seguindo o depoente.
+PASS depoente também faz a ação no original: não adivinha | O depoente relatou que estava enforcando ele porque o depoente estava enforcando.
+PASS duas pessoas no original: validador acusa (rejeição e marca de incompleto) | fidelidade: papéis trocados: no original «Ele estava me enforcando», na saída «o depoente estava enforcando»
+PASS troca que ficou sem reparo: validador acusa | fidelidade: papéis trocados: no original «ele estava me enforcando», na saída «o depoente estava enforcando»
+PASS frase quebrada que ficou sem reparo: validador acusa | fidelidade: frase quebrada: «o depoente» no meio da locução verbal: «estava o depoente enforcando»
+PASS P5 corrigida: validador aceita
+PASS frase normal: sem acusação
+PASS saída vazia continua rejeitada | fidelidade: saída vazia
+PASS reparo idempotente (aplicar duas vezes não muda)

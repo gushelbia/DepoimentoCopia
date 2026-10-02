@@ -33,6 +33,13 @@ $draft='Não sabe da chave. Não lembra da porta.'
 $fixed=Invoke-Text RepairSemanticAnchors @('Não lembro da chave. Não sei da porta.',$draft)
 Assert ($fixed -ceq $draft) 'positional cross-category repair is disabled'
 Assert (!(Invoke-Text IsCriticalIssue @('uma negação pode ter sido omitida'))) 'legacy count-only warning remains advisory'
+# Round 7: a role swap that could not be repaired is critical (retry, then rejection and incomplete mark).
+$issue=Invoke-Text Validate @('Eu empurrei ele porque ele estava me enforcando.','O depoente relatou que empurrou ele porque o depoente estava enforcando.')
+Assert ([bool]$issue -and $issue.Contains('papéis trocados') -and (Invoke-Text IsCriticalIssue @($issue))) 'embedded: unrepaired swapped gerund is critical'
+$fixed=Invoke-Text RepairSemanticAnchors @('Eu empurrei ele porque ele estava me enforcando.','Relatou que o depoente empurrou ele porque ele estava o depoente enforcando.')
+Assert ($fixed -ceq 'O depoente relatou que empurrou ele porque ele estava enforcando o depoente.') 'embedded: broken gerund repaired from the source'
+$fixed=Invoke-Text RepairSemanticAnchors @('Meu marido foi preso e eu fiquei sozinha.','Relatou que foi preso e o depoente ficou sozinho.')
+Assert ($fixed -ceq 'O depoente relatou que o marido do depoente foi preso e o depoente ficou sozinho.') 'embedded: deleted subject restored'
 Assert (!(Invoke-Text Validate @('Eu vi a médica chegar ao laboratório.','O depoente viu a médica chegar ao laboratório.'))) 'faithful conversion accepted'
 # Round 3, through the production order: residual repair, anchored repair, validation.
 function Invoke-Pipeline($source,$draft){ Invoke-Text RepairSemanticAnchors @($source,(Invoke-Text RepairResidualFirstPerson @($draft))) }

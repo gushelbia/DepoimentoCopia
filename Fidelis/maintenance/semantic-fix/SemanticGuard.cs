@@ -326,8 +326,8 @@ namespace DepoimentoLocal.Windows
             string conjugated = ConjugateWith(plain, forms);
             foreach (Match clause in Regex.Matches(plain, @"\beu\s+(?<neg>não\s+)?(?<v>\p{L}+)\s+(?<next>\p{L}+)", RegexOptions.IgnoreCase))
             {
-                string to = ConjugateWith(clause.Groups["v"].Value.ToLowerInvariant(), forms);
-                string body = Regex.Escape(clause.Groups["neg"].Value) + to + @"\s+" + Regex.Escape(clause.Groups["next"].Value) + @"\b";
+                // Round 7: the next word may differ in gender («eu era culpada» → «ele era culpado»).
+                string body = NarratorBody(clause, forms);
                 if (Regex.IsMatch(conjugated, @"\b(?:ele|ela)\s+" + body, RegexOptions.IgnoreCase)) continue;
                 if (Regex.Matches(fullOutput, @"\b(?:ele|ela)\s+" + body, RegexOptions.IgnoreCase).Count != 1) continue;
                 MatchCollection found = Regex.Matches(text, @"\b(?<pro>[Ee]le|[Ee]la)(?<rest>\s+" + body + ")", RegexOptions.IgnoreCase);
@@ -669,6 +669,308 @@ namespace DepoimentoLocal.Windows
             return null;
         }
 
+        // ---- Roles (round 7) ------------------------------------------------
+        // Four inversions of the 3B model, each repaired only from the source and
+        // only with a single possible correspondence; otherwise Validate reports.
+
+        // 1) Another person's subject deleted: «Meu marido foi preso» →
+        // «Relatou que foi preso» / «o depoente foi preso». The source predicate
+        // (verb + next word) of a non-narrator subject follows the narrator.
+        public static string OtherSubjects()
+        {
+            return @"(?<s>\b(?:[Ee]le|[Ee]la|[Ee]les|[Ee]las)|\b(?:[Oo]|[Aa]|[Oo]s|[Aa]s|[Mm]eu|[Mm]inha|[Mm]eus|[Mm]inhas)\s+(?!depoente\b)\p{Ll}{3,}|(?<=[\p{Ll},;]\s+)\p{Lu}\p{Ll}{2,})\s+(?:(?:não|já|também|ainda|só|então)\s+)*(?:se\s+)?(?<v>\p{L}{3,})\s+(?<w>\p{L}+)";
+        }
+
+        public static bool NotPredicateVerb(string v)
+        {
+            return Regex.IsMatch(v, @"^(?:que|quando|porque|para|com|mas|enquanto|onde|como|pela|pelo|pelas|pelos|depois|antes|dele|dela|lhe|nos|nas|uma|uns|umas|isso|aqui|ali|muito|mesmo|também|me|te)$", RegexOptions.IgnoreCase);
+        }
+
+        public static string PredicatePattern(string v, string w)
+        {
+            string stem = w.Length > 3 ? w.Substring(0, w.Length - 1) : w;
+            return Regex.Escape(v) + @"\s+" + Regex.Escape(stem) + (w.Length > 3 ? @"\p{L}{0,2}" : "") + @"\b";
+        }
+
+        // The narrator does the same verb anywhere in the source («eu estava…»,
+        // «fiquei…», «peguei minha bolsa» for «pegou sua bolsa»): not clear, no repair.
+        public static bool NarratorPredicate(string source, string v, string w)
+        {
+            if (Regex.IsMatch(source, @"\beu\s+(?:não\s+)?(?:já\s+)?(?:me\s+|se\s+|lhe\s+)?" + Regex.Escape(v) + @"\b", RegexOptions.IgnoreCase)) return true;
+            foreach (Match f in Regex.Matches(source, @"\b\p{L}+\b"))
+            {
+                string third = ThirdPerson(f.Value);
+                if (third != null && third == v.ToLowerInvariant() && third != f.Value.ToLowerInvariant()) return true;
+            }
+            return false;
+        }
+
+        // «Meu marido» → «o marido do depoente»; «O porteiro» → «o porteiro»; «Ele» → «ele».
+        public static string SubjectPhrase(string s)
+        {
+            Match own = Regex.Match(s, @"^(?<p>[Mm]eu|[Mm]inha|[Mm]eus|[Mm]inhas)\s+(?<n>\p{L}+)$");
+            if (own.Success)
+            {
+                string p = own.Groups["p"].Value.ToLowerInvariant();
+                string article = p == "meu" ? "o" : p == "minha" ? "a" : p == "meus" ? "os" : "as";
+                return article + " " + own.Groups["n"].Value + " do depoente";
+            }
+            if (Regex.IsMatch(s, @"^(?:[Oo]|[Aa]|[Oo]s|[Aa]s|[Ee]le|[Ee]la|[Ee]les|[Ee]las)\b")) return Char.ToLowerInvariant(s[0]) + s.Substring(1);
+            return s;
+        }
+
+        // The word that identifies the subject («marido», «porteiro», «ele», «Carlos»).
+        public static string SubjectKey(string s)
+        {
+            return Regex.Match(s, @"\p{L}+$").Value;
+        }
+
+        public static string DeletedSubjectLead()
+        {
+            return @"(?<lead>\b[Rr]elatou que|\b[Oo] depoente)(?<mid>\s+(?:(?:não|já|também|ainda|só|então)\s+)*(?:se\s+)?)";
+        }
+
+        public static string RepairDeletedSubject(string source, string text, string fullOutput)
+        {
+            foreach (Match m in Regex.Matches(source, OtherSubjects()))
+            {
+                string v = m.Groups["v"].Value, w = m.Groups["w"].Value, s = m.Groups["s"].Value;
+                if (NotPredicateVerb(v)) continue;
+                string predicate = PredicatePattern(v, w);
+                if (Regex.Matches(source, @"\b" + predicate, RegexOptions.IgnoreCase).Count != 1 || NarratorPredicate(source, v, w)) continue;
+                string pattern = DeletedSubjectLead() + @"(?<p>" + predicate + ")";
+                if (Regex.Matches(fullOutput, pattern, RegexOptions.IgnoreCase).Count != 1) continue;
+                MatchCollection found = Regex.Matches(text, pattern, RegexOptions.IgnoreCase);
+                if (found.Count != 1) continue;
+                Match x = found[0];
+                // The same person already named in this output sentence: which one is it? Not clear.
+                string sentence = SentenceAt(text, x.Index);
+                if (Regex.IsMatch(sentence, @"\b" + Regex.Escape(SubjectKey(s)) + @"\b", RegexOptions.IgnoreCase)) continue;
+                string pred = x.Groups["p"].Value;
+                Match pw = Regex.Match(pred, @"(?<v>\p{L}+)\s+(?<w>\p{L}+)$");
+                // Agreement as in the source («estava nervoso» → «estava nervosa» for «Ela estava nervosa»).
+                if (pw.Success && pw.Groups["w"].Value != w && w.Length > 3) pred = pred.Substring(0, pw.Groups["w"].Index) + w;
+                string subject = SubjectPhrase(s);
+                string lead = x.Groups["lead"].Value, replacement;
+                if (lead.ToLowerInvariant() == "relatou que") replacement = lead + " " + subject + x.Groups["mid"].Value + pred;
+                else replacement = MatchCase(lead, subject) + x.Groups["mid"].Value + pred;
+                text = text.Substring(0, x.Index) + replacement + text.Substring(x.Index + x.Length);
+            }
+            return text;
+        }
+
+        public static string DeletedSubjectIssue(string original, string output)
+        {
+            string source = Unquote(original), rendered = Unquote(output);
+            foreach (Match m in Regex.Matches(source, OtherSubjects()))
+            {
+                string v = m.Groups["v"].Value, w = m.Groups["w"].Value;
+                if (NotPredicateVerb(v)) continue;
+                string predicate = PredicatePattern(v, w);
+                if (Regex.Matches(source, @"\b" + predicate, RegexOptions.IgnoreCase).Count != 1 || NarratorPredicate(source, v, w)) continue;
+                Match x = Regex.Match(rendered, DeletedSubjectLead() + @"(?<p>" + predicate + ")", RegexOptions.IgnoreCase);
+                if (x.Success) return "fidelidade: sujeito de outra pessoa apagado: no original «" + m.Value.Trim() + "», na saída «" + x.Value.Trim() + "»";
+            }
+            return null;
+        }
+
+        // 2) Roles swapped around the narrator: «O Carlos entrou depois de mim» →
+        // «Relatou que entrou depois do Carlos». Restore the source's order.
+        public static string RelativeToMe()
+        {
+            return @"(?<s>\b(?:[Ee]le|[Ee]la|(?:[Oo]|[Aa])\s+\p{Ll}{3,}|(?:[Oo]|[Aa])\s+\p{Lu}\p{Ll}+|(?<=[\p{Ll},;]\s+)\p{Lu}\p{Ll}{2,}))\s+(?<v>\p{L}{3,})\s+(?<rel>depois|antes|atrás|perto|longe|ao lado|na frente|em frente)\s+de\s+mim\b";
+        }
+
+        public static string SwappedRelativePattern(Match m)
+        {
+            string key = SubjectKey(m.Groups["s"].Value);
+            return DeletedSubjectLead() + @"(?<v>" + Regex.Escape(m.Groups["v"].Value) + @")\s+" + Regex.Escape(m.Groups["rel"].Value) + @"\s+(?:d[oa]|de)\s+(?:\p{L}+\s+)?" + Regex.Escape(key) + @"\b";
+        }
+
+        public static string RepairSwappedRelative(string source, string text, string fullOutput)
+        {
+            foreach (Match m in Regex.Matches(source, RelativeToMe()))
+            {
+                if (Regex.Matches(source, Regex.Escape(m.Value)).Count != 1) continue;
+                // «depois do Carlos» in the source itself: no swap to repair.
+                if (Regex.IsMatch(source, @"\b" + Regex.Escape(m.Groups["rel"].Value) + @"\s+(?:d[oa]|de)\s+(?:\p{L}+\s+)?" + Regex.Escape(SubjectKey(m.Groups["s"].Value)) + @"\b", RegexOptions.IgnoreCase)) continue;
+                string pattern = SwappedRelativePattern(m);
+                if (Regex.Matches(fullOutput, pattern, RegexOptions.IgnoreCase).Count != 1) continue;
+                MatchCollection found = Regex.Matches(text, pattern, RegexOptions.IgnoreCase);
+                if (found.Count != 1) continue;
+                Match x = found[0];
+                string subject = SubjectPhrase(m.Groups["s"].Value), lead = x.Groups["lead"].Value;
+                string body = x.Groups["mid"].Value + x.Groups["v"].Value + " " + m.Groups["rel"].Value + " do depoente";
+                string replacement = lead.ToLowerInvariant() == "relatou que" ? lead + " " + subject + body : MatchCase(lead, subject) + body;
+                text = text.Substring(0, x.Index) + replacement + text.Substring(x.Index + x.Length);
+            }
+            // «ficou me encarando» → «ficou lhe encarando»: «lhe» with a direct action;
+            // the source's object is the narrator.
+            foreach (Match g in Regex.Matches(source, @"\bme\s+(?<g>\p{L}+ndo)\b", RegexOptions.IgnoreCase))
+            {
+                string pattern = @"\blhe\s+(?<g>" + Regex.Escape(g.Groups["g"].Value) + @")\b";
+                if (Regex.Matches(source, @"\bme\s+" + Regex.Escape(g.Groups["g"].Value) + @"\b", RegexOptions.IgnoreCase).Count != 1) continue;
+                if (Regex.Matches(fullOutput, pattern, RegexOptions.IgnoreCase).Count != 1) continue;
+                MatchCollection found = Regex.Matches(text, pattern, RegexOptions.IgnoreCase);
+                if (found.Count != 1) continue;
+                text = text.Substring(0, found[0].Index) + found[0].Groups["g"].Value + " o depoente" + text.Substring(found[0].Index + found[0].Length);
+            }
+            return text;
+        }
+
+        public static string SwappedRoleIssue(string original, string output)
+        {
+            string source = Unquote(original), rendered = Unquote(output);
+            foreach (Match m in Regex.Matches(source, RelativeToMe()))
+            {
+                if (Regex.IsMatch(source, @"\b" + Regex.Escape(m.Groups["rel"].Value) + @"\s+(?:d[oa]|de)\s+(?:\p{L}+\s+)?" + Regex.Escape(SubjectKey(m.Groups["s"].Value)) + @"\b", RegexOptions.IgnoreCase)) continue;
+                Match x = Regex.Match(rendered, SwappedRelativePattern(m), RegexOptions.IgnoreCase);
+                if (x.Success) return "fidelidade: papéis trocados: no original «" + m.Value.Trim() + "», na saída «" + x.Value.Trim() + "»";
+            }
+            // «eu era culpada» → «ele era culpado»: the narrator rendered as another person.
+            string[,] forms = SourceNarratorForms(original);
+            string conjugated = ConjugateWith(source, forms);
+            foreach (Match clause in Regex.Matches(source, @"\beu\s+(?<neg>não\s+)?(?<v>\p{L}+)\s+(?<next>\p{L}+)", RegexOptions.IgnoreCase))
+            {
+                string body = NarratorBody(clause, forms);
+                if (Regex.IsMatch(conjugated, @"\b(?:ele|ela)\s+" + body, RegexOptions.IgnoreCase)) continue;
+                Match x = Regex.Match(rendered, @"\b(?:ele|ela)\s+" + body, RegexOptions.IgnoreCase);
+                if (x.Success) return "fidelidade: depoente trocado por outra pessoa: no original «" + clause.Value.Trim() + "», na saída «" + x.Value.Trim() + "»";
+            }
+            return null;
+        }
+
+        // Narrator predicate after person conversion; the next word may change gender
+        // («eu era culpada» / «ele era culpado»).
+        public static string NarratorBody(Match clause, string[,] forms)
+        {
+            string to = ConjugateWith(clause.Groups["v"].Value.ToLowerInvariant(), forms);
+            string next = clause.Groups["next"].Value;
+            string nextPattern = next.Length > 3 && Regex.IsMatch(next, @"[oa]s?$", RegexOptions.IgnoreCase)
+                ? Regex.Escape(Regex.Replace(next, @"[oa](s?)$", "")) + @"[oa]s?"
+                : Regex.Escape(next);
+            return Regex.Escape(clause.Groups["neg"].Value) + Regex.Escape(to) + @"\s+" + nextPattern + @"\b";
+        }
+
+        // 3) Ambiguous pronoun: «ele me atacou» → «ele o atacou» (o = another man?).
+        // Prefer the passive with the narrator as subject: «o depoente foi atacado por ele».
+        public static string Participle(string verb)
+        {
+            string v = verb.ToLowerInvariant();
+            if (Regex.IsMatch(v, @"^(?:deu|viu|bateu|abriu|cobriu|descobriu|escreveu|fez|disse|trouxe|pôs|quis|foi|teve|veio|leu)$")) return null;
+            if (v.Length > 4 && v.EndsWith("ou")) return v.Substring(0, v.Length - 2) + "ado";
+            if (v.Length > 4 && (v.EndsWith("eu") || v.EndsWith("iu"))) return v.Substring(0, v.Length - 2) + "ido";
+            return null;
+        }
+
+        public static string AmbiguousObjectSource()
+        {
+            return @"\b(?<s>[Ee]le|[Ee]la|[Ee]les|[Ee]las)\s+(?<neg>não\s+)?(?<adv>(?:já|também|ainda|depois|então)\s+)?me\s+(?<v>\p{L}+(?:ou|eu|iu))\b";
+        }
+
+        public static string AmbiguousObjectPattern(Match m)
+        {
+            string stem = VerbStem(m.Groups["v"].Value);
+            string head = stem.Length >= 4 ? stem.Substring(0, 4) : stem;
+            return @"\b(?<s>" + Regex.Escape(m.Groups["s"].Value) + @")\s+(?<neg>não\s+)?(?<adv>(?:já|também|ainda|depois|então)\s+)?(?:o|a)\s+(?<v>" + Regex.Escape(head) + @"\p{L}*(?:ou|eu|iu))\b";
+        }
+
+        public static string RepairAmbiguousObject(string source, string text, string fullOutput)
+        {
+            foreach (Match m in Regex.Matches(source, AmbiguousObjectSource()))
+            {
+                if (SpeechVerb(m.Groups["v"].Value) || Participle(m.Groups["v"].Value) == null) continue;
+                if (Regex.Matches(source, Regex.Escape(m.Value), RegexOptions.IgnoreCase).Count != 1) continue;
+                string pattern = AmbiguousObjectPattern(m);
+                if (Regex.Matches(fullOutput, pattern, RegexOptions.IgnoreCase).Count != 1) continue;
+                MatchCollection found = Regex.Matches(text, pattern, RegexOptions.IgnoreCase);
+                if (found.Count != 1) continue;
+                Match x = found[0];
+                string participle = Participle(x.Groups["v"].Value);
+                if (participle == null) continue;
+                string s = x.Groups["s"].Value;
+                string replacement = MatchCase(s, "o depoente ") + x.Groups["neg"].Value + x.Groups["adv"].Value + "foi " + participle + " por " + s.ToLowerInvariant();
+                text = text.Substring(0, x.Index) + replacement + text.Substring(x.Index + x.Length);
+            }
+            return text;
+        }
+
+        public static string AmbiguousObjectIssue(string original, string output)
+        {
+            string source = Unquote(original), rendered = Unquote(output);
+            foreach (Match m in Regex.Matches(source, AmbiguousObjectSource()))
+            {
+                if (SpeechVerb(m.Groups["v"].Value) || Participle(m.Groups["v"].Value) == null) continue;
+                Match x = Regex.Match(rendered, AmbiguousObjectPattern(m), RegexOptions.IgnoreCase);
+                if (x.Success && Participle(x.Groups["v"].Value) != null) return "fidelidade: pronome ambíguo: no original «" + m.Value.Trim() + "», na saída «" + x.Value.Trim() + "»";
+            }
+            return null;
+        }
+
+        // 4a) «ele estava me enforcando» (narrator as object of a gerund). The model
+        // writes «ele estava o depoente enforcando» (broken) or «o depoente estava
+        // enforcando» (roles swapped). With a single source frame, restore it:
+        // «ele estava enforcando o depoente». Otherwise Validate reports it.
+        public static string GerundSource()
+        {
+            return @"(?<s>\b(?:[Ee]le|[Ee]la|[Ee]les|[Ee]las)|\b(?:[Oo]|[Aa])\s+\p{Ll}{3,}|(?<=[\p{Ll},;]\s+)\p{Lu}\p{Ll}{2,})\s+(?<neg>não\s+)?(?<aux>estava|estavam|está|estão|ficou|ficava|continuava|continuou|começou a|tentava|tentou|ia|vinha)\s+me\s+(?<g>\p{L}+ndo)\b";
+        }
+
+        public static string RepairGerundObject(string source, string text, string fullOutput)
+        {
+            foreach (Match m in Regex.Matches(source, GerundSource()))
+            {
+                string g = m.Groups["g"].Value, aux = m.Groups["aux"].Value;
+                // One source frame with this gerund, and the narrator never does it himself.
+                if (Regex.Matches(source, @"\b" + Regex.Escape(g) + @"\b", RegexOptions.IgnoreCase).Count != 1) continue;
+                if (Regex.IsMatch(source, @"\beu\s+(?:não\s+)?" + Regex.Escape(aux) + @"\s+" + Regex.Escape(g), RegexOptions.IgnoreCase)) continue;
+                // Broken: «estava o depoente enforcando» → «estava enforcando o depoente».
+                string broken = @"\b(?<aux>" + Regex.Escape(aux) + @")\s+o depoente\s+(?<g>" + Regex.Escape(g) + @")\b";
+                if (Regex.Matches(fullOutput, broken, RegexOptions.IgnoreCase).Count == 1)
+                {
+                    MatchCollection found = Regex.Matches(text, broken, RegexOptions.IgnoreCase);
+                    if (found.Count == 1)
+                    {
+                        Match x = found[0];
+                        text = text.Substring(0, x.Index) + x.Groups["aux"].Value + " " + x.Groups["g"].Value + " o depoente" + text.Substring(x.Index + x.Length);
+                        continue;
+                    }
+                }
+                // Swapped: «o depoente estava enforcando» → «ele estava enforcando o depoente».
+                string swapped = DeletedSubjectLead() + @"(?<neg>não\s+)?(?<aux>" + Regex.Escape(aux) + @")\s+(?<g>" + Regex.Escape(g) + @")\b(?!\s+(?:o|a)\s+depoente\b)";
+                if (Regex.Matches(fullOutput, swapped, RegexOptions.IgnoreCase).Count != 1) continue;
+                MatchCollection hits = Regex.Matches(text, swapped, RegexOptions.IgnoreCase);
+                if (hits.Count != 1) continue;
+                Match y = hits[0];
+                string subject = SubjectPhrase(m.Groups["s"].Value), lead = y.Groups["lead"].Value;
+                string body = y.Groups["mid"].Value + y.Groups["neg"].Value + y.Groups["aux"].Value + " " + y.Groups["g"].Value + " o depoente";
+                string replacement = lead.ToLowerInvariant() == "relatou que" ? lead + " " + subject + body : MatchCase(lead, subject) + body;
+                text = text.Substring(0, y.Index) + replacement + text.Substring(y.Index + y.Length);
+            }
+            return text;
+        }
+
+        public static string GerundObjectIssue(string original, string output)
+        {
+            string source = Unquote(original), rendered = Unquote(output);
+            foreach (Match m in Regex.Matches(source, GerundSource()))
+            {
+                if (Regex.IsMatch(source, @"\beu\s+(?:não\s+)?" + Regex.Escape(m.Groups["aux"].Value) + @"\s+" + Regex.Escape(m.Groups["g"].Value), RegexOptions.IgnoreCase)) continue;
+                string pattern = DeletedSubjectLead() + @"(?:não\s+)?" + Regex.Escape(m.Groups["aux"].Value) + @"\s+" + Regex.Escape(m.Groups["g"].Value) + @"\b(?!\s+(?:o|a)\s+depoente\b)";
+                Match x = Regex.Match(rendered, pattern, RegexOptions.IgnoreCase);
+                if (x.Success) return "fidelidade: papéis trocados: no original «" + m.Value.Trim() + "», na saída «" + x.Value.Trim() + "»";
+            }
+            return null;
+        }
+
+        // 4) Broken phrase: «ele estava o depoente enforcando» — the narrator inside a
+        // verbal phrase. Never guessed; reported for a new attempt.
+        public static string BrokenPhraseIssue(string output)
+        {
+            Match x = Regex.Match(Unquote(output), @"\b(?:estava|está|estavam|estão|ia|vai|tinha|havia|queria|começou a|continuou a|tentou|tentava)\s+o depoente\s+\p{L}+(?:ndo|ar|er|ir)\b", RegexOptions.IgnoreCase);
+            return x.Success ? "fidelidade: frase quebrada: «o depoente» no meio da locução verbal: «" + x.Value + "»" : null;
+        }
+
         public static string CorrectionKey(string text)
         {
             text = Normalize(text);
@@ -841,6 +1143,12 @@ namespace DepoimentoLocal.Windows
             }
             text = RepairEllipticalNarrator(source, text, fullOutput, forms);
             text = RepairNarratorPronoun(source, text, fullOutput, forms);
+            // Round 7: roles (after the narrator pronoun, so «ele era culpado» is
+            // already «o depoente era culpado» when the deleted subject is restored).
+            text = RepairGerundObject(source, text, fullOutput);
+            text = RepairSwappedRelative(source, text, fullOutput);
+            text = RepairDeletedSubject(source, text, fullOutput);
+            text = RepairAmbiguousObject(source, text, fullOutput);
             text = RepairWholeSentenceNarrator(source, text, fullOutput, forms);
             text = RepairNarratorPossessive(source, text);
             text = RepairRecipients(source, text, fullOutput);
@@ -980,6 +1288,13 @@ namespace DepoimentoLocal.Windows
             if (String.IsNullOrWhiteSpace(output)) return "fidelidade: saída vazia";
             string swapped = SwappedSubjectIssue(original, output);
             if (swapped != null) return swapped;
+            // Round 7: roles that could not be repaired with certainty.
+            string role = DeletedSubjectIssue(original, output);
+            if (role == null) role = SwappedRoleIssue(original, output);
+            if (role == null) role = AmbiguousObjectIssue(original, output);
+            if (role == null) role = GerundObjectIssue(original, output);
+            if (role == null) role = BrokenPhraseIssue(output);
+            if (role != null) return role;
             string source = Normalize(Unquote(original));
             string rendered = Normalize(Unquote(output));
             var participants = new HashSet<string>();

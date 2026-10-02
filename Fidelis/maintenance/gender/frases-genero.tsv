@@ -1,39 +1,38 @@
-# Bateria de gênero (frases inventadas): id, pendência, frase. A letra do id é o campo Gênero do depoente: F = Feminino, M = Masculino, N = Não informado.
-# Pendências guardadas para a próxima correção (inversões do próprio modelo, não erros de gênero):
-#   pendente-papel   = achado do plano: «eu era culpada» vira «ele era culpado»; «depois de mim» vira «depois do Carlos».
-#   pendente-sujeito = achado desta bateria: o modelo apaga o sujeito de outra pessoa e o fato passa para o depoente
-#                      («Ele estava nervoso» → «relatou que estava nervoso»; «Meu marido foi preso» → «relatou que foi preso»).
+# Bateria de gênero (frases inventadas): id, marca, frase. A letra do id é o campo Gênero do depoente: F = Feminino, M = Masculino, N = Não informado.
+# Inversões de papel do próprio modelo (não são erros de gênero), corrigidas no motor na rodada 7 (maintenance/role-fix) e mantidas aqui como regressão:
+#   inversao-papel   = «eu era culpada» → «ele era culpado»; «depois de mim» → «depois do Carlos».
+#   inversao-sujeito = o modelo apagava o sujeito de outra pessoa e o fato passava para o depoente («Meu marido foi preso» → «relatou que foi preso»).
 F1		Eu fiquei assustada quando ele entrou gritando.
 F2		Fui agredida pelo vizinho na frente do prédio.
 F3		Eu estava sozinha em casa quando ouvi um barulho na porta.
 F4		Cheguei cansada do trabalho e encontrei a porta aberta.
-F5	pendente-papel	Ele disse que eu era culpada pelo que aconteceu.
+F5	inversao-papel	Ele disse que eu era culpada pelo que aconteceu.
 F6		Eu sou a mãe do menino e fui chamada na escola.
-F7	pendente-papel	O Carlos entrou depois de mim e ficou me encarando.
+F7	inversao-papel	O Carlos entrou depois de mim e ficou me encarando.
 F8		Fiquei preocupada porque minha filha não atendia o telefone.
 F9		Ele me empurrou e eu caí sentada no chão.
 F10		Eu não fui ouvida pela polícia naquele dia.
 F11		Eu estava grávida quando ele me ameaçou.
 F12		Fiquei calada porque estava com medo.
-F13	pendente-sujeito	Ele estava nervoso e eu fiquei calada.
-F14	pendente-sujeito	Meu marido foi preso e eu fiquei sozinha com as crianças.
+F13	inversao-sujeito	Ele estava nervoso e eu fiquei calada.
+F14	inversao-sujeito	Meu marido foi preso e eu fiquei sozinha com as crianças.
 M1		Eu fiquei assustado quando ele entrou gritando.
 M2		Fui agredido pelo vizinho na frente do prédio.
 M3		Eu estava sozinho em casa quando ouvi um barulho na porta.
 M4		Cheguei cansado do trabalho e encontrei a porta aberta.
-M5	pendente-papel	Ele disse que eu era culpado pelo que aconteceu.
+M5	inversao-papel	Ele disse que eu era culpado pelo que aconteceu.
 M6		Eu sou o pai do menino e fui chamado na escola.
-M7	pendente-papel	O Carlos entrou depois de mim e ficou me encarando.
+M7	inversao-papel	O Carlos entrou depois de mim e ficou me encarando.
 M8		Fiquei preocupado porque minha filha não atendia o telefone.
 M9		Ele me empurrou e eu caí sentado no chão.
 M10		Eu não fui ouvido pela polícia naquele dia.
 M11		Eu estava ferido quando ele me ameaçou.
 M12		Fiquei calado porque estava com medo.
-M13	pendente-sujeito	Ela estava nervosa e eu fiquei calado.
-M14	pendente-sujeito	Minha esposa foi presa e eu fiquei sozinho com as crianças.
-N1	pendente-sujeito	Ele chegou nervoso e começou a gritar comigo.
+M13	inversao-sujeito	Ela estava nervosa e eu fiquei calado.
+M14	inversao-sujeito	Minha esposa foi presa e eu fiquei sozinho com as crianças.
+N1	inversao-sujeito	Ele chegou nervoso e começou a gritar comigo.
 N2		Eu liguei para a polícia quando ouvi os tiros.
-N3	pendente-sujeito	Minha vizinha estava assustada e bateu na minha porta.
+N3	inversao-sujeito	Minha vizinha estava assustada e bateu na minha porta.
 N4		Ele me ameaçou na saída do trabalho.
-N5	pendente-sujeito	O porteiro ficou calado e não quis abrir o portão.
+N5	inversao-sujeito	O porteiro ficou calado e não quis abrir o portão.
 N6		Eu vi o carro parado na esquina por duas horas.

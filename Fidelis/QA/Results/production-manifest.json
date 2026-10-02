@@ -1,8 +1,8 @@
 ﻿[
     {
         "path":  "ui/ModernShell.cs",
-        "sha256":  "8E8D2BBC21E040FAABBC85894280C1C0DF387C30EC4F3ED72DA2F9B543EC5325",
-        "bytes":  188406
+        "sha256":  "052D808AC6999841324C0008DFF7CF39333447D9781E50D7ADE969F18936FA0C",
+        "bytes":  192970
     },
     {
         "path":  "launcher/DesktopProgram.cs",
@@ -11,13 +11,13 @@
     },
     {
         "path":  "engine/DepoimentoLocal.dll",
-        "sha256":  "687C90B523A7C9BC4E6F6CFEC8EA1E44ABC47389B890EA4495E5F489867763E1",
-        "bytes":  226816
+        "sha256":  "2F213A8E5BA05A104928210952997E3DBD50D23E3F52879C3933E934C3526C8C",
+        "bytes":  238080
     },
     {
         "path":  "engine/DepoimentoLocal.Vulkan8.dll",
-        "sha256":  "687C90B523A7C9BC4E6F6CFEC8EA1E44ABC47389B890EA4495E5F489867763E1",
-        "bytes":  226816
+        "sha256":  "2F213A8E5BA05A104928210952997E3DBD50D23E3F52879C3933E934C3526C8C",
+        "bytes":  238080
     },
     {
         "path":  "modelo/qwen2.5-3b-instruct-q4_k_m.gguf",

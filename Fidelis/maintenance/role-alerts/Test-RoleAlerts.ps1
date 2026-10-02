@@ -17,6 +17,7 @@ function Kinds($original, $output) {
             elseif ($p.StartsWith('frase quebrada')) { $k += 'quebrada' }
             elseif ($p.StartsWith('«lhe» com verbo')) { $k += 'lhe' }
             elseif ($p.StartsWith('pronome ambíguo')) { $k += 'ambíguo' }
+            elseif ($p.StartsWith('sujeito de outra pessoa apagado')) { $k += 'apagado' }
             elseif ($p.StartsWith('sujeito')) { $k += 'sujeito' }
             elseif ($p.StartsWith('gênero trocado')) { $k += 'gênero trocado' }
             elseif ($p.StartsWith('gênero presumido')) { $k += 'gênero presumido' }
@@ -82,9 +83,9 @@ Check ($r.Roles[0].Alert -and -not $r.Roles[0].Unmatched) 'alerta de papel usa a
 Check (-not $r.Notes[0].Alert -and -not $r.Notes[0].Unmatched) 'aviso informativo não tem cor' ''
 $paintedBad = 0; $notesBad = 0
 foreach ($c in $battery) { $out = ($c.output -split "`n" | Where-Object { $_ -match '^Relatou' } | Select-Object -First 1); $rr = [ReviewScanner]::Compare($c.input, $out)
-  foreach ($i in $rr.Roles) { if ($i.Reason -match '^(sujeito|gênero presumido)' -or -not $i.Alert) { $paintedBad++ } }
-  foreach ($i in $rr.Notes) { if ($i.Alert -or $i.Reason -notmatch '^(sujeito|gênero presumido)') { $notesBad++ } } }
-Check ($paintedBad -eq 0) 'bateria: laranja só para inversão, reflexivo, frase quebrada, «lhe», pronome ambíguo e gênero trocado' ("$paintedBad itens indevidos")
+  foreach ($i in $rr.Roles) { if ($i.Reason -match '^(sujeito:|gênero presumido)' -or -not $i.Alert) { $paintedBad++ } }
+  foreach ($i in $rr.Notes) { if ($i.Alert -or $i.Reason -notmatch '^(sujeito:|gênero presumido)') { $notesBad++ } } }
+Check ($paintedBad -eq 0) 'bateria: laranja só para inversão, reflexivo, frase quebrada, «lhe», pronome ambíguo, sujeito apagado e gênero trocado' ("$paintedBad itens indevidos")
 Check ($notesBad -eq 0) 'bateria: sujeito e gênero presumido ficam só como aviso informativo' ("$notesBad itens indevidos")
 
 foreach ($n in 11,12,19) { $c = $battery | Where-Object number -eq $n; $out = ($c.output -split "`n" | Where-Object { $_ -match '^Relatou' } | Select-Object -First 1); $rr = [ReviewScanner]::Compare($c.input, $out)
@@ -92,6 +93,31 @@ foreach ($n in 11,12,19) { $c = $battery | Where-Object number -eq $n; $out = ($
   Check ($swapped.Count -ge 1 -and -not ($rr.Notes | Where-Object { $_.Reason -match 'gênero trocado' })) ("bateria {0}: gênero trocado pintado de laranja (contradiz o original)" -f $n) (($swapped | ForEach-Object { $_.Text }) -join ', ') }
 $rr = [ReviewScanner]::Compare('Eu fiquei nervosa e liguei para o meu irmão.', 'Relatou que o depoente ficou nervoso e ligou para o seu irmão.')
 Check (@($rr.Roles | Where-Object { $_.Text -eq 'nervoso' }).Count -eq 1 -and @($rr.Notes | Where-Object { $_.Reason -match '^sujeito' }).Count -eq 1) '«nervoso» em laranja; «Relatou que» continua aviso sem cor' ''
+
+# 5) Sujeito de outra pessoa apagado (laranja): as 7 frases guardadas na bateria de gênero (saídas reais do 3B).
+function Has($name, $original, $output, $span) {
+    $hit = @([RoleScanner]::Find($original, $output) | Where-Object { $_.Kind -eq [RoleScanner]::Alert -and $_.Reason -match 'sujeito de outra pessoa apagado' })
+    Check ($hit.Count -eq 1 -and $hit[0].Text -eq $span) $name (($hit | ForEach-Object { $_.Text }) -join ', ')
+}
+function HasNot($name, $original, $output) {
+    $hit = @([RoleScanner]::Find($original, $output) | Where-Object { $_.Reason -match 'sujeito de outra pessoa apagado' })
+    Check ($hit.Count -eq 0) $name (($hit | ForEach-Object { $_.Text }) -join ', ')
+}
+Has 'F13: «Ele estava nervoso» → «relatou que estava nervoso»' 'Ele estava nervoso e eu fiquei calada.' 'O depoente relatou que estava nervoso e o depoente ficou calado.' 'estava nervoso'
+Has 'F14: «Meu marido foi preso» → «relatou que foi preso»' 'Meu marido foi preso e eu fiquei sozinha com as crianças.' 'O depoente relatou que foi preso e o depoente ficou sozinho com as crianças.' 'foi preso'
+Has 'M13: «Ela estava nervosa» → «relatou que estava nervoso» (gênero também mudou)' 'Ela estava nervosa e eu fiquei calado.' 'O depoente relatou que estava nervoso e o depoente ficou calado.' 'estava nervoso'
+Has 'M14: «Minha esposa foi presa» → «relatou que foi presa»' 'Minha esposa foi presa e eu fiquei sozinho com as crianças.' 'O depoente relatou que foi presa e o depoente ficou sozinho com as crianças.' 'foi presa'
+Has 'N1: «Ele chegou nervoso» → «relatou que chegou nervoso»' 'Ele chegou nervoso e começou a gritar comigo.' 'O depoente relatou que chegou nervoso e começou a gritar com o depoente.' 'chegou nervoso'
+Has 'N3: «Minha vizinha estava assustada» → «relatou que estava assustado»' 'Minha vizinha estava assustada e bateu na minha porta.' 'O depoente relatou que estava assustado e bateu na porta da vizinha.' 'estava assustado'
+Has 'N5: «O porteiro ficou calado» → «relatou que ficou calado»' 'O porteiro ficou calado e não quis abrir o portão.' 'O depoente relatou que ficou calado e não quis abrir o portão.' 'ficou calado'
+Has 'com «a depoente» (campo Feminino) também marca' 'Meu marido foi preso e eu fiquei sozinha com as crianças.' 'A depoente relatou que foi preso e a depoente ficou sozinha com as crianças.' 'foi preso'
+Has 'papéis trocados também marcados: «O Carlos entrou depois de mim»' 'O Carlos entrou depois de mim e ficou me encarando.' 'O depoente relatou que entrou depois do Carlos e ficou lhe encarando.' 'entrou depois'
+HasNot 'versão correta («o marido do depoente foi preso»): sem alerta' 'Meu marido foi preso e eu fiquei sozinha com as crianças.' 'O depoente relatou que o seu marido foi preso e o depoente ficou sozinho com as crianças.'
+HasNot 'versão correta («ele estava nervoso»): sem alerta' 'Ele estava nervoso e eu fiquei calada.' 'O depoente relatou que ele estava nervoso e o depoente ficou calado.'
+HasNot 'depoente também faz a ação no original («eu fiquei calado»): sem alerta' 'O porteiro ficou calado e eu fiquei calado também.' 'O depoente relatou que o porteiro ficou calado e o depoente ficou calado também.'
+HasNot 'mesmo predicado do depoente com verbo irregular c→qu («verifiquei isso»)' 'Não sei se ele verificou isso. Eu não verifiquei isso pessoalmente.' 'O depoente não sabe se ele verificou isso. O depoente não verificou isso pessoalmente.'
+HasNot 'ação dirigida ao depoente («ela me atacou») fica com as regras de inversão' 'Ela me atacou primeiro e eu só me defendi.' 'O depoente relatou que ela o atacou primeiro e o depoente só se defendeu.'
+HasNot 'fala entre aspas não conta' 'Ela gritou: "ele foi preso".' 'O depoente relatou que ela gritou: "ele foi preso".'
 $results | Set-Content -Encoding UTF8 (Join-Path $PSScriptRoot 'results.txt')
 Write-Output ($(if ($failures -eq 0) { 'RESULT PASS' } else { "RESULT FAIL ($failures)" }))
 if ($failures -ne 0) { exit 1 }

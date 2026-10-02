@@ -13,7 +13,7 @@ PASS texto já correto: sem mudança | O depoente relatou que ela se defendeu qu
 PASS dois candidatos no original: não adivinha | O depoente relatou que lhe disse que viria. Ela lhe disse que não.
 PASS sujeito correto («o Marcos lhe segurou»): sem mudança | O depoente relatou que o Marcos lhe segurou pelo braço.
 PASS «Depois me disseram» não vira sujeito | O depoente relatou que depois lhe disseram que houve reunião.
-PASS ação do próprio depoente («eu bati»): sem mudança | O depoente relatou que bateu nele porque ele o ameaçou.
+PASS ação do próprio depoente («eu bati»): sujeito mantido; «ele o ameaçou» vira passiva (rodada 7) | O depoente relatou que bateu nele porque o depoente foi ameaçado por ele.
 PASS validador: troca não reparável é acusada | fidelidade: autor da ação trocado com o depoente: no original «Ele me disse», na saída «o depoente lhe disse»
 PASS validador: caso 10 sem reparo seria acusado | fidelidade: autor da ação trocado com o depoente: no original «Ela me contou», na saída «o depoente lhe disse»
 PASS validador: depoente que fala de fato não é acusado

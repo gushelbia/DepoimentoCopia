@@ -48,9 +48,24 @@ PASS resumo: alertas e avisos contados separados | 1 alerta de papéis e pronome
 PASS lista ao clicar: alertas primeiro, avisos informativos em seção própria |    • «o depoente lhe disse» — Confira quem fez ou disse: aqui o depoente age sobre outra pessoa, mas no original a ação foi dirigida ao depoente («… me …»).
 PASS alerta de papel usa a cor laranja (alerta), nunca a vermelha
 PASS aviso informativo não tem cor
-PASS bateria: laranja só para inversão, reflexivo, frase quebrada, «lhe», pronome ambíguo e gênero trocado | 0 itens indevidos
+PASS bateria: laranja só para inversão, reflexivo, frase quebrada, «lhe», pronome ambíguo, sujeito apagado e gênero trocado | 0 itens indevidos
 PASS bateria: sujeito e gênero presumido ficam só como aviso informativo | 0 itens indevidos
 PASS bateria 11: gênero trocado pintado de laranja (contradiz o original) | o depoente
 PASS bateria 12: gênero trocado pintado de laranja (contradiz o original) | o depoente, nervoso
 PASS bateria 19: gênero trocado pintado de laranja (contradiz o original) | o depoente, agredido
 PASS «nervoso» em laranja; «Relatou que» continua aviso sem cor
+PASS F13: «Ele estava nervoso» → «relatou que estava nervoso» | estava nervoso
+PASS F14: «Meu marido foi preso» → «relatou que foi preso» | foi preso
+PASS M13: «Ela estava nervosa» → «relatou que estava nervoso» (gênero também mudou) | estava nervoso
+PASS M14: «Minha esposa foi presa» → «relatou que foi presa» | foi presa
+PASS N1: «Ele chegou nervoso» → «relatou que chegou nervoso» | chegou nervoso
+PASS N3: «Minha vizinha estava assustada» → «relatou que estava assustado» | estava assustado
+PASS N5: «O porteiro ficou calado» → «relatou que ficou calado» | ficou calado
+PASS com «a depoente» (campo Feminino) também marca | foi preso
+PASS papéis trocados também marcados: «O Carlos entrou depois de mim» | entrou depois
+PASS versão correta («o marido do depoente foi preso»): sem alerta
+PASS versão correta («ele estava nervoso»): sem alerta
+PASS depoente também faz a ação no original («eu fiquei calado»): sem alerta
+PASS mesmo predicado do depoente com verbo irregular c→qu («verifiquei isso»)
+PASS ação dirigida ao depoente («ela me atacou») fica com as regras de inversão
+PASS fala entre aspas não conta

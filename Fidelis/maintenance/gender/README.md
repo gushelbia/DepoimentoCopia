@@ -1,4 +1,4 @@
-# Gênero do depoente (opção 1 do plano: conversão na interface)
+﻿# Gênero do depoente (opção 1 do plano: conversão na interface)
 
 O motor continua gerando no masculino («O depoente relatou que…»). Com o campo **Gênero do depoente = Feminino**, a interface converte o texto recebido para o feminino, usando o original como guia (`GenderConverter` em `ui/ModernShell.cs`). Com **Masculino** ou **Não informado**, nada é convertido: a tela mostra exatamente o texto do motor.
 
@@ -41,14 +41,14 @@ Ao trocar o campo:
 | `Run-GenderBattery.ps1` (STA, modelo real) | `frases-genero.tsv`: mulheres (F), homens (M) e sem gênero (N), e mais a identidade dos 30 textos aprovados (20 frases + 10 QA) |
 | `Print-Gender.ps1` | Prints da sugestão e do texto convertido |
 
-## Pendências guardadas na bateria (para a próxima correção)
+## Inversões de papel na bateria (corrigidas na rodada 7)
 
-São inversões do próprio modelo, que acontecem também com homens:
+São inversões do próprio modelo e acontecem também com homens. Foram corrigidas no motor na rodada 7 (`maintenance/role-fix`) e continuam na bateria como teste de regressão.
 
-- **`pendente-papel`**:
-  - «Ele disse que **eu era culpada**» → «disse que ele era culpado»;
-  - «O Carlos entrou **depois de mim**» → «entrou depois do Carlos».
-- **`pendente-sujeito`**: o modelo apaga o sujeito de outra pessoa, e o fato passa para o depoente.
-  - «**Ele** estava nervoso» → «relatou que estava nervoso»;
-  - «**Meu marido** foi preso» → «relatou que foi preso».
-  - Nenhum alerta pega esse caso hoje.
+- **`inversao-papel`**:
+  - «Ele disse que **eu era culpada**» saía «disse que ele era culpado»;
+  - «O Carlos entrou **depois de mim**» saía «entrou depois do Carlos».
+- **`inversao-sujeito`**: o modelo apagava o sujeito de outra pessoa, e o fato passava para o depoente.
+  - «**Ele** estava nervoso» saía «relatou que estava nervoso»;
+  - «**Meu marido** foi preso» saía «relatou que foi preso».
+  - Hoje o motor devolve o sujeito do original. A interface também mostra um alerta laranja quando isso escapa.

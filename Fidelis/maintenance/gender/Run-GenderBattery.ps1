@@ -43,7 +43,7 @@ foreach ($c in $cases) {
     $alerts = Alerts $c.input $shown $field
     $row = [ordered]@{ id = $c.id; field = $field; pending = $c.pending; input = $c.input; engine = $g.Output; shown = $shown; alerts = $alerts; completed = $g.CompletedNormally; asFeminine = $null }
     Log ''
-    Log ('{0} [{1}]{2}  {3}' -f $c.id, $(if ($field) { $field } else { 'Não informado' }), $(if ($c.pending -eq 'pendente-papel') { ' (PENDENTE: papéis trocados pelo modelo)' } elseif ($c.pending -eq 'pendente-sujeito') { ' (PENDENTE: sujeito de outra pessoa apagado pelo modelo)' } else { '' }), $c.input)
+    Log ('{0} [{1}]{2}  {3}' -f $c.id, $(if ($field) { $field } else { 'Não informado' }), $(if ($c.pending -eq 'inversao-papel') { ' (inversão de papéis do modelo; corrigida na rodada 7)' } elseif ($c.pending -eq 'inversao-sujeito') { ' (sujeito apagado pelo modelo; corrigido na rodada 7)' } else { '' }), $c.input)
     Log ('   motor: ' + $g.Output)
     if ($shown -cne $g.Output) { Log ('   tela:  ' + $shown) }
     foreach ($a in $alerts) { Log ('   ' + $a) }

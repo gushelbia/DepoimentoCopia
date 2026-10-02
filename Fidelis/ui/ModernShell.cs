@@ -3631,6 +3631,15 @@ public static class RoleScanner
             if (InQuotes(quotes, m.Index)) continue;
             Add(items, m.Index, m.Length, m.Value, "frase quebrada: «o depoente» no meio da locução verbal (no original: «… me …»). Confira quem fez o quê.");
         }
+        // 5b. Another person's subject deleted: «Meu marido foi preso» → «O depoente
+        // relatou que foi preso». The original's predicate (verb + next word) of a
+        // non-narrator subject now follows the deponent; skipped when the narrator
+        // also does it in the original.
+        foreach (ReviewItem d in DeletedSubjects(o, r))
+        {
+            if (InQuotes(quotes, d.Start) || Covered(items, d.Start)) continue;
+            Add(items, d.Start, d.Length, d.Text, d.Reason);
+        }
         // 6. Subject: «Relatou que o depoente…» reads as a third person talking about the narrator.
         Match lead = Regex.Match(r, @"^\s*(?<t>Relatou que\s+(?:o|a) depoente)\b", I);
         if (lead.Success)
@@ -3675,6 +3684,62 @@ public static class RoleScanner
         List<ReviewItem> all = Merge(alerts);
         all.AddRange(Merge(notes));
         return all;
+    }
+
+    // «Meu marido foi preso» → «O depoente relatou que foi preso»: a predicate whose
+    // subject in the original is another person (pronoun, article/possessive + noun,
+    // or a name inside the sentence) right after «o/a depoente» or «relatou que».
+    private static readonly Regex OtherSubject = new Regex(@"(?<s>\b(?:ele|ela|eles|elas)|\b(?:o|a|os|as|meu|minha|meus|minhas|seu|sua|seus|suas)\s+(?!depoente\b)\p{Ll}{3,}|(?-i:(?<=[\p{Ll},;]\s+)\p{Lu}\p{Ll}{2,}))\s+(?:(?:não|já|também|ainda|só|então)\s+)*(?:se\s+)?(?<v>\p{L}{3,})\s+(?<w>\p{L}+)", I);
+    private static readonly Regex NotVerb = new Regex(@"^(?:que|quando|porque|para|com|mas|enquanto|onde|como|pela|pelo|pelas|pelos|depois|antes|dele|dela|lhe|nos|nas|uma|uns|umas|isso|aqui|ali|muito|mesmo|também|me|te)$", I);
+
+    public static List<ReviewItem> DeletedSubjects(string original, string reformulated)
+    {
+        var found = new List<ReviewItem>();
+        string o = Regex.Replace(original, "\"[^\"]*\"|“[^”]*”|«[^»]*»", delegate (Match q) { return new string(' ', q.Length); });
+        foreach (Match m in OtherSubject.Matches(o))
+        {
+            string v = m.Groups["v"].Value, w = m.Groups["w"].Value;
+            if (NotVerb.IsMatch(v)) continue;
+            string wStem = w.Length > 3 ? w.Substring(0, w.Length - 1) : w;
+            string predicate = Regex.Escape(v) + @"\s+" + Regex.Escape(wStem) + (w.Length > 3 ? @"\p{L}{0,2}" : "");
+            // The same predicate elsewhere in the original (narrator or another person): not clear.
+            if (Regex.Matches(o, @"\b" + predicate + @"\b", I).Count != 1) continue;
+            if (NarratorDoes(o, v, wStem)) continue;
+            foreach (Match x in Regex.Matches(reformulated, @"(?:\b(?:o|a)\s+depoente|\brelatou\s+que)\s+(?:(?:não|já|também|ainda|só|então)\s+)*(?:se\s+)?(?<p>" + predicate + @")\b", I))
+            {
+                Group p = x.Groups["p"];
+                var item = new ReviewItem();
+                item.Start = p.Index; item.Length = p.Length; item.Text = p.Value; item.Kind = Alert;
+                item.Reason = "sujeito de outra pessoa apagado: no original «" + m.Value.Trim() + "» (quem faz é «" + m.Groups["s"].Value + "»); aqui o texto atribui ao depoente («" + p.Value + "»). Confira quem fez.";
+                found.Add(item);
+            }
+        }
+        return found;
+    }
+
+    // The narrator does the same verb anywhere in the original: «eu estava…»,
+    // «fiquei…» (first-person form of «ficou»), «peguei minha bolsa» for «pegou sua
+    // bolsa». Then it is not clear who did it: no alert from this rule.
+    private static bool NarratorDoes(string o, string v, string wStem)
+    {
+        string tail = @"\b";
+        if (Regex.IsMatch(o, @"\beu\s+(?:não\s+)?(?:já\s+)?(?:me\s+|se\s+|lhe\s+)?" + Regex.Escape(v) + tail, I)) return true;
+        var forms = new List<string>();
+        string lv = v.ToLowerInvariant();
+        string[,] irregular = { { "foi", "fui" }, { "esteve", "estive" }, { "teve", "tive" }, { "fez", "fiz" }, { "veio", "vim" }, { "deu", "dei" }, { "pôde", "pude" }, { "é", "sou" }, { "está", "estou" }, { "tem", "tenho" }, { "ficou", "fiquei" }, { "chegou", "cheguei" }, { "começou", "comecei" } };
+        for (int i = 0; i < irregular.GetLength(0); i++) if (irregular[i, 0] == lv) forms.Add(irregular[i, 1]);
+        if (lv.EndsWith("ou") && lv.Length > 4)
+        {
+            string stem = lv.Substring(0, lv.Length - 2);
+            if (stem.EndsWith("c")) stem = stem.Substring(0, stem.Length - 1) + "qu";
+            else if (stem.EndsWith("g")) stem += "u";
+            else if (stem.EndsWith("ç")) stem = stem.Substring(0, stem.Length - 1) + "c";
+            forms.Add(stem + "ei");
+        }
+        if ((lv.EndsWith("eu") || lv.EndsWith("iu")) && lv.Length > 4) forms.Add(lv.Substring(0, lv.Length - 2) + "i");
+        foreach (string f in forms)
+            if (Regex.IsMatch(o, @"\b" + Regex.Escape(f) + tail, I)) return true;
+        return false;
     }
 
     public static string FirstFeminine(string o)

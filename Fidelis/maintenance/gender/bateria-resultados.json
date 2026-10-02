@@ -54,10 +54,10 @@
     {
         "id":  "F5",
         "field":  "Feminino",
-        "pending":  "pendente-papel",
+        "pending":  "inversao-papel",
         "input":  "Ele disse que eu era culpada pelo que aconteceu.",
-        "engine":  "O depoente relatou que disse que ele era culpado pelo que aconteceu.",
-        "shown":  "A depoente relatou que disse que ele era culpado pelo que aconteceu.",
+        "engine":  "O depoente relatou que ele disse que o depoente era culpado pelo que aconteceu.",
+        "shown":  "A depoente relatou que ele disse que a depoente era culpada pelo que aconteceu.",
         "alerts":  {
 
                    },
@@ -80,11 +80,13 @@
     {
         "id":  "F7",
         "field":  "Feminino",
-        "pending":  "pendente-papel",
+        "pending":  "inversao-papel",
         "input":  "O Carlos entrou depois de mim e ficou me encarando.",
-        "engine":  "O depoente relatou que entrou depois do Carlos e ficou lhe encarando.",
-        "shown":  "A depoente relatou que entrou depois do Carlos e ficou lhe encarando.",
-        "alerts":  "LARANJA: «lhe» com verbo de ação direta: no original a ação foi contra o depoente («me encarand…»). Confira: o claro seria «encarando o depoente». [ficou lhe encarando]",
+        "engine":  "O depoente relatou que o Carlos entrou depois do depoente e ficou encarando o depoente.",
+        "shown":  "A depoente relatou que o Carlos entrou depois da depoente e ficou encarando a depoente.",
+        "alerts":  {
+
+                   },
         "completed":  true,
         "asFeminine":  null
     },
@@ -132,9 +134,11 @@
         "field":  "Feminino",
         "pending":  "",
         "input":  "Eu estava grávida quando ele me ameaçou.",
-        "engine":  "O depoente relatou que estava grávida quando ele o ameaçou.",
-        "shown":  "A depoente relatou que estava grávida quando ele a ameaçou.",
-        "alerts":  "LARANJA: pronome ambíguo: «a» pode ser lido como outra pessoa (no original: «ele me …»). Confira: o claro seria «ele ameaçou o depoente». [ele a ameaçou]",
+        "engine":  "O depoente relatou que estava grávida quando o depoente foi ameaçado por ele.",
+        "shown":  "A depoente relatou que estava grávida quando a depoente foi ameaçada por ele.",
+        "alerts":  {
+
+                   },
         "completed":  true,
         "asFeminine":  null
     },
@@ -154,21 +158,23 @@
     {
         "id":  "F13",
         "field":  "Feminino",
-        "pending":  "pendente-sujeito",
+        "pending":  "inversao-sujeito",
         "input":  "Ele estava nervoso e eu fiquei calada.",
-        "engine":  "O depoente relatou que estava nervoso e o depoente ficou calado.",
-        "shown":  "A depoente relatou que estava nervoso e a depoente ficou calada.",
-        "alerts":  "aviso: gênero: «nervoso» não foi convertido porque, no original, essa palavra se refere a outra pessoa. Confira quem é. [nervoso]",
+        "engine":  "O depoente relatou que ele estava nervoso e o depoente ficou calado.",
+        "shown":  "A depoente relatou que ele estava nervoso e a depoente ficou calada.",
+        "alerts":  {
+
+                   },
         "completed":  true,
         "asFeminine":  null
     },
     {
         "id":  "F14",
         "field":  "Feminino",
-        "pending":  "pendente-sujeito",
+        "pending":  "inversao-sujeito",
         "input":  "Meu marido foi preso e eu fiquei sozinha com as crianças.",
-        "engine":  "O depoente relatou que foi preso e o depoente ficou sozinho com as crianças.",
-        "shown":  "A depoente relatou que foi preso e a depoente ficou sozinha com as crianças.",
+        "engine":  "O depoente relatou que o marido do depoente foi preso e o depoente ficou sozinho com as crianças.",
+        "shown":  "A depoente relatou que o marido da depoente foi preso e a depoente ficou sozinha com as crianças.",
         "alerts":  {
 
                    },
@@ -230,15 +236,15 @@
     {
         "id":  "M5",
         "field":  "Masculino",
-        "pending":  "pendente-papel",
+        "pending":  "inversao-papel",
         "input":  "Ele disse que eu era culpado pelo que aconteceu.",
-        "engine":  "O depoente relatou que disse que o depoente era culpado pelo que aconteceu.",
-        "shown":  "O depoente relatou que disse que o depoente era culpado pelo que aconteceu.",
+        "engine":  "O depoente relatou que ele disse que o depoente era culpado pelo que aconteceu.",
+        "shown":  "O depoente relatou que ele disse que o depoente era culpado pelo que aconteceu.",
         "alerts":  {
 
                    },
         "completed":  true,
-        "asFeminine":  "A depoente relatou que disse que a depoente era culpado pelo que aconteceu."
+        "asFeminine":  "A depoente relatou que ele disse que a depoente era culpado pelo que aconteceu."
     },
     {
         "id":  "M6",
@@ -256,13 +262,15 @@
     {
         "id":  "M7",
         "field":  "Masculino",
-        "pending":  "pendente-papel",
+        "pending":  "inversao-papel",
         "input":  "O Carlos entrou depois de mim e ficou me encarando.",
-        "engine":  "O depoente relatou que entrou depois do Carlos e ficou lhe encarando.",
-        "shown":  "O depoente relatou que entrou depois do Carlos e ficou lhe encarando.",
-        "alerts":  "LARANJA: «lhe» com verbo de ação direta: no original a ação foi contra o depoente («me encarand…»). Confira: o claro seria «encarando o depoente». [ficou lhe encarando]",
+        "engine":  "O depoente relatou que o Carlos entrou depois do depoente e ficou encarando o depoente.",
+        "shown":  "O depoente relatou que o Carlos entrou depois do depoente e ficou encarando o depoente.",
+        "alerts":  {
+
+                   },
         "completed":  true,
-        "asFeminine":  "A depoente relatou que entrou depois do Carlos e ficou lhe encarando."
+        "asFeminine":  "A depoente relatou que o Carlos entrou depois da depoente e ficou encarando a depoente."
     },
     {
         "id":  "M8",
@@ -308,11 +316,13 @@
         "field":  "Masculino",
         "pending":  "",
         "input":  "Eu estava ferido quando ele me ameaçou.",
-        "engine":  "O depoente relatou que estava ferido quando ele o ameaçou.",
-        "shown":  "O depoente relatou que estava ferido quando ele o ameaçou.",
-        "alerts":  "LARANJA: pronome ambíguo: «o» pode ser lido como outra pessoa (no original: «ele me …»). Confira: o claro seria «ele ameaçou o depoente». [ele o ameaçou]",
+        "engine":  "O depoente relatou que estava ferido quando o depoente foi ameaçado por ele.",
+        "shown":  "O depoente relatou que estava ferido quando o depoente foi ameaçado por ele.",
+        "alerts":  {
+
+                   },
         "completed":  true,
-        "asFeminine":  "A depoente relatou que estava ferido quando ele a ameaçou."
+        "asFeminine":  "A depoente relatou que estava ferido quando a depoente foi ameaçada por ele."
     },
     {
         "id":  "M12",
@@ -330,39 +340,39 @@
     {
         "id":  "M13",
         "field":  "Masculino",
-        "pending":  "pendente-sujeito",
+        "pending":  "inversao-sujeito",
         "input":  "Ela estava nervosa e eu fiquei calado.",
-        "engine":  "O depoente relatou que estava nervoso e o depoente ficou calado.",
-        "shown":  "O depoente relatou que estava nervoso e o depoente ficou calado.",
+        "engine":  "O depoente relatou que ela estava nervosa e o depoente ficou calado.",
+        "shown":  "O depoente relatou que ela estava nervosa e o depoente ficou calado.",
         "alerts":  {
 
                    },
         "completed":  true,
-        "asFeminine":  "A depoente relatou que estava nervoso e a depoente ficou calado."
+        "asFeminine":  "A depoente relatou que ela estava nervosa e a depoente ficou calado."
     },
     {
         "id":  "M14",
         "field":  "Masculino",
-        "pending":  "pendente-sujeito",
+        "pending":  "inversao-sujeito",
         "input":  "Minha esposa foi presa e eu fiquei sozinho com as crianças.",
-        "engine":  "O depoente relatou que foi presa e o depoente ficou sozinho com as crianças.",
-        "shown":  "O depoente relatou que foi presa e o depoente ficou sozinho com as crianças.",
+        "engine":  "O depoente relatou que a esposa do depoente foi presa e o depoente ficou sozinho com as crianças.",
+        "shown":  "O depoente relatou que a esposa do depoente foi presa e o depoente ficou sozinho com as crianças.",
         "alerts":  {
 
                    },
         "completed":  true,
-        "asFeminine":  "A depoente relatou que foi presa e a depoente ficou sozinho com as crianças."
+        "asFeminine":  "A depoente relatou que a esposa da depoente foi presa e a depoente ficou sozinho com as crianças."
     },
     {
         "id":  "N1",
         "field":  "",
-        "pending":  "pendente-sujeito",
+        "pending":  "inversao-sujeito",
         "input":  "Ele chegou nervoso e começou a gritar comigo.",
-        "engine":  "O depoente relatou que chegou nervoso e começou a gritar com o depoente.",
-        "shown":  "O depoente relatou que chegou nervoso e começou a gritar com o depoente.",
+        "engine":  "O depoente relatou que ele chegou nervoso e começou a gritar com o depoente.",
+        "shown":  "O depoente relatou que ele chegou nervoso e começou a gritar com o depoente.",
         "alerts":  "aviso: gênero presumido: o original não diz se quem fala é homem ou mulher; «o depoente» supõe homem. Confira. [O depoente]",
         "completed":  true,
-        "asFeminine":  "A depoente relatou que chegou nervoso e começou a gritar com a depoente."
+        "asFeminine":  "A depoente relatou que ele chegou nervoso e começou a gritar com a depoente."
     },
     {
         "id":  "N2",
@@ -378,13 +388,13 @@
     {
         "id":  "N3",
         "field":  "",
-        "pending":  "pendente-sujeito",
+        "pending":  "inversao-sujeito",
         "input":  "Minha vizinha estava assustada e bateu na minha porta.",
-        "engine":  "O depoente relatou que estava assustado e bateu na porta da vizinha.",
-        "shown":  "O depoente relatou que estava assustado e bateu na porta da vizinha.",
+        "engine":  "O depoente relatou que a vizinha do depoente estava assustada e bateu na sua porta.",
+        "shown":  "O depoente relatou que a vizinha do depoente estava assustada e bateu na sua porta.",
         "alerts":  "aviso: gênero presumido: o original não diz se quem fala é homem ou mulher; «o depoente» supõe homem. Confira. [O depoente]",
         "completed":  true,
-        "asFeminine":  "A depoente relatou que estava assustado e bateu na porta da vizinha."
+        "asFeminine":  "A depoente relatou que a vizinha da depoente estava assustada e bateu na sua porta."
     },
     {
         "id":  "N4",
@@ -400,13 +410,13 @@
     {
         "id":  "N5",
         "field":  "",
-        "pending":  "pendente-sujeito",
+        "pending":  "inversao-sujeito",
         "input":  "O porteiro ficou calado e não quis abrir o portão.",
-        "engine":  "O depoente relatou que ficou calado e não quis abrir o portão.",
-        "shown":  "O depoente relatou que ficou calado e não quis abrir o portão.",
+        "engine":  "O depoente relatou que o porteiro ficou calado e não quis abrir o portão.",
+        "shown":  "O depoente relatou que o porteiro ficou calado e não quis abrir o portão.",
         "alerts":  "aviso: gênero presumido: o original não diz se quem fala é homem ou mulher; «o depoente» supõe homem. Confira. [O depoente]",
         "completed":  true,
-        "asFeminine":  "A depoente relatou que ficou calado e não quis abrir o portão."
+        "asFeminine":  "A depoente relatou que o porteiro ficou calado e não quis abrir o portão."
     },
     {
         "id":  "N6",

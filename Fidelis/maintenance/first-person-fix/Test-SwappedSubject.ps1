@@ -28,7 +28,7 @@ Repair 'Ela se defendeu quando ele me empurrou.' 'Relatou que ela se defendeu qu
 Repair 'Ele me disse que viria. Ela me disse que não.' 'Relatou que o depoente lhe disse que viria. Ela lhe disse que não.' 'Relatou que o depoente lhe disse que viria. Ela lhe disse que não.' 'dois candidatos no original: não adivinha'
 Repair 'O Marcos me segurou pelo braço.' 'Relatou que o Marcos lhe segurou pelo braço.' 'Relatou que o Marcos lhe segurou pelo braço.' 'sujeito correto («o Marcos lhe segurou»): sem mudança'
 Repair 'Depois me disseram que houve reunião.' 'Relatou que depois lhe disseram que houve reunião.' 'Relatou que depois lhe disseram que houve reunião.' '«Depois me disseram» não vira sujeito'
-Repair 'Eu bati nele porque ele me ameaçou.' 'Relatou que o depoente bateu nele porque ele o ameaçou.' 'Relatou que o depoente bateu nele porque ele o ameaçou.' 'ação do próprio depoente («eu bati»): sem mudança'
+Repair 'Eu bati nele porque ele me ameaçou.' 'Relatou que o depoente bateu nele porque ele o ameaçou.' 'Relatou que o depoente bateu nele porque o depoente foi ameaçado por ele.' 'ação do próprio depoente («eu bati»): sujeito mantido; «ele o ameaçou» vira passiva (rodada 7)'
 
 # Validador: troca que não pôde ser reparada vira erro (nova tentativa / rejeição).
 Issue 'Ele me disse que viria. Ela me disse que não.' 'Relatou que o depoente lhe disse que viria. Ela lhe disse que não.' $true 'validador: troca não reparável é acusada'

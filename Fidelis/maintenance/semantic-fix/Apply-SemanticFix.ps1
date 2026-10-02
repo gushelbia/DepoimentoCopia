@@ -178,7 +178,20 @@ foreach($name in $names) {
         # Round 6, option A: the opening becomes «O depoente relatou que» at the end of the
         # final repair (SemanticGuard.FinalLead, called by RepairSourceAnchors); the internal
         # opening «Relatou que » used by every repair and check is unchanged.
-        foreach($method in @($validate,$critical,$repair,$residual,$move)+@($factory.Methods)+@($type.Methods)){if($method.HasBody){$method.Body.SimplifyBranches(); $method.Body.OptimizeBranches()}}
+        # Round 8: log without testimony text. AppLog.Write(level, eventName, details) first
+        # passes the details through SemanticGuard.LogMessage, which keeps only technical
+        # data unless diagnostic mode (tests only) is on. The log format is unchanged.
+        $appLog=$m.GetTypes() | Where-Object Name -eq AppLog
+        $write=$appLog.Methods | Where-Object Name -eq Write
+        if($null -eq $write -or $write.Parameters.Count -ne 3 -or $write.Parameters[1].Name -ne 'eventName' -or $write.Parameters[2].Name -ne 'details'){throw 'AppLog.Write layout not recognized'}
+        $wi=$write.Body.Instructions
+        if(@($wi | Where-Object { $_.Operand -eq $wi[0] }).Count -ne 0){throw 'A branch targets the start of AppLog.Write'}
+        $logMessage=$type.Methods | Where-Object Name -eq LogMessage
+        $wi.Insert(0,[dnlib.DotNet.Emit.Instruction]::new([dnlib.DotNet.Emit.OpCodes]::Ldarg_1))
+        $wi.Insert(1,[dnlib.DotNet.Emit.Instruction]::new([dnlib.DotNet.Emit.OpCodes]::Ldarg_2))
+        $wi.Insert(2,[dnlib.DotNet.Emit.Instruction]::new([dnlib.DotNet.Emit.OpCodes]::Call,$logMessage))
+        $wi.Insert(3,[dnlib.DotNet.Emit.Instruction]::new([dnlib.DotNet.Emit.OpCodes]::Starg,$write.Parameters[2]))
+        foreach($method in @($validate,$critical,$repair,$residual,$move,$write)+@($factory.Methods)+@($type.Methods)){if($method.HasBody){$method.Body.SimplifyBranches(); $method.Body.OptimizeBranches()}}
         $options=[dnlib.DotNet.Writer.ModuleWriterOptions]::new($m)
         $options.MetadataOptions.Flags=[dnlib.DotNet.Writer.MetadataFlags]::PreserveAll
         $destination=Join-Path $staged $name
@@ -190,10 +203,11 @@ foreach($name in $names) {
                 if(($t.Name -eq 'PromptFactory' -and $method.Name -in @('Build','BuildRetry','ChatMl')) -or ($t.Name -eq 'TextProcessing' -and $method.Name -in @('Validate','IsCriticalIssue','RepairSemanticAnchors','RepairResidualFirstPerson'))){continue}
                 if($t.FullName -eq 'DepoimentoLocal.Windows.TextProcessing/<>c__DisplayClass5_0' -and $method.Name -eq '<RepairResidualFirstPerson>b__0'){continue}
                 if($t.FullName -eq 'DepoimentoLocal.Windows.MainForm/<Reformulate_Click>d__30' -and $method.Name -eq 'MoveNext'){continue}
+                if($t.Name -eq 'AppLog' -and $method.Name -eq 'Write'){continue}
                 if($method.HasBody -and (($method.Body.Instructions | ForEach-Object ToString) -join "`n") -cne $before[$method.FullName]){throw "Unrelated method changed: $($method.FullName)"}
             }}
         } finally {$check.Dispose()}
-        $report.Add("PASS $name : only prompts, assistant prefill, semantic guard, supplemental conjugations, retry classification, unsafe positional repair, incomplete-output marking, post-generation cancellation check, final opening «O depoente relatou que» (FinalLead), swapped-subject/reflexive repair (round 6) and role repairs: deleted subject, swapped roles, ambiguous pronoun as passive, broken phrase check (round 7) changed.")
+        $report.Add("PASS $name : only prompts, assistant prefill, semantic guard, supplemental conjugations, retry classification, unsafe positional repair, incomplete-output marking, post-generation cancellation check, final opening «O depoente relatou que» (FinalLead), swapped-subject/reflexive repair (round 6) and role repairs: deleted subject, swapped roles, ambiguous pronoun as passive, broken phrase check (round 7) and log without testimony text outside diagnostic mode (round 8) changed.")
     } finally {$m.Dispose()}
 }
 $helper.Dispose()

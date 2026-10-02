@@ -491,9 +491,13 @@ namespace DepoimentoLocal.Windows
 
         public static string RepairSourceAnchors(string original, string output)
         {
+            string step = output;
             output = RepairNameSpelling(original, output);
+            NoteRepair("grafia-de-nomes", step, output);
             if (String.IsNullOrWhiteSpace(original) || String.IsNullOrWhiteSpace(output)) return output;
+            step = output;
             output = RepairSwappedSubject(original, output);
+            NoteRepair("sujeito-trocado", step, output);
             // Exact lexical frames only. Never align by sentence number or by a
             // fuzzy similarity score, and never change quoted speech.
             string source = Unquote(original);
@@ -510,7 +514,10 @@ namespace DepoimentoLocal.Windows
                 }
                 output = result.ToString();
             }
-            return FinalLead(output);
+            step = output;
+            output = FinalLead(output);
+            NoteRepair("abertura", step, output);
+            return output;
         }
 
         // ---- Opening (round 6, option A) -----------------------------------
@@ -667,6 +674,66 @@ namespace DepoimentoLocal.Windows
                         return "fidelidade: autor da ação trocado com o depoente: no original «" + c.Value.Trim() + "», na saída «" + slot.Value.Trim() + "»";
             }
             return null;
+        }
+
+        // ---- Log without testimony text (round 8) ---------------------------
+        // AppLog.Write calls LogMessage first. In normal use the log keeps only
+        // technical data (events, times, sizes, status, error categories and the
+        // names of the repairs applied); any excerpt of the input or the output is
+        // removed. The full text is kept only in diagnostic mode, which only the
+        // tests turn on (environment variable DEPOIMENTOLOCAL_LOG_DIAGNOSTICO=1).
+        public static bool DiagnosticLog()
+        {
+            return Environment.GetEnvironmentVariable("DEPOIMENTOLOCAL_LOG_DIAGNOSTICO") == "1";
+        }
+
+        public static string LogMessage(string eventName, string details)
+        {
+            string message = details ?? "";
+            if (!DiagnosticLog()) message = RedactLog(message);
+            if (eventName == "APP_START") message += (message.Length > 0 ? "; " : "") + (DiagnosticLog() ? "log=diagnóstico (texto completo; só para testes)" : "log=técnico (sem texto do depoimento)");
+            if (Regex.IsMatch(eventName ?? "", @"^(?:LOCAL_REPAIR|BLOCK_OK|BLOCK_RETRY_START|BLOCK_RETRY_END|BLOCK_REJECTED|BLOCK_ACCEPTED_WITH_WARNING)$"))
+            {
+                string repairs = TakeRepairs();
+                if (repairs.Length > 0) message += "; repairs=" + repairs;
+            }
+            return message;
+        }
+
+        public const string OmittedText = "[texto omitido]";
+
+        // Keeps the category of each validator message («fidelidade: possível
+        // omissão de oração») and drops what follows it; quoted excerpts go too.
+        public static string RedactLog(string message)
+        {
+            if (String.IsNullOrEmpty(message)) return message;
+            string text = Regex.Replace(message, "«[^»\r\n]*»|“[^”\r\n]*”|\"[^\"\r\n]*\"", "«…»");
+            text = Regex.Replace(text, @"(?<cat>fidelidade:\s*[^:;\r\n]+?):[^\r\n]*?(?=;\s*[A-Za-z]+=|\r?$)", "${cat}: " + OmittedText, RegexOptions.Multiline);
+            // Engine messages with a payload after a colon in a text-bearing field.
+            text = Regex.Replace(text, @"(?<key>\b(?:issue|before|after|detail)=)(?!\s*fidelidade:)(?<value>[^;\r\n]*?):(?!\s*\[texto omitido\])[^\r\n]*?(?=;\s*[A-Za-z]+=|\r?$)", "${key}${value}: " + OmittedText, RegexOptions.Multiline);
+            // Review message of a rejected block: «… ainda precisa de revisão: <motivo>».
+            text = Regex.Replace(text, @"(?<head>ainda precisa de revisão:\s*)(?!\s|fidelidade:|\[texto omitido\])[^\r\n]*", "${head}" + OmittedText);
+            return text;
+        }
+
+        // Names of the repairs that changed the text, collected per block and
+        // written with the next block event. Kept in the AppDomain (the engine
+        // copy of this class has methods only, no fields).
+        public const string RepairsKey = "DepoimentoLocal.SemanticGuard.Repairs";
+
+        public static void NoteRepair(string name, string before, string after)
+        {
+            if (before == after) return;
+            string current = AppDomain.CurrentDomain.GetData(RepairsKey) as string ?? "";
+            if (("," + current + ",").Contains("," + name + ",")) return;
+            AppDomain.CurrentDomain.SetData(RepairsKey, current.Length == 0 ? name : current + "," + name);
+        }
+
+        public static string TakeRepairs()
+        {
+            string current = AppDomain.CurrentDomain.GetData(RepairsKey) as string ?? "";
+            AppDomain.CurrentDomain.SetData(RepairsKey, "");
+            return current;
         }
 
         // ---- Roles (round 7) ------------------------------------------------
@@ -1017,7 +1084,10 @@ namespace DepoimentoLocal.Windows
 
         public static string RepairReferenceFrames(string source, string text, string fullOutput)
         {
+            string step = text;
             text = RepairNarratorVerbs(source, text);
+            NoteRepair("verbos-do-depoente", step, text);
+            step = text;
             string[,] forms = SourceNarratorForms(source);
             foreach (Match report in Regex.Matches(source, @"\b(?<verb>falou|disse|contou|informou|explicou|relatou)\s+(?:pra|para)\s+mim\s+(?<tail>[^,.!?;]+)", RegexOptions.IgnoreCase))
             {
@@ -1141,18 +1211,20 @@ namespace DepoimentoLocal.Windows
                     break;
                 }
             }
-            text = RepairEllipticalNarrator(source, text, fullOutput, forms);
-            text = RepairNarratorPronoun(source, text, fullOutput, forms);
+            NoteRepair("ancoras-do-original", step, text);
+            step = text; text = RepairEllipticalNarrator(source, text, fullOutput, forms); NoteRepair("sujeito-eliptico", step, text);
+            step = text; text = RepairNarratorPronoun(source, text, fullOutput, forms); NoteRepair("pronome-do-depoente", step, text);
             // Round 7: roles (after the narrator pronoun, so «ele era culpado» is
             // already «o depoente era culpado» when the deleted subject is restored).
-            text = RepairGerundObject(source, text, fullOutput);
-            text = RepairSwappedRelative(source, text, fullOutput);
-            text = RepairDeletedSubject(source, text, fullOutput);
-            text = RepairAmbiguousObject(source, text, fullOutput);
-            text = RepairWholeSentenceNarrator(source, text, fullOutput, forms);
-            text = RepairNarratorPossessive(source, text);
-            text = RepairRecipients(source, text, fullOutput);
-            text = RepairParallelCorrections(source, text);
+            step = text; text = RepairGerundObject(source, text, fullOutput); NoteRepair("gerundio-objeto", step, text);
+            step = text; text = RepairSwappedRelative(source, text, fullOutput); NoteRepair("papeis-trocados", step, text);
+            step = text; text = RepairDeletedSubject(source, text, fullOutput); NoteRepair("sujeito-apagado", step, text);
+            step = text; text = RepairAmbiguousObject(source, text, fullOutput); NoteRepair("voz-passiva", step, text);
+            step = text; text = RepairWholeSentenceNarrator(source, text, fullOutput, forms); NoteRepair("frase-do-depoente", step, text);
+            step = text; text = RepairNarratorPossessive(source, text); NoteRepair("possessivo", step, text);
+            step = text; text = RepairRecipients(source, text, fullOutput); NoteRepair("destinatario", step, text);
+            step = text; text = RepairParallelCorrections(source, text); NoteRepair("autocorrecao", step, text);
+            step = text;
             // "nossa conversa": an interaction the narrator took part in. Say
             // exactly that, without naming who else took part.
             foreach (Match shared in Regex.Matches(text, @"\b(?<p>[Nn]oss[ao])\s+(?<n>conversa|reunião|discussão|ligação|chamada|encontro)\b"))
@@ -1169,6 +1241,7 @@ namespace DepoimentoLocal.Windows
             text = Regex.Replace(text, @"\b([Pp])or o depoente\b(?!\s+(?:não\s+)?\p{L}+(?:ar|er|ir|or)\b)", "$1elo depoente");
             text = Regex.Replace(text, @";\s+O depoente\b", "; o depoente");
             text = Regex.Replace(text, @"(^|[.!?]\s+)Depoente\s+", "$1O depoente ");
+            NoteRepair("contracoes", step, text);
             return text;
         }
 
@@ -1252,7 +1325,9 @@ namespace DepoimentoLocal.Windows
                 }
                 result.Append(part); result.Append(quote.Value); start = quote.Index + quote.Length;
             }
-            return result.ToString();
+            string done = result.ToString();
+            NoteRepair("primeira-pessoa", text, done);
+            return done;
         }
 
         public static string Unquote(string text)

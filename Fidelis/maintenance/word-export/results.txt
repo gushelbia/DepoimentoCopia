@@ -1,4 +1,4 @@
-﻿START 2026-10-02T06:03:01
+﻿START 2026-10-02T07:04:56
 PASS 1: .docx completo e com XML válido (documento, estilos, rodapé, relações)
 PASS 1: página A4
 PASS 1: margens 3 cm (esquerda, em cima) e 2 cm (direita, embaixo) | top=1701 left=1701 right=1134 bottom=1134

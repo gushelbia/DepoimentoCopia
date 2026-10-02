@@ -52,3 +52,8 @@ São inversões do próprio modelo e acontecem também com homens. Foram corrigi
   - «**Ele** estava nervoso» saía «relatou que estava nervoso»;
   - «**Meu marido** foi preso» saía «relatou que foi preso».
   - Hoje o motor devolve o sujeito do original. A interface também mostra um alerta laranja quando isso escapa.
+
+### Pendente para a próxima correção
+
+- **`pendente-lhe`** (N7): «Eu fiquei na Xavantina até tarde e ele **me atacou** na saída» sai «… e **lhe atacou** na saída». O modelo apaga «ele» e troca «me» por «lhe» com um verbo de ação, e o depoente parece ter atacado alguém.
+  - Hoje só o alerta laranja da interface marca o caso («lhe» com verbo de ação direta).

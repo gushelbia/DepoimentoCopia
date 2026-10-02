@@ -428,5 +428,19 @@
         "alerts":  "aviso: gênero presumido: o original não diz se quem fala é homem ou mulher; «o depoente» supõe homem. Confira. [O depoente]",
         "completed":  true,
         "asFeminine":  "A depoente relatou que viu o carro parado na esquina por duas horas."
+    },
+    {
+        "id":  "N7",
+        "field":  "",
+        "pending":  "pendente-lhe",
+        "input":  "Eu fiquei na Xavantina até tarde e ele me atacou na saída.",
+        "engine":  "O depoente relatou que ficou na Xavantina até tarde e lhe atacou na saída.",
+        "shown":  "O depoente relatou que ficou na Xavantina até tarde e lhe atacou na saída.",
+        "alerts":  [
+                       "LARANJA: «lhe» com verbo de ação direta: no original a ação foi contra o depoente («me atac…»). Confira: o claro seria «atacou o depoente». [e lhe atacou]",
+                       "aviso: gênero presumido: o original não diz se quem fala é homem ou mulher; «o depoente» supõe homem. Confira. [O depoente]"
+                   ],
+        "completed":  true,
+        "asFeminine":  "A depoente relatou que ficou na Xavantina até tarde e lhe atacou na saída."
     }
 ]

@@ -11,13 +11,13 @@
     },
     {
         "path":  "engine/DepoimentoLocal.dll",
-        "sha256":  "2F213A8E5BA05A104928210952997E3DBD50D23E3F52879C3933E934C3526C8C",
-        "bytes":  238080
+        "sha256":  "A3F1EA9D6B93664983B4B60314EF54BE2786464B011B5F9FA5DB1D4143E05E8A",
+        "bytes":  240640
     },
     {
         "path":  "engine/DepoimentoLocal.Vulkan8.dll",
-        "sha256":  "2F213A8E5BA05A104928210952997E3DBD50D23E3F52879C3933E934C3526C8C",
-        "bytes":  238080
+        "sha256":  "A3F1EA9D6B93664983B4B60314EF54BE2786464B011B5F9FA5DB1D4143E05E8A",
+        "bytes":  240640
     },
     {
         "path":  "modelo/qwen2.5-3b-instruct-q4_k_m.gguf",

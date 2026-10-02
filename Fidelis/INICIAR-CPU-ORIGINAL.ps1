@@ -4,7 +4,7 @@ $engine = Join-Path $root 'engine'
 $appExe = Join-Path $engine 'DepoimentoLocal.exe'
 $appDll = Join-Path $engine 'DepoimentoLocal.dll'
 $cpuDll = Join-Path $engine 'DepoimentoLocal.CPU-original.dll'
-$expectedHash = '675A7AC26A3A51419B58ED0560DF0B8838AA849946427FA3A7B841CF0537E2D4'
+$expectedHash = 'BEA8FE3DC36107160096C6F01CC3C85AF61F000CF7EF0FCA22902805E998006A'
 $marker = Join-Path $root 'MODO-ATIVO.txt'
 if (-not (Test-Path $appExe) -or -not (Test-Path $cpuDll)) { Write-Host 'Arquivos do programa nao encontrados.' -ForegroundColor Red; exit 1 }
 $h = (Get-FileHash -Algorithm SHA256 -Path $cpuDll).Hash.ToUpperInvariant()

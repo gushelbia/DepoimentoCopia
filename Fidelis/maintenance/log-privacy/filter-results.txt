@@ -1,0 +1,22 @@
+PASS LOCAL_REPAIR: categoria mantida, frase do original omitida | block=1/1; before=fidelidade: possível omissão de oração: [texto omitido]; after=ok
+PASS motivo da nova tentativa: categoria mantida, trechos «…» omitidos | block=1/2; issue=fidelidade: sujeito de outra pessoa apagado: [texto omitido]
+PASS rejeição: palavra do original omitida | block=1/1; detail=fidelidade: possível primeira pessoa residual: [texto omitido]
+PASS erro: tipo, categoria e pilha mantidos; trecho omitido | sourceChars=58; elapsedMs=9000
+System.InvalidOperationException: O bloco 1 ainda precisa de revisão: fidelidade: papéis trocados: [texto omitido]
+   at DepoimentoLocal.Windows.MainForm.Reformulate_Click()
+PASS revisão sem categoria conhecida: tudo depois de «revisão:» omitido | O bloco 2 ainda precisa de revisão: [texto omitido]
+PASS detalhe com fala entre aspas omitido | block=1/1; detail=algo: [texto omitido]
+PASS dados técnicos ficam iguais (bloco, tamanho, tokens) | block=1/3; chars=812; maxTokens=900
+PASS motivo sem trecho de texto fica igual | block=1/1; issue=a saída ainda contém primeira pessoa
+PASS reparo sem problema fica igual | block=1/1; before=ok; after=ok
+PASS carregamento do modelo fica igual | file=..\modelo\qwen2.5-3b-instruct-q4_k_m.gguf; bytes=1929903264
+PASS mensagem nativa técnica fica igual | print_info: model type = 3B
+PASS APP_START registra que o log está no modo técnico | version=1.0.5; log=técnico (sem texto do depoimento)
+PASS BLOCK_OK lista os reparos aplicados, sem texto | block=1/1; outputChars=80; repairs=sujeito-apagado,abertura
+PASS a lista é zerada a cada bloco | block=2/2; outputChars=80
+PASS reparo da primeira pessoa registrado | block=1/1; before=ok; after=ok; repairs=primeira-pessoa
+PASS outros eventos não recebem lista de reparos | context=4096
+PASS modo diagnóstico: texto completo mantido
+PASS APP_START registra o modo diagnóstico
+PASS qualquer valor diferente de 1 = modo técnico
+PASS reparos continuam produzindo o mesmo texto

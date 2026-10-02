@@ -19,7 +19,14 @@ public static class QaRunner
         using (var reader = new StreamReader(stream, Encoding.UTF8)) return reader.ReadToEnd();
     }
 
+    // Tests run the engine in diagnostic log mode (full text in the log, which the
+    // reports read). diagnostic=false reproduces normal use: technical log only.
     public static QaGeneration Run(string root, string input, int timeoutSeconds)
+    {
+        return Run(root, input, timeoutSeconds, true);
+    }
+
+    public static QaGeneration Run(string root, string input, int timeoutSeconds, bool diagnostic)
     {
         var result = new QaGeneration();
         var total = Stopwatch.StartNew();
@@ -47,6 +54,8 @@ public static class QaRunner
             start.UseShellExecute = false;
             start.CreateNoWindow = true;
             start.WindowStyle = ProcessWindowStyle.Hidden;
+            if (diagnostic) start.EnvironmentVariables["DEPOIMENTOLOCAL_LOG_DIAGNOSTICO"] = "1";
+            else start.EnvironmentVariables.Remove("DEPOIMENTOLOCAL_LOG_DIAGNOSTICO");
             process = Process.Start(start);
             bridge = new OriginalAppBridge(process);
             if (!bridge.Connect(15000)) throw new Exception("Não foi possível conectar ao motor do teste.");

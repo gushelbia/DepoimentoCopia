@@ -1,0 +1,23 @@
+﻿PASS uso normal, geração concluída: Gertrudes
+PASS log técnico continua útil (eventos, tempos, tamanhos): Gertrudes
+PASS log registra o modo técnico: Gertrudes
+PASS sentinela «Gertrudes» ausente do log
+PASS nenhum trecho entre aspas no log: Gertrudes
+PASS nenhuma palavra da entrada ou da saída no log: Gertrudes
+     reparos registrados: abertura
+PASS uso normal, geração concluída: Valdomiro
+PASS log técnico continua útil (eventos, tempos, tamanhos): Valdomiro
+PASS log registra o modo técnico: Valdomiro
+PASS sentinela «Valdomiro» ausente do log
+PASS nenhum trecho entre aspas no log: Valdomiro
+PASS nenhuma palavra da entrada ou da saída no log: Valdomiro
+     reparos registrados: abertura
+PASS uso normal, geração concluída: Xavantina
+PASS log técnico continua útil (eventos, tempos, tamanhos): Xavantina
+PASS log registra o modo técnico: Xavantina
+PASS sentinela «Xavantina» ausente do log
+PASS nenhum trecho entre aspas no log: Xavantina
+PASS nenhuma palavra da entrada ou da saída no log: Xavantina
+     reparos registrados: abertura
+PASS modo diagnóstico (testes): registrado no log
+PASS modo diagnóstico: geração concluída

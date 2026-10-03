@@ -32,6 +32,14 @@ Check ($dz -contains 'dele') '«dele» para «de mim»: aviso informativo, sem c
 $dz = Doubts 'Eu fiquei nervosa e ele estava nervoso também.' 'O depoente relatou que ficou nervoso e ele estava nervoso também.'
 Check ($dz.Count -eq 0) 'termo claramente de outra pessoa: sem aviso' ($dz -join ', ')
 
+# Rodada 10: pronome «o» de «me» depois de um nome; grupo com uma mulher nomeada.
+Conv 'Aí a Kátia, que também é bolsista, me contou tudo.' 'O depoente relatou que a Kátia, que também é bolsista, o informou de tudo.' 'A depoente relatou que a Kátia, que também é bolsista, a informou de tudo.' 'B01: «a Kátia … o informou» (de «me contou») → «a informou»'
+Conv 'A Kátia me contou tudo.' 'O depoente relatou que a Kátia o informou de tudo.' 'A depoente relatou que a Kátia a informou de tudo.' '«a Kátia o informou» → «a informou»'
+Conv 'A Kátia me contou e o diretor saiu.' 'O depoente relatou que a Kátia viu o diretor e o informou.' 'A depoente relatou que a Kátia viu o diretor e o informou.' '«o» depois de outro termo masculino: não muda'
+Conv 'A Kátia viu o Pedro.' 'O depoente relatou que a Kátia o viu.' 'A depoente relatou que a Kátia o viu.' 'sem «me» no original: «o» de outra pessoa não muda'
+Conv 'A Olívia veio falar comigo e a gente foi junto.' 'O depoente relatou que a Olívia veio falar com o depoente e o depoente e a Olívia foram juntos.' 'A depoente relatou que a Olívia veio falar com a depoente e a depoente e a Olívia foram juntas.' 'C07: «a depoente e a Olívia foram juntas»'
+Conv 'Eu e o Otávio fomos juntos.' 'O depoente relatou que o depoente e o Otávio foram juntos.' 'A depoente relatou que a depoente e o Otávio foram juntos.' 'grupo com homem: «juntos» não muda'
+
 # Na dúvida não converte (bateria de gênero: o modelo perdeu o sujeito de outra pessoa).
 Conv 'Ele estava nervoso e eu fiquei calada.' 'O depoente relatou que estava nervoso e o depoente ficou calado.' 'A depoente relatou que estava nervoso e a depoente ficou calada.' 'F13: «nervoso» é do «ele» no original: não vira «nervosa»'
 $dz = Doubts 'Ele estava nervoso e eu fiquei calada.' 'O depoente relatou que estava nervoso e o depoente ficou calado.'

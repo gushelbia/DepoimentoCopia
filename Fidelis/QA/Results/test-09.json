@@ -9,19 +9,19 @@
     "outputChars":  607,
     "inputWords":  92,
     "outputWords":  106,
-    "generationSeconds":  45.213,
-    "totalSeconds":  47.543267799999995,
+    "generationSeconds":  44.628,
+    "totalSeconds":  46.821017,
     "modelConfig":  "context=4096; batch=512; ubatch=256; threads=4; gpuLayers=8; mmap=true; temperature=0",
     "modelFile":  "file=qwen2.5-3b-instruct-q4_k_m.gguf; bytes=2104932768",
     "outputCaptureVerified":  true,
     "warnings":  [
-                     "[2026-10-02 21:28:50.593 -03:00] [WARN] [BLOCK_RETRY_START] block=1/1; issue=fidelidade: perda de destinatário do relato: no dia seguinte, ou talvez dois dias depois, carla me contou que tinha conversado novamente com bruno."
+                     "[2026-10-03 11:59:15.363 -03:00] [WARN] [BLOCK_RETRY_START] block=1/1; issue=fidelidade: perda de destinatário do relato: no dia seguinte, ou talvez dois dias depois, carla me contou que tinha conversado novamente com bruno."
                  ],
     "nativeWarnings":  [
-                           "[2026-10-02 21:28:26.943 -03:00] [NATIVE-WARNING] [LLAMASHARP] load: control-looking token: 128247 \u0027\u003c/s\u003e\u0027 was not control-type; this is probably a bug in the model. its type will be overridden",
-                           "[2026-10-02 21:28:27.615 -03:00] [NATIVE-WARNING] [LLAMASHARP] llama_context: n_ctx_seq (4096) \u003c n_ctx_train (32768) -- the full capacity of the model will not be utilized",
-                           "[2026-10-02 21:28:27.749 -03:00] [NATIVE-WARNING] [LLAMASHARP] llama_context: n_ctx_seq (4096) \u003c n_ctx_train (32768) -- the full capacity of the model will not be utilized",
-                           "[2026-10-02 21:28:50.602 -03:00] [NATIVE-WARNING] [LLAMASHARP] llama_context: n_ctx_seq (4096) \u003c n_ctx_train (32768) -- the full capacity of the model will not be utilized"
+                           "[2026-10-03 11:58:52.112 -03:00] [NATIVE-WARNING] [LLAMASHARP] load: control-looking token: 128247 \u0027\u003c/s\u003e\u0027 was not control-type; this is probably a bug in the model. its type will be overridden",
+                           "[2026-10-03 11:58:52.726 -03:00] [NATIVE-WARNING] [LLAMASHARP] llama_context: n_ctx_seq (4096) \u003c n_ctx_train (32768) -- the full capacity of the model will not be utilized",
+                           "[2026-10-03 11:58:52.852 -03:00] [NATIVE-WARNING] [LLAMASHARP] llama_context: n_ctx_seq (4096) \u003c n_ctx_train (32768) -- the full capacity of the model will not be utilized",
+                           "[2026-10-03 11:59:15.370 -03:00] [NATIVE-WARNING] [LLAMASHARP] llama_context: n_ctx_seq (4096) \u003c n_ctx_train (32768) -- the full capacity of the model will not be utilized"
                        ],
     "retry":  true,
     "exception":  "",

@@ -2,21 +2,19 @@
 
 Depoimentos inventados. Saída final = texto que a janela mostra (com a conversão do gênero). Tempo = geração no motor.
 
-## B01 — Gênero do depoente: Feminino — 57.1 s — nova tentativa — **SAÍDA INCOMPLETA (rejeitada)**
+## B01 — Gênero do depoente: Feminino — 29.4 s
 
 **Entrada:** Eu sou bolsista do projeto de extensão desde o ano passado. A coordenadora, a professora Ivone, sempre foi muito exigente, mas em maio começou a ficar diferente comigo. Ela me tirou do grupo de mensagens do projeto sem avisar. Quando eu perguntei por quê, ela falou: "você sabe muito bem o que você fez". Eu não sabia, juro. Aí a Kátia, que também é bolsista, me contou que a Ivone achava que eu tinha falado mal dela pro diretor. Eu nunca falei com o diretor, eu nem conheço ele pessoalmente. Depois disso a Ivone cortou a minha bolsa em junho, e a bolsa da Kátia continuou. Eu me lembro que fiquei uns três dias sem conseguir dormir direito.
 
-**Saída final:** [SAÍDA INCOMPLETA E NÃO VALIDADA - NÃO UTILIZAR COMO REFORMULAÇÃO] / Motivo: O bloco 1 ainda precisa de revisão: fidelidade: primeira pessoa fora das aspas: «conheço». A reformulação foi interrompida: os blocos seguintes não foram processados e o trecho na tela foi marcado como incompleto. /  / A depoente relatou que é bolsista do projeto de extensão desde o ano passado. A coordenadora, a professora Ivone, sempre foi muito exigente, mas em maio começou a ficar diferente com a depoente. Ela tirou a depoente do grupo de mensagens do projeto sem avisar. Quando a depoente perguntou por quê, ela falou: "você sabe muito bem o que você fez". A depoente não sabia. Aí a Kátia, que também é bolsista, lhe contou que a Ivone achava que a depoente tinha falado mal dela pro diretor. A depoente nunca falou com o diretor, nem conheço pessoalmente. Depois disso, a Ivone cortou a bolsa da depoente em junho, e a bolsa da Kátia continuou. A depoente se lembra que ficou uns três dias sem conseguir dormir direito. /  / [FIM DO TRECHO PARCIAL - a transcrição não foi reformulada por completo]
+**Saída final:** A depoente relatou que é bolsista do projeto de extensão desde o ano passado. A coordenadora, a professora Ivone, sempre foi muito exigente, mas em maio começou a ficar diferente com a depoente. A depoente foi tirada por ela do grupo de mensagens do projeto sem avisar. Quando a depoente perguntou por quê, ela falou: "você sabe muito bem o que você fez". A depoente não sabia. Aí a Kátia, que também é bolsista, a informou que a Ivone achava que a depoente tinha falado mal dela pro diretor. A depoente nunca falou com o diretor, a depoente nem conhece pessoalmente. Depois disso, a Ivone cortou a bolsa da depoente em junho, e a bolsa da Kátia continuou. A depoente se lembra que ficou uns três dias sem conseguir dormir direito.
 
-*Saída do motor (antes da conversão):* [SAÍDA INCOMPLETA E NÃO VALIDADA - NÃO UTILIZAR COMO REFORMULAÇÃO] / Motivo: O bloco 1 ainda precisa de revisão: fidelidade: primeira pessoa fora das aspas: «conheço». A reformulação foi interrompida: os blocos seguintes não foram processados e o trecho na tela foi marcado como incompleto. /  / O depoente relatou que é bolsista do projeto de extensão desde o ano passado. A coordenadora, a professora Ivone, sempre foi muito exigente, mas em maio começou a ficar diferente com o depoente. Ela tirou o depoente do grupo de mensagens do projeto sem avisar. Quando o depoente perguntou por quê, ela falou: "você sabe muito bem o que você fez". O depoente não sabia. Aí a Kátia, que também é bolsista, lhe contou que a Ivone achava que o depoente tinha falado mal dela pro diretor. O depoente nunca falou com o diretor, nem conheço pessoalmente. Depois disso, a Ivone cortou a bolsa do depoente em junho, e a bolsa da Kátia continuou. O depoente se lembra que ficou uns três dias sem conseguir dormir direito. /  / [FIM DO TRECHO PARCIAL - a transcrição não foi reformulada por completo]
+*Saída do motor (antes da conversão):* O depoente relatou que é bolsista do projeto de extensão desde o ano passado. A coordenadora, a professora Ivone, sempre foi muito exigente, mas em maio começou a ficar diferente com o depoente. O depoente foi tirado por ela do grupo de mensagens do projeto sem avisar. Quando o depoente perguntou por quê, ela falou: "você sabe muito bem o que você fez". O depoente não sabia. Aí a Kátia, que também é bolsista, o informou que a Ivone achava que o depoente tinha falado mal dela pro diretor. O depoente nunca falou com o diretor, o depoente nem conhece pessoalmente. Depois disso, a Ivone cortou a bolsa do depoente em junho, e a bolsa da Kátia continuou. O depoente se lembra que ficou uns três dias sem conseguir dormir direito.
 
 **Alertas laranja (papéis e pronomes):** nenhum
 
 **Avisos informativos:** nenhum
 
-**Motor:** [BLOCK_RETRY_START] block=1/1; issue=fidelidade: perda de destinatário do relato: a coordenadora, a professora ivone, sempre foi muito exigente, mas em maio começou a ficar diferente comigo. | [BLOCK_REJECTED] block=1/1; detail=fidelidade: primeira pessoa fora das aspas: «conheço»
-
-**Chave automática:** FALHA — não devia ter: primeira pessoa fora das aspas
+**Chave automática:** ok
 
 **Chave (fatos a preservar):**
 - Quem tirou a depoente do grupo e cortou a bolsa dela: Ivone.
@@ -27,11 +25,11 @@ Depoimentos inventados. Saída final = texto que a janela mostra (com a convers�
 - «me lembro» é pronominal: «a depoente se lembra» / «recorda» (não é ação de outra pessoa).
 - «uns três dias» é aproximado.
 
-## B02 — Gênero do depoente: Masculino — 27.4 s
+## B02 — Gênero do depoente: Masculino — 27 s
 
 **Entrada:** Eu e o meu irmão, o Otávio, estávamos voltando da festa da atlética, era sábado, umas três da manhã. Na saída do estacionamento três caras pararam a gente. Um deles, de boné vermelho, empurrou o Otávio e falou que a gente tinha mexido com a namorada dele. A gente não tinha mexido com ninguém. O de boné me deu um soco no rosto e os outros dois seguraram o meu irmão. Eu caí e bati a cabeça no meio-fio. Quem chamou o segurança foi uma menina que estava no carro do lado. Eles fugiram a pé quando o segurança chegou. Eu fiquei com o olho roxo e o Otávio não se machucou.
 
-**Saída final:** O depoente relatou que o depoente e o seu irmão, o Otávio, estavavam voltando da festa da atlética, era sábado, umas três da manhã. Na saída do estacionamento três caras pararam a gente. Um deles, de boné vermelho, empurrou o Otávio e falou que a gente tinha mexido com a namorada dele. A gente não tinha mexido com ninguém. O de boné lhe deu um soco no rosto e os outros dois seguraram o irmão do depoente. O depoente caiu e bateu a cabeça no meio-fio. Quem chamou o segurança foi uma menina que estava no carro do lado. Eles fugiram a pé quando o segurança chegou. O depoente ficou com o olho roxo e o Otávio não se machucou.
+**Saída final:** O depoente relatou que o depoente e o seu irmão, o Otávio, estavavam voltando da festa da atlética, era sábado, umas três da manhã. Na saída do estacionamento três caras pararam o depoente e o Otávio. Um deles, de boné vermelho, empurrou o Otávio e falou que o grupo tinha mexido com a namorada dele. O grupo não tinha mexido com ninguém. O de boné lhe deu um soco no rosto e os outros dois seguraram o irmão do depoente. O depoente caiu e bateu a cabeça no meio-fio. Quem chamou o segurança foi uma menina que estava no carro do lado. Eles fugiram a pé quando o segurança chegou. O depoente ficou com o olho roxo e o Otávio não se machucou.
 
 **Alertas laranja (papéis e pronomes):**
 - «estavavam» — palavra inexistente: «estavavam» não está no dicionário nem no original. Confira a grafia.
@@ -49,7 +47,7 @@ Depoimentos inventados. Saída final = texto que a janela mostra (com a convers�
 - Quem chamou o segurança: a menina do carro ao lado (NÃO o depoente).
 - Quem fugiu: os três. Quem ficou com olho roxo: o depoente. Otávio NÃO se machucou.
 
-## B03 — Gênero do depoente: Feminino — 25.7 s
+## B03 — Gênero do depoente: Feminino — 24.5 s
 
 **Entrada:** Ontem de manhã, antes da aula de Anatomia, eu fui no banheiro do segundo andar e quando eu voltei a minha mochila não estava mais na cadeira. Dentro tinha meu notebook, minha carteira com cento e oitenta reais e meu crachá. O Bruno, que senta atrás de mim, disse que viu um rapaz de moletom cinza pegando a mochila, mas achou que era meu namorado. Eu não tenho namorado. Eu fui na segurança e eles me mostraram a câmera, mas a imagem estava muito escura. Depois, por volta do meio-dia, a minha carteira apareceu no achados e perdidos, sem o dinheiro.
 
@@ -77,7 +75,7 @@ Depoimentos inventados. Saída final = texto que a janela mostra (com a convers�
 - A carteira reapareceu SEM o dinheiro, «por volta do meio-dia» (aproximado).
 - «Ontem» deve continuar relativo (não inventar data).
 
-## B04 — Gênero do depoente: Masculino — 47.9 s — nova tentativa
+## B04 — Gênero do depoente: Masculino — 46.6 s — nova tentativa
 
 **Entrada:** Eu sou servidor do almoxarifado há doze anos. No dia 2 de outubro o senhor Alcides, que é meu chefe, me mandou assinar o recebimento de quarenta cadeiras. Eu falei pra ele que só tinham chegado vinte e oito. Ele disse que as outras doze iam chegar depois e que era pra eu assinar assim mesmo. Eu não assinei. Ele ficou irritado e falou que eu ia me arrepender. Na semana seguinte eu fui transferido pro turno da noite. Eu acho que foi por causa disso, mas ninguém me falou o motivo.
 
@@ -98,11 +96,11 @@ Depoimentos inventados. Saída final = texto que a janela mostra (com a convers�
 - Quem foi transferido: o depoente.
 - A causa é suposição do depoente («acho»), não fato; ninguém informou o motivo.
 
-## B05 — Gênero do depoente: Não informado — 21.8 s
+## B05 — Gênero do depoente: Não informado — 21.7 s
 
 **Entrada:** Eu moro no alojamento, quarto 214. A minha colega de quarto, a Simone, começou a levar o namorado dela pra dormir lá quase todo dia. Eu pedi pra ela não fazer isso porque é proibido e porque eu não me sinto bem. Ela disse que eu era chata e que se eu reclamasse com a administração ela ia fazer da minha vida um inferno. Eu reclamei mesmo assim, no dia 18. Desde então ela não fala comigo e escondeu o meu carregador duas vezes.
 
-**Saída final:** O depoente relatou que mora no alojamento, quarto 214. A colega de quarto, a Simone, começou a levar o namorado dela para dormir lá quase todo dia. O depoente pediu pra ela não fazer isso porque é proibido e porque ele não se sente bem. Ela disse que o depoente era chato e que se o depoente reclamasse com a administração ela ia fazer da vida do depoente um inferno. O depoente reclamou mesmo assim, no dia 18. Desde então ela não fala com ele e escondeu o carregador do depoente duas vezes.
+**Saída final:** O depoente relatou que mora no alojamento, quarto 214. A colega de quarto, a Simone, começou a levar o namorado dela para dormir lá quase todo dia. O depoente pediu pra ela não fazer isso porque é proibido e porque ele não se sente bem. Ela disse que o depoente era chato e que se o depoente reclamasse com a administração ela ia fazer da vida do depoente um inferno. O depoente reclamou mesmo assim, no dia 18. Desde então ela não fala com o depoente e escondeu o carregador do depoente duas vezes.
 
 **Alertas laranja (papéis e pronomes):** nenhum
 
@@ -119,7 +117,7 @@ Depoimentos inventados. Saída final = texto que a janela mostra (com a convers�
 - Quem reclamou à administração no dia 18: o/a depoente.
 - Quem parou de falar e escondeu o carregador (do/da depoente) duas vezes: Simone.
 
-## B06 — Gênero do depoente: Feminino — 22.8 s
+## B06 — Gênero do depoente: Feminino — 22.5 s
 
 **Entrada:** Eu estava dando monitoria quando o aluno Jefferson entrou na sala gritando. Ele dizia que eu tinha dado a nota errada pra ele de propósito. Eu expliquei que quem dá a nota é o professor, não a monitora. Ele não quis ouvir. Ele bateu com a mão na mesa e chegou muito perto de mim. A Luana, que é a outra monitora, saiu pra chamar o professor Emanuel. Quando o professor chegou, o Jefferson já tinha ido embora. O professor me perguntou se eu queria registrar a ocorrência e eu falei que sim.
 
@@ -141,7 +139,7 @@ Depoimentos inventados. Saída final = texto que a janela mostra (com a convers�
 - Quem já tinha ido embora: Jefferson.
 - Quem perguntou: o professor Emanuel perguntou à depoente; quem disse que sim: a depoente.
 
-## B07 — Gênero do depoente: Masculino — 24.5 s
+## B07 — Gênero do depoente: Masculino — 24 s
 
 **Entrada:** Eu não vi a briga, eu só ouvi. Eu estava na biblioteca, no terceiro andar, e ouvi alguém gritando "me solta, me solta" no corredor. Quando eu cheguei na porta, tinha um rapaz no chão e uma moça de cabelo curto do lado dele. Ela falou pra mim: "ele tentou me agarrar". Ele levantou e disse que era mentira e saiu andando. Eu não conhecia nenhum dos dois. Eu fiquei com a moça até a segurança chegar, uns quinze minutos depois.
 
@@ -161,13 +159,13 @@ Depoimentos inventados. Saída final = texto que a janela mostra (com a convers�
 - O depoente não conhecia nenhum dos dois.
 - Quem ficou com a moça: o depoente. «uns quinze minutos» é aproximado.
 
-## B08 — Gênero do depoente: Feminino — 43.3 s — nova tentativa
+## B08 — Gênero do depoente: Feminino — 41.2 s — nova tentativa
 
 **Entrada:** A minha mãe me ligou dizendo que tinham ligado pra ela do meu celular pedindo dinheiro. Só que o meu celular estava comigo o tempo todo. Ela já tinha feito um Pix de quinhentos e cinquenta reais pra uma conta no nome de um tal de Edvaldo. Eu fui com ela na delegacia no mesmo dia, dia 25 de agosto, e a gente fez o boletim de ocorrência. O banco disse pra ela que ia tentar estornar, mas até hoje não devolveram nada.
 
-**Saída final:** A depoente relatou que a mãe da depoente lhe ligou dizendo que tinham ligado para ela do celular da depoente pedindo dinheiro. Só que o celular da depoente estava com a depoente o tempo todo. Ela já tinha feito um Pix de quinhentos e cinquenta reais pra uma conta no nome de um tal de Edvaldo. A depoente foi com ela na delegacia no mesmo dia, dia 25 de agosto, e a gente fez o boletim de ocorrência. O banco disse para ela que ia tentar estornar, mas até hoje não devolveram nada.
+**Saída final:** A depoente relatou que a mãe da depoente lhe ligou dizendo que tinham ligado para ela do celular da depoente pedindo dinheiro. Só que o celular da depoente estava com a depoente o tempo todo. Ela já tinha feito um Pix de quinhentos e cinquenta reais pra uma conta no nome de um tal de Edvaldo. A depoente foi com ela na delegacia no mesmo dia, dia 25 de agosto, e o grupo fez o boletim de ocorrência. O banco disse para ela que ia tentar estornar, mas até hoje não devolveram nada.
 
-*Saída do motor (antes da conversão):* O depoente relatou que a mãe do depoente lhe ligou dizendo que tinham ligado para ela do celular do depoente pedindo dinheiro. Só que o celular do depoente estava com o depoente o tempo todo. Ela já tinha feito um Pix de quinhentos e cinquenta reais pra uma conta no nome de um tal de Edvaldo. O depoente foi com ela na delegacia no mesmo dia, dia 25 de agosto, e a gente fez o boletim de ocorrência. O banco disse para ela que ia tentar estornar, mas até hoje não devolveram nada.
+*Saída do motor (antes da conversão):* O depoente relatou que a mãe do depoente lhe ligou dizendo que tinham ligado para ela do celular do depoente pedindo dinheiro. Só que o celular do depoente estava com o depoente o tempo todo. Ela já tinha feito um Pix de quinhentos e cinquenta reais pra uma conta no nome de um tal de Edvaldo. O depoente foi com ela na delegacia no mesmo dia, dia 25 de agosto, e o grupo fez o boletim de ocorrência. O banco disse para ela que ia tentar estornar, mas até hoje não devolveram nada.
 
 **Alertas laranja (papéis e pronomes):** nenhum
 
@@ -184,7 +182,7 @@ Depoimentos inventados. Saída final = texto que a janela mostra (com a convers�
 - Quem foi à delegacia: a depoente e a mãe, em 25/08; «a gente» = as duas.
 - O banco disse à mãe que ia tentar estornar; nada foi devolvido.
 
-## B09 — Gênero do depoente: Masculino — 21.4 s
+## B09 — Gênero do depoente: Masculino — 20.8 s
 
 **Entrada:** O professor Rogério me chamou pra ser monitor dele no semestre passado e eu aceitei. No começo foi tudo bem. Depois ele começou a me pedir pra corrigir as provas inteiras sozinho, inclusive as notas finais. Eu falei que não me sentia confortável, porque isso é função dele. Ele disse que se eu não quisesse tinha uma fila de gente querendo a vaga. Eu continuei corrigindo porque precisava da declaração de monitoria. Eu me arrependo de não ter falado antes com a coordenação.
 
@@ -203,7 +201,7 @@ Depoimentos inventados. Saída final = texto que a janela mostra (com a convers�
 - Quem respondeu com a «fila de gente»: Rogério.
 - «me arrependo» é pronominal: o depoente se arrepende (de não ter falado antes).
 
-## B10 — Gênero do depoente: Feminino — 53.5 s — nova tentativa
+## B10 — Gênero do depoente: Feminino — 51.7 s — nova tentativa
 
 **Entrada:** Na reunião do colegiado do dia 9 de setembro, eu pedi a palavra pra falar sobre a carga horária dos técnicos. O professor Nestor, que presidia a reunião, me disse que aquilo não estava na pauta. Eu mostrei que estava sim, no item 4. Aí ele falou que eu podia falar, mas só por dois minutos. Enquanto eu falava, ele e o professor Clóvis ficaram conversando alto e rindo. Eu parei e pedi que eles me respeitassem. O Clóvis disse que não estava rindo de mim. Depois da reunião, a professora Dalva veio me pedir desculpas pelos colegas e me disse que ia levar o assunto pra direção.
 

@@ -9,24 +9,24 @@
     "outputChars":  6536,
     "inputWords":  1025,
     "outputWords":  1104,
-    "generationSeconds":  257.151,
-    "totalSeconds":  259.56389079999997,
+    "generationSeconds":  255.133,
+    "totalSeconds":  257.45483839999997,
     "modelConfig":  "context=4096; batch=512; ubatch=256; threads=4; gpuLayers=8; mmap=true; temperature=0",
     "modelFile":  "file=qwen2.5-3b-instruct-q4_k_m.gguf; bytes=2104932768",
     "outputCaptureVerified":  true,
     "warnings":  [
-                     "[2026-10-02 21:24:56.248 -03:00] [WARN] [BLOCK_RETRY_START] block=3/6; issue=fidelidade: ação de participante atribuída ao depoente: o depoente respondeu"
+                     "[2026-10-03 11:55:24.092 -03:00] [WARN] [BLOCK_RETRY_START] block=3/6; issue=fidelidade: ação de participante atribuída ao depoente: o depoente respondeu"
                  ],
     "nativeWarnings":  [
-                           "[2026-10-02 21:22:51.475 -03:00] [NATIVE-WARNING] [LLAMASHARP] load: control-looking token: 128247 \u0027\u003c/s\u003e\u0027 was not control-type; this is probably a bug in the model. its type will be overridden",
-                           "[2026-10-02 21:22:52.147 -03:00] [NATIVE-WARNING] [LLAMASHARP] llama_context: n_ctx_seq (4096) \u003c n_ctx_train (32768) -- the full capacity of the model will not be utilized",
-                           "[2026-10-02 21:22:52.293 -03:00] [NATIVE-WARNING] [LLAMASHARP] llama_context: n_ctx_seq (4096) \u003c n_ctx_train (32768) -- the full capacity of the model will not be utilized",
-                           "[2026-10-02 21:23:37.162 -03:00] [NATIVE-WARNING] [LLAMASHARP] llama_context: n_ctx_seq (4096) \u003c n_ctx_train (32768) -- the full capacity of the model will not be utilized",
-                           "[2026-10-02 21:24:17.797 -03:00] [NATIVE-WARNING] [LLAMASHARP] llama_context: n_ctx_seq (4096) \u003c n_ctx_train (32768) -- the full capacity of the model will not be utilized",
-                           "[2026-10-02 21:24:56.255 -03:00] [NATIVE-WARNING] [LLAMASHARP] llama_context: n_ctx_seq (4096) \u003c n_ctx_train (32768) -- the full capacity of the model will not be utilized",
-                           "[2026-10-02 21:25:33.867 -03:00] [NATIVE-WARNING] [LLAMASHARP] llama_context: n_ctx_seq (4096) \u003c n_ctx_train (32768) -- the full capacity of the model will not be utilized",
-                           "[2026-10-02 21:26:17.307 -03:00] [NATIVE-WARNING] [LLAMASHARP] llama_context: n_ctx_seq (4096) \u003c n_ctx_train (32768) -- the full capacity of the model will not be utilized",
-                           "[2026-10-02 21:26:55.114 -03:00] [NATIVE-WARNING] [LLAMASHARP] llama_context: n_ctx_seq (4096) \u003c n_ctx_train (32768) -- the full capacity of the model will not be utilized"
+                           "[2026-10-03 11:53:20.261 -03:00] [NATIVE-WARNING] [LLAMASHARP] load: control-looking token: 128247 \u0027\u003c/s\u003e\u0027 was not control-type; this is probably a bug in the model. its type will be overridden",
+                           "[2026-10-03 11:53:20.871 -03:00] [NATIVE-WARNING] [LLAMASHARP] llama_context: n_ctx_seq (4096) \u003c n_ctx_train (32768) -- the full capacity of the model will not be utilized",
+                           "[2026-10-03 11:53:21.013 -03:00] [NATIVE-WARNING] [LLAMASHARP] llama_context: n_ctx_seq (4096) \u003c n_ctx_train (32768) -- the full capacity of the model will not be utilized",
+                           "[2026-10-03 11:54:05.510 -03:00] [NATIVE-WARNING] [LLAMASHARP] llama_context: n_ctx_seq (4096) \u003c n_ctx_train (32768) -- the full capacity of the model will not be utilized",
+                           "[2026-10-03 11:54:46.326 -03:00] [NATIVE-WARNING] [LLAMASHARP] llama_context: n_ctx_seq (4096) \u003c n_ctx_train (32768) -- the full capacity of the model will not be utilized",
+                           "[2026-10-03 11:55:24.099 -03:00] [NATIVE-WARNING] [LLAMASHARP] llama_context: n_ctx_seq (4096) \u003c n_ctx_train (32768) -- the full capacity of the model will not be utilized",
+                           "[2026-10-03 11:56:01.487 -03:00] [NATIVE-WARNING] [LLAMASHARP] llama_context: n_ctx_seq (4096) \u003c n_ctx_train (32768) -- the full capacity of the model will not be utilized",
+                           "[2026-10-03 11:56:44.477 -03:00] [NATIVE-WARNING] [LLAMASHARP] llama_context: n_ctx_seq (4096) \u003c n_ctx_train (32768) -- the full capacity of the model will not be utilized",
+                           "[2026-10-03 11:57:21.813 -03:00] [NATIVE-WARNING] [LLAMASHARP] llama_context: n_ctx_seq (4096) \u003c n_ctx_train (32768) -- the full capacity of the model will not be utilized"
                        ],
     "retry":  true,
     "exception":  "",

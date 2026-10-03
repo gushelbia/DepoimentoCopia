@@ -153,6 +153,14 @@ $k = @([RoleScanner]::Find('Eu me lembro que fiquei sem dormir.', 'O depoente re
 Check ($k.Count -ge 1 -and $k[0].Reason -match 'se lembra') 'B01: «o depoente lhe lembra» com sugestão «se lembra»' (($k | ForEach-Object { $_.Reason }) -join ' | ')
 $k = @([RoleScanner]::Find('Eu fui na segurança e eles me mostraram a câmera.', 'O depoente relatou que foi na segurança e eles a mostraram a câmera.') | Where-Object { $_.Reason -match '^regência' })
 Check ($k.Count -eq 1 -and $k[0].Reason -match 'lhe mostraram') 'B03: «eles a mostraram» com sugestão «lhe mostraram»' (($k | ForEach-Object { $_.Reason }) -join ' | ')
+
+# 8) Rodada 10 (bateria realista 3): particípio não é primeira pessoa; aproximação perdida.
+$k = @([RoleScanner]::Find('Se ele tivesse me explicado o motivo, eu teria assinado.', 'O depoente relatou que, se ele tivesse lhe explicado o motivo, o depoente teria assinado.') | Where-Object { $_.Reason -match 'pronominal' })
+Check ($k.Count -eq 0) 'C01: «tivesse lhe explicado» não é verbo pronominal do depoente (sem falso alarme)' (($k | ForEach-Object { $_.Reason }) -join ' | ')
+$k = @([RoleScanner]::Find('Um carro bateu umas sete e meia da noite.', 'O depoente relatou que um carro bateu às sete e meia da noite.') | Where-Object { $_.Reason -match '^aproximação perdida' })
+Check ($k.Count -eq 1 -and $k[0].Kind -eq [RoleScanner]::Alert -and $k[0].Reason -match 'por volta das sete e meia') 'C02: «às sete e meia» para «umas sete e meia» em laranja, com «por volta das sete e meia»' (($k | ForEach-Object { $_.Reason }) -join ' | ')
+$k = @([RoleScanner]::Find('Um carro bateu umas sete e meia da noite.', 'O depoente relatou que um carro bateu por volta das sete e meia da noite.') | Where-Object { $_.Reason -match '^aproximação perdida' })
+Check ($k.Count -eq 0) 'aproximação mantida: sem alerta' ''
 $results | Set-Content -Encoding UTF8 (Join-Path $PSScriptRoot 'results.txt')
 Write-Output ($(if ($failures -eq 0) { 'RESULT PASS' } else { "RESULT FAIL ($failures)" }))
 if ($failures -ne 0) { exit 1 }

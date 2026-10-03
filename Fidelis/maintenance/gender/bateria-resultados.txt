@@ -1,4 +1,4 @@
-﻿START 2026-10-02T21:02:55
+﻿START 2026-10-03T12:41:21
 PASS textos aprovados (20 frases + 10 QA) idênticos com Masculino e Não informado | 30/30
 
 F1 [Feminino]  Eu fiquei assustada quando ele entrou gritando.

@@ -1,0 +1,84 @@
+# Chave automática da bateria realista 3 (tirada da CHAVE de cada caso em bateria-realista-3.txt).
+# id, deve|não, expressão regular (sem diferenciar maiúsculas), o que confere. Aplicada só ao texto reformulado da saída final
+# (já convertida para o gênero; sem as linhas da marca de incompleto).
+C01	deve	Fausto	quem age: o diretor Fausto
+C01	deve	(?:mandou\s+chamar\s+o depoente|mandou\s+chamá-lo|o depoente\s+foi\s+chamado)	o depoente é quem foi chamado
+C01	deve	(?:fez\s+o depoente\s+assinar|obrigou\s+o depoente)	o depoente foi obrigado a assinar
+C01	deve	(?:sem\s+(?:deixar|permitir)\s+(?:que\s+)?o depoente\s+ler|sem\s+lhe\s+(?:deixar|permitir)|sem\s+deixá-lo\s+ler)	o depoente foi impedido de ler
+C01	deve	\bse\b[^.]*\btivesse\b	hipótese preservada («se tivesse»)
+C01	deve	\bteria\s+assinado\b	hipótese preservada («teria assinado»)
+C01	deve	Glória	quem informou: Glória
+C01	deve	Anselmo	o atraso foi de Anselmo
+C01	deve	(?:não\s+foi\s+do depoente|nem\s+foi\s+do depoente|não\s+era\s+do depoente)	o atraso não foi do depoente
+C01	não	\bme\b|\bmeu\b	primeira pessoa residual
+C02	deve	Gilson	quem dirigia: Gilson
+C02	deve	Débora	ocupante: Débora
+C02	deve	Fernanda	ocupante: Fernanda
+C02	deve	PNQ2H67	placa
+C02	deve	(?:umas|por volta d[ae]s?|cerca d[ae]s?|aproximadamente)\s+(?:\p{L}+\s+){0,1}sete e meia	horário aproximado («umas sete e meia»)
+C02	deve	Fernanda[^.]*joelho	só Fernanda bateu o joelho
+C02	não	a depoente[^.]*(?:se machucou|bateu o joelho)	a depoente não se machucou
+C02	deve	filmou	a depoente filmou
+C02	deve	celular da depoente|seu celular|próprio celular	o celular é da depoente
+C02	deve	\bmotorista\b	quem desceu e ameaçou: o motorista
+C02	não	\bnos\s+ameaçou\b|\bnossa\b	primeira pessoa do plural residual
+C03	deve	Marta	a depoente se identifica como Marta
+C03	deve	\bsecretária\b	secretária (feminino)
+C03	deve	oito anos	tempo de serviço
+C03	deve	a primeira a chegar	«a primeira» (feminino)
+C03	deve	Hélio	a sala é do professor Hélio
+C03	deve	não mexeu	negação mantida
+C03	deve	ninguém[^.]*(?:informou|falou|disse|contou)[^.]*(?:à depoente|lhe)|ninguém\s+(?:nunca\s+)?(?:lhe|a)\s+(?:informou|falou|disse|contou)|à depoente[^.]*o que foi levado	ninguém informou à depoente o que foi levado
+C03	não	ninguém nunca não	dupla negação errada
+C03	deve	não sabe se	Hélio não sabe se sumiu algo
+C03	deve	vinte minutos	aproximação mantida
+C04	deve	"eu vou te pegar lá fora, seu dedo-duro"	fala citada intacta
+C04	deve	Ícaro	quem ameaçou: Ícaro
+C04	deve	não respondeu	o depoente não respondeu
+C04	deve	(?:achava|acreditava|pensava)	Ícaro achava (suposição)
+C04	deve	o depoente não contou|não contou	o depoente não contou
+C04	deve	não sabe quem	quem contou é desconhecido
+C04	deve	Jurandir	quem acompanhou: o inspetor Jurandir
+C04	deve	(?:esperando\s+o depoente|o\s+esperava|esperava\s+o depoente)	Ícaro esperava o depoente
+C05	deve	não\s+(?:se\s+)?lembra	a depoente não lembra quem jogou
+C05	deve	Lauro	Lauro
+C05	deve	Márcio	Márcio
+C05	não	(?:Lauro|Márcio)\s+jogou\s+a\s+garrafa	não atribui o ato a um deles
+C05	deve	se abaixou	«me abaixei» → «se abaixou»
+C05	deve	março	briga anterior em março
+C05	deve	não pode afirmar	não pode afirmar que foi ele
+C05	deve	(?:prefere|preferir)	prefere não acusar
+C05	não	lhe abaixou|abaixou a depoente	reflexivo errado
+C06	não	\bsei lá\b|\btipo\b|\bné\b|\btava\b	marcadores da fala removidos
+C06	deve	"pega, pega"	fala citada mantida
+C06	deve	o depoente caiu	quem caiu: o depoente
+C06	deve	(?:não|nem) parou	o «cara» não parou
+C06	deve	celular	o celular do depoente
+C06	deve	tela	a tela quebrou
+C06	não	celular[^.]*(?:roubado|furtado)	o celular não foi roubado
+C06	deve	não sabe se	incerteza: não sabe se o «cara» roubou algo
+C07	deve	Noêmia	quem disse: Noêmia
+C07	deve	Olívia	Olívia
+C07	deve	nunca disse	negação mantida
+C07	deve	(?:a depoente\s+teria\s+(?:dito|falado)|a depoente\s+tinha\s+(?:dito|falado))	cadeia: a depoente teria dito
+C07	não	a depoente copiou	quem teria copiado: Olívia
+C07	deve	acreditou	Olívia acreditou na depoente
+C07	deve	(?:aluno|estudante)	ouviu de um aluno
+C07	deve	não lembrava|não se lembrava|não lembra	não lembra quem
+C08	deve	1\.204\.338	matrícula
+C08	deve	15 de setembro|15/09	data
+C08	deve	por volta das 14	horário aproximado
+C08	deve	16h20|16:20	horário exato
+C08	deve	Priscila	quem avisou: Priscila
+C08	deve	(?:buscar\s+o depoente|buscá-lo|o\s+buscar|chamar\s+o depoente)	Priscila veio buscar o depoente
+C08	deve	registro geral	o depoente fechou o registro
+C08	deve	(?:ajudou\s+o depoente|o\s+ajudou|lhe ajudou)	Priscila ajudou o depoente
+C08	deve	ninguém passou mal	ninguém passou mal
+C08	deve	(?:acredita|acha)	a causa é suposição
+C08	deve	não viu quem	o depoente não viu quem
+C08	deve	Bunsen	bico de Bunsen
+C03	não	(?-i:\bmarta\b)	nome próprio em minúscula
+C05	deve	brigado com a depoente	Lauro brigou com a depoente
+C05	não	brigado com ele	«comigo» virou «com ele»
+C07	não	não tinha sido ele	«não tinha sido eu» virou «ele»
+C07	deve	não tinha sido (?:ela|a depoente)	quem não tinha sido: a depoente

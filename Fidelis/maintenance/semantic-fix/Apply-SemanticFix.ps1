@@ -207,7 +207,7 @@ foreach($name in $names) {
                 if($method.HasBody -and (($method.Body.Instructions | ForEach-Object ToString) -join "`n") -cne $before[$method.FullName]){throw "Unrelated method changed: $($method.FullName)"}
             }}
         } finally {$check.Dispose()}
-        $report.Add("PASS $name : only prompts, assistant prefill, semantic guard, supplemental conjugations, retry classification, unsafe positional repair, incomplete-output marking, post-generation cancellation check, final opening «O depoente relatou que» (FinalLead), swapped-subject/reflexive repair (round 6) and role repairs: deleted subject, swapped roles, ambiguous pronoun as passive, broken phrase check (round 7) log without testimony text outside diagnostic mode (round 8) and narrator as object/owner, number words, repetition and regency (round 8b), pronominal verbs, first person left, lost recipient, recipient restored and isolated oath (round 9) changed.")
+        $report.Add("PASS $name : only prompts, assistant prefill, semantic guard, supplemental conjugations, retry classification, unsafe positional repair, incomplete-output marking, post-generation cancellation check, final opening «O depoente relatou que» (FinalLead), swapped-subject/reflexive repair (round 6) and role repairs: deleted subject, swapped roles, ambiguous pronoun as passive, broken phrase check (round 7) log without testimony text outside diagnostic mode (round 8) and narrator as object/owner, number words, repetition and regency (round 8b), pronominal verbs, first person left, lost recipient, recipient restored and isolated oath (round 9), other first-person forms, approximation, plural, speech markers, names and opening (round 10) changed.")
     } finally {$m.Dispose()}
 }
 $helper.Dispose()

@@ -83,3 +83,6 @@ PASS fala entre aspas não é conferida no dicionário
 PASS B04: «ia lhe arrepender» com sugestão «se arrepender» | verbo pronominal do depoente: no original «me arrepender…» (o próprio depoente). Confira: o certo seria «se arrepender».
 PASS B01: «o depoente lhe lembra» com sugestão «se lembra» | o original é reflexivo («me lembr…»: o depoente fez a ação em si mesmo); «lhe» indica outra pessoa. Confira: o correto seria «se lembra».
 PASS B03: «eles a mostraram» com sugestão «lhe mostraram» | regência: com «mostraram», quem recebe a ação é objeto indireto (no original: «eles me mostraram»). Confira: o certo seria «eles lhe mostraram».
+PASS C01: «tivesse lhe explicado» não é verbo pronominal do depoente (sem falso alarme)
+PASS C02: «às sete e meia» para «umas sete e meia» em laranja, com «por volta das sete e meia» | aproximação perdida: no original «umas sete e meia» (aproximado); aqui ficou exato («às sete e meia»). Confira: o certo seria «por volta das sete e meia».
+PASS aproximação mantida: sem alerta

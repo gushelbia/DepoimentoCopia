@@ -1,0 +1,37 @@
+PASS C05: «brigado com ele» → «brigado com o depoente» | O depoente relatou que o Lauro já tinha brigado com o depoente antes.
+PASS C07: «sido ele» → «sido o depoente» | O depoente relatou que explicou que não tinha sido o depoente.
+PASS C01: «nem foi seu» → «nem foi do depoente» | O depoente relatou que era um atraso que nem foi do depoente, foi do Anselmo.
+PASS «depois dele» (de mim) → «depois do depoente» | O depoente relatou que o Carlos entrou depois do depoente e o depoente já estava lá.
+PASS «acreditou nele» (em mim) → «no depoente» | O depoente relatou que ela acreditou no depoente.
+PASS duas saídas «brigado com ele»: não adivinha | O depoente relatou que o Lauro tinha brigado com ele e tinha brigado com ele.
+PASS duas ocorrências: validador acusa | fidelidade: depoente trocado por outra pessoa: no original «brigado comigo», na saída «brigado com ele»
+PASS C02: «às sete e meia» → «por volta das sete e meia» | O depoente relatou que o carro bateu por volta das sete e meia da noite.
+PASS «uns vinte minutos» → «cerca de vinte minutos» | O depoente relatou que esperou cerca de vinte minutos.
+PASS aproximação mantida: sem mudança | O depoente relatou que esperou uns vinte minutos.
+PASS duas ocorrências: validador acusa | fidelidade: aproximação perdida: no original «lá pelas dez», na saída exato
+PASS C02: número na frase ou na anterior → «os quatro»; depois → «o grupo» | O depoente relatou que os quatro estavam no carro, o depoente, a Débora e o Gilson. Um carro bateu atrás dos quatro. O motorista disse que a culpa era do grupo. Ele ameaçou o grupo.
+PASS C07: membro nomeado na frase anterior → «o depoente e a Olívia foram juntos» | O depoente relatou que Olívia veio falar com o depoente. Ela acreditou no depoente e o depoente e a Olívia foram juntos falar com a Noêmia.
+PASS B02: «eu e o meu irmão, o Otávio» → objeto «o depoente e o Otávio»; sem nome perto → «o grupo» | O depoente relatou que o depoente e o seu irmão, o Otávio, estavam voltando. Na saída três caras pararam o depoente e o Otávio. Um deles falou que o grupo tinha mexido com a namorada dele.
+PASS B08: membro sem nome («com ela») → «o grupo» | O depoente relatou que foi com ela na delegacia e o grupo fez o boletim. Era no nome do Edvaldo.
+PASS dois nomes possíveis: na dúvida, «o grupo» | O depoente relatou que o Caio e a Rita chegaram. O grupo saiu junto.
+PASS «com a Lia» antes de «a gente»; a Rosa, depois, não é membro | O depoente relatou que foi com a Lia ao mercado e o depoente e a Lia encontraram a Rosa lá.
+PASS «nós estávamos» → «o grupo estava» | O depoente relatou que o grupo estava voltando.
+PASS «nós três» → «os três estavam» | O depoente relatou que os três estavam voltando.
+PASS fala entre aspas preservada | O depoente relatou que ela disse: "a gente vai embora".
+PASS C06: marcadores removidos; «tava» → «estava» | O depoente relatou que foi tudo muito rápido. O depoente estava saindo.
+PASS «sei lá se» (dúvida) → «não sabe se» | O depoente relatou que não sabe se foi ele.
+PASS marcadores retirados não contam como omissão
+PASS marcadores entre aspas preservados | O depoente relatou que ele disse: "olha, tipo, sei lá".
+PASS C03: «Eu, Marta, sou…» → «O depoente, Marta, relatou que é…»
+PASS nome perdido na abertura: «O depoente, Marta, relatou que…»
+PASS nome do original em minúscula volta à maiúscula | O depoente relatou que falou com a Rosa ontem.
+PASS palavra comum igual ao nome no original: não muda | O depoente relatou que a rosa estava na mesa da Rosa.
+PASS B01: «nem conheço» → «nem conhece» | O depoente relatou que nunca falou com o diretor, nem conhece pessoalmente.
+PASS C04: «o depoente não contei» → «não contou» | O depoente relatou que não contou.
+PASS sem «o depoente» como sujeito da oração: não adivinha | O depoente relatou que ele disse que conheço o lugar.
+PASS e o validador acusa | fidelidade: primeira pessoa fora das aspas: «conheço»
+PASS R04: «ele devolveu», «ele não contou» → «o depoente» | O depoente relatou que devolveu para ela e o depoente não contou a ninguém.
+PASS B01: «ele nem conhece» → «o depoente nem conhece» | O depoente relatou que nunca falou com o diretor, o depoente nem conhece pessoalmente.
+PASS outra pessoa faz o mesmo no original: não adivinha | O depoente relatou que ele chegou depois.
+PASS «jura» isolado (de «juro») removido | O depoente relatou que não sabia.
+PASS saída vazia continua rejeitada | fidelidade: saída vazia

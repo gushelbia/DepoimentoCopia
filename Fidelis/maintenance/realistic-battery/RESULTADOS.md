@@ -2,7 +2,7 @@
 
 Depoimentos inventados. Saída final = texto que a janela mostra (com a conversão do gênero). Tempo = geração no motor.
 
-## R01 — Gênero do depoente: Feminino — 23.5 s
+## R01 — Gênero do depoente: Feminino — 23 s
 
 **Entrada:** Então, eu sou aluna do quinto período e o professor Heitor me chamou na sala dele depois da aula, isso foi numa quinta, dia 14 de agosto, umas cinco e pouco da tarde. Ele fechou a porta e me disse que se eu não fosse no aniversário dele ele ia me reprovar. Eu fiquei muito nervosa e falei que não ia. Aí ele me segurou pelo braço e eu me soltei e saí correndo. Depois eu contei pra minha colega Bianca e ela me disse que ele já tinha feito isso com ela também.
 
@@ -26,11 +26,11 @@ Depoimentos inventados. Saída final = texto que a janela mostra (com a convers�
 - «ela me disse que ele já tinha feito isso com ela»: Bianca relatou que Heitor fez o mesmo com Bianca.
 - Data 14/08 (quinta); horário aproximado («cinco e pouco») não pode virar horário exato.
 
-## R02 — Gênero do depoente: Masculino — 17.8 s
+## R02 — Gênero do depoente: Masculino — 19 s
 
 **Entrada:** Olha, eu sou o professor Heitor e eu nego tudo. A aluna me procurou porque queria revisão de nota, ela que me pediu pra conversar. Eu nunca disse que ia reprovar ninguém. Ela me acusou de segurar o braço dela, mas quem estava nervoso ali era eu, porque ela começou a gritar comigo. Eu não fechei a porta, a porta fica fechada por causa do ar-condicionado.
 
-**Saída final:** O depoente relatou que é o professor Heitor e nega tudo. A aluna o procurou porque queria revisão de nota, ela que lhe pediu para conversar. O depoente nunca disse que ia reprovar ninguém. O depoente foi acusado por ela de segurar o braço dela, mas quem estava nervoso ali era ele, porque ela começou a gritar com ele. O depoente não fechou a porta, a porta fica fechada por causa do ar-condicionado.
+**Saída final:** O depoente relatou que é o professor Heitor e nega tudo. A aluna o procurou porque queria revisão de nota, ela que lhe pediu para conversar. O depoente nunca disse que ia reprovar ninguém. O depoente foi acusado por ela de segurar o braço dela, mas quem estava nervoso ali era o depoente, porque ela começou a gritar com o depoente. O depoente não fechou a porta, a porta fica fechada por causa do ar-condicionado.
 
 **Alertas laranja (papéis e pronomes):** nenhum
 
@@ -46,7 +46,7 @@ Depoimentos inventados. Saída final = texto que a janela mostra (com a convers�
 - Quem gritou: a aluna gritou com o depoente.
 - Negações preservadas: «nunca disse», «não fechei a porta».
 
-## R03 — Gênero do depoente: Masculino — 22.6 s
+## R03 — Gênero do depoente: Masculino — 22 s
 
 **Entrada:** Eu trabalho na portaria do bloco F. Naquele dia, acho que era terça, não, quarta, dia 3 de setembro, por volta das dez da noite, dois alunos começaram a discutir na escada. O mais alto empurrou o outro e ele caiu. Um deles me pediu pra chamar a segurança, acho que foi o que caiu. Eu liguei pro ramal 4417. O Rafael, que era o mais alto, foi levado pela segurança e o outro rapaz ficou sentado com a mão na cabeça.
 
@@ -69,19 +69,17 @@ Depoimentos inventados. Saída final = texto que a janela mostra (com a convers�
 - Quem ficou sentado com a mão na cabeça: o outro aluno (NÃO o depoente).
 - «por volta das dez» é aproximado.
 
-## R04 — Gênero do depoente: Feminino — 38.7 s — nova tentativa
+## R04 — Gênero do depoente: Feminino — 19.6 s
 
 **Entrada:** Na prova de Cálculo II a Larissa sentou do meu lado e me passou um papel dobrado. Eu não abri. Eu devolvi pra ela e ela ficou brava comigo. Depois da prova ela me disse que eu era uma dedo-duro e que todo mundo ia saber. Eu não contei pra professora naquele dia, eu só contei uma semana depois, quando ela me ameaçou no grupo da turma.
 
-**Saída final:** A depoente relatou que na prova de Cálculo II, Larissa sentou do lado da depoente e lhe passou um papel dobrado. A depoente não abriu. A depoente devolveu o papel para ela e ela ficou brava com a depoente. Depois da prova, ela lhe disse que a depoente era uma dedo-duro e que todo mundo ia saber. A depoente não contou à professora naquele dia; a depoente contou apenas uma semana depois, quando ela ameaçou a depoente no grupo da turma.
+**Saída final:** A depoente relatou que na prova de Cálculo II, Larissa sentou do lado da depoente e lhe passou um papel dobrado. A depoente não abriu o papel. Depois disso, a depoente devolveu o papel para ela e ela ficou brava com a depoente. Após a prova, Larissa lhe disse que a depoente era uma dedo-duro e que todo mundo ia saber. A depoente não contou à professora naquele dia; a depoente só contou uma semana depois, quando ela ameaçou a depoente no grupo da turma.
 
-*Saída do motor (antes da conversão):* O depoente relatou que na prova de Cálculo II, Larissa sentou do lado do depoente e lhe passou um papel dobrado. O depoente não abriu. O depoente devolveu o papel para ela e ela ficou brava com o depoente. Depois da prova, ela lhe disse que o depoente era uma dedo-duro e que todo mundo ia saber. O depoente não contou à professora naquele dia; o depoente contou apenas uma semana depois, quando ela ameaçou o depoente no grupo da turma.
+*Saída do motor (antes da conversão):* O depoente relatou que na prova de Cálculo II, Larissa sentou do lado do depoente e lhe passou um papel dobrado. O depoente não abriu o papel. Depois disso, o depoente devolveu o papel para ela e ela ficou brava com o depoente. Após a prova, Larissa lhe disse que o depoente era uma dedo-duro e que todo mundo ia saber. O depoente não contou à professora naquele dia; o depoente só contou uma semana depois, quando ela ameaçou o depoente no grupo da turma.
 
 **Alertas laranja (papéis e pronomes):** nenhum
 
 **Avisos informativos:** nenhum
-
-**Motor:** [BLOCK_RETRY_START] block=1/1; issue=fidelidade: perda de destinatário do relato: eu devolvi pra ela e ela ficou brava comigo.
 
 **Chave automática:** ok
 
@@ -92,7 +90,7 @@ Depoimentos inventados. Saída final = texto que a janela mostra (com a convers�
 - Negações preservadas: «não abri», «não contei naquele dia».
 - Quem ameaçou no grupo: Larissa ameaçou a depoente.
 
-## R05 — Gênero do depoente: Masculino — 23 s
+## R05 — Gênero do depoente: Masculino — 21.8 s
 
 **Entrada:** Eu sou vigilante. Eram umas duas e quarenta da manhã quando um rapaz parou um carro prata, placa RJX4C21, perto do portão. Ele desceu e veio me xingando, falando que eu tinha que abrir o portão pra ele. Eu disse que sem crachá não podia. Aí ele tirou uma faca da cintura e me ameaçou. Eu me afastei e chamei a viatura pelo rádio. Ele entrou no carro e foi embora antes da viatura chegar.
 
@@ -114,7 +112,7 @@ Depoimentos inventados. Saída final = texto que a janela mostra (com a convers�
 - «veio me xingando» → o rapaz xingando o depoente (gerúndio, armadilha da P5).
 - Quem foi embora: o rapaz.
 
-## R06 — Gênero do depoente: Feminino — 37.9 s — nova tentativa
+## R06 — Gênero do depoente: Feminino — 37 s — nova tentativa
 
 **Entrada:** Eu sou técnica administrativa na secretaria. A minha chefe, a Dona Rosângela, me humilhou na frente de todo mundo. Ela disse que eu era incompetente e que eu tinha perdido o processo do aluno. Mas fui eu que achei o processo, ele estava na mesa dela. Eu fiquei calada porque fiquei com medo. Depois a Rosângela me mandou um e-mail pedindo desculpas, no dia 22 de setembro.
 
@@ -138,7 +136,7 @@ Depoimentos inventados. Saída final = texto que a janela mostra (com a convers�
 - Quem ficou calada e com medo: a depoente («calada»).
 - Quem pediu desculpas por e-mail: Rosângela, em 22/09.
 
-## R07 — Gênero do depoente: Masculino — 16.8 s
+## R07 — Gênero do depoente: Masculino — 16.5 s
 
 **Entrada:** Meu orientador, o professor Wanderley, foi afastado em agosto. Eu não sei o motivo direito. O coordenador ficou calado na reunião e ninguém explicou nada pra gente. Eu fiquei sem orientador quase dois meses. Aí a professora Cecília me aceitou como orientando, mas ela disse que não podia assinar o relatório antigo.
 
@@ -156,7 +154,7 @@ Depoimentos inventados. Saída final = texto que a janela mostra (com a convers�
 - Quem ficou sem orientador: o depoente.
 - Quem aceitou e quem disse que não podia assinar: a professora Cecília.
 
-## R08 — Gênero do depoente: Não informado — 20.2 s
+## R08 — Gênero do depoente: Não informado — 19.4 s
 
 **Entrada:** Eu caí da escada do prédio da reitoria porque o corrimão estava solto. Me machuquei no joelho. Uma moça que estava passando me ajudou a levantar e me levou até o ambulatório. Lá a enfermeira me disse que eu tinha que fazer raio-x. Eu já tinha avisado a manutenção do corrimão no dia 5, pelo telefone (21) 3938-1100.
 
@@ -177,7 +175,7 @@ Depoimentos inventados. Saída final = texto que a janela mostra (com a convers�
 - Quem avisou a manutenção: o/a depoente, no dia 5; telefone preservado.
 - Gênero não informado: aviso informativo esperado; não pode virar feminino sozinho.
 
-## R09 — Gênero do depoente: Feminino — 15.6 s
+## R09 — Gênero do depoente: Feminino — 15.2 s
 
 **Entrada:** A Paula e a Renata brigaram no laboratório. A Paula disse que a Renata tinha pegado o caderno dela. Ela negou e disse que o caderno era dela mesmo. Eu tentei separar e acabei levando um tapa sem querer. Eu acho que foi da Renata, mas não tenho certeza.
 
@@ -197,14 +195,13 @@ Depoimentos inventados. Saída final = texto que a janela mostra (com a convers�
 - Quem tentou separar e levou o tapa: a depoente.
 - Esperado: alerta laranja de pronome ambíguo se a saída mantiver «ela… dela».
 
-## R10 — Gênero do depoente: Masculino — 36.3 s — nova tentativa — **SAÍDA INCOMPLETA (rejeitada)**
+## R10 — Gênero do depoente: Masculino — 34.9 s — nova tentativa — **SAÍDA INCOMPLETA (rejeitada)**
 
 **Entrada:** O Diego me pediu duzentos reais emprestado em março, falou que ia me pagar em abril. Eu dei o dinheiro em espécie. Ele não me pagou. Em junho eu cobrei e ele me disse que já tinha me dado cento e cinquenta. Isso é mentira, ele não me deu nada. Aí ele começou a espalhar que eu é que devia pra ele.
 
 **Saída final:** [SAÍDA INCOMPLETA E NÃO VALIDADA - NÃO UTILIZAR COMO REFORMULAÇÃO] / Motivo: O bloco 1 ainda precisa de revisão: fidelidade: participante explícito omitido ou substituído na oração: o diego me pediu duzentos reais emprestado em março, falou que ia me pagar em abril.. A reformulação foi interrompida: os blocos seguintes não foram processados e o trecho na tela foi marcado como incompleto. /  / O depoente relatou que lhe pediu duzentos reais emprestado em março, falou que ia lhe pagar em abril. O depoente deu o dinheiro em espécie. Ele não lhe pagou. Em junho o depoente cobrou e ele lhe disse que já tinha lhe dado cento e cinquenta. Isso é mentira, ele não lhe deu nada. Aí ele começou a espalhar que o depoente é que devia pra ele. /  / [FIM DO TRECHO PARCIAL - a transcrição não foi reformulada por completo]
 
-**Alertas laranja (papéis e pronomes):**
-- «tinha lhe dado» — verbo pronominal do depoente: no original «me dad…» (o próprio depoente). Confira: o certo seria «se dado».
+**Alertas laranja (papéis e pronomes):** nenhum
 
 **Avisos informativos:** nenhum
 
@@ -219,7 +216,7 @@ Depoimentos inventados. Saída final = texto que a janela mostra (com a convers�
 - Quem espalhou boato: Diego, dizendo que o DEPOENTE devia a Diego.
 - Valores: duzentos reais e cento e cinquenta reais.
 
-## R11 — Gênero do depoente: Feminino — 19.7 s
+## R11 — Gênero do depoente: Feminino — 19.3 s
 
 **Entrada:** Eu estava no ponto de ônibus em frente ao alojamento quando um homem de moto parou e me perguntou as horas. Quando eu fui olhar o celular ele puxou da minha mão e saiu. Eu gritei e um rapaz que estava na lanchonete correu atrás dele, mas não conseguiu pegar. Eu fiquei muito assustada. Foi umas onze e meia, onze e quarenta, por aí.
 
@@ -243,7 +240,7 @@ Depoimentos inventados. Saída final = texto que a janela mostra (com a convers�
 - Quem correu atrás e não conseguiu pegar: o rapaz da lanchonete.
 - Horário aproximado («por aí»): não pode virar horário exato.
 
-## R12 — Gênero do depoente: Masculino — 20.3 s
+## R12 — Gênero do depoente: Masculino — 19.3 s
 
 **Entrada:** Eu sou representante de turma. Na assembleia do dia 10, a professora Márcia me interrompeu várias vezes e disse que eu não tinha legitimidade pra falar pelos alunos. Eu respondi que tinha sido eleito. Aí o Tiago, que é aluno também, se levantou e me defendeu. A Márcia mandou ele sentar e ele sentou. No final ela me pediu pra mandar a ata por e-mail, e eu mandei no mesmo dia.
 

@@ -9,20 +9,20 @@
     "outputChars":  1317,
     "inputWords":  222,
     "outputWords":  236,
-    "generationSeconds":  88.61,
-    "totalSeconds":  90.901309099999992,
+    "generationSeconds":  87.696,
+    "totalSeconds":  89.9223892,
     "modelConfig":  "context=4096; batch=512; ubatch=256; threads=4; gpuLayers=8; mmap=true; temperature=0",
     "modelFile":  "file=qwen2.5-3b-instruct-q4_k_m.gguf; bytes=2104932768",
     "outputCaptureVerified":  true,
     "warnings":  [
-                     "[2026-10-02 21:20:19.896 -03:00] [WARN] [BLOCK_RETRY_START] block=1/1; issue=fidelidade: negação de percepção omitida ou transferida para o fato",
-                     "[2026-10-02 21:21:01.838 -03:00] [WARN] [BLOCK_ACCEPTED_WITH_WARNING] block=1/1; issue=uma negação pode ter sido omitida"
+                     "[2026-10-03 11:50:47.270 -03:00] [WARN] [BLOCK_RETRY_START] block=1/1; issue=fidelidade: negação de percepção omitida ou transferida para o fato",
+                     "[2026-10-03 11:51:28.977 -03:00] [WARN] [BLOCK_ACCEPTED_WITH_WARNING] block=1/1; issue=uma negação pode ter sido omitida"
                  ],
     "nativeWarnings":  [
-                           "[2026-10-02 21:19:32.440 -03:00] [NATIVE-WARNING] [LLAMASHARP] load: control-looking token: 128247 \u0027\u003c/s\u003e\u0027 was not control-type; this is probably a bug in the model. its type will be overridden",
-                           "[2026-10-02 21:19:33.113 -03:00] [NATIVE-WARNING] [LLAMASHARP] llama_context: n_ctx_seq (4096) \u003c n_ctx_train (32768) -- the full capacity of the model will not be utilized",
-                           "[2026-10-02 21:19:33.250 -03:00] [NATIVE-WARNING] [LLAMASHARP] llama_context: n_ctx_seq (4096) \u003c n_ctx_train (32768) -- the full capacity of the model will not be utilized",
-                           "[2026-10-02 21:20:19.903 -03:00] [NATIVE-WARNING] [LLAMASHARP] llama_context: n_ctx_seq (4096) \u003c n_ctx_train (32768) -- the full capacity of the model will not be utilized"
+                           "[2026-10-03 11:50:00.572 -03:00] [NATIVE-WARNING] [LLAMASHARP] load: control-looking token: 128247 \u0027\u003c/s\u003e\u0027 was not control-type; this is probably a bug in the model. its type will be overridden",
+                           "[2026-10-03 11:50:01.194 -03:00] [NATIVE-WARNING] [LLAMASHARP] llama_context: n_ctx_seq (4096) \u003c n_ctx_train (32768) -- the full capacity of the model will not be utilized",
+                           "[2026-10-03 11:50:01.304 -03:00] [NATIVE-WARNING] [LLAMASHARP] llama_context: n_ctx_seq (4096) \u003c n_ctx_train (32768) -- the full capacity of the model will not be utilized",
+                           "[2026-10-03 11:50:47.277 -03:00] [NATIVE-WARNING] [LLAMASHARP] llama_context: n_ctx_seq (4096) \u003c n_ctx_train (32768) -- the full capacity of the model will not be utilized"
                        ],
     "retry":  true,
     "exception":  "",

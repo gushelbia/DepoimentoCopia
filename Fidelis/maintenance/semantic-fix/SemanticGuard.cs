@@ -523,6 +523,10 @@ namespace DepoimentoLocal.Windows
             step = output;
             output = FinalLead(output);
             NoteRepair("abertura", step, output);
+            // Round 10: names kept in capitals and «Eu, Marta, sou…» → «O depoente, Marta, relatou que é…».
+            step = output;
+            output = RepairNamesAndOpening(original, output);
+            NoteRepair("nome-na-abertura", step, output);
             return output;
         }
 
@@ -1044,6 +1048,437 @@ namespace DepoimentoLocal.Windows
             return x.Success ? "fidelidade: frase quebrada: «o depoente» no meio da locução verbal: «" + x.Value + "»" : null;
         }
 
+        // ---- Round 10 (realistic battery 3) ----------------------------------
+
+        // 1) Other first-person forms: «comigo», «em/de/por… mim», «foi eu», «foi meu».
+        // The model writes «com ele», «nele», «sido ele», «foi seu»: with a single
+        // correspondence, the narrator is restored («com o depoente», «sido o depoente»).
+        public static string[,] MimForms()
+        {
+            return new string[,] {
+                {"em", "nele|nela", "no depoente"}, {"de", "dele|dela", "do depoente"}, {"por", "por ele|por ela", "pelo depoente"},
+                {"sobre", "sobre ele|sobre ela", "sobre o depoente"}, {"contra", "contra ele|contra ela", "contra o depoente"},
+                {"sem", "sem ele|sem ela", "sem o depoente"}, {"até", "até ele|até ela", "até o depoente"}
+            };
+        }
+
+        // Frames of the source and the wrong output form for each: (source pattern, output pattern, replacement).
+        public static List<string[]> OtherFirstPersonFrames(string source)
+        {
+            var frames = new List<string[]>();
+            string plain = Unquote(source);
+            foreach (Match m in Regex.Matches(plain, @"\b(?<w>\p{L}{3,})\s+comigo\b", RegexOptions.IgnoreCase))
+                frames.Add(new string[] { m.Value, @"\b" + Regex.Escape(m.Groups["w"].Value) + @"\s+(?<x>com\s+(?:ele|ela))\b", "com o depoente", Regex.Escape(m.Groups["w"].Value) + @"\s+com\s+(?:ele|ela)\b" });
+            string[,] mim = MimForms();
+            for (int i = 0; i < mim.GetLength(0); i++)
+                foreach (Match m in Regex.Matches(plain, @"\b(?<w>\p{L}{3,})\s+" + mim[i, 0] + @"\s+mim\b", RegexOptions.IgnoreCase))
+                    frames.Add(new string[] { m.Value, @"\b" + Regex.Escape(m.Groups["w"].Value) + @"\s+(?<x>" + mim[i, 1] + @")\b", mim[i, 2], Regex.Escape(m.Groups["w"].Value) + @"\s+(?:" + mim[i, 1] + @")\b" });
+            foreach (Match m in Regex.Matches(plain, @"\b(?<v>foi|era|sido|fosse|é|seria|será)\s+eu\b", RegexOptions.IgnoreCase))
+                frames.Add(new string[] { m.Value, @"\b" + m.Groups["v"].Value + @"\s+(?<x>ele|ela)\b(?!\s+(?:mesm|própri))", "o depoente", m.Groups["v"].Value + @"\s+(?:ele|ela)\b" });
+            foreach (Match m in Regex.Matches(plain, @"\b(?<v>foi|era|é|sido|fosse)\s+(?:meu|minha|meus|minhas)(?=\s*[,.;!?])", RegexOptions.IgnoreCase))
+                frames.Add(new string[] { m.Value, @"\b" + m.Groups["v"].Value + @"\s+(?<x>seu|sua|seus|suas|dele|dela)(?=\s*[,.;!?])", "do depoente", m.Groups["v"].Value + @"\s+(?:seu|sua|seus|suas|dele|dela)(?=\s*[,.;!?])" });
+            return frames;
+        }
+
+        public static string RepairOtherFirstPerson(string source, string text, string fullOutput)
+        {
+            string plain = Unquote(source);
+            foreach (string[] f in OtherFirstPersonFrames(source))
+            {
+                if (Regex.Matches(plain, Regex.Escape(f[0]), RegexOptions.IgnoreCase).Count != 1) continue;
+                if (Regex.IsMatch(plain, @"\b" + f[3], RegexOptions.IgnoreCase)) continue;      // the source has the third person itself
+                if (Regex.Matches(fullOutput, f[1], RegexOptions.IgnoreCase).Count != 1) continue;
+                MatchCollection found = Regex.Matches(text, f[1], RegexOptions.IgnoreCase);
+                if (found.Count != 1) continue;
+                Group x = found[0].Groups["x"];
+                text = text.Substring(0, x.Index) + f[2] + text.Substring(x.Index + x.Length);
+            }
+            return text;
+        }
+
+        public static string OtherFirstPersonIssue(string original, string output)
+        {
+            string plain = Unquote(original), rendered = Unquote(output);
+            foreach (string[] f in OtherFirstPersonFrames(original))
+            {
+                if (Regex.IsMatch(plain, @"\b" + f[3], RegexOptions.IgnoreCase)) continue;
+                Match x = Regex.Match(rendered, f[1], RegexOptions.IgnoreCase);
+                if (x.Success) return "fidelidade: depoente trocado por outra pessoa: no original «" + f[0] + "», na saída «" + x.Value + "»";
+            }
+            return null;
+        }
+
+        // 2) Approximation lost: «umas sete e meia» → «às sete e meia».
+        public static string NumberPhrase()
+        {
+            const string word = @"(?:um|uma|dois|duas|três|tres|quatro|cinco|seis|sete|oito|nove|dez|onze|doze|treze|quatorze|catorze|quinze|dezesseis|dezessete|dezoito|dezenove|vinte|trinta|quarenta|cinquenta|sessenta|setenta|oitenta|noventa|cem|cento|duzentos|duzentas|trezentos|quinhentos|mil)";
+            return @"(?:\d{1,4}(?:h\d{0,2}|:\d{2})?|" + word + @"(?:\s+e\s+(?:meia|pouco|" + word + @"))*)";
+        }
+
+        public static string RepairLostApproximation(string source, string text, string fullOutput)
+        {
+            string plain = Unquote(source);
+            foreach (Match m in Regex.Matches(plain, @"\b(?<a>umas|uns|por\s+volta\s+d[aoe]s?|cerca\s+de|lá\s+pel[ao]s|aproximadamente)\s+(?<n>" + NumberPhrase() + @")\b", RegexOptions.IgnoreCase))
+            {
+                string n = m.Groups["n"].Value;
+                if (Regex.Matches(plain, @"\b" + Regex.Escape(n) + @"\b", RegexOptions.IgnoreCase).Count != 1) continue;
+                string pattern = @"(?<pre>\b\p{L}+\s+)?\b(?<n>" + Regex.Escape(n) + @")\b";
+                var unmarked = new List<Match>();
+                foreach (Match x in Regex.Matches(text, pattern, RegexOptions.IgnoreCase))
+                {
+                    string before = text.Substring(0, x.Groups["n"].Index);
+                    if (Regex.IsMatch(before, @"\b(?:umas|uns|volta\s+d[aoe]s?|cerca\s+de|pel[ao]s|aproximadamente|mais\s+ou\s+menos|em\s+torno\s+d[aeo]s?|perto\s+d[aeo]s?|quase)\s+$", RegexOptions.IgnoreCase)) continue;
+                    unmarked.Add(x);
+                }
+                if (unmarked.Count != 1 || Regex.Matches(fullOutput, @"\b" + Regex.Escape(n) + @"\b", RegexOptions.IgnoreCase).Count != 1) continue;
+                Match u = unmarked[0];
+                string pre = u.Groups["pre"].Value;
+                if (Regex.IsMatch(pre, @"^(?:às|as)\s+$", RegexOptions.IgnoreCase))
+                    text = text.Substring(0, u.Groups["pre"].Index) + MatchCase(pre, "por volta das ") + text.Substring(u.Groups["n"].Index);
+                else if (Regex.IsMatch(pre, @"^(?:à|a)\s+$", RegexOptions.IgnoreCase))
+                    text = text.Substring(0, u.Groups["pre"].Index) + MatchCase(pre, "por volta da ") + text.Substring(u.Groups["n"].Index);
+                else
+                    text = text.Substring(0, u.Groups["n"].Index) + "cerca de " + text.Substring(u.Groups["n"].Index);
+            }
+            return text;
+        }
+
+        public static string LostApproximationIssue(string original, string output)
+        {
+            string plain = Unquote(original), rendered = Unquote(output);
+            foreach (Match m in Regex.Matches(plain, @"\b(?<a>umas|uns|por\s+volta\s+d[aoe]s?|cerca\s+de|lá\s+pel[ao]s|aproximadamente)\s+(?<n>" + NumberPhrase() + @")\b", RegexOptions.IgnoreCase))
+            {
+                string n = m.Groups["n"].Value;
+                foreach (Match x in Regex.Matches(rendered, @"\b" + Regex.Escape(n) + @"\b", RegexOptions.IgnoreCase))
+                {
+                    string before = rendered.Substring(0, x.Index);
+                    if (Regex.IsMatch(before, @"\b(?:umas|uns|volta\s+d[aoe]s?|cerca\s+de|pel[ao]s|aproximadamente|mais\s+ou\s+menos|em\s+torno\s+d[aeo]s?|perto\s+d[aeo]s?|quase)\s+$", RegexOptions.IgnoreCase)) continue;
+                    if (Regex.IsMatch(before, @"\b(?:às|as|à|a)\s+$", RegexOptions.IgnoreCase))
+                        return "fidelidade: aproximação perdida: no original «" + m.Value + "», na saída exato";
+                }
+            }
+            return null;
+        }
+
+        // 3) First person plural copied from the source. Form chosen by the user:
+        // an explicit number in the same or the previous sentence → «os quatro»; exactly
+        // one other member named safely in the same sentence (before «a gente») or in the
+        // previous one → «o depoente e a Olívia», verb in the plural; otherwise, or in
+        // doubt → «o grupo».
+        public static string[,] PluralVerbs()
+        {
+            return new string[,] {
+                {"estávamos","estava"}, {"éramos","era"}, {"fomos","foi"}, {"ficamos","ficou"}, {"chegamos","chegou"}, {"saímos","saiu"},
+                {"vimos","viu"}, {"voltamos","voltou"}, {"fizemos","fez"}, {"tínhamos","tinha"}, {"íamos","ia"}, {"podíamos","podia"},
+                {"sabíamos","sabia"}, {"estamos","está"}, {"somos","é"}, {"temos","tem"}, {"vamos","vai"}, {"entramos","entrou"}
+            };
+        }
+
+        // Third person plural of a third person singular verb; null when unknown.
+        public static string PluralOf(string verb)
+        {
+            string v = verb.ToLowerInvariant();
+            string[,] irregular = {
+                {"foi","foram"}, {"era","eram"}, {"fez","fizeram"}, {"está","estão"}, {"é","são"}, {"tem","têm"}, {"vai","vão"},
+                {"saiu","saíram"}, {"pode","podem"}, {"deu","deram"}, {"veio","vieram"}, {"teve","tiveram"}, {"disse","disseram"},
+                {"quis","quiseram"}, {"pôs","puseram"}, {"viu","viram"}, {"ia","iam"}
+            };
+            for (int i = 0; i < irregular.GetLength(0); i++) if (irregular[i, 0] == v) return irregular[i, 1];
+            if (v.Length < 4) return null;
+            if (v.EndsWith("ou")) return v.Substring(0, v.Length - 2) + "aram";
+            if (v.EndsWith("eu")) return v.Substring(0, v.Length - 2) + "eram";
+            if (v.EndsWith("iu")) return v.Substring(0, v.Length - 2) + "iram";
+            if (v.EndsWith("ava") || v.EndsWith("ia")) return v + "m";
+            return null;
+        }
+
+        // Sentences of a text; quoted speech never splits a sentence.
+        public static MatchCollection PluralSentences(string text)
+        {
+            return Regex.Matches(text, "(?:\"[^\"]*\"|“[^”]*”|«[^»]*»|[^.!?\"“«])+[.!?]*");
+        }
+
+        public static bool HasLetter(string text)
+        {
+            foreach (char c in text) if (Char.IsLetter(c)) return true;
+            return false;
+        }
+
+        // The group of source sentence i: «os quatro», «o depoente e a Olívia» or «o grupo».
+        public static string GroupOf(List<string> sentences, int i)
+        {
+            string here = Unquote(sentences[i]), before = i > 0 ? Unquote(sentences[i - 1]) : "";
+            string count = @"\b(?:(?:nós|somos|éramos)\s+(?<n>dois|duas|três|quatro|cinco|seis|sete|oito|nove|dez)\b|em\s+(?<n>dois|duas|três|quatro|cinco|seis|sete|oito|nove|dez)(?=\s*(?:[,.;:!?]|$)|\s+(?:no|na|nos|nas|num|numa|e|pessoas)\b))";
+            Match number = Regex.Match(here, count, RegexOptions.IgnoreCase);
+            if (!number.Success) number = Regex.Match(before, count, RegexOptions.IgnoreCase);
+            if (number.Success)
+            {
+                string n = number.Groups["n"].Value.ToLowerInvariant();
+                return (n == "duas" ? "as " : "os ") + n;
+            }
+            Match first = Regex.Match(here, @"\b(?:a\s+gente|nós|nos|noss[ao]s?|conosco)\b", RegexOptions.IgnoreCase);
+            string scope = before + " . " + (first.Success ? here.Substring(0, first.Index) : here);
+            string after = first.Success ? here.Substring(first.Index) : "";
+            bool narrator = Regex.IsMatch(scope, @"\beu\b", RegexOptions.IgnoreCase);
+            var names = new List<string>(); var articles = new List<string>();
+            foreach (Match c in Regex.Matches(scope, @"(?:^\s*|[.!?]\s+)(?<art>[OA])\s+(?<n>\p{Lu}\p{Ll}+)(?!\s*(?:,\s*|e\s+)(?:o|a)\s+\p{Lu})\s+\p{Ll}|\b[Ee]u\s+e\s+(?:(?:o|a)\s+)?(?:(?:meu|minha)\s+\p{Ll}+,\s*)?(?<art>o|a)\s+(?<n>\p{Lu}\p{Ll}+)(?!\s*(?:,\s*|e\s+)(?:o|a)\s+\p{Lu})|\bcom\s+(?<art>o|a)\s+(?<n>\p{Lu}\p{Ll}+)(?!\s*(?:,\s*|e\s+)(?:o|a)\s+\p{Lu})"))
+            {
+                string n = c.Groups["n"].Value;
+                if (c.Value.StartsWith("com") && !narrator) continue;
+                if (Regex.IsMatch(after, @"\b" + Regex.Escape(n) + @"\b")) continue;   // named after «a gente»: not a member
+                if (names.Contains(n)) continue;
+                names.Add(n); articles.Add(c.Groups["art"].Value.ToLowerInvariant());
+            }
+            if (names.Count == 1) return "o depoente e " + articles[0] + " " + names[0];
+            return "o grupo";
+        }
+
+        // «da gente» → «do grupo» / «dos quatro» / «do depoente e da Olívia».
+        public static string GroupWith(string prep, string group)
+        {
+            if (group == "o grupo") return prep == "de" ? "do grupo" : prep == "em" ? "no grupo" : prep + " o grupo";
+            if (group.StartsWith("os ") || group.StartsWith("as "))
+                return prep == "de" ? "d" + group : prep == "em" ? "n" + group : prep + " " + group;
+            Match m = Regex.Match(group, @"^o depoente e (?<art>o|a) (?<n>.+)$");
+            if (m.Success && prep == "de") return "do depoente e d" + m.Groups["art"].Value + " " + m.Groups["n"].Value;
+            if (m.Success && prep == "em") return "no depoente e n" + m.Groups["art"].Value + " " + m.Groups["n"].Value;
+            return prep + " " + group;
+        }
+
+        public static string Capitalized(string text)
+        {
+            return text.Length == 0 ? text : Char.ToUpperInvariant(text[0]) + text.Substring(1);
+        }
+
+        public static string RepairFirstPersonPlural(string source, string text)
+        {
+            string plain = Unquote(source);
+            if (!Regex.IsMatch(plain, @"\b(?:nós|nos|nosso|nossa|nossos|nossas|conosco|a\s+gente|estávamos|éramos|fomos)\b", RegexOptions.IgnoreCase)) return text;
+            var sources = new List<string>();
+            foreach (Match m in PluralSentences(source)) if (HasLetter(m.Value)) sources.Add(m.Value);
+            MatchCollection parts = PluralSentences(text);
+            int count = 0;
+            foreach (Match m in parts) if (HasLetter(m.Value)) count++;
+            bool aligned = count == sources.Count;
+            var result = new System.Text.StringBuilder(); int start = 0, index = 0;
+            foreach (Match m in parts)
+            {
+                result.Append(text.Substring(start, m.Index - start));
+                if (!HasLetter(m.Value)) result.Append(m.Value);
+                else
+                {
+                    string group = aligned ? GroupOf(sources, index) : "o grupo";
+                    result.Append(ConvertPluralPart(plain, m.Value, group));
+                    index++;
+                }
+                start = m.Index + m.Length;
+            }
+            result.Append(text.Substring(start));
+            return result.ToString();
+        }
+
+        public static string ConvertPluralPart(string plain, string sentence, string group)
+        {
+            bool plural = group != "o grupo";
+            bool counted = group.StartsWith("os ") || group.StartsWith("as ");
+            var result = new System.Text.StringBuilder(); int start = 0;
+            foreach (Match quote in Regex.Matches(sentence, "\"[^\"]*\"|“[^”]*”|«[^»]*»|'[^']*'|$"))
+            {
+                string part = sentence.Substring(start, quote.Index - start);
+                // «nós três» with the group «os três»: the number goes with the group.
+                if (counted) part = Regex.Replace(part, @"\b(?<s>nós|a\s+gente)\s+" + Regex.Escape(group.Substring(3)) + @"\b", "${s}", RegexOptions.IgnoreCase);
+                string[,] verbs = PluralVerbs();
+                for (int i = 0; i < verbs.GetLength(0); i++)
+                    if (Regex.IsMatch(plain, @"\b" + verbs[i, 0] + @"\b", RegexOptions.IgnoreCase))
+                        part = Regex.Replace(part, @"\b(?<s>(?:nós|a\s+gente|o\s+grupo)\s+(?:não\s+)?)" + verbs[i, 0] + @"\b", "${s}" + verbs[i, 1], RegexOptions.IgnoreCase);
+                if (Regex.IsMatch(plain, @"\ba\s+gente\b|\bnós\b", RegexOptions.IgnoreCase))
+                {
+                    part = Regex.Replace(part, @"\b[Dd]a\s+gente\b", "§de§");
+                    part = Regex.Replace(part, @"\b[Nn]a\s+gente\b", "§em§");
+                    part = Regex.Replace(part, @"\b(?<p>com|para|pra)\s+a\s+gente\b", "§${p}§", RegexOptions.IgnoreCase);
+                    // Subject at a clause start: with names or a number, the verb goes to the plural.
+                    MatchCollection subjects = Regex.Matches(part, @"(?<b>^\s*|[,;:]\s*|\b(?:que|e|quando|porque|onde|mas|como)\s+)(?<s>a\s+gente|nós)\s+(?<neg>não\s+)?(?<v>\p{L}+)(?<rest>(?:\s+[\p{L}-]+){0,4})", RegexOptions.IgnoreCase);
+                    for (int i = subjects.Count - 1; i >= 0; i--)
+                    {
+                        Match s = subjects[i];
+                        string head = group, v = s.Groups["v"].Value, rest = s.Groups["rest"].Value;
+                        if (plural)
+                        {
+                            string pl = PluralOf(v);
+                            if (pl == null) head = "o grupo";
+                            else
+                            {
+                                v = pl;
+                                rest = Regex.Replace(rest, @"^(\s+)junto\b", "$1juntos");
+                                if (counted) rest = Regex.Replace(rest, @"^\s+em\s+" + Regex.Escape(group.Substring(3)) + @"\b", "");
+                            }
+                        }
+                        if (Char.IsUpper(s.Groups["s"].Value[0])) head = Capitalized(head);
+                        part = part.Substring(0, s.Groups["s"].Index) + head + " " + s.Groups["neg"].Value + v + rest + part.Substring(s.Index + s.Length);
+                    }
+                    // Object or anything else left.
+                    part = Regex.Replace(part, @"\bA\s+gente\b", Capitalized(group));
+                    part = Regex.Replace(part, @"\ba\s+gente\b", group);
+                    part = Regex.Replace(part, @"\bNós\b", Capitalized(group));
+                    part = Regex.Replace(part, @"\bnós\b", group);
+                    part = part.Replace("§de§", GroupWith("de", group)).Replace("§em§", GroupWith("em", group));
+                    part = Regex.Replace(part, @"§(?<p>com|para|pra|Com|Para|Pra)§", "${p} " + group);
+                }
+                if (Regex.IsMatch(plain, @"\bnos\s+\p{L}+", RegexOptions.IgnoreCase))
+                    part = Regex.Replace(part, @"\bnos\s+(?<v>\p{L}+(?:ou|eu|iu|ava|ia|aram|eram|iram))\b", "${v} " + group);
+                if (Regex.IsMatch(plain, @"\bnoss[ao]s?\b", RegexOptions.IgnoreCase))
+                    part = Regex.Replace(part, @"\bnoss[ao]s?(?=\s*[,.;!?])", GroupWith("de", group));
+                // «…, eu, a Débora…»: the narrator inside an enumeration of the group.
+                if (Regex.IsMatch(plain, @",\s*eu\s*(?:,|\be\b)", RegexOptions.IgnoreCase))
+                    part = Regex.Replace(part, @",\s*eu(?=\s*(?:,|\be\b))", ", o depoente");
+                result.Append(part); result.Append(quote.Value); start = quote.Index + quote.Length;
+            }
+            return result.ToString();
+        }
+
+        // 4) Speech markers: isolated «olha», «tipo», «né», «aí», «sei lá» are dropped;
+        // «tava» → «estava»; a doubt («sei lá se foi ele») stays («não sabe se foi ele»).
+        public static string RepairSpeechMarkers(string source, string text)
+        {
+            string plain = Unquote(source);
+            var result = new System.Text.StringBuilder(); int start = 0;
+            foreach (Match quote in Regex.Matches(text, "\"[^\"]*\"|“[^”]*”|«[^»]*»|'[^']*'|$"))
+            {
+                string part = text.Substring(start, quote.Index - start);
+                string unchanged = part;
+                if (Regex.IsMatch(plain, @"\b(?:sei\s+lá)\s+se\b", RegexOptions.IgnoreCase))
+                    part = Regex.Replace(part, @"\b(?:sei|sabe)\s+lá\s+se\b", "não sabe se", RegexOptions.IgnoreCase);
+                if (Regex.IsMatch(plain, @"(?:^|[,.!?]\s*)sei\s+lá\s*(?:,|\.|$)", RegexOptions.IgnoreCase | RegexOptions.Multiline))
+                    part = Regex.Replace(part, @"(?<=[,]|\bque)\s*(?:sei|sabe)\s+lá\s*,", "", RegexOptions.IgnoreCase);
+                foreach (string marker in new string[] { "olha", "tipo", "né", "aí" })
+                {
+                    if (!Regex.IsMatch(plain, @"(?:^|[,.!?]\s*)" + marker + @"\s*(?:,|\.|!|\?|$)", RegexOptions.IgnoreCase | RegexOptions.Multiline)) continue;
+                    part = Regex.Replace(part, @"(?<=\bque|[.!?])\s*" + marker + @"\s*,", "", RegexOptions.IgnoreCase);
+                    part = Regex.Replace(part, @",\s*" + marker + @"\s*(?=,)", "", RegexOptions.IgnoreCase);
+                    part = Regex.Replace(part, @",\s*" + marker + @"\s*(?=[.!?]|$)", "", RegexOptions.IgnoreCase);
+                }
+                if (Regex.IsMatch(plain, @"\btava\b", RegexOptions.IgnoreCase)) part = Regex.Replace(part, @"\b([Tt])ava\b", "estava");
+                if (Regex.IsMatch(plain, @"\btavam\b", RegexOptions.IgnoreCase)) part = Regex.Replace(part, @"\b([Tt])avam\b", "estavam");
+                part = Regex.Replace(part, @"\bque\s+,\s*", "que ");
+                // Capital letter again at a sentence start left by a removed marker.
+                MatchCollection lowStarts = Regex.Matches(part, @"(?:^|[.!?]\s+)(?<c>[a-zà-ú])");
+                for (int i = part == unchanged ? -1 : lowStarts.Count - 1; i >= 0; i--)
+                {
+                    Group c = lowStarts[i].Groups["c"];
+                    if (c.Index == 0 && start > 0) continue;
+                    part = part.Substring(0, c.Index) + Char.ToUpperInvariant(c.Value[0]) + part.Substring(c.Index + 1);
+                }
+                result.Append(part); result.Append(quote.Value); start = quote.Index + quote.Length;
+            }
+            return result.ToString();
+        }
+
+        // Isolated speech markers («olha,», «, tipo,», «, né.», «sei lá,») removed from a
+        // source sentence before the omission check; «sei lá se» (a doubt) stays.
+        public static string StripSpeechMarkers(string sentence)
+        {
+            string s = Regex.Replace(sentence, @"(?:^|(?<=[,.!?]))\s*(?:olha|tipo|né|aí|sei\s+lá)\s*(?=[,.!?]|$)", "", RegexOptions.IgnoreCase);
+            return Regex.Replace(s, @"^[\s,]+|,\s*(?=[,.!?])", "");
+        }
+
+        // 5) Names of the source in lower case («relatou que marta») and the opening
+        // «Eu, Marta, sou…» → «O depoente, Marta, relatou que é …».
+        public static string RepairNamesAndOpening(string source, string text)
+        {
+            string plain = Unquote(source);
+            var names = new List<string>();
+            foreach (Match n in Regex.Matches(plain, @"(?:^|[.!?]\s+)Eu,\s*(?<n>\p{Lu}\p{Ll}{2,}),|\b(?i:[oa]|com|para|pra|segundo)\s+(?<n>\p{Lu}\p{Ll}{2,})\b"))
+                if (!names.Contains(n.Groups["n"].Value)) names.Add(n.Groups["n"].Value);
+            foreach (string name in names)
+            {
+                string lower = name.ToLowerInvariant();
+                if (Regex.IsMatch(plain, @"\b" + Regex.Escape(lower) + @"\b")) continue;           // also a common word in the source
+                text = Regex.Replace(text, @"(?<![\p{L}""“«'])" + Regex.Escape(lower) + @"(?![\p{L}])", name);
+            }
+            Match intro = Regex.Match(plain, @"^\s*Eu,\s*(?<n>\p{Lu}\p{Ll}{2,}),\s*sou\b");
+            if (!intro.Success) return text;
+            string nm = intro.Groups["n"].Value;
+            Match app = Regex.Match(text, @"^(?<ws>\s*)O depoente relatou que\s+" + Regex.Escape(nm) + @",\s*(?<app>[^,.]+?),\s*o depoente\s+(?<rest>\p{L})");
+            if (app.Success)
+                return app.Groups["ws"].Value + "O depoente, " + nm + ", relatou que é " + app.Groups["app"].Value + " e " + text.Substring(app.Groups["rest"].Index);
+            if (!Regex.IsMatch(text, @"\b" + Regex.Escape(nm) + @"\b"))
+            {
+                Match lead = Regex.Match(text, @"^(?<ws>\s*)O depoente relatou que\s+");
+                if (lead.Success) return lead.Groups["ws"].Value + "O depoente, " + nm + ", relatou que " + text.Substring(lead.Length);
+            }
+            return text;
+        }
+
+        // 6) A first-person singular verb left in the output, with the deponent as the
+        // subject of its clause («a depoente nunca falou…, nem conheço») → third person.
+        public static string RepairFirstPersonLeft(string source, string text)
+        {
+            string plain = Unquote(source);
+            var candidates = new List<string>();
+            foreach (Match w in Regex.Matches(plain, @"\b(?:" + FirstPersonWords() + @")\b", RegexOptions.IgnoreCase))
+                if (!candidates.Contains(w.Value.ToLowerInvariant())) candidates.Add(w.Value.ToLowerInvariant());
+            foreach (Match w in Regex.Matches(plain, @"\beu\s+(?:(?:não|nem|já|também|só|ainda|nunca)\s+)?(?<w>\p{L}{3,}(?:o|ei|i))\b", RegexOptions.IgnoreCase))
+            {
+                string v = w.Groups["w"].Value.ToLowerInvariant();
+                if ((FirstToThird(v) != null || Lookup(SubjectOnlyFirstPerson(), v) != null) && !candidates.Contains(v)) candidates.Add(v);
+            }
+            var result = new System.Text.StringBuilder(); int start = 0;
+            foreach (Match quote in Regex.Matches(text, "\"[^\"]*\"|“[^”]*”|«[^»]*»|'[^']*'|$"))
+            {
+                string part = text.Substring(start, quote.Index - start);
+                foreach (string c in candidates)
+                {
+                    string third = FirstToThird(c);
+                    if (third == null) third = Lookup(SubjectOnlyFirstPerson(), c);
+                    if (third == null || third == c) continue;
+                    MatchCollection hits = Regex.Matches(part, @"(?<![\p{L}-])" + Regex.Escape(c) + @"(?![\p{L}-])", RegexOptions.IgnoreCase);
+                    for (int i = hits.Count - 1; i >= 0; i--)
+                    {
+                        Match h = hits[i];
+                        string before = part.Substring(0, h.Index);
+                        if (Regex.IsMatch(before, @"\b(?:o|a|os|as|um|uma|do|da|no|na|ao|à|pelo|pela|de|em|seu|sua|meu|minha|este|esse)\s+$", RegexOptions.IgnoreCase)) continue;
+                        string sentence = before.Substring(SentenceStart(before, before.Length));
+                        Match dep = Regex.Match(sentence, @"\b(?:o|a)\s+depoente\b(?<after>[^.!?]*)$", RegexOptions.IgnoreCase | RegexOptions.RightToLeft);
+                        if (!dep.Success) continue;
+                        // No other subject between the deponent and the verb.
+                        string between = dep.Groups["after"].Value;
+                        if (Regex.IsMatch(between, @"\b(?:ele|ela|eles|elas|que|quem|você)\b", RegexOptions.IgnoreCase) || Regex.IsMatch(between, @"(?<=[\p{Ll},;]\s)\p{Lu}\p{Ll}+")) continue;
+                        part = part.Substring(0, h.Index) + MatchCase(h.Value, third) + part.Substring(h.Index + h.Length);
+                    }
+                }
+                result.Append(part); result.Append(quote.Value); start = quote.Index + quote.Length;
+            }
+            return result.ToString();
+        }
+
+        // 7) The narrator rendered as «ele/ela»: «Eu devolvi…» → «ele devolveu…», «eu
+        // nem conheço» → «ele nem conhece». With «eu V» in the source, a single «ele/ela
+        // V-3rd» in the output and no «ele/ela V» in the source, the pronoun becomes
+        // «o depoente». Otherwise nothing changes.
+        public static string RepairNarratorAsPronoun(string source, string text, string fullOutput)
+        {
+            string plain = Unquote(source);
+            var done = new List<string>();
+            foreach (Match m in Regex.Matches(plain, @"\beu\s+(?:(?:não|nunca|nem|só|também|já|ainda)\s+)?(?<v>\p{L}{3,})\b", RegexOptions.IgnoreCase))
+            {
+                string v = m.Groups["v"].Value;
+                string third = FirstToThird(v);
+                if (third == null) third = Lookup(SubjectOnlyFirstPerson(), v);
+                if (third == null || third == v.ToLowerInvariant() || done.Contains(third)) continue;
+                done.Add(third);
+                // Someone else does the same thing in the source: not clear.
+                if (Regex.IsMatch(plain, @"\b(?:ele|ela|eles|elas)\s+(?:(?:não|nunca|nem|só|também|já|ainda)\s+)?" + Regex.Escape(third) + @"\b", RegexOptions.IgnoreCase)) continue;
+                if (Regex.IsMatch(plain, @"\b(?:\p{Lu}\p{Ll}+|o\s+\p{Ll}+|a\s+\p{Ll}+)\s+(?:(?:não|nunca|nem|só|também|já|ainda)\s+)?" + Regex.Escape(third) + @"\b")) continue;
+                string pattern = @"\b(?<p>[Ee]le|[Ee]la)(?<rest>\s+(?:(?:não|nunca|nem|só|também|já|ainda)\s+)?" + Regex.Escape(third) + @")\b";
+                if (Regex.Matches(fullOutput, pattern).Count != 1) continue;
+                MatchCollection found = Regex.Matches(text, pattern);
+                if (found.Count != 1) continue;
+                Match x = found[0];
+                text = text.Substring(0, x.Index) + MatchCase(x.Groups["p"].Value, "o depoente") + x.Groups["rest"].Value + text.Substring(x.Index + x.Length);
+            }
+            return text;
+        }
+
         // ---- Round 9 (realistic battery 2) -----------------------------------
 
         // Another person in the sentence besides the deponent: a pronoun, a name
@@ -1268,7 +1703,8 @@ namespace DepoimentoLocal.Windows
         public static string RepairIsolatedOath(string source, string text)
         {
             if (!Regex.IsMatch(Unquote(source), @",\s*juro\s*(?=[.,;!?])", RegexOptions.IgnoreCase)) return text;
-            return Regex.Replace(text, @"\s*,\s*juro\s*(?=[.,;!?])", "", RegexOptions.IgnoreCase);
+            // «jura»: the model sometimes conjugates the oath; it is still the speaker's oath.
+            return Regex.Replace(text, @"\s*,\s*jur[oa]\s*(?=[.,;!?])", "", RegexOptions.IgnoreCase);
         }
 
         // ---- The narrator as object (round 8, realistic battery) -------------
@@ -1685,6 +2121,13 @@ namespace DepoimentoLocal.Windows
             step = text; text = RepairRepeatedSubject(text); NoteRepair("repeticao", step, text);
             step = text; text = RepairLostRecipient(source, text, fullOutput); NoteRepair("destinatario-devolvido", step, text);
             step = text; text = RepairIsolatedOath(source, text); NoteRepair("juro-isolado", step, text);
+            // Round 10: other first-person forms, approximation, plural, speech markers, first person left.
+            step = text; text = RepairOtherFirstPerson(source, text, fullOutput); NoteRepair("primeira-pessoa-outras-formas", step, text);
+            step = text; text = RepairLostApproximation(source, text, fullOutput); NoteRepair("aproximacao", step, text);
+            step = text; text = RepairFirstPersonPlural(source, text); NoteRepair("plural-do-grupo", step, text);
+            step = text; text = RepairSpeechMarkers(source, text); NoteRepair("marcadores-da-fala", step, text);
+            step = text; text = RepairFirstPersonLeft(source, text); NoteRepair("primeira-pessoa-restante", step, text);
+            step = text; text = RepairNarratorAsPronoun(source, text, fullOutput); NoteRepair("depoente-como-ele", step, text);
             step = text;
             // "nossa conversa": an interaction the narrator took part in. Say
             // exactly that, without naming who else took part.
@@ -1838,6 +2281,9 @@ namespace DepoimentoLocal.Windows
             if (role == null) role = NarratorPronominalIssue(original, output);
             if (role == null) role = FirstPersonLeftIssue(original, output);
             if (role == null) role = LostRecipientIssue(original, output);
+            // Round 10: other first-person forms turned into «ele/ela»; approximation made exact.
+            if (role == null) role = OtherFirstPersonIssue(original, output);
+            if (role == null) role = LostApproximationIssue(original, output);
             if (role != null) return role;
             string source = Normalize(Unquote(original));
             string rendered = Normalize(Unquote(output));
@@ -1967,7 +2413,8 @@ namespace DepoimentoLocal.Windows
             string[] dstSentences = Regex.Split(rendered, @"(?<=[.!?])\s+|[\r\n]+");
             foreach (string sentence in srcSentences)
             {
-                var anchors = Anchors(sentence);
+                // Round 10: isolated speech markers are not content to keep.
+                var anchors = Anchors(StripSpeechMarkers(sentence));
                 if (anchors.Count < 2) continue;
                 string best = ""; double bestScore = -1; int bestSize = Int32.MaxValue;
                 foreach (string candidate in dstSentences)

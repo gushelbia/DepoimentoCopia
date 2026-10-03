@@ -3,21 +3,20 @@
         "id":  "B01",
         "gender":  "Feminino",
         "input":  "Eu sou bolsista do projeto de extensão desde o ano passado. A coordenadora, a professora Ivone, sempre foi muito exigente, mas em maio começou a ficar diferente comigo. Ela me tirou do grupo de mensagens do projeto sem avisar. Quando eu perguntei por quê, ela falou: \"você sabe muito bem o que você fez\". Eu não sabia, juro. Aí a Kátia, que também é bolsista, me contou que a Ivone achava que eu tinha falado mal dela pro diretor. Eu nunca falei com o diretor, eu nem conheço ele pessoalmente. Depois disso a Ivone cortou a minha bolsa em junho, e a bolsa da Kátia continuou. Eu me lembro que fiquei uns três dias sem conseguir dormir direito.",
-        "engine":  "[SAÍDA INCOMPLETA E NÃO VALIDADA - NÃO UTILIZAR COMO REFORMULAÇÃO]\r\nMotivo: O bloco 1 ainda precisa de revisão: fidelidade: primeira pessoa fora das aspas: «conheço». A reformulação foi interrompida: os blocos seguintes não foram processados e o trecho na tela foi marcado como incompleto.\r\n\r\nO depoente relatou que é bolsista do projeto de extensão desde o ano passado. A coordenadora, a professora Ivone, sempre foi muito exigente, mas em maio começou a ficar diferente com o depoente. Ela tirou o depoente do grupo de mensagens do projeto sem avisar. Quando o depoente perguntou por quê, ela falou: \"você sabe muito bem o que você fez\". O depoente não sabia. Aí a Kátia, que também é bolsista, lhe contou que a Ivone achava que o depoente tinha falado mal dela pro diretor. O depoente nunca falou com o diretor, nem conheço pessoalmente. Depois disso, a Ivone cortou a bolsa do depoente em junho, e a bolsa da Kátia continuou. O depoente se lembra que ficou uns três dias sem conseguir dormir direito.\r\n\r\n[FIM DO TRECHO PARCIAL - a transcrição não foi reformulada por completo]",
-        "shown":  "[SAÍDA INCOMPLETA E NÃO VALIDADA - NÃO UTILIZAR COMO REFORMULAÇÃO]\r\nMotivo: O bloco 1 ainda precisa de revisão: fidelidade: primeira pessoa fora das aspas: «conheço». A reformulação foi interrompida: os blocos seguintes não foram processados e o trecho na tela foi marcado como incompleto.\r\n\r\nA depoente relatou que é bolsista do projeto de extensão desde o ano passado. A coordenadora, a professora Ivone, sempre foi muito exigente, mas em maio começou a ficar diferente com a depoente. Ela tirou a depoente do grupo de mensagens do projeto sem avisar. Quando a depoente perguntou por quê, ela falou: \"você sabe muito bem o que você fez\". A depoente não sabia. Aí a Kátia, que também é bolsista, lhe contou que a Ivone achava que a depoente tinha falado mal dela pro diretor. A depoente nunca falou com o diretor, nem conheço pessoalmente. Depois disso, a Ivone cortou a bolsa da depoente em junho, e a bolsa da Kátia continuou. A depoente se lembra que ficou uns três dias sem conseguir dormir direito.\r\n\r\n[FIM DO TRECHO PARCIAL - a transcrição não foi reformulada por completo]",
-        "seconds":  57.1,
-        "completed":  false,
-        "incomplete":  true,
+        "engine":  "O depoente relatou que é bolsista do projeto de extensão desde o ano passado. A coordenadora, a professora Ivone, sempre foi muito exigente, mas em maio começou a ficar diferente com o depoente. O depoente foi tirado por ela do grupo de mensagens do projeto sem avisar. Quando o depoente perguntou por quê, ela falou: \"você sabe muito bem o que você fez\". O depoente não sabia. Aí a Kátia, que também é bolsista, o informou que a Ivone achava que o depoente tinha falado mal dela pro diretor. O depoente nunca falou com o diretor, o depoente nem conhece pessoalmente. Depois disso, a Ivone cortou a bolsa do depoente em junho, e a bolsa da Kátia continuou. O depoente se lembra que ficou uns três dias sem conseguir dormir direito.",
+        "shown":  "A depoente relatou que é bolsista do projeto de extensão desde o ano passado. A coordenadora, a professora Ivone, sempre foi muito exigente, mas em maio começou a ficar diferente com a depoente. A depoente foi tirada por ela do grupo de mensagens do projeto sem avisar. Quando a depoente perguntou por quê, ela falou: \"você sabe muito bem o que você fez\". A depoente não sabia. Aí a Kátia, que também é bolsista, a informou que a Ivone achava que a depoente tinha falado mal dela pro diretor. A depoente nunca falou com o diretor, a depoente nem conhece pessoalmente. Depois disso, a Ivone cortou a bolsa da depoente em junho, e a bolsa da Kátia continuou. A depoente se lembra que ficou uns três dias sem conseguir dormir direito.",
+        "seconds":  29.4,
+        "completed":  true,
+        "incomplete":  false,
         "keyFailures":  [
-                            "não devia ter: primeira pessoa fora das aspas"
+
                         ],
-        "sameAsApproved":  null,
-        "retry":  true,
+        "sameAsApproved":  false,
+        "retry":  false,
         "engineWarnings":  [
-                               "[BLOCK_RETRY_START] block=1/1; issue=fidelidade: perda de destinatário do relato: a coordenadora, a professora ivone, sempre foi muito exigente, mas em maio começou a ficar diferente comigo.",
-                               "[BLOCK_REJECTED] block=1/1; detail=fidelidade: primeira pessoa fora das aspas: «conheço»"
+
                            ],
-        "exception":  "Geração falhou ou foi cancelada; exceção e stack trace, se presentes, constam no log integral.",
+        "exception":  "",
         "orange":  {
 
                    },
@@ -48,15 +47,15 @@
         "id":  "B02",
         "gender":  "Masculino",
         "input":  "Eu e o meu irmão, o Otávio, estávamos voltando da festa da atlética, era sábado, umas três da manhã. Na saída do estacionamento três caras pararam a gente. Um deles, de boné vermelho, empurrou o Otávio e falou que a gente tinha mexido com a namorada dele. A gente não tinha mexido com ninguém. O de boné me deu um soco no rosto e os outros dois seguraram o meu irmão. Eu caí e bati a cabeça no meio-fio. Quem chamou o segurança foi uma menina que estava no carro do lado. Eles fugiram a pé quando o segurança chegou. Eu fiquei com o olho roxo e o Otávio não se machucou.",
-        "engine":  "O depoente relatou que o depoente e o seu irmão, o Otávio, estavavam voltando da festa da atlética, era sábado, umas três da manhã. Na saída do estacionamento três caras pararam a gente. Um deles, de boné vermelho, empurrou o Otávio e falou que a gente tinha mexido com a namorada dele. A gente não tinha mexido com ninguém. O de boné lhe deu um soco no rosto e os outros dois seguraram o irmão do depoente. O depoente caiu e bateu a cabeça no meio-fio. Quem chamou o segurança foi uma menina que estava no carro do lado. Eles fugiram a pé quando o segurança chegou. O depoente ficou com o olho roxo e o Otávio não se machucou.",
-        "shown":  "O depoente relatou que o depoente e o seu irmão, o Otávio, estavavam voltando da festa da atlética, era sábado, umas três da manhã. Na saída do estacionamento três caras pararam a gente. Um deles, de boné vermelho, empurrou o Otávio e falou que a gente tinha mexido com a namorada dele. A gente não tinha mexido com ninguém. O de boné lhe deu um soco no rosto e os outros dois seguraram o irmão do depoente. O depoente caiu e bateu a cabeça no meio-fio. Quem chamou o segurança foi uma menina que estava no carro do lado. Eles fugiram a pé quando o segurança chegou. O depoente ficou com o olho roxo e o Otávio não se machucou.",
-        "seconds":  27.4,
+        "engine":  "O depoente relatou que o depoente e o seu irmão, o Otávio, estavavam voltando da festa da atlética, era sábado, umas três da manhã. Na saída do estacionamento três caras pararam o depoente e o Otávio. Um deles, de boné vermelho, empurrou o Otávio e falou que o grupo tinha mexido com a namorada dele. O grupo não tinha mexido com ninguém. O de boné lhe deu um soco no rosto e os outros dois seguraram o irmão do depoente. O depoente caiu e bateu a cabeça no meio-fio. Quem chamou o segurança foi uma menina que estava no carro do lado. Eles fugiram a pé quando o segurança chegou. O depoente ficou com o olho roxo e o Otávio não se machucou.",
+        "shown":  "O depoente relatou que o depoente e o seu irmão, o Otávio, estavavam voltando da festa da atlética, era sábado, umas três da manhã. Na saída do estacionamento três caras pararam o depoente e o Otávio. Um deles, de boné vermelho, empurrou o Otávio e falou que o grupo tinha mexido com a namorada dele. O grupo não tinha mexido com ninguém. O de boné lhe deu um soco no rosto e os outros dois seguraram o irmão do depoente. O depoente caiu e bateu a cabeça no meio-fio. Quem chamou o segurança foi uma menina que estava no carro do lado. Eles fugiram a pé quando o segurança chegou. O depoente ficou com o olho roxo e o Otávio não se machucou.",
+        "seconds":  27,
         "completed":  true,
         "incomplete":  false,
         "keyFailures":  [
                             "não devia ter: palavra inexistente"
                         ],
-        "sameAsApproved":  null,
+        "sameAsApproved":  false,
         "retry":  false,
         "engineWarnings":  [
 
@@ -92,14 +91,14 @@
         "input":  "Ontem de manhã, antes da aula de Anatomia, eu fui no banheiro do segundo andar e quando eu voltei a minha mochila não estava mais na cadeira. Dentro tinha meu notebook, minha carteira com cento e oitenta reais e meu crachá. O Bruno, que senta atrás de mim, disse que viu um rapaz de moletom cinza pegando a mochila, mas achou que era meu namorado. Eu não tenho namorado. Eu fui na segurança e eles me mostraram a câmera, mas a imagem estava muito escura. Depois, por volta do meio-dia, a minha carteira apareceu no achados e perdidos, sem o dinheiro.",
         "engine":  "O depoente relatou que ontem de manhã, antes da aula de Anatomia, o depoente foi no banheiro do segundo andar e quando voltou a mochila do depoente não estava mais na cadeira. Dentro havia o notebook do depoente, sua carteira com ciento e oitenta reais e seu crachá. O Bruno, que senta atrás do depoente, disse que viu um rapaz de moletom cinza pegando a mochila, mas achou que era o namorado do depoente. O depoente não tem namorado. O depoente foi na segurança e eles lhe mostraram a câmera, mas a imagem estava muito escura. Depois, por volta do meio-dia, a carteira do depoente apareceu no achados e perdidos, sem o dinheiro.",
         "shown":  "A depoente relatou que ontem de manhã, antes da aula de Anatomia, a depoente foi no banheiro do segundo andar e quando voltou a mochila da depoente não estava mais na cadeira. Dentro havia o notebook da depoente, sua carteira com ciento e oitenta reais e seu crachá. O Bruno, que senta atrás da depoente, disse que viu um rapaz de moletom cinza pegando a mochila, mas achou que era o namorado da depoente. A depoente não tem namorado. A depoente foi na segurança e eles lhe mostraram a câmera, mas a imagem estava muito escura. Depois, por volta do meio-dia, a carteira da depoente apareceu no achados e perdidos, sem o dinheiro.",
-        "seconds":  25.7,
+        "seconds":  24.5,
         "completed":  true,
         "incomplete":  false,
         "keyFailures":  [
                             "falta: valor",
                             "não devia ter: palavra inexistente"
                         ],
-        "sameAsApproved":  null,
+        "sameAsApproved":  true,
         "retry":  false,
         "engineWarnings":  [
 
@@ -134,13 +133,13 @@
         "input":  "Eu sou servidor do almoxarifado há doze anos. No dia 2 de outubro o senhor Alcides, que é meu chefe, me mandou assinar o recebimento de quarenta cadeiras. Eu falei pra ele que só tinham chegado vinte e oito. Ele disse que as outras doze iam chegar depois e que era pra eu assinar assim mesmo. Eu não assinei. Ele ficou irritado e falou que eu ia me arrepender. Na semana seguinte eu fui transferido pro turno da noite. Eu acho que foi por causa disso, mas ninguém me falou o motivo.",
         "engine":  "O depoente relatou que é servidor do almoxarifado há doze anos. No dia 2 de outubro o senhor Alcides, que é o chefe do depoente, lhe mandou assinar o recebimento de quarenta cadeiras. O depoente falou pra ele que só tinham chegado vinte e oito. Ele disse que as outras doze iam chegar depois e que era pra o depoente assinar assim mesmo. O depoente não assinou. Ele ficou irritado e falou que o depoente ia se arrepender. Na semana seguinte o depoente foi transferido pro turno da noite. O depoente acredita que foi por causa disso, mas ninguém lhe falou o motivo.",
         "shown":  "O depoente relatou que é servidor do almoxarifado há doze anos. No dia 2 de outubro o senhor Alcides, que é o chefe do depoente, lhe mandou assinar o recebimento de quarenta cadeiras. O depoente falou pra ele que só tinham chegado vinte e oito. Ele disse que as outras doze iam chegar depois e que era pra o depoente assinar assim mesmo. O depoente não assinou. Ele ficou irritado e falou que o depoente ia se arrepender. Na semana seguinte o depoente foi transferido pro turno da noite. O depoente acredita que foi por causa disso, mas ninguém lhe falou o motivo.",
-        "seconds":  47.9,
+        "seconds":  46.6,
         "completed":  true,
         "incomplete":  false,
         "keyFailures":  [
 
                         ],
-        "sameAsApproved":  null,
+        "sameAsApproved":  true,
         "retry":  true,
         "engineWarnings":  [
                                "[BLOCK_RETRY_START] block=1/1; issue=fidelidade: depoente omitido ou trocado como objeto: no original «me mandou»; repairs=primeira-pessoa,possessivo,abertura"
@@ -174,15 +173,15 @@
         "id":  "B05",
         "gender":  "Não informado",
         "input":  "Eu moro no alojamento, quarto 214. A minha colega de quarto, a Simone, começou a levar o namorado dela pra dormir lá quase todo dia. Eu pedi pra ela não fazer isso porque é proibido e porque eu não me sinto bem. Ela disse que eu era chata e que se eu reclamasse com a administração ela ia fazer da minha vida um inferno. Eu reclamei mesmo assim, no dia 18. Desde então ela não fala comigo e escondeu o meu carregador duas vezes.",
-        "engine":  "O depoente relatou que mora no alojamento, quarto 214. A colega de quarto, a Simone, começou a levar o namorado dela para dormir lá quase todo dia. O depoente pediu pra ela não fazer isso porque é proibido e porque ele não se sente bem. Ela disse que o depoente era chato e que se o depoente reclamasse com a administração ela ia fazer da vida do depoente um inferno. O depoente reclamou mesmo assim, no dia 18. Desde então ela não fala com ele e escondeu o carregador do depoente duas vezes.",
-        "shown":  "O depoente relatou que mora no alojamento, quarto 214. A colega de quarto, a Simone, começou a levar o namorado dela para dormir lá quase todo dia. O depoente pediu pra ela não fazer isso porque é proibido e porque ele não se sente bem. Ela disse que o depoente era chato e que se o depoente reclamasse com a administração ela ia fazer da vida do depoente um inferno. O depoente reclamou mesmo assim, no dia 18. Desde então ela não fala com ele e escondeu o carregador do depoente duas vezes.",
-        "seconds":  21.8,
+        "engine":  "O depoente relatou que mora no alojamento, quarto 214. A colega de quarto, a Simone, começou a levar o namorado dela para dormir lá quase todo dia. O depoente pediu pra ela não fazer isso porque é proibido e porque ele não se sente bem. Ela disse que o depoente era chato e que se o depoente reclamasse com a administração ela ia fazer da vida do depoente um inferno. O depoente reclamou mesmo assim, no dia 18. Desde então ela não fala com o depoente e escondeu o carregador do depoente duas vezes.",
+        "shown":  "O depoente relatou que mora no alojamento, quarto 214. A colega de quarto, a Simone, começou a levar o namorado dela para dormir lá quase todo dia. O depoente pediu pra ela não fazer isso porque é proibido e porque ele não se sente bem. Ela disse que o depoente era chato e que se o depoente reclamasse com a administração ela ia fazer da vida do depoente um inferno. O depoente reclamou mesmo assim, no dia 18. Desde então ela não fala com o depoente e escondeu o carregador do depoente duas vezes.",
+        "seconds":  21.7,
         "completed":  true,
         "incomplete":  false,
         "keyFailures":  [
 
                         ],
-        "sameAsApproved":  null,
+        "sameAsApproved":  false,
         "retry":  false,
         "engineWarnings":  [
 
@@ -217,13 +216,13 @@
         "input":  "Eu estava dando monitoria quando o aluno Jefferson entrou na sala gritando. Ele dizia que eu tinha dado a nota errada pra ele de propósito. Eu expliquei que quem dá a nota é o professor, não a monitora. Ele não quis ouvir. Ele bateu com a mão na mesa e chegou muito perto de mim. A Luana, que é a outra monitora, saiu pra chamar o professor Emanuel. Quando o professor chegou, o Jefferson já tinha ido embora. O professor me perguntou se eu queria registrar a ocorrência e eu falei que sim.",
         "engine":  "O depoente relatou que estava dando monitoria quando o aluno Jefferson entrou na sala gritando. Ele dizia que o depoente tinha dado a nota errada para ele de propósito. O depoente explicou que quem dá a nota é o professor, não a monitora. Jefferson não quis ouvir. Ele bateu com a mão na mesa e chegou muito perto do depoente. A Luana, que é a outra monitora, saiu pra chamar o professor Emanuel. Quando o professor chegou, Jefferson já tinha ido embora. O professor perguntou se o depoente queria registrar a ocorrência e o depoente disse que sim.",
         "shown":  "A depoente relatou que estava dando monitoria quando o aluno Jefferson entrou na sala gritando. Ele dizia que a depoente tinha dado a nota errada para ele de propósito. A depoente explicou que quem dá a nota é o professor, não a monitora. Jefferson não quis ouvir. Ele bateu com a mão na mesa e chegou muito perto da depoente. A Luana, que é a outra monitora, saiu pra chamar o professor Emanuel. Quando o professor chegou, Jefferson já tinha ido embora. O professor perguntou se a depoente queria registrar a ocorrência e a depoente disse que sim.",
-        "seconds":  22.8,
+        "seconds":  22.5,
         "completed":  true,
         "incomplete":  false,
         "keyFailures":  [
 
                         ],
-        "sameAsApproved":  null,
+        "sameAsApproved":  true,
         "retry":  false,
         "engineWarnings":  [
 
@@ -260,13 +259,13 @@
         "input":  "Eu não vi a briga, eu só ouvi. Eu estava na biblioteca, no terceiro andar, e ouvi alguém gritando \"me solta, me solta\" no corredor. Quando eu cheguei na porta, tinha um rapaz no chão e uma moça de cabelo curto do lado dele. Ela falou pra mim: \"ele tentou me agarrar\". Ele levantou e disse que era mentira e saiu andando. Eu não conhecia nenhum dos dois. Eu fiquei com a moça até a segurança chegar, uns quinze minutos depois.",
         "engine":  "O depoente relatou que não viu a briga, apenas ouviu. O depoente estava na biblioteca, no terceiro andar, e ouviu alguém gritando \"me solta, me solta\" no corredor. Quando o depoente chegou à porta, havia um rapaz no chão e uma moça de cabelo curto do lado dele. A moça falou ao depoente: \"ele tentou me agarrar\". O rapaz levantou-se e disse que era mentira, depois saiu andando. O depoente não conhecia nenhum dos dois. O depoente ficou com a moça até que a segurança chegasse, cerca de quinze minutos depois.",
         "shown":  "O depoente relatou que não viu a briga, apenas ouviu. O depoente estava na biblioteca, no terceiro andar, e ouviu alguém gritando \"me solta, me solta\" no corredor. Quando o depoente chegou à porta, havia um rapaz no chão e uma moça de cabelo curto do lado dele. A moça falou ao depoente: \"ele tentou me agarrar\". O rapaz levantou-se e disse que era mentira, depois saiu andando. O depoente não conhecia nenhum dos dois. O depoente ficou com a moça até que a segurança chegasse, cerca de quinze minutos depois.",
-        "seconds":  24.5,
+        "seconds":  24,
         "completed":  true,
         "incomplete":  false,
         "keyFailures":  [
 
                         ],
-        "sameAsApproved":  null,
+        "sameAsApproved":  true,
         "retry":  false,
         "engineWarnings":  [
 
@@ -301,15 +300,15 @@
         "id":  "B08",
         "gender":  "Feminino",
         "input":  "A minha mãe me ligou dizendo que tinham ligado pra ela do meu celular pedindo dinheiro. Só que o meu celular estava comigo o tempo todo. Ela já tinha feito um Pix de quinhentos e cinquenta reais pra uma conta no nome de um tal de Edvaldo. Eu fui com ela na delegacia no mesmo dia, dia 25 de agosto, e a gente fez o boletim de ocorrência. O banco disse pra ela que ia tentar estornar, mas até hoje não devolveram nada.",
-        "engine":  "O depoente relatou que a mãe do depoente lhe ligou dizendo que tinham ligado para ela do celular do depoente pedindo dinheiro. Só que o celular do depoente estava com o depoente o tempo todo. Ela já tinha feito um Pix de quinhentos e cinquenta reais pra uma conta no nome de um tal de Edvaldo. O depoente foi com ela na delegacia no mesmo dia, dia 25 de agosto, e a gente fez o boletim de ocorrência. O banco disse para ela que ia tentar estornar, mas até hoje não devolveram nada.",
-        "shown":  "A depoente relatou que a mãe da depoente lhe ligou dizendo que tinham ligado para ela do celular da depoente pedindo dinheiro. Só que o celular da depoente estava com a depoente o tempo todo. Ela já tinha feito um Pix de quinhentos e cinquenta reais pra uma conta no nome de um tal de Edvaldo. A depoente foi com ela na delegacia no mesmo dia, dia 25 de agosto, e a gente fez o boletim de ocorrência. O banco disse para ela que ia tentar estornar, mas até hoje não devolveram nada.",
-        "seconds":  43.3,
+        "engine":  "O depoente relatou que a mãe do depoente lhe ligou dizendo que tinham ligado para ela do celular do depoente pedindo dinheiro. Só que o celular do depoente estava com o depoente o tempo todo. Ela já tinha feito um Pix de quinhentos e cinquenta reais pra uma conta no nome de um tal de Edvaldo. O depoente foi com ela na delegacia no mesmo dia, dia 25 de agosto, e o grupo fez o boletim de ocorrência. O banco disse para ela que ia tentar estornar, mas até hoje não devolveram nada.",
+        "shown":  "A depoente relatou que a mãe da depoente lhe ligou dizendo que tinham ligado para ela do celular da depoente pedindo dinheiro. Só que o celular da depoente estava com a depoente o tempo todo. Ela já tinha feito um Pix de quinhentos e cinquenta reais pra uma conta no nome de um tal de Edvaldo. A depoente foi com ela na delegacia no mesmo dia, dia 25 de agosto, e o grupo fez o boletim de ocorrência. O banco disse para ela que ia tentar estornar, mas até hoje não devolveram nada.",
+        "seconds":  41.2,
         "completed":  true,
         "incomplete":  false,
         "keyFailures":  [
 
                         ],
-        "sameAsApproved":  null,
+        "sameAsApproved":  false,
         "retry":  true,
         "engineWarnings":  [
                                "[BLOCK_RETRY_START] block=1/1; issue=fidelidade: possível omissão de oração: só que o meu celular estava comigo o tempo todo.; repairs=abertura"
@@ -345,13 +344,13 @@
         "input":  "O professor Rogério me chamou pra ser monitor dele no semestre passado e eu aceitei. No começo foi tudo bem. Depois ele começou a me pedir pra corrigir as provas inteiras sozinho, inclusive as notas finais. Eu falei que não me sentia confortável, porque isso é função dele. Ele disse que se eu não quisesse tinha uma fila de gente querendo a vaga. Eu continuei corrigindo porque precisava da declaração de monitoria. Eu me arrependo de não ter falado antes com a coordenação.",
         "engine":  "O depoente relatou que o professor Rogério chamou o depoente pra ser monitor dele no semestre passado e o depoente aceitou. No começo foi tudo bem. Depois ele começou a lhe pedir pra corrigir as provas inteiras sozinho, inclusive as notas finais. O depoente falou que não se sentia confortável, porque isso é função dele. Ele disse que se o depoente não quisesse tinha uma fila de gente querendo a vaga. O depoente continuou corrigindo porque precisava da declaração de monitoria. O depoente se arrepende de não ter falado antes com a coordenação.",
         "shown":  "O depoente relatou que o professor Rogério chamou o depoente pra ser monitor dele no semestre passado e o depoente aceitou. No começo foi tudo bem. Depois ele começou a lhe pedir pra corrigir as provas inteiras sozinho, inclusive as notas finais. O depoente falou que não se sentia confortável, porque isso é função dele. Ele disse que se o depoente não quisesse tinha uma fila de gente querendo a vaga. O depoente continuou corrigindo porque precisava da declaração de monitoria. O depoente se arrepende de não ter falado antes com a coordenação.",
-        "seconds":  21.4,
+        "seconds":  20.8,
         "completed":  true,
         "incomplete":  false,
         "keyFailures":  [
 
                         ],
-        "sameAsApproved":  null,
+        "sameAsApproved":  true,
         "retry":  false,
         "engineWarnings":  [
 
@@ -387,13 +386,13 @@
         "input":  "Na reunião do colegiado do dia 9 de setembro, eu pedi a palavra pra falar sobre a carga horária dos técnicos. O professor Nestor, que presidia a reunião, me disse que aquilo não estava na pauta. Eu mostrei que estava sim, no item 4. Aí ele falou que eu podia falar, mas só por dois minutos. Enquanto eu falava, ele e o professor Clóvis ficaram conversando alto e rindo. Eu parei e pedi que eles me respeitassem. O Clóvis disse que não estava rindo de mim. Depois da reunião, a professora Dalva veio me pedir desculpas pelos colegas e me disse que ia levar o assunto pra direção.",
         "engine":  "O depoente relatou que na reunião do colegiado do dia 9 de setembro, o depoente pediu a palavra pra falar sobre a carga horária dos técnicos. O professor Nestor, que presidia a reunião, lhe disse que aquilo não estava na pauta. O depoente mostrou que estava sim, no item 4. Aí ele falou que o depoente podia falar, mas só por dois minutos. Enquanto o depoente falava, ele e o professor Clóvis ficaram conversando alto e rindo. O depoente parou e pediu que eles respeitassem o depoente. O Clóvis disse que não estava rindo do depoente. Depois da reunião, a professora Dalva veio lhe pedir desculpas pelos colegas e lhe disse que ia levar o assunto pra direção.",
         "shown":  "A depoente relatou que na reunião do colegiado do dia 9 de setembro, a depoente pediu a palavra pra falar sobre a carga horária dos técnicos. O professor Nestor, que presidia a reunião, lhe disse que aquilo não estava na pauta. A depoente mostrou que estava sim, no item 4. Aí ele falou que a depoente podia falar, mas só por dois minutos. Enquanto a depoente falava, ele e o professor Clóvis ficaram conversando alto e rindo. A depoente parou e pediu que eles respeitassem a depoente. O Clóvis disse que não estava rindo da depoente. Depois da reunião, a professora Dalva veio lhe pedir desculpas pelos colegas e lhe disse que ia levar o assunto pra direção.",
-        "seconds":  53.5,
+        "seconds":  51.7,
         "completed":  true,
         "incomplete":  false,
         "keyFailures":  [
 
                         ],
-        "sameAsApproved":  null,
+        "sameAsApproved":  true,
         "retry":  true,
         "engineWarnings":  [
                                "[BLOCK_RETRY_START] block=1/1; issue=fidelidade: depoente omitido ou trocado como objeto: no original «eles me respeitassem»"

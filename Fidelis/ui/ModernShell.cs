@@ -3522,6 +3522,12 @@ public static class GenderConverter
         // 4) Object pronoun that came from «me»: «ele o ameaçou» ← «ele me ameaçou».
         foreach (Match m in Regex.Matches(Unquote(source), @"\b(?<s>ele|ela|eles|elas)\s+(?:não\s+)?me\s+(?<v>\p{L}{3})", I))
             t = Regex.Replace(t, @"\b(" + m.Groups["s"].Value + @")\s+(não\s+)?o\s+(" + Regex.Escape(m.Groups["v"].Value) + @"\p{L}*)", "$1 $2a $3", I);
+        // 5) The same with a name: «a Kátia, que também é bolsista, o informou» ← «a Kátia,
+        // que também é bolsista, me contou». Only with no masculine term in between.
+        foreach (Match m in Regex.Matches(Unquote(source), @"\b(?<n>\p{Lu}\p{Ll}+)(?:,[^,.;!?]*,)?\s+(?:não\s+)?me\s+\p{L}"))
+            t = Regex.Replace(t, @"\b(?<head>" + Regex.Escape(m.Groups["n"].Value) + @"(?:,(?![^,.;!?]*\b(?:o|os|um|uns|ele|eles|dele|deles)\b)[^,.;!?]*,)?\s+(?:não\s+)?)o\s+(?<v>\p{L}+(?:ou|eu|iu|ava|ia|ará|erá|irá)\b)", "${head}a ${v}");
+        // 6) The deponent and a woman named in the group: «a depoente e a Olívia foram juntos».
+        t = Regex.Replace(t, @"(?<head>\b[Aa] depoente e a \p{Lu}\p{Ll}+\s+(?:não\s+)?\p{L}+\s+)juntos\b", "${head}juntas");
         return t;
     }
 
@@ -3733,6 +3739,15 @@ public static class RoleScanner
             if (InQuotes(quotes, d.Start) || Covered(items, d.Start)) continue;
             Add(items, d.Start, d.Length, d.Text, d.Reason);
         }
+        // 5d. Approximation made exact: «umas sete e meia» → «às sete e meia».
+        const string numberWord = @"(?:um|uma|dois|duas|três|tres|quatro|cinco|seis|sete|oito|nove|dez|onze|doze|treze|quatorze|catorze|quinze|vinte|trinta|quarenta|cinquenta|sessenta|cem|cento|duzentos|duzentas|trezentos|quinhentos|mil)";
+        string numberPhrase = @"(?:\d{1,4}(?:h\d{0,2}|:\d{2})?|" + numberWord + @"(?:\s+e\s+(?:meia|pouco|" + numberWord + @"))*)";
+        foreach (Match a in Regex.Matches(o, @"\b(?:umas|uns|por\s+volta\s+d[aoe]s?|cerca\s+de|lá\s+pel[ao]s|aproximadamente)\s+(?<n>" + numberPhrase + @")\b", I))
+            foreach (Match x in Regex.Matches(r, @"\b(?<p>às|as|à|a)\s+(?<n>" + Regex.Escape(a.Groups["n"].Value) + @")\b", I))
+            {
+                if (InQuotes(quotes, x.Index) || Covered(items, x.Index)) continue;
+                Add(items, x.Index, x.Length, x.Value, "aproximação perdida: no original «" + a.Value.Trim() + "» (aproximado); aqui ficou exato («" + x.Value + "»). Confira: o certo seria «por volta d" + (x.Groups["p"].Value.EndsWith("s") ? "as" : "a") + " " + a.Groups["n"].Value + "».");
+            }
         // 5c. Words that exist neither in the dictionary nor in the original («estavavam»).
         foreach (ReviewItem u in UnknownWords(o, r))
             if (!Covered(items, u.Start)) Add(items, u.Start, u.Length, u.Text, u.Reason);
@@ -3847,7 +3862,9 @@ public static class RoleScanner
         string s = Regex.Escape(stem);
         if (stem.StartsWith("sent", StringComparison.OrdinalIgnoreCase)) s = "(?:" + s + "|sint)";
         if (Regex.IsMatch(o, @"\beu\s+(?:(?:não|nem|já|também|só)\s+)?(?:\p{L}+\s+)?me\s+" + s, I)) return true;
-        if (Regex.IsMatch(o, @"\bme\s+" + s + @"\p{L}*(?:o|ei|i)\b", I)) return true;
+        // A participle («tivesse me explicado») is not a first-person form.
+        foreach (Match f in Regex.Matches(o, @"\bme\s+(?<w>" + s + @"\p{L}*(?:o|ei|i))\b", I))
+            if (!Regex.IsMatch(f.Groups["w"].Value, @"(?:ado|ido|ados|idos)$", I)) return true;
         return Regex.IsMatch(o, @"\b\p{L}+(?:ei|i)\s+que\s+(?:não\s+)?me\s+" + s, I);
     }
 

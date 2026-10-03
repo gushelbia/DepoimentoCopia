@@ -1,4 +1,4 @@
-﻿START 2026-10-02T10:20:49
+﻿START 2026-10-02T21:02:55
 PASS textos aprovados (20 frases + 10 QA) idênticos com Masculino e Não informado | 30/30
 
 F1 [Feminino]  Eu fiquei assustada quando ele entrou gritando.
@@ -184,11 +184,11 @@ PASS N2: texto da tela idêntico ao do motor
    (se o campo fosse Feminino: A depoente relatou que ligou para a polícia quando a depoente ouviu os tiros.)
 
 N3 [Não informado] (sujeito apagado pelo modelo; corrigido na rodada 7)  Minha vizinha estava assustada e bateu na minha porta.
-   motor: O depoente relatou que a vizinha do depoente estava assustada e bateu na sua porta.
+   motor: O depoente relatou que a vizinha do depoente estava assustada e bateu na porta do depoente.
    aviso: gênero presumido: o original não diz se quem fala é homem ou mulher; «o depoente» supõe homem. Confira. [O depoente]
 PASS N3: geração concluída
 PASS N3: texto da tela idêntico ao do motor
-   (se o campo fosse Feminino: A depoente relatou que a vizinha da depoente estava assustada e bateu na sua porta.)
+   (se o campo fosse Feminino: A depoente relatou que a vizinha da depoente estava assustada e bateu na porta da depoente.)
 
 N4 [Não informado]  Ele me ameaçou na saída do trabalho.
    motor: O depoente relatou que ele ameaçou o depoente na saída do trabalho.

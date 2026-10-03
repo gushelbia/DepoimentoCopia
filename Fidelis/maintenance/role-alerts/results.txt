@@ -76,3 +76,10 @@ PASS «lhe defendeu» é marcado («defendeu» não é verbo de dar) | e lhe def
 PASS R10: «cem e cinquenta» marcado como divergente; «cento e cinquenta» sumiu | cem e cinquenta
 PASS valor por extenso sem «reais» em contexto de dinheiro: conferido quando igual | cento e cinquenta
 PASS «deu um soco», «dois tapas»: não são valores
+PASS B02: «estavavam» marcado como palavra inexistente | estavavam
+PASS B03: «ciento» marcado como palavra inexistente
+PASS palavra que está no original («tava», nomes) não é marcada
+PASS fala entre aspas não é conferida no dicionário
+PASS B04: «ia lhe arrepender» com sugestão «se arrepender» | verbo pronominal do depoente: no original «me arrepender…» (o próprio depoente). Confira: o certo seria «se arrepender».
+PASS B01: «o depoente lhe lembra» com sugestão «se lembra» | o original é reflexivo («me lembr…»: o depoente fez a ação em si mesmo); «lhe» indica outra pessoa. Confira: o correto seria «se lembra».
+PASS B03: «eles a mostraram» com sugestão «lhe mostraram» | regência: com «mostraram», quem recebe a ação é objeto indireto (no original: «eles me mostraram»). Confira: o certo seria «eles lhe mostraram».

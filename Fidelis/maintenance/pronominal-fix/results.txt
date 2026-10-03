@@ -1,0 +1,29 @@
+PASS B09: «não lhe sentia» → «não se sentia» | O depoente relatou que falou que não se sentia confortável.
+PASS B09: «o depoente lhe arrependo» → «se arrepende» | O depoente relatou que se arrepende de não ter falado antes.
+PASS B09 (forma da rodada 8): «arrependo o depoente» → «se arrepende» | O depoente relatou que se arrepende de não ter falado antes.
+PASS B01: «lhe lembra» → «se lembra» | O depoente relatou que se lembra que ficou sem dormir.
+PASS B04: «ia lhe arrepender» → «ia se arrepender» | O depoente relatou que ele falou que o depoente ia se arrepender.
+PASS B05: «não me sinto» é do depoente: sem falso alarme
+PASS «me machuquei» → «se machucou»: sem acusação
+PASS pronominal com «lhe» que ficou: validador acusa | fidelidade: verbo pronominal do depoente sem «se»: no original «Eu me arrependo», na saída «lhe arrepende»
+PASS «Heitor me chamou»: outra pessoa → «chamou o depoente» (não «se chamou») | O depoente relatou que o professor Heitor chamou o depoente na sala.
+PASS «ele me disse»: fica «lhe disse» | O depoente relatou que ele lhe disse que já tinha lhe dado o dinheiro.
+PASS «eles me respeitassem»: não vira «se respeitassem» | O depoente relatou que parou e pediu que eles respeitassem o depoente.
+PASS «pessoas me disseram»: sem falso alarme
+PASS B01: «juro» isolado entre vírgulas removido | O depoente relatou que não sabia.
+PASS «juro que…» (não isolado): validador acusa | fidelidade: primeira pessoa fora das aspas: «juro»
+PASS B01: «nem conheço» acusado | fidelidade: primeira pessoa fora das aspas: «conheço»
+PASS «juro» entre aspas: sem acusação
+PASS «o trabalho» (substantivo): sem acusação
+PASS B03: «seu namorado» com o Bruno na frase → «o namorado do depoente» | O depoente relatou que o Bruno disse que o depoente achou que era o namorado do depoente.
+PASS B05: «da sua vida» com «ela» → «da vida do depoente» | O depoente relatou que ela disse ao depoente que ia fazer da vida do depoente um inferno.
+PASS «sua colega Bianca»: o nome já identifica: sem mudança | O depoente relatou que contou para sua colega Bianca.
+PASS só o depoente na frase: «sua mesa» fica | O depoente relatou que foi para sua mesa.
+PASS B08: «ligado pra ela» devolvido pelo original | O depoente relatou que tinham ligado para ela do celular do depoente.
+PASS B08: «disse pra ela» devolvido pelo original | O depoente relatou que o banco disse para ela que ia estornar.
+PASS duas frases iguais no original: não adivinha, validador acusa | fidelidade: destinatário perdido: no original «disse pra ela»
+PASS B08: «disse pra ela» perdido: acusado | fidelidade: destinatário perdido: no original «disse pra ela»
+PASS destinatário mantido («disse à mãe»): sem acusação
+PASS «para ele ficar» (finalidade): fora desta regra
+PASS B03: «eles o mostraram» → «eles lhe mostraram» | O depoente relatou que foi na segurança e eles lhe mostraram a câmera.
+PASS saída vazia continua rejeitada | fidelidade: saída vazia

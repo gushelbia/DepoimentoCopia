@@ -137,6 +137,22 @@ $v = @($rv.Reformulated | Where-Object { $_.Kind -eq 'valor' })
 Check ($v.Count -eq 1 -and -not $v[0].Unmatched -and -not $v[0].Alert) 'valor por extenso sem «reais» em contexto de dinheiro: conferido quando igual' (($v | ForEach-Object { $_.Text }) -join ', ')
 $rv = [ReviewScanner]::Compare('Ele me deu um soco e dois tapas.', 'O depoente relatou que ele lhe deu um soco e dois tapas.')
 Check (@($rv.Reformulated | Where-Object { $_.Kind -eq 'valor' }).Count -eq 0) '«deu um soco», «dois tapas»: não são valores' ''
+
+# 7) Rodada 9 (bateria realista 2): palavras inexistentes, verbo pronominal do depoente, regência «-aram».
+$u = @([RoleScanner]::UnknownWords('Eu e o meu irmão estávamos voltando.', 'O depoente relatou que o depoente e o irmão do depoente estavavam voltando.'))
+Check ($u.Count -eq 1 -and $u[0].Text -eq 'estavavam') 'B02: «estavavam» marcado como palavra inexistente' (($u | ForEach-Object { $_.Text }) -join ', ')
+$u = @([RoleScanner]::UnknownWords('Minha carteira com cento e oitenta reais.', 'O depoente relatou que sua carteira tinha ciento e oitenta reais.'))
+Check ($u.Count -eq 1 -and $u[0].Text -eq 'ciento') 'B03: «ciento» marcado como palavra inexistente' ''
+$u = @([RoleScanner]::UnknownWords('Eu tava cansado em Xavantina com a Kátia.', 'O depoente relatou que tava cansado em Xavantina com a Kátia.'))
+Check ($u.Count -eq 0) 'palavra que está no original («tava», nomes) não é marcada' (($u | ForEach-Object { $_.Text }) -join ', ')
+$u = @([RoleScanner]::UnknownWords('Ela gritou: "tô cansadão".', 'O depoente relatou que ela gritou: "tô cansadão".'))
+Check ($u.Count -eq 0) 'fala entre aspas não é conferida no dicionário' ''
+$k = @([RoleScanner]::Find('Ele falou que eu ia me arrepender.', 'O depoente relatou que ele falou que o depoente ia lhe arrepender.') | Where-Object { $_.Kind -eq [RoleScanner]::Alert })
+Check ($k.Count -ge 1 -and $k[0].Reason -match 'se arrepender') 'B04: «ia lhe arrepender» com sugestão «se arrepender»' (($k | ForEach-Object { $_.Reason }) -join ' | ')
+$k = @([RoleScanner]::Find('Eu me lembro que fiquei sem dormir.', 'O depoente relatou que o depoente lhe lembra que ficou sem dormir.') | Where-Object { $_.Kind -eq [RoleScanner]::Alert })
+Check ($k.Count -ge 1 -and $k[0].Reason -match 'se lembra') 'B01: «o depoente lhe lembra» com sugestão «se lembra»' (($k | ForEach-Object { $_.Reason }) -join ' | ')
+$k = @([RoleScanner]::Find('Eu fui na segurança e eles me mostraram a câmera.', 'O depoente relatou que foi na segurança e eles a mostraram a câmera.') | Where-Object { $_.Reason -match '^regência' })
+Check ($k.Count -eq 1 -and $k[0].Reason -match 'lhe mostraram') 'B03: «eles a mostraram» com sugestão «lhe mostraram»' (($k | ForEach-Object { $_.Reason }) -join ' | ')
 $results | Set-Content -Encoding UTF8 (Join-Path $PSScriptRoot 'results.txt')
 Write-Output ($(if ($failures -eq 0) { 'RESULT PASS' } else { "RESULT FAIL ($failures)" }))
 if ($failures -ne 0) { exit 1 }

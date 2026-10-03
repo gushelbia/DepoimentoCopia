@@ -3376,6 +3376,70 @@ public static class ReviewScanner
     }
 }
 
+// Offline pt-BR spell checking through the Windows spell checker (Windows 8 or
+// later, with the Portuguese (Brazil) language). Nothing is downloaded; if the
+// language is not available the check finds nothing.
+[ComImport, Guid("8E018A9D-2415-4677-BF08-794EA61F94BB"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+public interface ISpellCheckerFactoryCom
+{
+    [return: MarshalAs(UnmanagedType.Interface)] object get_SupportedLanguages();
+    int IsSupported([MarshalAs(UnmanagedType.LPWStr)] string languageTag);
+    [return: MarshalAs(UnmanagedType.Interface)] ISpellCheckerCom CreateSpellChecker([MarshalAs(UnmanagedType.LPWStr)] string languageTag);
+}
+
+[ComImport, Guid("B6FD0B71-E2BC-4653-8D05-F197E412770B"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+public interface ISpellCheckerCom
+{
+    [return: MarshalAs(UnmanagedType.LPWStr)] string get_LanguageTag();
+    [return: MarshalAs(UnmanagedType.Interface)] IEnumSpellingErrorCom Check([MarshalAs(UnmanagedType.LPWStr)] string text);
+}
+
+[ComImport, Guid("803E3BD4-2828-4410-8290-418D1D73C762"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+public interface IEnumSpellingErrorCom
+{
+    [PreserveSig] int Next([MarshalAs(UnmanagedType.Interface)] out ISpellingErrorCom value);
+}
+
+[ComImport, Guid("B7C82D61-FBE8-4B47-9B27-6C0D2E0DE0A3"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+public interface ISpellingErrorCom
+{
+    uint get_StartIndex();
+    uint get_Length();
+    int get_CorrectiveAction();
+    [return: MarshalAs(UnmanagedType.LPWStr)] string get_Replacement();
+}
+
+[ComImport, Guid("7AB36653-1796-484B-BDFA-E74F1DB7C1DC")]
+public class SpellCheckerFactoryCom { }
+
+public static class WindowsSpell
+{
+    private static ISpellCheckerCom checker;
+    private static bool unavailable;
+
+    // (start, length) of each word the pt-BR dictionary does not know.
+    public static List<KeyValuePair<int, int>> Check(string text)
+    {
+        var result = new List<KeyValuePair<int, int>>();
+        if (String.IsNullOrEmpty(text) || unavailable) return result;
+        try
+        {
+            if (checker == null)
+            {
+                var factory = (ISpellCheckerFactoryCom)new SpellCheckerFactoryCom();
+                if (factory.IsSupported("pt-BR") == 0) { unavailable = true; return result; }
+                checker = factory.CreateSpellChecker("pt-BR");
+            }
+            IEnumSpellingErrorCom errors = checker.Check(text);
+            ISpellingErrorCom error;
+            while (errors.Next(out error) == 0)
+                result.Add(new KeyValuePair<int, int>((int)error.get_StartIndex(), (int)error.get_Length()));
+        }
+        catch (Exception) { unavailable = true; result.Clear(); }
+        return result;
+    }
+}
+
 // Writes the reformulated text in the feminine when the qualification says the
 // deponent is a woman (Gênero do depoente: Feminino). The engine keeps generating
 // «o depoente»; only the interface converts, using the original as the guide, and
@@ -3611,7 +3675,7 @@ public static class RoleScanner
             // whose original has «me» and no other recipient at all.
             bool sameVerb = Regex.IsMatch(o, @"\bme\s+" + Regex.Escape(Stem(v)), I);
             if (!sameVerb && originalLhe) continue;
-            bool reflexive = Regex.IsMatch(o, @"\bme\s+" + Regex.Escape(Stem(v)) + @"\p{L}*i\b", I);
+            bool reflexive = Regex.IsMatch(o, @"\bme\s+" + Regex.Escape(Stem(v)) + @"\p{L}*i\b", I) || NarratorPronominal(o, v);
             Add(items, m.Index, m.Length, m.Value, reflexive
                 ? "o original é reflexivo («me " + Stem(v) + "…»: o depoente fez a ação em si mesmo); «lhe» indica outra pessoa. Confira: o correto seria «se " + v + "»."
                 : "confira quem fez ou disse: aqui o depoente age sobre outra pessoa, mas no original a ação foi dirigida ao depoente («… me …»).");
@@ -3623,7 +3687,14 @@ public static class RoleScanner
         {
             if (!originalMe || InQuotes(quotes, m.Index) || Covered(items, m.Index)) continue;
             string v = m.Groups["v"].Value;
-            if (RecipientVerb.IsMatch(v) || m.Groups["s"].Value.Equals("depoente", StringComparison.OrdinalIgnoreCase)) continue;
+            if (m.Groups["s"].Value.Equals("depoente", StringComparison.OrdinalIgnoreCase)) continue;
+            // «ia lhe arrepender» for «eu ia me arrepender»: the narrator's pronominal verb.
+            if (NarratorPronominal(o, v))
+            {
+                Add(items, m.Index, m.Length, m.Value, "verbo pronominal do depoente: no original «me " + Stem(v) + "…» (o próprio depoente). Confira: o certo seria «se " + v + "».");
+                continue;
+            }
+            if (RecipientVerb.IsMatch(v)) continue;
             Add(items, m.Index, m.Length, m.Value, "«lhe» com verbo de ação direta: no original a ação foi contra o depoente («me " + Stem(v) + "…»). Confira: o claro seria «" + v + " o depoente».");
         }
         // 3. «ele o atacou»: clitic «o/a» after a third-person subject where the
@@ -3634,7 +3705,7 @@ public static class RoleScanner
             string v = m.Groups["v"].Value;
             if (!Regex.IsMatch(o, @"\b" + m.Groups["s"].Value + @"\s+(?:que\s+)?(?:não\s+)?(?:já\s+)?me\s+" + Regex.Escape(Stem(v)), I)) continue;
             // «ela o pediu»: a verb whose person is an indirect object takes «lhe».
-            if (RecipientVerb.IsMatch(v) && Regex.IsMatch(v, @"(?:ou|eu|iu|ia|ava|isse)$", I))
+            if (RecipientVerb.IsMatch(v) && Regex.IsMatch(v, @"(?:ou|eu|iu|ia|ava|isse|aram|eram|iram|avam|iam)$", I))
                 Add(items, m.Index, m.Length, m.Value, "regência: com «" + v + "», quem recebe a ação é objeto indireto (no original: «" + m.Groups["s"].Value + " me " + v + "»). Confira: o certo seria «" + m.Groups["s"].Value + " lhe " + v + "».");
             else
                 Add(items, m.Index, m.Length, m.Value, "pronome ambíguo: «" + m.Groups["c"].Value + "» pode ser lido como outra pessoa (no original: «" + m.Groups["s"].Value + " me …»). Confira: o claro seria «" + m.Groups["s"].Value + " " + v + " o depoente».");
@@ -3662,6 +3733,9 @@ public static class RoleScanner
             if (InQuotes(quotes, d.Start) || Covered(items, d.Start)) continue;
             Add(items, d.Start, d.Length, d.Text, d.Reason);
         }
+        // 5c. Words that exist neither in the dictionary nor in the original («estavavam»).
+        foreach (ReviewItem u in UnknownWords(o, r))
+            if (!Covered(items, u.Start)) Add(items, u.Start, u.Length, u.Text, u.Reason);
         // 6. Subject: «Relatou que o depoente…» reads as a third person talking about the narrator.
         Match lead = Regex.Match(r, @"^\s*(?<t>Relatou que\s+(?:o|a) depoente)\b", I);
         if (lead.Success)
@@ -3762,6 +3836,39 @@ public static class RoleScanner
         foreach (string f in forms)
             if (Regex.IsMatch(o, @"\b" + Regex.Escape(f) + tail, I)) return true;
         return false;
+    }
+
+    // The original has this verb as the narrator's pronominal verb: «eu me lembro»,
+    // «me arrependo», «não me sinto», «falei que não me sentia», «eu ia me arrepender».
+    public static bool NarratorPronominal(string o, string verb)
+    {
+        string stem = Stem(verb);
+        if (stem.Length < 3) return false;
+        string s = Regex.Escape(stem);
+        if (stem.StartsWith("sent", StringComparison.OrdinalIgnoreCase)) s = "(?:" + s + "|sint)";
+        if (Regex.IsMatch(o, @"\beu\s+(?:(?:não|nem|já|também|só)\s+)?(?:\p{L}+\s+)?me\s+" + s, I)) return true;
+        if (Regex.IsMatch(o, @"\bme\s+" + s + @"\p{L}*(?:o|ei|i)\b", I)) return true;
+        return Regex.IsMatch(o, @"\b\p{L}+(?:ei|i)\s+que\s+(?:não\s+)?me\s+" + s, I);
+    }
+
+    // Words of the output that exist neither in the pt-BR dictionary (Windows spell
+    // checker, offline) nor in the original: «estavavam», «ciento», «depente».
+    public static List<ReviewItem> UnknownWords(string original, string reformulated)
+    {
+        var found = new List<ReviewItem>();
+        List<KeyValuePair<int, int>> errors = WindowsSpell.Check(reformulated);
+        var quotes = QuoteRanges(reformulated);
+        foreach (KeyValuePair<int, int> e in errors)
+        {
+            string word = reformulated.Substring(e.Key, e.Value);
+            if (InQuotes(quotes, e.Key) || Regex.IsMatch(word, @"\d") || word.ToUpperInvariant() == word) continue;
+            if (Regex.IsMatch(original, @"(?<![\p{L}])" + Regex.Escape(word) + @"(?![\p{L}])", I)) continue;
+            var item = new ReviewItem();
+            item.Start = e.Key; item.Length = e.Value; item.Text = word; item.Kind = Alert;
+            item.Reason = "palavra inexistente: «" + word + "» não está no dicionário nem no original. Confira a grafia.";
+            found.Add(item);
+        }
+        return found;
     }
 
     public static string FirstFeminine(string o)

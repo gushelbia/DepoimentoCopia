@@ -445,7 +445,13 @@ namespace DepoimentoLocal.Windows
                 {
                     Match m = found[i];
                     int start = SentenceStart(text, m.Index);
-                    if (Regex.IsMatch(text.Substring(start, m.Index - start), @"\bdepoente\b", RegexOptions.IgnoreCase)) continue;
+                    // Round 9: «sua» is ambiguous also when another person is in the
+                    // sentence («achou que era seu namorado», «ligado do seu celular»).
+                    if (Regex.IsMatch(text.Substring(start, m.Index - start), @"\bdepoente\b", RegexOptions.IgnoreCase)
+                        && !OtherPersonInSentence(SentenceAt(text, m.Index), m.Groups["n"].Value)) continue;
+                    // «sua colega Bianca»: the name right after already identifies the person.
+                    if (Regex.IsMatch(text.Substring(start, m.Index - start), @"\bdepoente\b", RegexOptions.IgnoreCase)
+                        && Regex.IsMatch(text.Substring(m.Index + m.Length), @"^,?\s+(?:o\s+|a\s+)?\p{Lu}\p{Ll}+")) continue;
                     string prep = m.Groups["prep"].Value, lower = prep.ToLowerInvariant(), head;
                     if (lower == "em") head = "n" + article;
                     else if (lower == "de") head = "d" + article;
@@ -1038,6 +1044,233 @@ namespace DepoimentoLocal.Windows
             return x.Success ? "fidelidade: frase quebrada: «o depoente» no meio da locução verbal: «" + x.Value + "»" : null;
         }
 
+        // ---- Round 9 (realistic battery 2) -----------------------------------
+
+        // Another person in the sentence besides the deponent: a pronoun, a name
+        // inside the sentence, or a person noun («a mãe», «o professor»). `owned`
+        // is the noun of the possessive itself, which does not count.
+        public static bool OtherPersonInSentence(string sentence, string owned)
+        {
+            if (Regex.IsMatch(sentence, @"\b(?:ele|ela|eles|elas)\b", RegexOptions.IgnoreCase)) return true;
+            foreach (Match name in Regex.Matches(sentence, @"(?<=[\p{Ll},;]\s+)\p{Lu}\p{Ll}{2,}\b"))
+                if (!Regex.IsMatch(name.Value, @"^(?:Relatou|Depois|Então|Aí|Quando|Mas|Ontem|Hoje|Lá|Ali|Aqui)$")) return true;
+            foreach (Match noun in Regex.Matches(sentence, @"\b(?:o|a|os|as|um|uma|do|da|dos|das|ao|à|pelo|pela|com\s+o|com\s+a)\s+(?<n>mãe|pai|irmão|irmã|professor|professora|chefe|colega|vizinho|vizinha|amigo|amiga|namorado|namorada|marido|esposa|filho|filha|aluno|aluna|rapaz|moça|homem|mulher|coordenador|coordenadora|diretor|diretora|segurança|policial|médico|médica|enfermeiro|enfermeira|menino|menina|senhor|senhora|banco)\b", RegexOptions.IgnoreCase))
+                if (!noun.Groups["n"].Value.Equals(owned, StringComparison.OrdinalIgnoreCase)) return true;
+            return false;
+        }
+
+        // Present first-person forms of common pronominal verbs and their third person.
+        public static string[,] PronominalPresent()
+        {
+            return new string[,] {
+                {"lembro","lembra"}, {"recordo","recorda"}, {"sinto","sente"}, {"arrependo","arrepende"}, {"preocupo","preocupa"},
+                {"sento","senta"}, {"levanto","levanta"}, {"afasto","afasta"}, {"escondo","esconde"}, {"defendo","defende"},
+                {"acostumo","acostuma"}, {"queixo","queixa"}, {"chamo","chama"}, {"machuco","machuca"}, {"assusto","assusta"},
+                {"aproximo","aproxima"}, {"recuso","recusa"}, {"esqueço","esquece"}, {"divirto","diverte"}, {"visto","veste"},
+                {"deito","deita"}, {"irrito","irrita"}, {"envergonho","envergonha"}, {"culpo","culpa"}, {"considero","considera"},
+                {"comporto","comporta"}, {"dirijo","dirige"}, {"apresento","apresenta"}, {"acalmo","acalma"}, {"nego","nega"},
+                {"canso","cansa"}, {"importo","importa"}, {"incomodo","incomoda"}, {"mudo","muda"}, {"perco","perde"}
+            };
+        }
+
+        // Third person of a first-person verb form, or null when the form is not first person.
+        public static string FirstToThird(string verb)
+        {
+            string w = verb.ToLowerInvariant();
+            string known = Lookup(PronominalPresent(), w);
+            if (known != null) return known;
+            string third = ThirdPerson(w);
+            if (third != null && third != w) return third;
+            return null;
+        }
+
+        // Heads that find the same verb in the output («sinto» ~ «sente», «sentia»).
+        public static string[] PronominalHeads(string verb)
+        {
+            string head = StemHead(verb);
+            string v = verb.ToLowerInvariant();
+            if (v.StartsWith("sint")) return new string[] { head, "sent" };
+            if (v.StartsWith("divirt")) return new string[] { head, "divert" };
+            if (v.StartsWith("vist")) return new string[] { head, "vest" };
+            if (v.StartsWith("dirij")) return new string[] { head, "dirig" };
+            if (v.StartsWith("perc")) return new string[] { head, "perd" };
+            if (v.StartsWith("esqueç")) return new string[] { head, "esquec" };
+            return new string[] { head };
+        }
+
+        // «me» of a source match whose subject is the narrator: «eu me lembro», «me
+        // arrependo», «não me sinto», «falei que não me sentia», «eu ia me arrepender».
+        public static bool NarratorPronominal(string source, Match m)
+        {
+            string v = m.Groups["v"].Value, pre = m.Groups["pre"].Value.Trim().ToLowerInvariant();
+            if (pre == "eu") return true;
+            if (FirstToThird(v) != null) return true;                                // «me arrependo», «me machuquei»
+            if (Lookup(SubjectOnlyFirstPerson(), v) != null) return true;
+            // A finite third-person form («chamou», «disseram», «respeitassem») is never the narrator's.
+            if (Regex.IsMatch(v, @"(?:ou|eu|iu|am|em|ão|ez|ôs)$", RegexOptions.IgnoreCase)) return false;
+            // Same form for 1st and 3rd person (sentia, ia, infinitive, gerund): the
+            // nearest subject before «me» in the sentence decides (the word right
+            // before «me» included).
+            int meIndex = m.Index + m.Groups["pre"].Length;
+            int start = SentenceStart(source, meIndex);
+            MatchCollection words = Regex.Matches(source.Substring(start, meIndex - start), @"[\p{L}-]+");
+            for (int i = words.Count - 1; i >= 0; i--)
+            {
+                string w = words[i].Value, lw = w.ToLowerInvariant();
+                if (lw == "eu") return true;
+                if (Regex.IsMatch(lw, @"^(?:ele|ela|eles|elas|você|vocês|alguém|ninguém|todos|todas)$")) return false;
+                if (i > 0 && Char.IsUpper(w[0]) && !Regex.IsMatch(w, @"^(?:Eu|Depois|Então|Aí|Quando|Mas|Ontem|Hoje)$")) return false;
+                string t = FirstToThird(w);
+                if (t != null) return true;                                          // «falei que não me sentia»
+                if (Regex.IsMatch(lw, @"\p{L}+(?:ou|eu|iu)$") && lw.Length > 3 && lw != "eu") return false;   // a third-person preterite before
+            }
+            return false;
+        }
+
+        // «o depoente lhe arrependo» / «não lhe sentia» / «ia lhe arrepender» / «sentia o
+        // depoente» → «se arrepende» / «não se sentia» / «ia se arrepender» / «se sentia».
+        public static string RepairNarratorPronominal(string source, string text, string fullOutput)
+        {
+            foreach (Match m in Regex.Matches(source, MeObjectSource(), RegexOptions.IgnoreCase))
+            {
+                if (!NarratorPronominal(source, m)) continue;
+                foreach (string head in PronominalHeads(m.Groups["v"].Value))
+                {
+                    if (head.Length < 3) continue;
+                    if (Regex.Matches(source, @"\b" + Regex.Escape(head) + @"\p{L}*", RegexOptions.IgnoreCase).Count > 1) continue;
+                    string w = @"(?<w>" + Regex.Escape(head) + @"\p{L}*)";
+                    string pattern = @"\b(?:(?<cl>lhe|me)\s+" + w + @"|" + w.Replace("<w>", "<w2>") + @"\s+(?<obj>o depoente)|(?<subj>depoente\s+(?:(?:não|já|ainda|também|só|nunca)\s+)?)" + w.Replace("<w>", "<w3>") + @")\b";
+                    MatchCollection inFull = Regex.Matches(fullOutput, pattern, RegexOptions.IgnoreCase);
+                    MatchCollection found = Regex.Matches(text, pattern, RegexOptions.IgnoreCase);
+                    if (inFull.Count != 1 || found.Count != 1) continue;
+                    Match x = found[0];
+                    if (x.Groups["subj"].Success)
+                    {
+                        // Only a copied first-person form right after the deponent («o depoente arrependo»).
+                        string bare = x.Groups["w3"].Value;
+                        string t3 = FirstToThird(bare);
+                        if (t3 == null) continue;
+                        // «o depoente arrependo [o depoente]» → «o depoente se arrepende».
+                        string tail = text.Substring(x.Groups["w3"].Index + bare.Length);
+                        Match obj = Regex.Match(tail, @"^\s+o depoente\b");
+                        if (obj.Success) tail = tail.Substring(obj.Length);
+                        text = text.Substring(0, x.Groups["w3"].Index) + "se " + MatchCase(bare, t3) + tail;
+                        break;
+                    }
+                    string verb = x.Groups["w"].Success ? x.Groups["w"].Value : x.Groups["w2"].Value;
+                    string third = FirstToThird(verb);
+                    string head2 = text.Substring(0, x.Index);
+                    string se = Regex.IsMatch(head2, @"\bse\s+$", RegexOptions.IgnoreCase) ? "" : "se ";
+                    text = head2 + se + (third != null ? third : verb) + text.Substring(x.Index + x.Length);
+                    break;
+                }
+            }
+            return text;
+        }
+
+        public static string NarratorPronominalIssue(string original, string output)
+        {
+            string source = Unquote(original), rendered = Unquote(output);
+            foreach (Match m in Regex.Matches(source, MeObjectSource(), RegexOptions.IgnoreCase))
+            {
+                if (!NarratorPronominal(source, m)) continue;
+                foreach (string head in PronominalHeads(m.Groups["v"].Value))
+                {
+                    if (head.Length < 3) continue;
+                    Match x = Regex.Match(rendered, @"\b(?:lhe|me)\s+" + Regex.Escape(head) + @"\p{L}*\b|\b" + Regex.Escape(head) + @"\p{L}*\s+o depoente\b", RegexOptions.IgnoreCase);
+                    if (x.Success) return "fidelidade: verbo pronominal do depoente sem «se»: no original «" + m.Value.Trim() + "», na saída «" + x.Value.Trim() + "»";
+                }
+            }
+            return null;
+        }
+
+        // First person left outside quotes («nem conheço», «juro»).
+        public static string FirstPersonWords()
+        {
+            return "juro|conheço|acho|sei|prometo|garanto|confesso|admito|imagino|suponho|reconheço|lembro|recordo|sinto|arrependo|quero|posso|tenho|estou|sou|vou|faço|vejo|ouço|moro|vim|fiz|tive|estive|pude|fui";
+        }
+
+        public static string FirstPersonLeftIssue(string original, string output)
+        {
+            string source = Unquote(original), rendered = Unquote(output);
+            var candidates = new List<string>();
+            foreach (Match w in Regex.Matches(source, @"\b(?:" + FirstPersonWords() + @")\b", RegexOptions.IgnoreCase))
+                if (!candidates.Contains(w.Value.ToLowerInvariant())) candidates.Add(w.Value.ToLowerInvariant());
+            foreach (Match w in Regex.Matches(source, @"\beu\s+(?:(?:não|nem|já|também|só|ainda|nunca)\s+)?(?<w>\p{L}{4,}(?:o|ei|i))\b", RegexOptions.IgnoreCase))
+            {
+                string v = w.Groups["w"].Value.ToLowerInvariant();
+                if (FirstToThird(v) != null || Lookup(SubjectOnlyFirstPerson(), v) != null)
+                    if (!candidates.Contains(v)) candidates.Add(v);
+            }
+            foreach (string c in candidates)
+            {
+                // «fui» is also third person of «ir/ser» only as «foi»; the 1st-person forms never are.
+                // Not after an article or preposition: «o trabalho», «no trabalho» are nouns.
+                foreach (Match x in Regex.Matches(rendered, @"(?<![\p{L}-])" + Regex.Escape(c) + @"(?![\p{L}-])", RegexOptions.IgnoreCase))
+                {
+                    if (Regex.IsMatch(rendered.Substring(0, x.Index), @"\b(?:o|a|os|as|um|uma|do|da|dos|das|no|na|nos|nas|ao|à|pelo|pela|de|em|seu|sua|meu|minha|este|esse|esta|essa|aquele|aquela)\s+$", RegexOptions.IgnoreCase)) continue;
+                    return "fidelidade: primeira pessoa fora das aspas: «" + x.Value + "»";
+                }
+            }
+            return null;
+        }
+
+        // «disse pra ela», «tinham ligado pra ela»: the other person as recipient must
+        // not be lost («o banco disse que…», «tinham ligado do celular…»).
+        public static string LostRecipientIssue(string original, string output)
+        {
+            string source = Unquote(original), rendered = Unquote(output);
+            foreach (Match m in Regex.Matches(source, @"\b(?<v>\p{L}{3,})\s+(?:pra|para)\s+(?<p>ele|ela|eles|elas)\b(?!\s+(?:\p{L}+r|ir|ficar|fazer|ser|ter|estar)\b)", RegexOptions.IgnoreCase))
+            {
+                string v = m.Groups["v"].Value;
+                if (!RecipientVerb(v) && !Regex.IsMatch(v, @"^(?:ligad|liga|ligou|ligaram|telefon)", RegexOptions.IgnoreCase)) continue;
+                int sourceCount = Regex.Matches(source, @"\b" + Regex.Escape(v) + @"\s+(?:pra|para)\s+(?:ele|ela|eles|elas)\b", RegexOptions.IgnoreCase).Count;
+                MatchCollection outs = Regex.Matches(rendered, @"(?<pre>\b\p{L}+\s+)?\b" + Regex.Escape(v) + @"\b(?<post>(?:\s+[\p{L}-]+){0,3})", RegexOptions.IgnoreCase);
+                if (outs.Count == 0) continue;                       // paraphrased verb: not this check
+                int marked = 0;
+                foreach (Match o in outs)
+                    if (Regex.IsMatch(o.Groups["pre"].Value, @"^(?:lhe|lhes)\s+$", RegexOptions.IgnoreCase)
+                        || Regex.IsMatch(o.Groups["post"].Value, @"^\s+(?:(?:\p{L}+\s+){0,2})?(?:pra|para|a|à|ao)\s+(?:ele|ela|eles|elas|a\s+\p{L}+|o\s+\p{L}+|\p{Lu}\p{Ll}+)", RegexOptions.IgnoreCase)
+                        || Regex.IsMatch(o.Value, @"-lhes?\b", RegexOptions.IgnoreCase)) marked++;
+                if (marked < sourceCount) return "fidelidade: destinatário perdido: no original «" + m.Value.Trim() + "»";
+            }
+            return null;
+        }
+
+        // Round 9b: give back the recipient «pra/para ele/ela» when the source frame is
+        // unique and the output has exactly one form of the verb without a recipient
+        // («tinham ligado do celular» → «tinham ligado para ela do celular»).
+        public static string RepairLostRecipient(string source, string text, string fullOutput)
+        {
+            string plain = Unquote(source);
+            foreach (Match m in Regex.Matches(plain, @"\b(?<v>\p{L}{3,})\s+(?:pra|para)\s+(?<p>ele|ela|eles|elas)\b(?!\s+(?:\p{L}+r|ir|ficar|fazer|ser|ter|estar)\b)", RegexOptions.IgnoreCase))
+            {
+                string v = m.Groups["v"].Value, p = m.Groups["p"].Value.ToLowerInvariant();
+                if (!RecipientVerb(v) && !Regex.IsMatch(v, @"^(?:ligad|liga|ligou|ligaram|telefon)", RegexOptions.IgnoreCase)) continue;
+                if (Regex.Matches(plain, @"\b" + Regex.Escape(v) + @"\b", RegexOptions.IgnoreCase).Count != 1) continue;
+                string form = @"(?<pre>\b\p{L}+\s+)?\b(?<v>" + Regex.Escape(v) + @")\b(?<post>(?:\s+[\p{L}-]+){0,3})";
+                MatchCollection all = Regex.Matches(fullOutput, form, RegexOptions.IgnoreCase);
+                MatchCollection found = Regex.Matches(text, form, RegexOptions.IgnoreCase);
+                if (all.Count != 1 || found.Count != 1) continue;
+                Match x = found[0];
+                bool marked = Regex.IsMatch(x.Groups["pre"].Value, @"^(?:lhe|lhes)\s+$", RegexOptions.IgnoreCase)
+                    || Regex.IsMatch(x.Groups["post"].Value, @"^\s+(?:(?:\p{L}+\s+){0,2})?(?:pra|para|a|à|ao)\s+(?:ele|ela|eles|elas|a\s+\p{L}+|o\s+\p{L}+|\p{Lu}\p{Ll}+)", RegexOptions.IgnoreCase)
+                    || Regex.IsMatch(x.Value, @"-lhes?\b", RegexOptions.IgnoreCase);
+                if (marked) continue;
+                Group g = x.Groups["v"];
+                text = text.Substring(0, g.Index + g.Length) + " para " + p + text.Substring(g.Index + g.Length);
+            }
+            return text;
+        }
+
+        // Round 9b: «juro» isolated between commas («não sabia, juro.») is the speaker's
+        // oath in the first person: removed when the source has it isolated too.
+        public static string RepairIsolatedOath(string source, string text)
+        {
+            if (!Regex.IsMatch(Unquote(source), @",\s*juro\s*(?=[.,;!?])", RegexOptions.IgnoreCase)) return text;
+            return Regex.Replace(text, @"\s*,\s*juro\s*(?=[.,;!?])", "", RegexOptions.IgnoreCase);
+        }
+
         // ---- The narrator as object (round 8, realistic battery) -------------
         // Every «me»/«meu»/«minha» of the source needs a narrator reference in the
         // output. Repaired from the source with a single correspondence; otherwise
@@ -1078,23 +1311,9 @@ namespace DepoimentoLocal.Windows
 
         public static bool NarratorAsObject(string source, Match m)
         {
-            string v = m.Groups["v"].Value, pre = m.Groups["pre"].Value.Trim().ToLowerInvariant();
-            if (pre == "eu") return false;
-            string third = ThirdPerson(v);
-            if (third != null && third != v.ToLowerInvariant()) return false;                 // «me machuquei», «me lembro»
-            if (Lookup(SubjectOnlyFirstPerson(), v) != null) return false;
-            // Gerund or infinitive of a narrator clause: «eu estava me arrumando», «fiquei me
-            // perguntando». Only the auxiliary right before «me» and its subject decide
-            // («se eu não fosse … ele ia me reprovar» is about «ele»).
-            if (Regex.IsMatch(v, @"(?:ndo|ar|er|ir)$", RegexOptions.IgnoreCase) && pre.Length > 0)
-            {
-                string auxThird = ThirdPerson(pre);
-                if (auxThird != null && auxThird != pre) return false;                      // «fiquei me perguntando»
-                int start = SentenceStart(source, m.Index);
-                Match subject = Regex.Match(source.Substring(start, m.Groups["pre"].Index - start), @"(?<w>\p{L}+)\s*$");
-                if (subject.Success && subject.Groups["w"].Value.ToLowerInvariant() == "eu") return false;   // «eu estava me arrumando»
-            }
-            return true;
+            // Round 9: the narrator's pronominal verbs («me arrependo», «não me sinto», «falei
+            // que não me sentia», «eu ia me arrepender») are not the narrator as object.
+            return !NarratorPronominal(source, m);
         }
 
         // A narrator reference right at this word of the output: «lhe V», «o V», «V-o»,
@@ -1152,8 +1371,8 @@ namespace DepoimentoLocal.Windows
                     continue;
                 }
                 // «o pediu» → «lhe pediu» (recipient verb, finite form).
-                Match o = Regex.Match(before, @"\bo\s+$");
-                if (o.Success && recipient && Regex.IsMatch(w.Value, @"(?:ou|eu|iu|ia|ava|isse|eu)$", RegexOptions.IgnoreCase))
+                Match o = Regex.Match(before, @"\b(?:o|a)\s+$");
+                if (o.Success && recipient && Regex.IsMatch(w.Value, @"(?:ou|eu|iu|ia|ava|isse|aram|eram|iram|avam|iam)$", RegexOptions.IgnoreCase))
                 {
                     text = text.Substring(0, o.Index) + "lhe " + text.Substring(w.Index);
                     continue;
@@ -1459,10 +1678,13 @@ namespace DepoimentoLocal.Windows
             step = text; text = RepairParallelCorrections(source, text); NoteRepair("autocorrecao", step, text);
             // Round 8: the narrator as object and owner; number words. After the older
             // possessive and recipient repairs, which rely on the sentence before them.
+            step = text; text = RepairNarratorPronominal(source, text, fullOutput); NoteRepair("pronominal-do-depoente", step, text);
             step = text; text = RepairNarratorObject(source, text, fullOutput); NoteRepair("depoente-objeto", step, text);
             step = text; text = RepairNarratorOwner(source, text, fullOutput); NoteRepair("possessivo-do-depoente", step, text);
             step = text; text = RepairNumberWords(source, text); NoteRepair("valores", step, text);
             step = text; text = RepairRepeatedSubject(text); NoteRepair("repeticao", step, text);
+            step = text; text = RepairLostRecipient(source, text, fullOutput); NoteRepair("destinatario-devolvido", step, text);
+            step = text; text = RepairIsolatedOath(source, text); NoteRepair("juro-isolado", step, text);
             step = text;
             // "nossa conversa": an interaction the narrator took part in. Say
             // exactly that, without naming who else took part.
@@ -1612,6 +1834,10 @@ namespace DepoimentoLocal.Windows
             if (role == null) role = RepeatedNarratorIssue(output);
             if (role == null) role = NarratorObjectIssue(original, output);
             if (role == null) role = NarratorOwnerIssue(original, output);
+            // Round 9: pronominal verbs of the narrator, first person left, lost recipient.
+            if (role == null) role = NarratorPronominalIssue(original, output);
+            if (role == null) role = FirstPersonLeftIssue(original, output);
+            if (role == null) role = LostRecipientIssue(original, output);
             if (role != null) return role;
             string source = Normalize(Unquote(original));
             string rendered = Normalize(Unquote(output));

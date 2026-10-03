@@ -390,11 +390,11 @@
         "field":  "",
         "pending":  "inversao-sujeito",
         "input":  "Minha vizinha estava assustada e bateu na minha porta.",
-        "engine":  "O depoente relatou que a vizinha do depoente estava assustada e bateu na sua porta.",
-        "shown":  "O depoente relatou que a vizinha do depoente estava assustada e bateu na sua porta.",
+        "engine":  "O depoente relatou que a vizinha do depoente estava assustada e bateu na porta do depoente.",
+        "shown":  "O depoente relatou que a vizinha do depoente estava assustada e bateu na porta do depoente.",
         "alerts":  "aviso: gênero presumido: o original não diz se quem fala é homem ou mulher; «o depoente» supõe homem. Confira. [O depoente]",
         "completed":  true,
-        "asFeminine":  "A depoente relatou que a vizinha da depoente estava assustada e bateu na sua porta."
+        "asFeminine":  "A depoente relatou que a vizinha da depoente estava assustada e bateu na porta da depoente."
     },
     {
         "id":  "N4",

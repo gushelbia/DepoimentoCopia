@@ -1,0 +1,72 @@
+# Chave automática da bateria realista 2 (tirada da CHAVE de cada caso em bateria-realista-2.txt).
+# id, deve|não, expressão regular (sem diferenciar maiúsculas), o que confere. Aplicada à saída final (já convertida para o gênero).
+B01	deve	Ivone	quem tirou do grupo e cortou a bolsa: Ivone
+B01	deve	"você sabe muito bem o que você fez"	fala citada mantida
+B01	deve	Kátia	quem contou: Kátia
+B01	deve	nunca falou com o diretor	negação mantida
+B01	deve	bolsa da depoente	a bolsa cortada é a da depoente
+B01	deve	\bse lembra\b|\brecorda\b	«me lembro» pronominal
+B01	não	lhe lembra	«lhe lembra» errado
+B01	não	\bconheço\b|\bjuro\b	primeira pessoa fora das aspas
+B01	deve	uns três dias	aproximação mantida
+B02	deve	Otávio	o irmão: Otávio
+B02	deve	não tinha mexido|não tinham mexido	negação mantida
+B02	deve	boné	quem deu o soco: o de boné
+B02	não	o depoente chamou o segurança	quem chamou o segurança foi a menina
+B02	deve	menina	quem chamou o segurança: a menina
+B02	deve	olho roxo	o depoente ficou com o olho roxo
+B02	deve	Otávio não se machucou	Otávio não se machucou
+B02	não	estavavam	palavra inexistente
+B03	deve	cento e oitenta reais	valor
+B03	não	ciento	palavra inexistente
+B03	deve	Bruno	quem viu: Bruno
+B03	deve	não tem namorado	negação mantida
+B03	não	seu namorado	«seu namorado» ambíguo
+B03	deve	por volta do meio-dia	horário aproximado
+B03	deve	ontem	«ontem» mantido
+B03	não	a mostraram|o mostraram	regência: «lhe mostraram»
+B03	deve	sem o dinheiro	a carteira voltou sem o dinheiro
+B04	deve	Alcides	quem mandou assinar: Alcides
+B04	deve	quarenta	40 cadeiras
+B04	deve	vinte e oito	28 cadeiras
+B04	deve	doze	as outras doze
+B04	deve	não assinou	negação mantida
+B04	deve	se arrepender	«ia se arrepender»
+B04	não	lhe arrepender|faleceu	erros vistos
+B04	deve	acredita|acha	a causa é suposição do depoente
+B04	deve	transferido	quem foi transferido: o depoente
+B05	não	\ba depoente\b	gênero não informado: não vira feminino
+B05	deve	Simone	quem levava o namorado: Simone
+B05	deve	214	quarto
+B05	deve	dia 18	data da reclamação
+B05	deve	carregador	escondeu o carregador
+B05	deve	duas vezes	duas vezes
+B05	não	SAÍDA INCOMPLETA	não deve ser rejeitado (falso alarme)
+B06	deve	Jefferson	quem acusou: Jefferson
+B06	deve	Luana	quem chamou o professor: Luana
+B06	não	a depoente saiu	a depoente não saiu
+B06	deve	Emanuel	o professor Emanuel
+B06	deve	\bmonitora\b	«monitora»
+B07	deve	não viu a briga	negação essencial
+B07	deve	"me solta, me solta"	fala citada mantida
+B07	deve	"ele tentou me agarrar"	fala da moça mantida
+B07	deve	não conhecia	negação mantida
+B07	deve	quinze minutos	aproximação mantida
+B08	deve	quinhentos e cinquenta reais	valor
+B08	deve	Edvaldo	conta de Edvaldo
+B08	deve	25 de agosto	data
+B08	não	a depoente (?:já )?(?:tinha )?feito um Pix|a depoente fez um Pix	quem fez o Pix foi a mãe
+B08	deve	(?:ligado|ligaram|ligou)\s+(?:\p{L}+\s+){0,3}?(?:pra|para|à|a)\s+(?:ela|mãe|a mãe)	ligaram para a mãe
+B08	deve	disse\s+(?:\p{L}+\s+){0,2}?(?:pra|para|à|a)\s+(?:ela|mãe|a mãe)|lhe disse que ia tentar estornar	o banco disse à mãe
+B09	deve	Rogério	quem chamou: Rogério
+B09	deve	se sentia	«não se sentia»
+B09	deve	se arrepende	«se arrepende»
+B09	não	sentia o depoente|arrependo|o depoente o depoente	frase quebrada
+B09	deve	fila	a resposta de Rogério
+B10	deve	9 de setembro	data
+B10	deve	Nestor	quem presidia: Nestor
+B10	deve	item 4	item da pauta
+B10	deve	dois minutos	dois minutos
+B10	deve	Clóvis	Clóvis
+B10	deve	Dalva	quem pediu desculpas: Dalva
+B10	não	se respeitassem	quem devia respeitar a depoente: eles

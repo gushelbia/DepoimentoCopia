@@ -1,0 +1,140 @@
+BATERIA REALISTA 2 DO FIDELIS
+Depoimentos 100% inventados, em estilo de fala transcrita. Casos NOVOS, que o motor nunca viu,
+para medir se as correções funcionam em textos diferentes dos usados na calibração.
+Nenhum nome, fato, documento ou local corresponde a pessoa real.
+
+Cada caso traz:
+- GÊNERO: valor a usar no campo «Gênero do depoente»
+- TEXTO: a entrada a reformular
+- CHAVE: os fatos que a saída precisa preservar
+
+======================================================================
+B01
+GÊNERO: Feminino
+TEXTO:
+Eu sou bolsista do projeto de extensão desde o ano passado. A coordenadora, a professora Ivone, sempre foi muito exigente, mas em maio começou a ficar diferente comigo. Ela me tirou do grupo de mensagens do projeto sem avisar. Quando eu perguntei por quê, ela falou: "você sabe muito bem o que você fez". Eu não sabia, juro. Aí a Kátia, que também é bolsista, me contou que a Ivone achava que eu tinha falado mal dela pro diretor. Eu nunca falei com o diretor, eu nem conheço ele pessoalmente. Depois disso a Ivone cortou a minha bolsa em junho, e a bolsa da Kátia continuou. Eu me lembro que fiquei uns três dias sem conseguir dormir direito.
+CHAVE:
+- Quem tirou a depoente do grupo e cortou a bolsa dela: Ivone.
+- Fala citada entre aspas pertence a Ivone e se dirige à depoente.
+- Quem contou: Kátia contou à depoente que Ivone achava que a depoente tinha falado mal de Ivone ao diretor.
+- Negações: a depoente NUNCA falou com o diretor e NÃO o conhece pessoalmente.
+- A bolsa cortada é a da depoente; a de Kátia continuou.
+- «me lembro» é pronominal: «a depoente se lembra» / «recorda» (não é ação de outra pessoa).
+- «uns três dias» é aproximado.
+
+======================================================================
+B02
+GÊNERO: Masculino
+TEXTO:
+Eu e o meu irmão, o Otávio, estávamos voltando da festa da atlética, era sábado, umas três da manhã. Na saída do estacionamento três caras pararam a gente. Um deles, de boné vermelho, empurrou o Otávio e falou que a gente tinha mexido com a namorada dele. A gente não tinha mexido com ninguém. O de boné me deu um soco no rosto e os outros dois seguraram o meu irmão. Eu caí e bati a cabeça no meio-fio. Quem chamou o segurança foi uma menina que estava no carro do lado. Eles fugiram a pé quando o segurança chegou. Eu fiquei com o olho roxo e o Otávio não se machucou.
+CHAVE:
+- «a gente» = o depoente e o irmão Otávio (ambos parados pelos três).
+- Quem empurrou Otávio e acusou: o de boné vermelho.
+- Negação: o depoente e Otávio NÃO tinham mexido com ninguém.
+- Quem deu o soco no depoente: o de boné vermelho. Quem segurou Otávio: os outros dois.
+- Quem caiu e bateu a cabeça: o depoente.
+- Quem chamou o segurança: a menina do carro ao lado (NÃO o depoente).
+- Quem fugiu: os três. Quem ficou com olho roxo: o depoente. Otávio NÃO se machucou.
+
+======================================================================
+B03
+GÊNERO: Feminino
+TEXTO:
+Ontem de manhã, antes da aula de Anatomia, eu fui no banheiro do segundo andar e quando eu voltei a minha mochila não estava mais na cadeira. Dentro tinha meu notebook, minha carteira com cento e oitenta reais e meu crachá. O Bruno, que senta atrás de mim, disse que viu um rapaz de moletom cinza pegando a mochila, mas achou que era meu namorado. Eu não tenho namorado. Eu fui na segurança e eles me mostraram a câmera, mas a imagem estava muito escura. Depois, por volta do meio-dia, a minha carteira apareceu no achados e perdidos, sem o dinheiro.
+CHAVE:
+- A mochila, o notebook, a carteira (com R$ 180) e o crachá são da depoente.
+- Quem viu o rapaz de moletom cinza pegando a mochila: Bruno.
+- Bruno ACHOU que o rapaz era namorado da depoente; a depoente NÃO tem namorado.
+- Quem mostrou a câmera: a segurança, à depoente.
+- A carteira reapareceu SEM o dinheiro, «por volta do meio-dia» (aproximado).
+- «Ontem» deve continuar relativo (não inventar data).
+
+======================================================================
+B04
+GÊNERO: Masculino
+TEXTO:
+Eu sou servidor do almoxarifado há doze anos. No dia 2 de outubro o senhor Alcides, que é meu chefe, me mandou assinar o recebimento de quarenta cadeiras. Eu falei pra ele que só tinham chegado vinte e oito. Ele disse que as outras doze iam chegar depois e que era pra eu assinar assim mesmo. Eu não assinei. Ele ficou irritado e falou que eu ia me arrepender. Na semana seguinte eu fui transferido pro turno da noite. Eu acho que foi por causa disso, mas ninguém me falou o motivo.
+CHAVE:
+- Quem mandou assinar: Alcides (chefe). Quem recusou: o depoente («não assinei»).
+- Números: 40 cadeiras declaradas; só 28 chegaram; as «outras doze» viriam depois.
+- Quem ficou irritado e ameaçou («ia se arrepender»): Alcides; quem «ia se arrepender»: o depoente.
+- Quem foi transferido: o depoente.
+- A causa é suposição do depoente («acho»), não fato; ninguém informou o motivo.
+
+======================================================================
+B05
+GÊNERO: Não informado
+TEXTO:
+Eu moro no alojamento, quarto 214. A minha colega de quarto, a Simone, começou a levar o namorado dela pra dormir lá quase todo dia. Eu pedi pra ela não fazer isso porque é proibido e porque eu não me sinto bem. Ela disse que eu era chata e que se eu reclamasse com a administração ela ia fazer da minha vida um inferno. Eu reclamei mesmo assim, no dia 18. Desde então ela não fala comigo e escondeu o meu carregador duas vezes.
+CHAVE:
+- Gênero não informado: NÃO converter para feminino; aviso informativo esperado. («colega de quarto» é feminino porque se refere a Simone, não à pessoa depoente.)
+- Quem levava o namorado: Simone. O namorado é de Simone.
+- Quem pediu: o/a depoente.
+- Quem disse que o/a depoente era chato(a) e ameaçou: Simone.
+- Quem reclamou à administração no dia 18: o/a depoente.
+- Quem parou de falar e escondeu o carregador (do/da depoente) duas vezes: Simone.
+
+======================================================================
+B06
+GÊNERO: Feminino
+TEXTO:
+Eu estava dando monitoria quando o aluno Jefferson entrou na sala gritando. Ele dizia que eu tinha dado a nota errada pra ele de propósito. Eu expliquei que quem dá a nota é o professor, não a monitora. Ele não quis ouvir. Ele bateu com a mão na mesa e chegou muito perto de mim. A Luana, que é a outra monitora, saiu pra chamar o professor Emanuel. Quando o professor chegou, o Jefferson já tinha ido embora. O professor me perguntou se eu queria registrar a ocorrência e eu falei que sim.
+CHAVE:
+- A depoente é monitora («a monitora», feminino).
+- Quem entrou gritando e acusou: Jefferson. A acusação: que a DEPOENTE deu a nota errada a ele de propósito.
+- Quem explicou: a depoente. Quem não quis ouvir, bateu na mesa e chegou perto: Jefferson.
+- Quem saiu para chamar o professor: Luana (NÃO a depoente).
+- Quem já tinha ido embora: Jefferson.
+- Quem perguntou: o professor Emanuel perguntou à depoente; quem disse que sim: a depoente.
+
+======================================================================
+B07
+GÊNERO: Masculino
+TEXTO:
+Eu não vi a briga, eu só ouvi. Eu estava na biblioteca, no terceiro andar, e ouvi alguém gritando "me solta, me solta" no corredor. Quando eu cheguei na porta, tinha um rapaz no chão e uma moça de cabelo curto do lado dele. Ela falou pra mim: "ele tentou me agarrar". Ele levantou e disse que era mentira e saiu andando. Eu não conhecia nenhum dos dois. Eu fiquei com a moça até a segurança chegar, uns quinze minutos depois.
+CHAVE:
+- Negação essencial: o depoente NÃO viu a briga, só ouviu.
+- «me solta, me solta» é fala de outra pessoa, entre aspas (NÃO do depoente).
+- «ele tentou me agarrar» é fala da moça: o rapaz teria tentado agarrar a MOÇA (não o depoente).
+- Quem negou e saiu: o rapaz.
+- O depoente não conhecia nenhum dos dois.
+- Quem ficou com a moça: o depoente. «uns quinze minutos» é aproximado.
+
+======================================================================
+B08
+GÊNERO: Feminino
+TEXTO:
+A minha mãe me ligou dizendo que tinham ligado pra ela do meu celular pedindo dinheiro. Só que o meu celular estava comigo o tempo todo. Ela já tinha feito um Pix de quinhentos e cinquenta reais pra uma conta no nome de um tal de Edvaldo. Eu fui com ela na delegacia no mesmo dia, dia 25 de agosto, e a gente fez o boletim de ocorrência. O banco disse pra ela que ia tentar estornar, mas até hoje não devolveram nada.
+CHAVE:
+- Quem ligou para a depoente: a mãe dela.
+- Ligaram para a MÃE dizendo ser do celular da depoente; o celular estava COM a depoente.
+- Quem fez o Pix de R$ 550: a mãe (NÃO a depoente), para conta em nome de Edvaldo.
+- Quem foi à delegacia: a depoente e a mãe, em 25/08; «a gente» = as duas.
+- O banco disse à mãe que ia tentar estornar; nada foi devolvido.
+
+======================================================================
+B09
+GÊNERO: Masculino
+TEXTO:
+O professor Rogério me chamou pra ser monitor dele no semestre passado e eu aceitei. No começo foi tudo bem. Depois ele começou a me pedir pra corrigir as provas inteiras sozinho, inclusive as notas finais. Eu falei que não me sentia confortável, porque isso é função dele. Ele disse que se eu não quisesse tinha uma fila de gente querendo a vaga. Eu continuei corrigindo porque precisava da declaração de monitoria. Eu me arrependo de não ter falado antes com a coordenação.
+CHAVE:
+- Quem chamou e quem aceitou: Rogério chamou o depoente; o depoente aceitou.
+- Quem pedia para corrigir as provas: Rogério; quem corrigia: o depoente.
+- Quem não se sentia confortável: o depoente; «isso é função dele» = função de Rogério.
+- Quem respondeu com a «fila de gente»: Rogério.
+- «me arrependo» é pronominal: o depoente se arrepende (de não ter falado antes).
+
+======================================================================
+B10
+GÊNERO: Feminino
+TEXTO:
+Na reunião do colegiado do dia 9 de setembro, eu pedi a palavra pra falar sobre a carga horária dos técnicos. O professor Nestor, que presidia a reunião, me disse que aquilo não estava na pauta. Eu mostrei que estava sim, no item 4. Aí ele falou que eu podia falar, mas só por dois minutos. Enquanto eu falava, ele e o professor Clóvis ficaram conversando alto e rindo. Eu parei e pedi que eles me respeitassem. O Clóvis disse que não estava rindo de mim. Depois da reunião, a professora Dalva veio me pedir desculpas pelos colegas e me disse que ia levar o assunto pra direção.
+CHAVE:
+- Quem pediu a palavra: a depoente.
+- Quem disse que não estava na pauta: Nestor, à depoente. Quem mostrou o item 4: a depoente.
+- Quem permitiu «só por dois minutos»: Nestor.
+- Quem conversou alto e riu: Nestor e Clóvis (NÃO a depoente).
+- Quem pediu respeito: a depoente pediu que Nestor e Clóvis a respeitassem.
+- Quem negou estar rindo da depoente: Clóvis.
+- Quem pediu desculpas pelos colegas e disse que ia levar à direção: Dalva, à depoente.
+- Data: 09/09.
